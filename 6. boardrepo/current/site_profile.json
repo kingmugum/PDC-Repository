@@ -1,0 +1,209 @@
+{
+  "profile_name": "Suresoft Groupware Community Board",
+  "profile_version": "1.9",
+  "base_host": "gw.suresofttech.com",
+  "routing": {
+    "write_url_template": "{board_url}/post/write",
+    "prefer_direct_write_url": false,
+    "fallback_to_write_button": false,
+    "write_form_wait_seconds": 8,
+    "write_form_poll_interval_ms": 300,
+    "prefer_write_button": true,
+    "fallback_to_direct_write_url": true,
+    "new_post_button_wait_seconds": 6,
+    "new_post_button_poll_interval_ms": 300,
+    "validate_exact_write_url": true
+  },
+  "login": {
+    "username_candidates": [
+      "input[type='text'][name*='id']",
+      "input[type='text'][id*='id']",
+      "input[name*='user']",
+      "input[id*='user']",
+      "input[autocomplete='username']",
+      "input[type='text']"
+    ],
+    "password_candidates": [
+      "input[type='password']",
+      "input[name*='password']",
+      "input[id*='password']",
+      "input[autocomplete='current-password']"
+    ],
+    "submit_candidates": [
+      "button:has-text('로그인')",
+      "input[type='submit'][value*='로그인']",
+      "a:has-text('로그인')",
+      "button:has-text('Login')",
+      "input[type='submit']"
+    ],
+    "captcha_policy": "manual"
+  },
+  "board": {
+    "write_button_candidates": [
+      "xpath=//button[normalize-space()='새글쓰기']",
+      "xpath=//a[normalize-space()='새글쓰기']",
+      "xpath=//*[@role='button' and normalize-space()='새글쓰기']",
+      "xpath=//*[normalize-space()='새글쓰기' and not(self::script) and not(self::style)]"
+    ]
+  },
+  "editor": {
+    "title_input_candidates": [
+      "#subject",
+      "input#subject",
+      "xpath=//*[normalize-space(.)='제목']/following::input[1]",
+      "xpath=//*[contains(normalize-space(.),'제목') and string-length(normalize-space(.)) <= 10]/following::input[1]",
+      "input[name='title']",
+      "input[name*='title']",
+      "input[name*='subject']",
+      "input[id*='title']",
+      "input[id*='subject']",
+      "input[placeholder*='제목']"
+    ],
+    "file_input_candidates": [
+      "input[type='file']"
+    ],
+    "file_button_candidates": [
+      "text=파일선택",
+      "button:has-text('파일선택')",
+      "a:has-text('파일선택')",
+      "button:has-text('파일 첨부')",
+      "a:has-text('파일 첨부')"
+    ],
+    "body_input_candidates": [
+      "textarea",
+      "[contenteditable='true']",
+      "iframe"
+    ],
+    "submit_button_candidates": [
+      "xpath=//button[normalize-space()='등록']",
+      "xpath=//a[normalize-space()='등록']",
+      "input[type='submit'][value='등록']",
+      "input[type='button'][value='등록']"
+    ],
+    "scroll_before_submit": true,
+    "scroll_bottom_wait_ms": 500,
+    "title_fill_retry_count": 4,
+    "title_fill_retry_wait_ms": 300,
+    "register_exact_text": "등록",
+    "register_search_wait_seconds": 5,
+    "register_search_poll_interval_ms": 250
+  },
+  "verification": {
+    "success_url_contains": "/board/",
+    "write_url_contains": "/post/write",
+    "attachment_settle_ms": 2500,
+    "submit_wait_seconds": 15,
+    "poll_interval_ms": 500,
+    "verify_title_on_board": true,
+    "verify_board_wait_seconds": 8,
+    "success_text_candidates": [
+      "등록되었습니다",
+      "등록 되었습니다",
+      "게시글이 등록",
+      "게시물이 등록",
+      "저장되었습니다",
+      "저장 되었습니다",
+      "등록 완료"
+    ],
+    "draft_text_candidates": [
+      "임시저장",
+      "임시 저장",
+      "임시저장된",
+      "임시 저장된"
+    ],
+    "auto_accept_dialogs": true,
+    "attachment_wait_seconds": 8,
+    "attachment_poll_interval_ms": 300
+  },
+  "notes": [
+    "2026-08-08 사용자 제공 화면 기준 작성",
+    "게시판 목록에는 새글쓰기 또는 글쓰기 버튼이 존재",
+    "게시글 작성 URL은 /board/{board_id}/post/write 형태 확인",
+    "첨부 UI에는 파일선택이 존재하며 실제 업로드는 input[type=file] 직접 설정을 우선 사용",
+    "CAPTCHA/보안문자는 자동 우회하지 않음",
+    "2026-08-08 사용자 추가 화면에서 작성 화면 하단 중앙의 '등록' 버튼 존재 확인; 정확 일치 selector를 최우선으로 추가",
+    "v0.5: 등록 후 즉시 실패 판정하지 않고 최대 15초 대기하며 JS 확인창을 자동 수락. 작성 화면에 남아 있어도 게시판 목록에서 정확한 제목 존재 여부를 재확인.",
+    "v0.5: '임시저장/임시 저장' 문구는 편집기 자동저장 상태로 보고 오류로 판정하지 않음.",
+    "v0.6: /post/write URL 도달만으로 작성페이지 성공 판정하지 않음. 실제 제목/첨부 폼이 렌더링될 때까지 기본 8초 대기.",
+    "v0.6: 제목 selector 실패 시 검색창 등을 제외하고 화면에서 가장 넓은 visible text input을 제목 입력창 fallback으로 사용.",
+    "v0.7: 직접 /post/write 접근 시 '생성된 커뮤니티가 없습니다.' 팝업 가능성이 확인되어 게시판 목록 진입 후 새글쓰기/글쓰기 버튼 클릭을 1순위로 변경.",
+    "v0.7: 직접 작성 URL은 게시판 버튼 진입 실패 시에만 fallback으로 사용.",
+    "v0.7: 본문은 프로젝트명/버전/생성일/원본폴더/첨부파일/복원 설명을 자동 입력.",
+    "v0.8: 로그인 직후 커뮤니티 홈이 표시될 수 있으므로 '모솔1팀 실차TC강건화'를 자동 선택하여 커뮤니티 130 컨텍스트를 먼저 확립.",
+    "v0.8: 글쓰기 화면의 등록 버튼이 페이지 하단에 있으므로 등록 탐색 전에 window.scrollTo(0, document.body.scrollHeight)로 명시적 최하단 스크롤.",
+    "v0.9: 좌측 공용 '글쓰기' 버튼이 /board/post/write로 이동시키며 잘못된 To 게시판을 선택하는 현상 확인. 따라서 '새글쓰기' 정확 일치 요소만 허용하고 일반 '글쓰기'는 자동화 대상에서 완전 제외.",
+    "v0.9: 새글쓰기 클릭 후 URL이 반드시 현재 대상 board 번호를 포함한 /board/{id}/post/write인지 검증. 불일치 시 제목/본문/첨부 입력을 시작하지 않음.",
+    "v0.9: 등록 후보에서 저장/확인/부분일치 selector 제거. 정확히 '등록'인 요소만 허용하여 '임시 저장된 글(0)' 오클릭 가능성 제거.",
+    "v0.9: 본문의 \\\\n 문자열 문제 수정. config.json에는 실제 줄바꿈으로 저장.",
+    "v0.10: 실제 Playwright 로그에서 제목 input이 <input id='subject' ...>임을 확인. #subject를 최우선 selector로 사용하고 DOM 재렌더링(detached) 시 locator를 다시 잡아 최대 4회 재시도.",
+    "v0.10: 등록 UI의 HTML 태그가 button/a/input이 아닐 가능성에 대응. 태그와 무관하게 visible 요소 중 텍스트가 정확히 '등록'인 후보를 찾고 가장 아래쪽 후보를 선택.",
+    "v0.10: 정확한 '등록' 텍스트 요소 자체 클릭을 우선 시도하고 실패하면 button/a/[role=button]/onclick 등 가장 가까운 클릭 가능한 부모를 찾아 클릭.",
+    "v0.10: 등록 요소 탐지 실패 시 exact '등록' 후보의 tag/class/id/role/부모 메타정보를 로그로 남겨 사이트 DOM 변경을 진단.",
+    "v0.11: DEXT5 공식 API setBodyValue(value, editor_id)를 본문 입력 1순위로 사용.",
+    "v0.11: getBodyTextValue/getBodyValue로 DEXT5 내부 본문을 다시 읽어 실제 내부 값 입력 여부를 검증.",
+    "v0.11: 에디터가 1개면 공식 문서에 따라 editor_id 생략 호출을 우선 시도하고, 실패 시 DOM/inline script에서 editor id 후보를 탐색.",
+    "v0.11: 화면 DOM에 글자가 보이는 것만으로는 본문 입력 성공으로 판정하지 않음. DEXT5 API가 존재하는 경우 내부값 검증이 성공해야 등록 단계 진행.",
+    "v0.12: 페이지/UI 조작 후 고정 sleep만으로 다음 단계에 진입하지 않고 각 단계별 Readiness Condition을 먼저 확인.",
+    "v0.12: Readiness 충족 직후에도 동적 SPA 재렌더링을 고려해 단계별 300~650ms 안정화 시간을 적용.",
+    "v0.12: DEXT5 함수 존재만으로 에디터 준비 완료로 판단하지 않고 공식 getDext5Dom()이 실제 디자인 DOM을 반환할 때까지 최대 12초 대기.",
+    "v0.12: editor_id 후보는 getDext5Dom(editor_id)이 실제 DOM을 반환한 경우에만 유효한 DEXT5 editor id로 인정.",
+    "v0.12: DEXT5 준비 완료 후 setBodyValue/getBodyTextValue 검증은 최대 3회 재시도하며 재시도 사이에 짧은 안정화 시간을 둠.",
+    "v0.12: 첨부파일은 고정 대기만 하지 않고 화면에 첨부 파일명이 나타나는지 최대 8초 확인한 뒤 등록 단계로 이동."
+  ],
+  "community": {
+    "name": "모솔1팀 실차TC강건화",
+    "home_url": "https://gw.suresofttech.com/app/community/130",
+    "entry_candidates": [
+      "xpath=//*[normalize-space()='모솔1팀 실차TC강건화']",
+      "text=모솔1팀 실차TC강건화",
+      "xpath=//*[contains(normalize-space(.),'모솔1팀 실차TC강건화')]"
+    ],
+    "ready_candidates": [
+      "text=AI 스냅샷_PF",
+      "text=AI 스냅샷_Signal Ex",
+      "text=AI 스냅샷_기타",
+      "text=AI 스냅샷_자료백업"
+    ],
+    "selection_wait_seconds": 8,
+    "poll_interval_ms": 300
+  },
+  "dext5": {
+    "enabled": true,
+    "detect_wait_seconds": 8,
+    "poll_interval_ms": 250,
+    "prefer_api": true,
+    "set_method": "setBodyValue",
+    "get_text_method": "getBodyTextValue",
+    "get_html_method": "getBodyValue",
+    "allow_no_editor_id": true,
+    "candidate_editor_ids": [
+      "editor1",
+      "editor",
+      "dext5editor",
+      "dext_editor"
+    ],
+    "keyboard_fallback": true,
+    "require_internal_verification": true,
+    "minimum_text_match_ratio": 0.8,
+    "dom_method": "getDext5Dom",
+    "editor_ready_wait_seconds": 12,
+    "editor_ready_poll_interval_ms": 250,
+    "set_retry_count": 3,
+    "set_retry_wait_ms": 400
+  },
+  "readiness": {
+    "poll_interval_ms": 250,
+    "default_stabilize_ms": 450,
+    "stage_stabilize_ms": {
+      "login": 500,
+      "community": 500,
+      "board": 400,
+      "write_form": 500,
+      "title": 300,
+      "dext5": 650,
+      "body": 350,
+      "attachment": 500,
+      "before_submit": 400
+    }
+  }
+}

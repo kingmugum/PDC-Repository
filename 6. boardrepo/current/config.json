@@ -1,0 +1,267 @@
+{
+  "app_name": "BoardRepo",
+  "version": "0.20",
+  "community_base": "https://gw.suresofttech.com/app/community/130",
+  "targets": {
+    "PassFail": {
+      "display_name": "PassFail",
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/374",
+      "folder_aliases": [
+        "1. PassFail",
+        "PassFail",
+        "Pass_Fail",
+        "Pass-Fail",
+        "Pass Fail",
+        "PF",
+        "P_F",
+        "P-F",
+        "P/F"
+      ],
+      "archive_strategy": "date_counter_release",
+      "recommended_filename": "PassFail_YYMMDD_N.zip",
+      "revision_in_package_name": false,
+      "ui_label": "1. PassFail"
+    },
+    "SignalExport": {
+      "display_name": "SignalExport",
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/375",
+      "folder_aliases": [
+        "2. SignalExport",
+        "SignalExport",
+        "Signal_Export",
+        "Signal-Export",
+        "Signal Export",
+        "SignalExportV2",
+        "Signal_Export_V2",
+        "Signal Export V2"
+      ],
+      "archive_strategy": "date_counter_release",
+      "recommended_filename": "SignalExport_YYMMDD_N.zip",
+      "revision_in_package_name": false,
+      "ui_label": "2. SignalExport"
+    },
+    "Ext": {
+      "display_name": "Ext",
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/376",
+      "folder_aliases": [
+        "3. Ext",
+        "Ext",
+        "EXT",
+        "Etc",
+        "ETC",
+        "기타",
+        "기타자료",
+        "Extra"
+      ],
+      "ui_label": "3. Ext"
+    },
+    "Backup": {
+      "display_name": "Backup",
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/377",
+      "folder_aliases": [
+        "4. Backup",
+        "Backup",
+        "BackUp",
+        "DataBackup",
+        "Data_Backup",
+        "Data-Backup",
+        "Data Backup",
+        "자료백업",
+        "자료_백업",
+        "자료 백업"
+      ],
+      "upload_mode": "archive_inbox",
+      "accepted_extensions": [
+        ".zip",
+        ".7z",
+        ".rar"
+      ],
+      "ui_label": "4. Backup"
+    }
+  },
+  "browser": {
+    "headless": false,
+    "login_wait_seconds": 180,
+    "operation_timeout_ms": 15000
+  },
+  "upload": {
+    "title_template": "[BoardRepo] {display_name}_{version}",
+    "body_template": "BoardRepo 자동 백업 업로드입니다.\n\n프로젝트 : {display_name}\n버전 : {version}\n업로드일 : {created}\n원본 폴더 : {source_folder}\n첨부 파일 : {zip_name}\n\n대상 폴더에서 최신 규칙으로 자동 선택된 압축파일입니다.\n필요 시 첨부된 파일을 내려받아 해당 시점의 파일로 복원할 수 있습니다."
+  },
+  "archive_selection": {
+    "extensions": [
+      ".zip",
+      ".7z",
+      ".rar"
+    ],
+    "date_format": "YYMMDD",
+    "date_first": true,
+    "same_date_order": [
+      "rev",
+      "counter"
+    ],
+    "no_date_order": [
+      "rev",
+      "counter"
+    ],
+    "mixed_date_policy": "stop_and_warn",
+    "date_rev_conflict_policy": "stop_and_warn",
+    "tie_policy": "stop_and_warn",
+    "require_revision": true,
+    "recursive": false,
+    "strategies": {
+      "date_counter_release": {
+        "require_date": true,
+        "revision_required": false,
+        "order": [
+          "date",
+          "counter"
+        ],
+        "allow_missing_counter_if_unique_date": true,
+        "legacy_rev_token_policy": "ignore_for_ordering"
+      },
+      "date_rev_counter": {
+        "require_date": false,
+        "revision_required": true,
+        "order": [
+          "date",
+          "rev",
+          "counter"
+        ],
+        "mixed_date_policy": "stop_and_warn",
+        "date_rev_conflict_policy": "stop_and_warn"
+      }
+    }
+  },
+  "remote_duplicate_check": {
+    "enabled": true,
+    "max_board_pages": 10,
+    "page_wait_ms": 500,
+    "next_page_text_candidates": [
+      "다음"
+    ],
+    "standard_match_exact_title": true,
+    "standard_match_exact_filename_text": true,
+    "ext_same_name_missing_sha_policy": "conflict",
+    "ext_same_name_different_sha_policy": "conflict",
+    "ext_post_detail_wait_seconds": 5,
+    "ext_post_detail_poll_ms": 300,
+    "board_ready_timeout_seconds": 10,
+    "board_ready_poll_ms": 500,
+    "empty_scan_retries": 3,
+    "empty_scan_retry_ms": 1000,
+    "diagnostic_logging": true,
+    "row_textcontent_matching": true,
+    "unconfirmed_board_policy": "error_skip",
+    "empty_board_text_candidates": [
+      "게시글이 없습니다",
+      "등록된 게시글이 없습니다",
+      "검색된 게시물이 없습니다",
+      "등록된 글이 없습니다"
+    ],
+    "detail_navigation_timeout_seconds": 8,
+    "detail_navigation_poll_ms": 250,
+    "reuse_shared_row_navigation": true
+  },
+  "ext_upload": {
+    "recursive": false,
+    "exclude_hidden": true,
+    "exclude_prefixes": [
+      "~$"
+    ],
+    "exclude_names": [
+      "Thumbs.db",
+      "desktop.ini",
+      ".DS_Store"
+    ],
+    "exclude_suffixes": [
+      ".tmp",
+      ".temp",
+      ".part",
+      ".crdownload",
+      ".download",
+      ".swp",
+      ".lock"
+    ],
+    "title_template": "[BoardRepo][Ext] {filename}",
+    "body_template": "BoardRepo 기타 자료 업로드입니다.\n\n파일명 : {filename}\n크기 : {size_bytes} bytes\nSHA-256 : {sha256}\n업로드일 : {created}\n원본 폴더 : {source_folder}\n\nExt 폴더에서 신규 자료로 판정되어 자동 업로드된 파일입니다."
+  },
+  "package_release": {
+    "id": "260810_1",
+    "distribution_name": "BoardRepo_260810_1",
+    "filename_rule": "BoardRepo_YYMMDD_N.zip",
+    "date_format": "YYMMDD",
+    "counter_start": 1,
+    "counter_resets_on_new_date": true
+  },
+  "batch_policy": {
+    "local_preflight_error": "skip_item_and_continue",
+    "duplicate": "skip_item_and_continue",
+    "remote_conflict": "skip_item_and_continue",
+    "remote_item_error": "skip_item_and_continue",
+    "fatal_remote_session_error": "stop_all",
+    "actual_upload_error": "skip_item_and_continue",
+    "show_attention_warning": true,
+    "show_summary_popup_on_duplicate": true,
+    "show_summary_popup_on_attention": true,
+    "show_summary_popup_on_upload_failure": true,
+    "show_popup_when_all_success": false
+  },
+  "backup_upload": {
+    "recursive": false,
+    "exclude_hidden": true,
+    "exclude_prefixes": [
+      "~$"
+    ],
+    "exclude_names": [
+      "Thumbs.db",
+      "desktop.ini",
+      ".DS_Store"
+    ],
+    "exclude_suffixes": [
+      ".tmp",
+      ".temp",
+      ".part",
+      ".crdownload",
+      ".download",
+      ".swp",
+      ".lock"
+    ],
+    "extensions": [
+      ".zip",
+      ".7z",
+      ".rar"
+    ],
+    "title_template": "[BoardRepo][Backup] {filename}",
+    "body_template": "BoardRepo 압축자료 백업 업로드입니다.\n\n파일명 : {filename}\n크기 : {size_bytes} bytes\n업로드일 : {created}\n원본 폴더 : {source_folder}\n\nBackup 폴더의 압축파일 Inbox에서 신규 자료로 판정되어 자동 업로드된 파일입니다.",
+    "latest_per_family": true,
+    "release_pattern": "FAMILY_YYMMDD_N",
+    "legacy_release_without_counter": true,
+    "ignore_legacy_rev_before_date": true
+  },
+  "download": {
+    "enabled": true,
+    "max_board_pages": 10,
+    "page_wait_ms": 500,
+    "post_wait_ms": 500,
+    "download_timeout_ms": 30000,
+    "temporary_suffix": ".part",
+    "overwrite_existing": false,
+    "verify_ext_sha256": true,
+    "verify_known_size": true,
+    "versioned_policy": "remote_newer_only",
+    "backup_policy": "remote_newer_per_family_only",
+    "ext_policy": "missing_or_same_sha_skip_conflict_on_difference",
+    "show_result_popup": true,
+    "board_ready_timeout_seconds": 10,
+    "board_ready_poll_ms": 500,
+    "empty_scan_retries": 3,
+    "empty_scan_retry_ms": 1000,
+    "diagnostic_logging": true,
+    "dom_fallback_enabled": true,
+    "discovery_mode": "board_row_title_first",
+    "validate_attachment_against_title": true,
+    "invalid_boardrepo_post_policy": "ignore_and_log",
+    "ext_process_all_valid_posts": true
+  }
+}

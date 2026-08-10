@@ -37,7 +37,7 @@ from tkinter import ttk, filedialog, messagebox, simpledialog
 
 
 APP_NAME = "PDC Version Manager"
-APP_VERSION = "260809_3"
+APP_VERSION = "260810_1"
 ROOT_MANAGER_FILENAME = "PDC_Version_Manager.py"
 REQUIREMENTS_FILENAME = "PDC_Version_Manager_Requirements.xlsx"
 CONFIG_DIR = Path.home() / ".pdc_version_manager"
