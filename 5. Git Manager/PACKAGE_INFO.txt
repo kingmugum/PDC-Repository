@@ -1,0 +1,42 @@
+Git Manager Package Release
+===========================
+Release           : GitManager_260819_1
+Date              : 2026-08-19
+Primary GUI       : Automation_Manager.pyw (Automation Manager Root)
+Standalone GUI    : 5. Git Manager/current/Git_Manager.pyw
+Engine            : 5. Git Manager/current/git_manager.py
+Requirements      : GitManager_Requirements_260819_1.xlsx
+Integration SRS   : Automation_Manager_Requirements_260819_1.xlsx
+
+Current-folder Git recovery
+---------------------------
+- ZIP/BoardRepo로 받은 Automation Manager를 어느 폴더에 풀어도 그 현재 Root 자체를 기존 Git 이력에 연결 가능
+- Git Manager 탭의 [현재 폴더 Git 연결/복구] 사용
+- 기본 origin: https://github.com/kingmugum/PDC-Repository.git
+- 기본 branch: main
+- git init + fetch + mixed reset으로 이력을 연결하되 Working Tree의 기존 로컬 파일은 덮어쓰지 않음
+- 원격에만 있는 1~4 자료는 recursive 보완 (01. old 하위 포함)
+- 5/6은 Root 직속 Release/문서만 보완하고 current 하위 구버전 런타임은 복원하지 않음
+- 복구 직후 자동 Commit/Push 없음
+- 연결 실패 시 이번 작업이 만든 .git만 rollback
+- 현재 Release가 원격보다 오래된 경우 Commit+Push 자동 차단
+- 상위 Git Repository 내부에서는 중첩 .git 자동 생성 금지
+
+Clone vs current-folder recovery
+--------------------------------
+Clone:
+  원격 Repository를 기준으로 별도 새 폴더를 생성할 때 사용
+
+현재 폴더 Git 연결/복구:
+  이미 받은 Automation Manager ZIP의 현재 폴더 자체를 Git 작업 폴더로 사용할 때 사용
+
+Preserved Git policy
+--------------------
+- main single branch
+- Pull = git pull --ff-only
+- no force push
+- no automatic merge/rebase/conflict resolution
+- target checkboxes control status inspection scope
+- Pull / Commit+Push operate on the whole Git Repository
+- Automation Manager is not target 7
+- BoardRepo browser/offline dependency remains isolated in target 6

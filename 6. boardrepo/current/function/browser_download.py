@@ -10,6 +10,7 @@ from urllib.parse import urljoin
 from archive_selector import ArchiveSelectionError, select_latest_archive
 from backup_file_manager import BackupFileError, select_latest_backup_archives
 from board_post_navigation import open_board_post_by_title
+from browser_runtime import launch_persistent_context_auto
 from browser_automation import (
     BrowserAutomationError,
     _ensure_community_context,
@@ -174,7 +175,7 @@ def _extract_body_filename(body_text: str) -> str | None:
 
 
 def _post_prefix(target: DownloadTarget) -> str:
-    if target.target_key in {"PassFail", "SignalExport"}:
+    if target.target_key in {"PassFail", "SignalExport", "GitManager", "BoardRepo"}:
         return f"[BoardRepo] {target.display_name}_"
     if target.target_key == "Backup":
         return "[BoardRepo][Backup] "
@@ -293,7 +294,7 @@ def _canonical_versioned_board_title(
       [BoardRepo] SignalExport_Signal_Export_V2_260808_2
     """
     compact = _compact_dom_text(value)
-    prefix = f"[BoardRepo]{target.display_name}_"
+    prefix = _compact_dom_text(f"[BoardRepo] {target.display_name}_")
     pos = compact.find(prefix)
     if pos < 0:
         return None
@@ -350,7 +351,7 @@ def _canonical_title_from_text(
     target: DownloadTarget,
     value: str,
 ) -> str | None:
-    if target.target_key in {"PassFail", "SignalExport"}:
+    if target.target_key in {"PassFail", "SignalExport", "GitManager", "BoardRepo"}:
         return _canonical_versioned_board_title(target, value)
     if target.target_key == "Backup":
         return _canonical_backup_board_title(value)
@@ -705,7 +706,7 @@ def _versioned_title_release(
         return None
 
     compact = _compact_dom_text(canonical)
-    prefix = f"[BoardRepo]{target.display_name}_"
+    prefix = _compact_dom_text(f"[BoardRepo] {target.display_name}_")
     tail = compact[len(prefix):]
     matches = _valid_release_matches(tail)
     if not matches:
@@ -723,7 +724,7 @@ def _candidate_from_title(
     title: str,
     post_url: str,
 ) -> RemotePost | None:
-    if target.target_key in {"PassFail", "SignalExport"}:
+    if target.target_key in {"PassFail", "SignalExport", "GitManager", "BoardRepo"}:
         parsed = _versioned_title_release(target, title)
         if parsed is None:
             return None
@@ -797,7 +798,7 @@ def _select_remote_candidates(
             f"{invalid}건"
         )
 
-    if target.target_key in {"PassFail", "SignalExport"}:
+    if target.target_key in {"PassFail", "SignalExport", "GitManager", "BoardRepo"}:
         if not raw:
             return []
         best = max(raw, key=lambda x: _release_key(x.date_token, x.counter))
@@ -905,7 +906,7 @@ def _validate_attachment_against_title(
     candidate: RemotePost,
     filename: str,
 ) -> None:
-    if target.target_key in {"PassFail", "SignalExport"}:
+    if target.target_key in {"PassFail", "SignalExport", "GitManager", "BoardRepo"}:
         if Path(filename).suffix.casefold() not in _ARCHIVE_EXTS:
             raise BrowserAutomationError(
                 f"최신 글의 첨부파일이 압축파일이 아닙니다: {filename}"
@@ -947,6 +948,153 @@ def _validate_attachment_against_title(
 
 
 
+def _visible_attachment_filename(
+    page,
+    target: DownloadTarget,
+    candidate: RemotePost,
+) -> str | None:
+    """Best-effort filename from rendered attachment/download elements."""
+    expected = (candidate.filename or "").strip()
+
+    try:
+        rows = page.evaluate(
+            """() => Array.from(document.querySelectorAll(
+                'a, button, [role="button"], [title]'
+            )).map(el => ({
+                text: ((el.textContent || el.getAttribute('aria-label') ||
+                        el.getAttribute('title') || '') + '').trim(),
+                title: (el.getAttribute('title') || '').trim()
+            }))"""
+        )
+    except Exception:
+        rows = []
+
+    values: list[str] = []
+    for row in rows if isinstance(rows, list) else []:
+        for raw in (row.get("text", ""), row.get("title", "")):
+            value = _normalize_dom_text(raw)
+            if value and value not in values:
+                values.append(value)
+
+    if expected:
+        for value in values:
+            if value.casefold() == expected.casefold():
+                return value
+            if expected.casefold() in value.casefold():
+                # Some groupware attachment widgets combine filename and size.
+                return expected
+
+    if target.target_key in {"PassFail", "SignalExport", "GitManager", "BoardRepo"}:
+        for value in values:
+            # Use only a filename-like token. Release validation later ensures
+            # that it matches the selected post title.
+            for token in re.split(r"\s+", value):
+                token = token.strip("()[]{}<>,;\"'")
+                if Path(token).suffix.casefold() in _ARCHIVE_EXTS:
+                    return token
+
+    return None
+
+
+def _wait_for_detail_metadata(
+    page,
+    target: DownloadTarget,
+    candidate: RemotePost,
+    config: dict,
+    log: Callable[[str], None],
+) -> tuple[str | None, str, str | None, int | None]:
+    """
+    Wait for async detail content after the post URL has already opened.
+
+    The groupware can update /post/<id> before the body and attachment area is
+    rendered. Treat URL navigation and detail-content readiness as separate.
+    """
+    import time
+
+    download_cfg = config.get("download") or {}
+    timeout_seconds = max(
+        0.5,
+        float(download_cfg.get("detail_ready_timeout_seconds", 8)),
+    )
+    poll_ms = max(
+        100,
+        int(download_cfg.get("detail_ready_poll_ms", 250)),
+    )
+    ext_sha_grace_ms = max(
+        0,
+        int(download_cfg.get("ext_sha_ready_grace_ms", 1000)),
+    )
+    diagnostic = bool(download_cfg.get("diagnostic_logging", True))
+
+    deadline = time.monotonic() + timeout_seconds
+    first_filename_at: float | None = None
+    attempt = 0
+    last_state = None
+    body = ""
+    filename: str | None = None
+    sha_value: str | None = None
+    size_value: int | None = None
+
+    while True:
+        attempt += 1
+        body = _page_body_text(page)
+
+        # candidate.filename comes from the title for Ext/Backup. It is not
+        # proof of the actual attachment. Observe body/attachment DOM first.
+        body_filename = _extract_body_filename(body)
+        visible_filename = _visible_attachment_filename(page, target, candidate)
+        filename = body_filename or visible_filename
+        sha_value = _extract_sha(body)
+        size_value = _extract_size(body)
+
+        if filename and first_filename_at is None:
+            first_filename_at = time.monotonic()
+
+        sha_needed = (
+            target.target_key == "Ext"
+            and bool(download_cfg.get("verify_ext_sha256", True))
+        )
+        sha_grace_done = (
+            not sha_needed
+            or sha_value is not None
+            or (
+                first_filename_at is not None
+                and (time.monotonic() - first_filename_at) * 1000
+                >= ext_sha_grace_ms
+            )
+        )
+        ready = bool(filename) and sha_grace_done
+
+        state = (bool(filename), bool(sha_value), len(body))
+        if diagnostic and (attempt == 1 or state != last_state or ready):
+            log(
+                f"상세 콘텐츠 대기 [{target.display_name}] {attempt}차: "
+                f"첨부명={'있음' if filename else '없음'}, "
+                f"SHA={'있음' if sha_value else '없음'}, "
+                f"본문길이={len(body)}"
+            )
+
+        if ready:
+            log(
+                f"상세 콘텐츠 Ready [{target.display_name}]: "
+                f"첨부={filename}"
+                + (f", SHA={sha_value[:12]}..." if sha_value else "")
+            )
+            return filename, body, sha_value, size_value
+
+        if time.monotonic() >= deadline:
+            log(
+                f"상세 콘텐츠 대기 종료 [{target.display_name}]: "
+                f"{timeout_seconds:.1f}초, "
+                f"첨부명={'있음' if filename else '없음'}, "
+                f"SHA={'있음' if sha_value else '없음'}"
+            )
+            return filename, body, sha_value, size_value
+
+        last_state = state
+        page.wait_for_timeout(poll_ms)
+
+
 def _inspect_post_detail(
     page,
     target: DownloadTarget,
@@ -964,39 +1112,18 @@ def _inspect_post_detail(
         log,
     )
 
-    body = _page_body_text(page)
-    filename = candidate.filename or _extract_body_filename(body)
-
-    if not filename:
-        # Prefer textContent because visual wrapping can alter innerText.
-        try:
-            links = page.locator("a")
-            for idx in range(links.count()):
-                link = links.nth(idx)
-                value = link.evaluate(
-                    "el => (el.textContent || el.getAttribute('title') || '')"
-                )
-                value = _normalize_dom_text(value)
-                if not value:
-                    continue
-
-                if target.target_key == "Ext":
-                    # Ext body normally contains '파일명 : ...'; if it does not,
-                    # accept a visible attachment label that exactly matches the
-                    # filename encoded in the post title.
-                    if value.casefold() == candidate.filename.casefold():
-                        filename = value
-                        break
-                elif Path(value).suffix.casefold() in _ARCHIVE_EXTS:
-                    filename = value
-                    break
-        except Exception:
-            pass
+    filename, body, sha_value, size_value = _wait_for_detail_metadata(
+        page,
+        target,
+        candidate,
+        config,
+        log,
+    )
 
     if not filename:
         raise BrowserAutomationError(
-            f"{target.display_name} 선택 게시글에서 첨부파일명을 확인하지 못했습니다: "
-            f"{candidate.title}"
+            f"{target.display_name} 선택 게시글의 상세 콘텐츠가 준비된 뒤에도 "
+            f"첨부파일명을 확인하지 못했습니다: {candidate.title}"
         )
 
     filename = _safe_filename(filename)
@@ -1013,7 +1140,7 @@ def _inspect_post_detail(
 
     log(
         f"게시글 상세 확인 [{target.display_name}]: "
-        f"{candidate.title} → 첨부 {filename}"
+        f"{candidate.title} → 실제 첨부 {filename}"
     )
 
     return RemotePost(
@@ -1024,10 +1151,9 @@ def _inspect_post_detail(
         family=candidate.family,
         date_token=candidate.date_token,
         counter=candidate.counter,
-        sha256=_extract_sha(body),
-        size_bytes=_extract_size(body),
+        sha256=sha_value,
+        size_bytes=size_value,
     )
-
 
 def _local_versioned_latest(
     target: DownloadTarget,
@@ -1081,11 +1207,36 @@ def _download_attachment(
     page.goto(remote.post_url, wait_until="domcontentloaded")
     page.wait_for_timeout(int(download_cfg.get("post_wait_ms", 500)))
 
+    import time
+
+    ready_timeout_seconds = max(
+        0.5,
+        float(download_cfg.get("download_control_ready_timeout_seconds", 8)),
+    )
+    ready_poll_ms = max(
+        100,
+        int(download_cfg.get("download_control_ready_poll_ms", 250)),
+    )
+    deadline = time.monotonic() + ready_timeout_seconds
+    attempt = 0
     locators = []
 
-    for role in ("link", "button"):
+    while True:
+        attempt += 1
+        locators = []
+
+        for role in ("link", "button"):
+            try:
+                group = page.get_by_role(role, name=filename, exact=True)
+                for idx in range(group.count()):
+                    loc = group.nth(idx)
+                    if loc.is_visible():
+                        locators.append(loc)
+            except Exception:
+                pass
+
         try:
-            group = page.get_by_role(role, name=filename, exact=True)
+            group = page.locator("a").filter(has_text=filename)
             for idx in range(group.count()):
                 loc = group.nth(idx)
                 if loc.is_visible():
@@ -1093,29 +1244,33 @@ def _download_attachment(
         except Exception:
             pass
 
-    try:
-        group = page.locator("a").filter(has_text=filename)
-        for idx in range(group.count()):
-            loc = group.nth(idx)
-            if loc.is_visible():
-                locators.append(loc)
-    except Exception:
-        pass
+        if not locators:
+            try:
+                group = page.get_by_text(filename, exact=True)
+                for idx in range(group.count()):
+                    loc = group.nth(idx)
+                    if loc.is_visible():
+                        locators.append(loc)
+            except Exception:
+                pass
 
-    if not locators:
-        try:
-            group = page.get_by_text(filename, exact=True)
-            for idx in range(group.count()):
-                loc = group.nth(idx)
-                if loc.is_visible():
-                    locators.append(loc)
-        except Exception:
-            pass
+        if locators:
+            log(
+                f"다운로드 요소 Ready: {filename} "
+                f"({attempt}차, 후보={len(locators)})"
+            )
+            break
 
-    if not locators:
-        raise BrowserAutomationError(
-            f"게시글에서 첨부파일 다운로드 요소를 찾지 못했습니다: {filename}"
-        )
+        if time.monotonic() >= deadline:
+            raise BrowserAutomationError(
+                "게시글 상세 URL은 열렸지만 첨부파일 다운로드 요소가 "
+                f"{ready_timeout_seconds:.1f}초 안에 준비되지 않았습니다: "
+                f"{filename}"
+            )
+
+        if attempt == 1 or attempt % 4 == 0:
+            log(f"다운로드 요소 대기: {filename} ({attempt}차)")
+        page.wait_for_timeout(ready_poll_ms)
 
     timeout_ms = int(download_cfg.get("download_timeout_ms", 30000))
     last_error = None
@@ -1566,10 +1721,12 @@ def sync_selected_downloads(
 
     with sync_playwright() as p:
         log("BoardRepo 다운로드 브라우저를 실행합니다.")
-        context = p.chromium.launch_persistent_context(
-            user_data_dir=str(browser_profile),
-            headless=bool(browser_cfg.get("headless", False)),
-            viewport={"width": 1440, "height": 900},
+        context, browser_choice = launch_persistent_context_auto(
+            p,
+            browser_profile,
+            config,
+            log,
+            purpose="download",
             accept_downloads=True,
         )
         page = context.pages[0] if context.pages else context.new_page()
@@ -1624,7 +1781,7 @@ def sync_selected_downloads(
                             )
                         continue
 
-                    if target.target_key in {"PassFail", "SignalExport"}:
+                    if target.target_key in {"PassFail", "SignalExport", "GitManager", "BoardRepo"}:
                         results.append(
                             _sync_versioned_target(
                                 page,

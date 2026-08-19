@@ -1,0 +1,4 @@
+# BoardRepo company/offline dependency baseline
+# Browser binaries are intentionally NOT downloaded; installed Microsoft Edge is the fallback.
+playwright==1.62.0
+keyring==25.7.0

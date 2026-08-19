@@ -13,8 +13,8 @@ def _keyring():
         return keyring
     except ImportError as exc:
         raise CredentialStoreError(
-            "keyring 패키지가 설치되지 않았습니다. "
-            "setup_first_run.bat을 먼저 실행하세요."
+            "keyring 패키지가 준비되지 않았습니다. "
+            "BoardRepo의 [필수 모듈 설치/복구] 또는 [회사용 오프라인 준비] 절차를 확인하세요."
         ) from exc
 
 

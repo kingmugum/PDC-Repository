@@ -10,45 +10,20 @@ class FolderResolutionError(RuntimeError):
     pass
 
 
-def runtime_root() -> Path:
+def app_root() -> Path:
     """
-    Returns the directory containing the actual BoardRepo runtime.
+    Returns the directory containing BoardRepo itself.
 
-    Integrated layout:
-      <Repository Root>/6. boardrepo/current/
+    - Normal Python execution: directory containing this .py file
+    - Packaged executable (e.g. PyInstaller): directory containing the .exe
 
-    Standalone fallback:
-      directory containing BoardRepo.pyw
+    This intentionally does NOT use the current working directory because a
+    shortcut or another agent may start the program from another directory.
     """
     if getattr(sys, "frozen", False):
         return Path(sys.executable).resolve().parent
     return Path(__file__).resolve().parent.parent
 
-
-def app_root() -> Path:
-    """
-    Returns the shared repository/data root used for 1~4 target folders.
-
-    Integrated layout:
-      <Repository Root>/
-        1. PassFail/
-        2. SignalExport/
-        3. Ext/
-        4. Backup/
-        6. boardrepo/current/
-
-    When the runtime is not under '6. boardrepo/current', keep legacy
-    standalone behavior and use the runtime directory itself.
-    """
-    runtime = runtime_root()
-
-    if runtime.name.casefold() == "current":
-        boardrepo_dir = runtime.parent
-        normalized = re.sub(r"[^0-9a-zA-Z가-힣]+", "", boardrepo_dir.name).lower()
-        if normalized == "6boardrepo":
-            return boardrepo_dir.parent
-
-    return runtime
 
 def normalize_name(value: str) -> str:
     """

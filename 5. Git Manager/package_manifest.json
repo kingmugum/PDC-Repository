@@ -1,0 +1,83 @@
+{
+  "package": "GitManager_260819_1.zip",
+  "release": "260819_1",
+  "created": "2026-08-19",
+  "managed_target_id": 5,
+  "requirements_excel_runtime_dependency": false,
+  "git_recovery": {
+    "current_folder_adopt": true,
+    "default_branch": "main",
+    "automatic_push": false,
+    "local_files_take_precedence": true,
+    "remote_data_hydration": "1-4 recursive; 5-6 root_only; current excluded",
+    "older_local_push_guard": true,
+    "rollback_created_git_on_failure": true
+  },
+  "files": [
+    {
+      "path": "5. Git Manager/AUTOMATION_MANAGER_RELEASE_INFO.txt",
+      "size": 661,
+      "sha256": "6710953e395253e29b41b2fee32ff41857c5737346bbb264ef8aa6952e9ddf99"
+    },
+    {
+      "path": "5. Git Manager/Automation_Manager_Requirements_260819_1.xlsx",
+      "size": 29324,
+      "sha256": "0ba972b80e5c4d90ad71915920e0baedd5b08c961d3f33b28e929edae9629c79"
+    },
+    {
+      "path": "5. Git Manager/current/git_manager.py",
+      "size": 45714,
+      "sha256": "524d5da21f3ec5a069bab7effb31fc6c974eda5da0bdf4e3c657a937bc2f75f6"
+    },
+    {
+      "path": "5. Git Manager/current/Git_Manager.pyw",
+      "size": 904,
+      "sha256": "a1c92ba460e5167ddc12c66ce70af78ab04223f4956c937a067bb0f1a0412660"
+    },
+    {
+      "path": "5. Git Manager/GitManager_Requirements_260819_1.xlsx",
+      "size": 37771,
+      "sha256": "1ea045f91ebb0387e25d46ae951b41431b92027d18233f3b16f63cdd18a32eaa"
+    },
+    {
+      "path": "5. Git Manager/MANUAL.txt",
+      "size": 1546,
+      "sha256": "9faaf15ce2e9e43c92811e63e1e91179ec2318e4dd2e46c77b5529bdf1adc8ee"
+    },
+    {
+      "path": "5. Git Manager/PACKAGE_INFO.txt",
+      "size": 2004,
+      "sha256": "94345e75acf6096b6feb6945a81d64760d555646fca0f2a5ad807e0a5d79d21d"
+    },
+    {
+      "path": "5. Git Manager/SELF_TEST_RESULTS.txt",
+      "size": 953,
+      "sha256": "db6171510e094e7ea2105d8ce72317cccbd38c7e8481a7bc5091240dde54a591"
+    },
+    {
+      "path": "Automation_Manager.pyw",
+      "size": 3516,
+      "sha256": "1bacc9077b78a6d1aac528f6393a8b3f08c8ccae1dd32b76fb012be7f01ea6b9"
+    },
+    {
+      "path": "function/common/catalog.py",
+      "size": 1803,
+      "sha256": "5e029a7f1464320fb8cc99962c62cf9f40267cdf5030165e9c1cc7484c5e7185"
+    },
+    {
+      "path": "function/common/release_rules.py",
+      "size": 1310,
+      "sha256": "5576bb8283efef0ca5d3474168936366e296657602fb8d3e3b9ae64ce246da44"
+    },
+    {
+      "path": "function/common/work_lock.py",
+      "size": 672,
+      "sha256": "27825b89d1d0bb8e78501e362408ffd02c4a57c070399034051d09c6341eeb4f"
+    },
+    {
+      "path": "program_catalog.json",
+      "size": 4745,
+      "sha256": "75aa785534d7123e69dafacf2a50034fd348c3344875f4bfc59fedbf9b9fc81a"
+    }
+  ]
+}

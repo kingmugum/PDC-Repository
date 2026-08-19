@@ -1,0 +1,20 @@
+BoardRepo 260819_1 / Technical v0.22 간단 매뉴얼
+================================================
+
+BoardRepo 기능은 260815_2 v0.22와 동일합니다.
+이번 260819_1은 Automation Manager/Git Manager 복구 기능과 배포 기준선을 맞춘 Package Release입니다.
+
+1~6 게시판
+-----------
+1. PassFail      -> board/374
+2. SignalExport  -> board/375
+3. Ext           -> board/376
+4. Backup        -> board/377
+5. Git Manager   -> board/392
+6. BoardRepo     -> board/393
+
+Git 복구와의 관계
+-----------------
+BoardRepo는 GitManager/BoardRepo ZIP을 게시판에서 업로드/다운로드할 수 있습니다.
+그러나 다운로드 직후 .git을 만들거나 Commit/Push하지 않습니다.
+Git 연결/복구는 사용자가 Git Manager 탭에서 '현재 폴더 Git 연결/복구'를 명시적으로 실행할 때만 수행됩니다.

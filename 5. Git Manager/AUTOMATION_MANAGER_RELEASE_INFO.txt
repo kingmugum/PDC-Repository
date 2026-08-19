@@ -1,0 +1,16 @@
+Automation Manager Release
+==========================
+Release        : 260819_1
+Distribution   : Automation_Manager_260819_1.zip
+Owner target   : 5. Git Manager (Core/Launcher release ownership)
+Managed target : NO (Automation Manager is not target 7)
+
+Key change
+----------
+Automation Manager ZIP/BoardRepo 복구본을 압축 해제한 현재 Root 자체를 기존 Git origin/main 이력에 연결할 수 있는 self-bootstrap recovery를 추가했습니다.
+
+Requirements
+------------
+Automation_Manager_Requirements_260819_1.xlsx
+GitManager_Requirements_260819_1.xlsx
+BoardRepo_Requirements_v0_22.xlsx (BoardRepo Package Release 260819_1 / Technical v0.22)

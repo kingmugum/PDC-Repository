@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from browser_runtime import launch_persistent_context_auto
 import time
 from html import escape as html_escape
 from pathlib import Path
@@ -1817,10 +1818,13 @@ def upload_snapshot(
 
     with sync_playwright() as p:
         log("BoardRepo 전용 브라우저를 실행합니다.")
-        context = p.chromium.launch_persistent_context(
-            user_data_dir=str(browser_profile),
-            headless=bool(browser_cfg.get("headless", False)),
-            viewport={"width": 1440, "height": 900},
+        context, browser_choice = launch_persistent_context_auto(
+            p,
+            browser_profile,
+            config,
+            log,
+            purpose="upload",
+            accept_downloads=False,
         )
         page = context.pages[0] if context.pages else context.new_page()
         page.set_default_timeout(int(browser_cfg.get("operation_timeout_ms", 15000)))

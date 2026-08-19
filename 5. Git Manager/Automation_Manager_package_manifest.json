@@ -1,0 +1,253 @@
+{
+  "package": "Automation_Manager_260819_1.zip",
+  "release": "260819_1",
+  "created": "2026-08-19",
+  "managed_targets": 6,
+  "automation_manager_is_target": false,
+  "module_releases": {
+    "GitManager": "GitManager_260819_1.zip",
+    "BoardRepo": "BoardRepo_260819_1.zip"
+  },
+  "requirements": {
+    "AutomationManager": "Automation_Manager_Requirements_260819_1.xlsx",
+    "GitManager": "GitManager_Requirements_260819_1.xlsx",
+    "BoardRepo": "BoardRepo_Requirements_v0_22.xlsx"
+  },
+  "requirements_excel_runtime_dependency": false,
+  "git_recovery": {
+    "current_folder_self_bootstrap": true,
+    "remote_url": "https://github.com/kingmugum/PDC-Repository.git",
+    "branch": "main",
+    "current_local_files_overwritten": false,
+    "automatic_push": false,
+    "remote_data_preserve": "1-4 recursive / 5-6 root_only / current excluded",
+    "older_local_push_guard": true
+  },
+  "files": [
+    {
+      "path": "5. Git Manager/AUTOMATION_MANAGER_RELEASE_INFO.txt",
+      "size": 661,
+      "sha256": "6710953e395253e29b41b2fee32ff41857c5737346bbb264ef8aa6952e9ddf99"
+    },
+    {
+      "path": "5. Git Manager/Automation_Manager_Requirements_260819_1.xlsx",
+      "size": 29324,
+      "sha256": "0ba972b80e5c4d90ad71915920e0baedd5b08c961d3f33b28e929edae9629c79"
+    },
+    {
+      "path": "5. Git Manager/current/git_manager.py",
+      "size": 45714,
+      "sha256": "524d5da21f3ec5a069bab7effb31fc6c974eda5da0bdf4e3c657a937bc2f75f6"
+    },
+    {
+      "path": "5. Git Manager/current/Git_Manager.pyw",
+      "size": 904,
+      "sha256": "a1c92ba460e5167ddc12c66ce70af78ab04223f4956c937a067bb0f1a0412660"
+    },
+    {
+      "path": "5. Git Manager/GitManager_260819_1.zip",
+      "size": 86799,
+      "sha256": "8b6862dbd78d725905a0a94ddd82a9bb2796e8c5568e28ee96bd6ea32286a16d"
+    },
+    {
+      "path": "5. Git Manager/GitManager_Requirements_260819_1.xlsx",
+      "size": 37771,
+      "sha256": "1ea045f91ebb0387e25d46ae951b41431b92027d18233f3b16f63cdd18a32eaa"
+    },
+    {
+      "path": "5. Git Manager/MANUAL.txt",
+      "size": 1546,
+      "sha256": "9faaf15ce2e9e43c92811e63e1e91179ec2318e4dd2e46c77b5529bdf1adc8ee"
+    },
+    {
+      "path": "5. Git Manager/PACKAGE_INFO.txt",
+      "size": 2004,
+      "sha256": "94345e75acf6096b6feb6945a81d64760d555646fca0f2a5ad807e0a5d79d21d"
+    },
+    {
+      "path": "5. Git Manager/package_manifest.json",
+      "size": 2704,
+      "sha256": "d958d8e1c606148d41d62df41c187dfccb3c92abc5bdf547eb9a63d70673ebe3"
+    },
+    {
+      "path": "5. Git Manager/SELF_TEST_RESULTS.txt",
+      "size": 953,
+      "sha256": "db6171510e094e7ea2105d8ce72317cccbd38c7e8481a7bc5091240dde54a591"
+    },
+    {
+      "path": "6. BoardRepo/BoardRepo_260819_1.zip",
+      "size": 207078,
+      "sha256": "7220df99ad229b708fa0bb5ab9fa7beda7b595a5337b297e9ec594750572ae08"
+    },
+    {
+      "path": "6. BoardRepo/BoardRepo_Requirements_v0_22.xlsx",
+      "size": 113448,
+      "sha256": "91205b0d92dd4bdf7ed031a4ed0707f537b59cb8ea5f9458bf71f49ba97773ea"
+    },
+    {
+      "path": "6. BoardRepo/current/BoardRepo.pyw",
+      "size": 935,
+      "sha256": "2d55440b46d5de84134cef2b4181f64199ca72da8a39e0e0780a3b6bab149f7d"
+    },
+    {
+      "path": "6. BoardRepo/current/config.json",
+      "size": 10300,
+      "sha256": "b29e957b4632824518908f5d6c8e6c6b6658fbd7fa20ea585766401911202d56"
+    },
+    {
+      "path": "6. BoardRepo/current/function/archive_selector.py",
+      "size": 11232,
+      "sha256": "57964cf620fc418e6bf326064bef0f8f9b731423f7a450ddc8e366cfdc77d129"
+    },
+    {
+      "path": "6. BoardRepo/current/function/backup_file_manager.py",
+      "size": 6923,
+      "sha256": "bc69e88520a64c76a0668bbe94aa2eb90abed607f0ad1367fa086ed5101bab14"
+    },
+    {
+      "path": "6. BoardRepo/current/function/board_post_navigation.py",
+      "size": 9366,
+      "sha256": "3a15056ab5a936b96ae3cd133f9ca322c9e3a934d9014b49d7e2e61770dc0e26"
+    },
+    {
+      "path": "6. BoardRepo/current/function/boardrepo.py",
+      "size": 55803,
+      "sha256": "53c58a1ba28949ba530a988c583ec43bd521686b0bbadb9c55178922ce351dc3"
+    },
+    {
+      "path": "6. BoardRepo/current/function/boardrepo_tab.py",
+      "size": 52735,
+      "sha256": "c213241fa1095b6c807528cd77a627b14be6704bd4b3364019fcaff5dbc16c91"
+    },
+    {
+      "path": "6. BoardRepo/current/function/browser_automation.py",
+      "size": 68490,
+      "sha256": "fe86b0d177b61637ec49fdbd79a2d65e22421fd0eb0ae6b44c5e3e7a2d9f836a"
+    },
+    {
+      "path": "6. BoardRepo/current/function/browser_download.py",
+      "size": 60037,
+      "sha256": "de909dfff8961ec48794bd6d7b24e2537a83a78bc1304f0bb991040906b7e11d"
+    },
+    {
+      "path": "6. BoardRepo/current/function/browser_runtime.py",
+      "size": 8823,
+      "sha256": "648f95a14de3522dee2f6e015806a2996e2300c6b72d530ec60d0af07b2af648"
+    },
+    {
+      "path": "6. BoardRepo/current/function/credential_store.py",
+      "size": 1179,
+      "sha256": "0bbd0be162643dcbcedbf8c144735616e9175edb2bcc7fbc40397968143608d9"
+    },
+    {
+      "path": "6. BoardRepo/current/function/duplicate_checker.py",
+      "size": 24527,
+      "sha256": "c4b3033b1a2cbb4044004044b3c5f669dc9fb0957e5c8fad7eed9c02aef8b5b9"
+    },
+    {
+      "path": "6. BoardRepo/current/function/environment_manager.py",
+      "size": 16091,
+      "sha256": "9df7224f7313cb141fa2629c05c2562630a232fbac91afadd1973eda42d9fdd7"
+    },
+    {
+      "path": "6. BoardRepo/current/function/ext_file_manager.py",
+      "size": 1868,
+      "sha256": "40b44cc6d965195bda46959f6b73dd37df100d7a7f97bd237c260eae6f2a9df6"
+    },
+    {
+      "path": "6. BoardRepo/current/function/folder_resolver.py",
+      "size": 2409,
+      "sha256": "b71252a95f331be1659d6920b31f55b4aae5b1f78e68d1b9d732531d09d071af"
+    },
+    {
+      "path": "6. BoardRepo/current/function/package_release.py",
+      "size": 1013,
+      "sha256": "8b78fb1ef834192413146231c42d7a9d3ff049c02e82d0b14f7d08e087b20343"
+    },
+    {
+      "path": "6. BoardRepo/current/function/site_profile.py",
+      "size": 1003,
+      "sha256": "320e41399e4ccd38abe585209d012dbef6a6dc1cac72bd46b080906fe0d04d03"
+    },
+    {
+      "path": "6. BoardRepo/current/function/snapshot.py",
+      "size": 2666,
+      "sha256": "a37a92edfd52900301b230140aa9443ad2be00e7c8dc01a86705ddea0d85fe82"
+    },
+    {
+      "path": "6. BoardRepo/current/offline_packages/README.txt",
+      "size": 1170,
+      "sha256": "de2c9f99da600eab361e128c8a1fce164763e5277379f661339d21ffd5748f07"
+    },
+    {
+      "path": "6. BoardRepo/current/offline_packages/windows_x64/.gitkeep",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "6. BoardRepo/current/offline_requirements_windows.txt",
+      "size": 178,
+      "sha256": "f3c8cf9171c73215d5089bc3698b727f1f26ec5100ad8ff0e6569fbd0f676a0f"
+    },
+    {
+      "path": "6. BoardRepo/current/requirements.txt",
+      "size": 31,
+      "sha256": "529a500530cbd43cfbed8af0efedaf9564beddfc2dfaf580f794ce6445fe7af8"
+    },
+    {
+      "path": "6. BoardRepo/current/site_profile.json",
+      "size": 10277,
+      "sha256": "09d917fdae911a5f08c62cf44e5c33aab238d8ef7a248e869c1541d8eb91d67a"
+    },
+    {
+      "path": "6. BoardRepo/MANUAL.txt",
+      "size": 856,
+      "sha256": "c711a229aa421b3bcd9dfb101dadbbae403564c8e4f7154964684edbfb37cd9d"
+    },
+    {
+      "path": "6. BoardRepo/PACKAGE_INFO.txt",
+      "size": 1264,
+      "sha256": "27d5e87fe0a2dde7c53745cc8b577958b17c3bbb67fbba83886f42836aa8097e"
+    },
+    {
+      "path": "6. BoardRepo/package_manifest.json",
+      "size": 5155,
+      "sha256": "59c6e194dbe00fe67547c3f67b60fdea40aa707cff4708f319a074882f05b614"
+    },
+    {
+      "path": "6. BoardRepo/SELF_TEST_RESULTS.txt",
+      "size": 953,
+      "sha256": "db6171510e094e7ea2105d8ce72317cccbd38c7e8481a7bc5091240dde54a591"
+    },
+    {
+      "path": "Automation_Manager.pyw",
+      "size": 3516,
+      "sha256": "1bacc9077b78a6d1aac528f6393a8b3f08c8ccae1dd32b76fb012be7f01ea6b9"
+    },
+    {
+      "path": "function/common/catalog.py",
+      "size": 1803,
+      "sha256": "5e029a7f1464320fb8cc99962c62cf9f40267cdf5030165e9c1cc7484c5e7185"
+    },
+    {
+      "path": "function/common/release_rules.py",
+      "size": 1310,
+      "sha256": "5576bb8283efef0ca5d3474168936366e296657602fb8d3e3b9ae64ce246da44"
+    },
+    {
+      "path": "function/common/work_lock.py",
+      "size": 672,
+      "sha256": "27825b89d1d0bb8e78501e362408ffd02c4a57c070399034051d09c6341eeb4f"
+    },
+    {
+      "path": "program_catalog.json",
+      "size": 4745,
+      "sha256": "75aa785534d7123e69dafacf2a50034fd348c3344875f4bfc59fedbf9b9fc81a"
+    },
+    {
+      "path": "SELF_TEST_RESULTS.txt",
+      "size": 953,
+      "sha256": "db6171510e094e7ea2105d8ce72317cccbd38c7e8481a7bc5091240dde54a591"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+Git Manager 260819_1 간단 매뉴얼
+================================
+
+[PC/바탕화면이 지워진 뒤 가장 간단한 복구]
+1. BoardRepo/ChatGPT 등에서 최신 Automation_Manager_YYMMDD_N.zip을 받습니다.
+2. 원하는 위치에 압축을 풉니다. 폴더 이름은 날짜/순번에 따라 달라도 괜찮습니다.
+3. 그 폴더 안의 Automation_Manager.pyw를 실행합니다.
+4. Git Manager 탭에서 '현재 폴더 Git 연결/복구'를 누릅니다.
+5. 기본 origin URL을 확인하고 진행합니다.
+6. 현재 폴더 자체에 .git이 생성되고 기존 origin/main 이력이 연결됩니다.
+7. 현재 로컬 파일은 덮어쓰지 않습니다.
+8. 원격에만 있는 1~4 관리자료는 복원하고, 5/6은 Root Release/문서만 보완합니다.
+9. 결과의 Local/Git Release 비교와 변경사항을 확인합니다.
+10. Local이 원격보다 최신/동일하고 변경내용이 의도한 것일 때만 Commit + Push합니다.
+
+[중요]
+- 복구는 자동 Push하지 않습니다.
+- Local Automation Manager Release가 원격보다 오래되면 Push가 차단됩니다.
+- 상위 Git Repository 안에 압축을 풀었다면 중첩 Git을 만들지 않고 이동을 안내합니다.
+- Git이 회사 정책으로 차단되어 fetch가 실패하면 새 .git을 rollback하고 현재 파일을 유지합니다.
+
+[Clone]
+Clone 버튼은 기존대로 별도 새 폴더를 만들고 싶을 때 사용합니다.
+현재 받은 ZIP 폴더 자체를 Git으로 쓰려면 '현재 폴더 Git 연결/복구'를 사용하세요.

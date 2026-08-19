@@ -41,6 +41,7 @@ from environment_manager import check_environment, format_status, install_or_rep
 from ext_file_manager import ExtFileError, list_ext_files
 from folder_resolver import FolderResolutionError, app_root, resolve_target_folder
 from site_profile import load_site_profile
+from catalog import load_catalog, boardrepo_targets_from_catalog
 
 
 APP_ROOT = app_root()
@@ -77,240 +78,85 @@ class PreflightIssue:
     file_name: str | None = None
 
 
-class BoardRepoApp(tk.Tk):
-    def __init__(self):
-        super().__init__()
+class BoardRepoFrame(ttk.Frame):
+    def __init__(self, master, workspace_root: Path, target_vars=None, operation_lock=None):
+        super().__init__(master)
+        self.workspace_root = Path(workspace_root).resolve()
+        self.operation_lock = operation_lock
         self.config_data = load_config()
+        catalog = load_catalog(self.workspace_root / "program_catalog.json")
+        self.config_data["targets"] = boardrepo_targets_from_catalog(catalog)
         self.site_profile = load_site_profile(SITE_PROFILE_PATH)
-        release_id = (self.config_data.get("package_release") or {}).get("id", "-")
-        self.title(
-            f"BoardRepo {release_id} (v{self.config_data.get('version', '0.19')})"
-        )
-        self.geometry("1080x740")
-        self.minsize(980, 660)
-
         self._event_queue = queue.Queue()
         self._running = False
         self._environment_ready = False
         self._action_widgets = []
-
-        self.target_vars = {
+        self.target_vars = target_vars or {
             key: tk.BooleanVar(value=False)
             for key in self.config_data["targets"].keys()
         }
-
         self._build_ui()
         self.after(100, self._poll_events)
         self.after(250, self.check_environment_async)
 
     def _build_ui(self):
-        root = ttk.Frame(self, padding=16)
+        root = ttk.Frame(self, padding=12)
         root.pack(fill="both", expand=True)
 
         header = ttk.Frame(root)
         header.pack(fill="x")
-
-        title_area = ttk.Frame(header)
-        title_area.pack(side="left", fill="x", expand=True)
-
+        ttk.Label(header, text="BoardRepo", font=("Segoe UI", 18, "bold")).pack(side="left")
         ttk.Label(
-            title_area,
-            text="BoardRepo",
-            font=("Segoe UI", 20, "bold"),
-        ).pack(anchor="w")
-        ttk.Label(
-            title_area,
-            text="그룹웨어 게시판과 로컬 폴더를 업로드 / 다운로드로 안전하게 동기화",
-        ).pack(anchor="w")
+            header,
+            text="그룹웨어 게시판 ↔ 1~6 공용 폴더 업로드/다운로드",
+        ).pack(side="left", padx=(12, 0), pady=(6, 0))
 
         env_area = ttk.Frame(header)
-        env_area.pack(side="right", anchor="ne")
-
+        env_area.pack(side="right")
         self.env_status_var = tk.StringVar(value="환경 확인 중...")
-        self.env_status_label = ttk.Label(env_area, textvariable=self.env_status_var)
-        self.env_status_label.grid(row=0, column=0, columnspan=2, sticky="e", pady=(0, 4))
+        ttk.Label(env_area, textvariable=self.env_status_var).pack(side="left", padx=(0, 8))
+        self.check_env_btn = ttk.Button(env_area, text="환경 확인", command=self.check_environment_async)
+        self.check_env_btn.pack(side="left")
+        self.install_env_btn = ttk.Button(env_area, text="필수 모듈 설치/복구", command=self.install_environment_async)
+        self.install_env_btn.pack(side="left", padx=(6, 0))
+        self.prepare_offline_btn = ttk.Button(env_area, text="회사용 오프라인 준비", command=self.prepare_offline_async)
+        self.prepare_offline_btn.pack(side="left", padx=(6, 0))
+        self.site_profile_btn = ttk.Button(env_area, text="사이트 설정", command=self.show_site_profile_summary)
+        self.site_profile_btn.pack(side="left", padx=(6, 0))
 
-        self.check_env_btn = ttk.Button(
-            env_area,
-            text="환경 확인",
-            command=self.check_environment_async,
-            width=12,
-        )
-        self.check_env_btn.grid(row=1, column=0, padx=(0, 6))
-
-        self.install_env_btn = ttk.Button(
-            env_area,
-            text="필수 모듈 설치/복구",
-            command=self.install_environment_async,
-            width=18,
-        )
-        self.install_env_btn.grid(row=1, column=1)
-
-        self.prepare_offline_btn = ttk.Button(
-            env_area,
-            text="회사용 오프라인 준비",
-            command=self.prepare_offline_async,
-            width=18,
-        )
-        self.prepare_offline_btn.grid(row=2, column=0, padx=(0, 6), pady=(6, 0))
-
-        self.site_profile_btn = ttk.Button(
-            env_area,
-            text="사이트 설정 확인",
-            command=self.show_site_profile_summary,
-            width=18,
-        )
-        self.site_profile_btn.grid(row=2, column=1, pady=(6, 0))
-
-        ttk.Separator(root).pack(fill="x", pady=12)
-
-        select_frame = ttk.LabelFrame(root, text="업로드 / 다운로드 대상 선택", padding=12)
-        select_frame.pack(fill="x")
-
+        ttk.Separator(root).pack(fill="x", pady=10)
         ttk.Label(
-            select_frame,
-            text=(
-                "체크박스는 업로드/다운로드 공용입니다. "
-                "다운로드는 원격 최신판과 로컬 상태를 비교하여 필요한 파일만 받습니다."
-            ),
-        ).grid(row=0, column=0, columnspan=3, sticky="w", pady=(0, 8))
+            root,
+            text="대상 선택은 창 상단의 공통 1~6 체크박스를 사용합니다. 5=Git 게시판(board/392), 6=보드관리(board/393).",
+        ).pack(anchor="w")
 
-        ttk.Label(
-            select_frame,
-            text="대상",
-            font=("Segoe UI", 9, "bold"),
-        ).grid(row=1, column=0, sticky="w", padx=(2, 18))
-        ttk.Label(
-            select_frame,
-            text="게시판",
-            font=("Segoe UI", 9, "bold"),
-        ).grid(row=1, column=1, sticky="w")
-
-        self.target_checkbuttons = {}
-        row = 2
-        for key, target in self.config_data["targets"].items():
-            check = ttk.Checkbutton(
-                select_frame,
-                text=target.get("ui_label", target["display_name"]),
-                variable=self.target_vars[key],
-            )
-            check.grid(row=row, column=0, sticky="w", pady=3, padx=(2, 18))
-            self.target_checkbuttons[key] = check
-
-            ttk.Label(
-                select_frame,
-                text=target["board_url"],
-                font=("Consolas", 9),
-            ).grid(row=row, column=1, sticky="w", pady=3)
-            row += 1
-
-        select_frame.columnconfigure(1, weight=1)
-
-        selection_buttons = ttk.Frame(select_frame)
-        selection_buttons.grid(
-            row=row,
-            column=0,
-            columnspan=3,
-            sticky="w",
-            pady=(10, 0),
-        )
-
-        self.select_all_btn = ttk.Button(
-            selection_buttons,
-            text="전체 선택",
-            command=self.select_all_targets,
-            width=11,
-        )
-        self.select_all_btn.pack(side="left")
-
-        self.clear_all_btn = ttk.Button(
-            selection_buttons,
-            text="전체 해제",
-            command=self.clear_all_targets,
-            width=11,
-        )
-        self.clear_all_btn.pack(side="left", padx=(6, 0))
-
-        self.check_file_btn = ttk.Button(
-            selection_buttons,
-            text="업로드 파일 확인",
-            command=self.check_selected_files,
-            width=15,
-        )
-        self.check_file_btn.pack(side="left", padx=(18, 0))
-
-        self.credential_btn = ttk.Button(
-            selection_buttons,
-            text="자격증명 저장",
-            command=self.save_credential_dialog,
-            width=14,
-        )
+        actions = ttk.Frame(root)
+        actions.pack(fill="x", pady=(10, 8))
+        self.check_file_btn = ttk.Button(actions, text="업로드 파일 확인", command=self.check_selected_files)
+        self.check_file_btn.pack(side="left")
+        self.credential_btn = ttk.Button(actions, text="자격증명 저장", command=self.save_credential_dialog)
         self.credential_btn.pack(side="left", padx=(6, 0))
-
         self.upload_btn = tk.Button(
-            selection_buttons,
-            text="선택 항목 업로드",
-            command=self.run_selected_uploads,
-            width=18,
-            bg="#DFF3E4",
-            activebackground="#CDEBD6",
-            fg="#1F4D2E",
-            activeforeground="#163B23",
-            relief="raised",
-            bd=1,
-            highlightthickness=1,
-            highlightbackground="#A8CDB1",
-            font=("Segoe UI", 9, "bold"),
-            cursor="hand2",
+            actions, text="선택 항목 업로드", command=self.run_selected_uploads, width=18,
+            bg="#DFF3E4", activebackground="#CDEBD6", fg="#1F4D2E", relief="raised", bd=1, font=("Segoe UI", 9, "bold")
         )
         self.upload_btn.pack(side="left", padx=(18, 0))
         self.download_btn = tk.Button(
-            selection_buttons,
-            text="선택 항목 다운로드",
-            command=self.run_selected_downloads,
-            width=18,
-            bg="#DCEBFA",
-            activebackground="#C9E0F7",
-            fg="#234A6D",
-            activeforeground="#183A58",
-            relief="raised",
-            bd=1,
-            highlightthickness=1,
-            highlightbackground="#A9C8E5",
-            font=("Segoe UI", 9, "bold"),
-            cursor="hand2",
+            actions, text="선택 항목 다운로드", command=self.run_selected_downloads, width=18,
+            bg="#DCEBFA", activebackground="#C9E0F7", fg="#234A6D", relief="raised", bd=1, font=("Segoe UI", 9, "bold")
         )
         self.download_btn.pack(side="left", padx=(6, 0))
 
-        ttk.Label(
-            root,
-            text=(
-                "업로드: 중복은 Skip / 다운로드: 이미 최신이면 Skip, 원격이 더 최신할 때만 저장 / "
-                "충돌·항목 오류는 해당 항목만 제외"
-            ),
-        ).pack(anchor="w", pady=(7, 0))
-
-        status_frame = ttk.LabelFrame(root, text="실행 로그", padding=8)
-        status_frame.pack(fill="both", expand=True, pady=(14, 0))
-
+        status_frame = ttk.LabelFrame(root, text="BoardRepo 로그", padding=8)
+        status_frame.pack(fill="both", expand=True, pady=(6, 0))
         self.log_text = tk.Text(status_frame, height=20, wrap="word", state="disabled")
         self.log_text.pack(fill="both", expand=True)
-
         self.status_var = tk.StringVar(value="대기")
-        ttk.Label(root, textvariable=self.status_var).pack(anchor="w", pady=(8, 0))
+        ttk.Label(root, textvariable=self.status_var).pack(anchor="w", pady=(6, 0))
 
         self._action_widgets = [
-            self.check_env_btn,
-            self.install_env_btn,
-            self.prepare_offline_btn,
-            self.site_profile_btn,
-            self.select_all_btn,
-            self.clear_all_btn,
-            self.check_file_btn,
-            self.credential_btn,
-            self.upload_btn,
-            self.download_btn,
-            *self.target_checkbuttons.values(),
+            self.check_env_btn, self.install_env_btn, self.prepare_offline_btn, self.site_profile_btn,
+            self.check_file_btn, self.credential_btn, self.upload_btn, self.download_btn,
         ]
 
     def log(self, message: str):
@@ -337,6 +183,8 @@ class BoardRepoApp(tk.Tk):
 
                 elif kind == "done":
                     self._running = False
+                    if self.operation_lock:
+                        self.operation_lock.release("BoardRepo")
                     self._set_controls_state("normal")
                     self.status_var.set(payload)
 
@@ -365,7 +213,12 @@ class BoardRepoApp(tk.Tk):
         if self._running:
             messagebox.showinfo("BoardRepo", "이미 작업을 수행 중입니다.")
             return False
-
+        if self.operation_lock and not self.operation_lock.acquire("BoardRepo"):
+            messagebox.showwarning(
+                "BoardRepo",
+                f"현재 {self.operation_lock.owner} 작업이 진행 중입니다. 완료 후 다시 실행해주세요.",
+            )
+            return False
         self._running = True
         self._set_controls_state("disabled")
         self.status_var.set(status_text)
@@ -430,7 +283,7 @@ class BoardRepoApp(tk.Tk):
             status = check_environment(self.config_data, probe_browser=True)
             for line in format_status(status).splitlines():
                 self.log(line)
-            self._event_queue.put(("info", ("오프라인 준비 완료", "회사 PC용 Offline Wheelhouse와 현재 Python용 Portable Vendor를 준비했습니다.\n\nBoardRepo/Automation Manager 폴더 전체를 회사 PC로 가져가면 됩니다.")))
+            self._event_queue.put(("info", ("오프라인 준비 완료", "회사 PC용 Offline Wheelhouse와 현재 Python용 Portable Vendor를 준비했습니다.\n\nAutomation Manager 폴더 전체를 회사 PC로 가져가면 됩니다.")))
             self._event_queue.put(("done", "회사용 오프라인 준비 완료"))
         except Exception as exc:
             self.log(f"회사용 오프라인 준비 실패: {exc}")
@@ -513,7 +366,7 @@ class BoardRepoApp(tk.Tk):
         """
         target = self.config_data["targets"][key]
         display_name = target["display_name"]
-        folder = resolve_target_folder(APP_ROOT, target["folder_aliases"])
+        folder = resolve_target_folder(self.workspace_root, target["folder_aliases"])
         plan: list[UploadPlanItem] = []
 
         if key == "Ext":
@@ -1177,7 +1030,7 @@ class BoardRepoApp(tk.Tk):
             target = self.config_data["targets"][key]
             try:
                 folder = resolve_target_folder(
-                    APP_ROOT,
+                    self.workspace_root,
                     target["folder_aliases"],
                 )
                 targets.append(

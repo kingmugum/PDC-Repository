@@ -8,6 +8,7 @@ from typing import Callable
 from urllib.parse import urljoin
 
 from board_post_navigation import open_board_post_by_title
+from browser_runtime import launch_persistent_context_auto
 from browser_automation import (
     BrowserAutomationError,
     _ensure_community_context,
@@ -685,10 +686,13 @@ def check_remote_items(
 
     with sync_playwright() as p:
         log("원격 중복검사용 BoardRepo 브라우저를 실행합니다.")
-        context = p.chromium.launch_persistent_context(
-            user_data_dir=str(browser_profile),
-            headless=bool(browser_cfg.get("headless", False)),
-            viewport={"width": 1440, "height": 900},
+        context, browser_choice = launch_persistent_context_auto(
+            p,
+            browser_profile,
+            config,
+            log,
+            purpose="duplicate-check",
+            accept_downloads=False,
         )
         page = context.pages[0] if context.pages else context.new_page()
         page.set_default_timeout(int(browser_cfg.get("operation_timeout_ms", 15000)))

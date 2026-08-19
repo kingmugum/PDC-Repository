@@ -1,0 +1,33 @@
+BoardRepo Package Release
+=========================
+Package Release   : BoardRepo_260819_1
+Technical Version : v0.22
+Date              : 2026-08-19
+Primary GUI       : Automation_Manager.pyw > BoardRepo tab
+Standalone GUI    : 6. BoardRepo/current/BoardRepo.pyw
+Requirements      : BoardRepo_Requirements_v0_22.xlsx
+
+Managed targets
+---------------
+1. PassFail      -> board/374
+2. SignalExport  -> board/375
+3. Ext           -> board/376
+4. Backup        -> board/377
+5. Git Manager   -> board/392 (AI 스냅샷_GIT)
+6. BoardRepo     -> board/393 (AI 스냅샷_보드관리)
+
+260819_1 integration alignment
+------------------------------
+- BoardRepo Technical 기능은 v0.22 그대로 유지
+- Automation Manager/Git Manager 260819_1 self-bootstrap Git recovery와 package release 기준선만 정렬
+- BoardRepo는 target 5/6 Release를 운반/다운로드하는 역할만 수행
+- BoardRepo가 Git 연결, git init, Commit, Push를 자동 호출하지 않음
+
+Preserved v0.22 policies
+------------------------
+- 기존 Playwright Chromium 1순위, Microsoft Edge fallback
+- browser auto-download 기본 OFF
+- online pip fallback 기본 OFF
+- 상세 본문/첨부 Ready Polling
+- Ext SHA grace Polling
+- 기존 업로드/DEXT5/원격 중복검사 정책 유지

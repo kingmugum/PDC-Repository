@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "release": "260819_1",
+  "targets": [
+    {
+      "id": 1,
+      "key": "PassFail",
+      "display_name": "PassFail",
+      "ui_label": "1. PassFail",
+      "folder": "1. PassFail",
+      "aliases": [
+        "1. PassFail",
+        "PassFail",
+        "Pass_Fail",
+        "Pass-Fail",
+        "Pass Fail",
+        "PF",
+        "P_F",
+        "P-F",
+        "P/F"
+      ],
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/374",
+      "board_name": "AI 스냅샷_PF",
+      "mode": "versioned_archive",
+      "archive_strategy": "date_counter_release",
+      "package_prefixes": [
+        "PassFail"
+      ],
+      "recommended_filename": "PassFail_YYMMDD_N.zip"
+    },
+    {
+      "id": 2,
+      "key": "SignalExport",
+      "display_name": "SignalExport",
+      "ui_label": "2. SignalExport",
+      "folder": "2. SignalExport",
+      "aliases": [
+        "2. SignalExport",
+        "SignalExport",
+        "Signal_Export",
+        "Signal-Export",
+        "Signal Export",
+        "SignalExportV2",
+        "Signal_Export_V2",
+        "Signal Export V2"
+      ],
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/375",
+      "board_name": "AI 스냅샷_Signal Export",
+      "mode": "versioned_archive",
+      "archive_strategy": "date_counter_release",
+      "package_prefixes": [
+        "SignalExport",
+        "Signal_Export_V2"
+      ],
+      "recommended_filename": "Signal_Export_V2_YYMMDD_N.zip"
+    },
+    {
+      "id": 3,
+      "key": "Ext",
+      "display_name": "Ext",
+      "ui_label": "3. Ext",
+      "folder": "3. Ext",
+      "aliases": [
+        "3. Ext",
+        "Ext",
+        "EXT",
+        "Etc",
+        "ETC",
+        "기타",
+        "기타자료",
+        "Extra"
+      ],
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/376",
+      "board_name": "AI 스냅샷_기타",
+      "mode": "file_hash",
+      "package_prefixes": []
+    },
+    {
+      "id": 4,
+      "key": "Backup",
+      "display_name": "Backup",
+      "ui_label": "4. Backup",
+      "folder": "4. Backup",
+      "aliases": [
+        "4. Backup",
+        "Backup",
+        "BackUp",
+        "DataBackup",
+        "Data_Backup",
+        "Data-Backup",
+        "Data Backup",
+        "자료백업",
+        "자료_백업",
+        "자료 백업"
+      ],
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/377",
+      "board_name": "AI 스냅샷_자료백업",
+      "mode": "archive_family",
+      "package_prefixes": []
+    },
+    {
+      "id": 5,
+      "key": "GitManager",
+      "display_name": "Git Manager",
+      "ui_label": "5. Git Manager",
+      "folder": "5. Git Manager",
+      "aliases": [
+        "5. Git Manager",
+        "Git Manager",
+        "GitManager",
+        "5. version_manager",
+        "5. Version Manager",
+        "Version Manager",
+        "version_manager"
+      ],
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/392",
+      "board_name": "AI 스냅샷_GIT",
+      "mode": "versioned_archive",
+      "archive_strategy": "date_counter_release",
+      "package_prefixes": [
+        "GitManager",
+        "PDC_Version_Manager"
+      ],
+      "recommended_filename": "GitManager_YYMMDD_N.zip"
+    },
+    {
+      "id": 6,
+      "key": "BoardRepo",
+      "display_name": "BoardRepo",
+      "ui_label": "6. BoardRepo",
+      "folder": "6. BoardRepo",
+      "aliases": [
+        "6. BoardRepo",
+        "BoardRepo",
+        "6. boardrepo",
+        "6. 보드관리",
+        "보드관리"
+      ],
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/393",
+      "board_name": "AI 스냅샷_보드관리",
+      "mode": "versioned_archive",
+      "archive_strategy": "date_counter_release",
+      "package_prefixes": [
+        "BoardRepo"
+      ],
+      "recommended_filename": "BoardRepo_YYMMDD_N.zip"
+    }
+  ],
+  "automation_manager": {
+    "managed_target": false,
+    "owner_target": "GitManager",
+    "reason": "Automation Manager는 5. Git Manager와 6. BoardRepo를 표시하는 통합 실행기/Core이며 7번째 관리 대상으로 중복 등록하지 않는다."
+  },
+  "git_repository": {
+    "url": "https://github.com/kingmugum/PDC-Repository.git",
+    "default_branch": "main",
+    "recovery": {
+      "preserve_root_files": [
+        ".gitignore",
+        ".gitattributes"
+      ],
+      "target_preserve_mode": {
+        "PassFail": "recursive",
+        "SignalExport": "recursive",
+        "Ext": "recursive",
+        "Backup": "recursive",
+        "GitManager": "root_only",
+        "BoardRepo": "root_only"
+      },
+      "local_files_take_precedence": true,
+      "automatic_push": false,
+      "rollback_git_metadata_on_failure": true
+    }
+  }
+}

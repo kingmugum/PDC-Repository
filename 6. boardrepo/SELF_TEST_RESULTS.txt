@@ -1,0 +1,15 @@
+Automation Manager 260819_1 Self Test Results
+===============================================
+
+PASS - Python/PYW syntax checks: 23 files
+PASS - program_catalog 1~6 + no target 7 + Git recovery policy
+PASS - Git recovery UI/helper + mixed reset + ff-only/no-force/no-hard-reset policy
+PASS - BoardRepo v0.22 functional code unchanged; only package-release config changed; no Git recovery dependency
+PASS - current package Root adopts existing origin/main without new subfolder
+PASS - existing local files preserved; remote-only 1~4/01.old data hydrated
+PASS - 5/6 root history preserved while remote old current runtime is excluded
+PASS - failed Git recovery rolls back created .git and preserves package files
+PASS - nested Git recovery is blocked
+PASS - older local Automation Manager Release is blocked from Push
+PASS - latest three requirements workbooks are bundled
+PASS - requirements formula scans reported 0 errors and all new conflicts RESOLVED
