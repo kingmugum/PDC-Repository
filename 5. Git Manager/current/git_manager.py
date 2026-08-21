@@ -18,7 +18,7 @@ from catalog import load_catalog, target_map
 from release_rules import latest_release, parse_release_name
 
 APP_NAME = "Git Manager"
-APP_VERSION = "260819_1"
+APP_VERSION = "260819_2"
 VERSION_RE = re.compile(r"^(?P<date>\d{6})_(?P<num>\d+)$")
 CONFIG_DIR = Path.home() / ".pdc_git_manager"
 CONFIG_FILE = CONFIG_DIR / "projects.json"
@@ -420,6 +420,27 @@ def _working_changed(repo: Path, folder: str) -> bool:
         return False
 
 
+def _working_changed_aliases(repo: Path, *folders: str) -> bool:
+    """Return True when any canonical/legacy alias path has working-tree changes."""
+    unique = []
+    seen = set()
+    for folder in folders:
+        text = str(folder or "").strip()
+        if not text:
+            continue
+        key = text.casefold()
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(text)
+    if not unique:
+        return False
+    try:
+        return bool(run_git(repo, "status", "--porcelain", "--", *unique))
+    except Exception:
+        return False
+
+
 def _file_sha256(path: Path) -> str:
     if not path.is_file():
         return "-"
@@ -484,20 +505,56 @@ def _resolve_local_target_folder(repo: Path, target: dict) -> tuple[Path, str | 
     return repo / target["folder"], None
 
 
-def _resolve_remote_folder_name(repo: Path, ref: str | None, target: dict) -> tuple[str, str | None]:
+def _root_tree_names(repo: Path, ref: str | None) -> list[str]:
     if not ref:
-        return target["folder"], None
-    aliases = target.get("aliases") or [target["folder"]]
-    matches = []
+        return []
+    try:
+        out = run_git(repo, "ls-tree", "--name-only", ref)
+        return [x.strip() for x in out.splitlines() if x.strip()]
+    except Exception:
+        return []
+
+
+def _resolve_git_tree_folder_name(
+    repo: Path, ref: str | None, target: dict, *, label: str = "Git"
+) -> tuple[str, str | None]:
+    """Resolve a target folder as it is actually recorded in a Git tree.
+
+    Git tree paths are case-sensitive even on Windows while the working filesystem may
+    treat `6. BoardRepo` and legacy `6. boardrepo` as the same directory.  Resolve the
+    real tree entry case-insensitively against all catalog aliases so status comparison
+    never reports a false 'remote only' solely because of legacy casing.
+    """
+    canonical = str(target["folder"])
+    if not ref:
+        return canonical, None
+
+    aliases = [str(x) for x in (target.get("aliases") or [canonical])]
+    alias_keys = {x.casefold() for x in aliases}
+    root_names = _root_tree_names(repo, ref)
+    matches = [name for name in root_names if name.casefold() in alias_keys]
+
+    # A Git tree cannot normally contain two case-only variants on Windows, but it can
+    # on case-sensitive systems. Treat that as a real ambiguity rather than guessing.
+    unique = list(dict.fromkeys(matches))
+    if len(unique) > 1:
+        return canonical, f"{label} 폴더 별칭 중복: {', '.join(unique)}"
+    if unique:
+        return unique[0], None
+
+    # Backward-compatible fallback for unusual trees where root enumeration is blocked.
+    exact = []
     for alias in aliases:
-        sha = _tree_sha(repo, ref, str(alias))
-        if sha:
-            matches.append(str(alias))
-    # Case/duplicate aliases can point to same exact path; de-dupe without losing order.
-    matches = list(dict.fromkeys(matches))
-    if len(matches) > 1:
-        return target["folder"], f"원격 폴더 별칭 중복: {', '.join(matches)}"
-    return (matches[0] if matches else target["folder"]), None
+        if _tree_sha(repo, ref, alias):
+            exact.append(alias)
+    exact = list(dict.fromkeys(exact))
+    if len(exact) > 1:
+        return canonical, f"{label} 폴더 별칭 중복: {', '.join(exact)}"
+    return (exact[0] if exact else canonical), None
+
+
+def _resolve_remote_folder_name(repo: Path, ref: str | None, target: dict) -> tuple[str, str | None]:
+    return _resolve_git_tree_folder_name(repo, ref, target, label="원격")
 
 
 def _release_summary(names: list[str], target: dict) -> str:
@@ -652,7 +709,7 @@ class GitManagerFrame(ttk.Frame):
             return
         self.recovery_info_var.set(
             "현재 Automation Manager Root에 .git이 없습니다. "
-            "ZIP/BoardRepo 복구본이라면 이 폴더 자체에 기존 원격 Git 이력을 안전하게 연결할 수 있습니다."
+            "ZIP/BoardRepo 복구본이라면 이 폴더 자체에 기존 원격 Git 이력을 안전하게 연결할 수 있습니다. 기본 origin/main은 catalog에서 자동 사용됩니다."
         )
         try:
             self.recovery_button.configure(state="normal")
@@ -696,22 +753,18 @@ class GitManagerFrame(ttk.Frame):
         git_cfg = self.catalog.get("git_repository") or {}
         default_url = str(git_cfg.get("url") or "https://github.com/kingmugum/PDC-Repository.git")
         branch = str(git_cfg.get("default_branch") or "main")
-        url = simpledialog.askstring(
-            "현재 폴더 Git 연결/복구",
-            "기존 Git Repository URL을 확인해주세요.\n\n"
-            "현재 Automation Manager 폴더 자체에 .git을 만들고 기존 원격 이력을 연결합니다.\n"
-            "현재 로컬 파일은 덮어쓰지 않으며 자동 Push도 하지 않습니다.\n\n"
-            "origin URL:",
-            initialvalue=default_url,
-        )
+        # Self-bootstrap recovery uses the catalog URL directly.  The user no longer
+        # needs to remember/type the Clone address on every PC or after a desktop loss.
+        # A different remote can still be configured explicitly through [원격 설정].
+        url = default_url.strip()
         if not url:
+            messagebox.showerror(APP_NAME, "program_catalog.json에 기본 Git Repository URL이 없습니다.")
             return
-        url = url.strip()
         if not messagebox.askyesno(
             APP_NAME,
             "현재 폴더를 기존 Git 이력에 연결하시겠습니까?\n\n"
             f"현재 폴더: {repo}\n"
-            f"원격: {url}\n"
+            f"원격(자동): {url}\n"
             f"Branch: {branch}\n\n"
             "안전 정책\n"
             "- 현재 로컬 파일은 덮어쓰지 않습니다.\n"
@@ -923,16 +976,19 @@ class GitManagerFrame(ttk.Frame):
             for key in selected:
                 t = self.targets[key]
                 local_folder, local_alias_issue = _resolve_local_target_folder(repo, t)
+                head_folder_name, head_alias_issue = _resolve_git_tree_folder_name(repo, "HEAD", t, label="HEAD")
                 remote_folder_name, remote_alias_issue = _resolve_remote_folder_name(repo, remote_ref, t)
-                folder_name = local_folder.name
+                physical_folder_name = local_folder.name
                 local_names = _local_names(local_folder)
                 remote_names = _tree_names(repo, remote_ref, remote_folder_name) if remote_ref else []
                 local_summary = _release_summary(local_names, t)
                 remote_summary = _release_summary(remote_names, t) if remote_ref else "-"
-                local_sha = _tree_sha(repo, "HEAD", folder_name)
+                local_sha = _tree_sha(repo, "HEAD", head_folder_name)
                 remote_sha = _tree_sha(repo, remote_ref, remote_folder_name) if remote_ref else None
-                changed = _working_changed(repo, folder_name)
-                alias_issue = local_alias_issue or remote_alias_issue
+                changed = _working_changed_aliases(
+                    repo, physical_folder_name, head_folder_name, remote_folder_name, t["folder"]
+                )
+                alias_issue = local_alias_issue or head_alias_issue or remote_alias_issue
                 if alias_issue:
                     state = "확인 필요"
                 elif changed:
@@ -952,8 +1008,17 @@ class GitManagerFrame(ttk.Frame):
                 tree_note = f"{(local_sha or '-')[:10]} / {(remote_sha or '-')[:10]}"
                 if alias_issue:
                     tree_note = alias_issue
-                elif folder_name != t["folder"] or remote_folder_name != t["folder"]:
-                    tree_note += f" | alias: {folder_name} / {remote_folder_name}"
+                else:
+                    alias_parts = []
+                    canonical = str(t["folder"])
+                    if head_folder_name != canonical:
+                        alias_parts.append(f"HEAD:{head_folder_name}")
+                    if remote_ref and remote_folder_name != canonical:
+                        alias_parts.append(f"origin:{remote_folder_name}")
+                    if physical_folder_name.casefold() != canonical.casefold():
+                        alias_parts.append(f"FS:{physical_folder_name}")
+                    if alias_parts:
+                        tree_note += " | 별칭 호환: " + " / ".join(alias_parts)
                 rows.append((t["ui_label"], local_summary, remote_summary, state, tree_note))
             div = tracking_divergence(repo)
             local_release = _local_automation_release(repo)

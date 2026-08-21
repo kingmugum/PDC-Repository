@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "260819_1",
+  "release": "260819_2",
   "targets": [
     {
       "id": 1,
@@ -169,7 +169,11 @@
       },
       "local_files_take_precedence": true,
       "automatic_push": false,
-      "rollback_git_metadata_on_failure": true
+      "rollback_git_metadata_on_failure": true,
+      "use_catalog_url_without_prompt": true,
+      "manual_url_entry_required": false,
+      "tree_alias_compare_case_insensitive": true,
+      "automatic_case_only_rename": false
     }
   }
 }

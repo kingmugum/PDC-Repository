@@ -1,11 +1,12 @@
 {
-  "package": "GitManager_260819_1.zip",
-  "release": "260819_1",
+  "package": "GitManager_260819_2.zip",
+  "release": "260819_2",
   "created": "2026-08-19",
   "managed_target_id": 5,
   "requirements_excel_runtime_dependency": false,
   "git_recovery": {
     "current_folder_adopt": true,
+    "catalog_url_without_prompt": true,
     "default_branch": "main",
     "automatic_push": false,
     "local_files_take_precedence": true,
@@ -13,51 +14,23 @@
     "older_local_push_guard": true,
     "rollback_created_git_on_failure": true
   },
+  "git_tree_alias": {
+    "case_insensitive_catalog_match": true,
+    "head_tree_path_resolution": true,
+    "false_remote_only_fix": true,
+    "automatic_case_only_rename": false,
+    "actual_duplicate_alias_requires_review": true
+  },
   "files": [
-    {
-      "path": "5. Git Manager/AUTOMATION_MANAGER_RELEASE_INFO.txt",
-      "size": 661,
-      "sha256": "6710953e395253e29b41b2fee32ff41857c5737346bbb264ef8aa6952e9ddf99"
-    },
-    {
-      "path": "5. Git Manager/Automation_Manager_Requirements_260819_1.xlsx",
-      "size": 29324,
-      "sha256": "0ba972b80e5c4d90ad71915920e0baedd5b08c961d3f33b28e929edae9629c79"
-    },
-    {
-      "path": "5. Git Manager/current/git_manager.py",
-      "size": 45714,
-      "sha256": "524d5da21f3ec5a069bab7effb31fc6c974eda5da0bdf4e3c657a937bc2f75f6"
-    },
-    {
-      "path": "5. Git Manager/current/Git_Manager.pyw",
-      "size": 904,
-      "sha256": "a1c92ba460e5167ddc12c66ce70af78ab04223f4956c937a067bb0f1a0412660"
-    },
-    {
-      "path": "5. Git Manager/GitManager_Requirements_260819_1.xlsx",
-      "size": 37771,
-      "sha256": "1ea045f91ebb0387e25d46ae951b41431b92027d18233f3b16f63cdd18a32eaa"
-    },
-    {
-      "path": "5. Git Manager/MANUAL.txt",
-      "size": 1546,
-      "sha256": "9faaf15ce2e9e43c92811e63e1e91179ec2318e4dd2e46c77b5529bdf1adc8ee"
-    },
-    {
-      "path": "5. Git Manager/PACKAGE_INFO.txt",
-      "size": 2004,
-      "sha256": "94345e75acf6096b6feb6945a81d64760d555646fca0f2a5ad807e0a5d79d21d"
-    },
-    {
-      "path": "5. Git Manager/SELF_TEST_RESULTS.txt",
-      "size": 953,
-      "sha256": "db6171510e094e7ea2105d8ce72317cccbd38c7e8481a7bc5091240dde54a591"
-    },
     {
       "path": "Automation_Manager.pyw",
       "size": 3516,
-      "sha256": "1bacc9077b78a6d1aac528f6393a8b3f08c8ccae1dd32b76fb012be7f01ea6b9"
+      "sha256": "90c3d4301722e60b921b528547b15a2c7b4f9cc9c4bbd782d14f9ed9e1095f97"
+    },
+    {
+      "path": "program_catalog.json",
+      "size": 4927,
+      "sha256": "543d2485846be3f96a75c68fc8b2a5988b0d5930185930e12ab4691893ffe3de"
     },
     {
       "path": "function/common/catalog.py",
@@ -75,9 +48,44 @@
       "sha256": "27825b89d1d0bb8e78501e362408ffd02c4a57c070399034051d09c6341eeb4f"
     },
     {
-      "path": "program_catalog.json",
-      "size": 4745,
-      "sha256": "75aa785534d7123e69dafacf2a50034fd348c3344875f4bfc59fedbf9b9fc81a"
+      "path": "5. Git Manager/AUTOMATION_MANAGER_RELEASE_INFO.txt",
+      "size": 820,
+      "sha256": "3611b4ca8b685fe1053c6085c9000bef6c669e315af039680e395d386ea026df"
+    },
+    {
+      "path": "5. Git Manager/Automation_Manager_Requirements_260819_2.xlsx",
+      "size": 32151,
+      "sha256": "799949e9208eba588a182e6cfaabdefcac45102aa5a4315105a056f630829b0e"
+    },
+    {
+      "path": "5. Git Manager/current/git_manager.py",
+      "size": 48469,
+      "sha256": "39a5473418296d9b069534491f23d1083fe7aee3f6fe8e0397aef76b492e6949"
+    },
+    {
+      "path": "5. Git Manager/current/Git_Manager.pyw",
+      "size": 904,
+      "sha256": "a1c92ba460e5167ddc12c66ce70af78ab04223f4956c937a067bb0f1a0412660"
+    },
+    {
+      "path": "5. Git Manager/GitManager_Requirements_260819_2.xlsx",
+      "size": 41127,
+      "sha256": "cc5b8107ed4c910aff28699f7692767f829beb098ee78c65c0f32c458fc5b6f9"
+    },
+    {
+      "path": "5. Git Manager/MANUAL.txt",
+      "size": 2011,
+      "sha256": "f60dac7acd93f35d6f8dc711228303b7d40d4ee6ece1c08cf5744e0d27e1b464"
+    },
+    {
+      "path": "5. Git Manager/PACKAGE_INFO.txt",
+      "size": 1454,
+      "sha256": "d805e97d0782a6e1aa929072345524750ad60b8c03c7aedb4e275c109225727d"
+    },
+    {
+      "path": "5. Git Manager/SELF_TEST_RESULTS.txt",
+      "size": 1093,
+      "sha256": "474c84940c8dccad80f8def40b844a254c7ccc31c537310d005cc0851f8c2e73"
     }
   ]
 }

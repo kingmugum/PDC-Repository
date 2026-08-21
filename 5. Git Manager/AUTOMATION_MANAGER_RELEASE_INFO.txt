@@ -1,16 +1,21 @@
 Automation Manager Release
 ==========================
-Release        : 260819_1
-Distribution   : Automation_Manager_260819_1.zip
+Release        : 260819_2
+Distribution   : Automation_Manager_260819_2.zip
 Owner target   : 5. Git Manager (Core/Launcher release ownership)
 Managed target : NO (Automation Manager is not target 7)
 
 Key change
 ----------
-Automation Manager ZIP/BoardRepo 복구본을 압축 해제한 현재 Root 자체를 기존 Git origin/main 이력에 연결할 수 있는 self-bootstrap recovery를 추가했습니다.
+Git Tree legacy casing alias 상태 오판을 수정하고 현재 폴더 Git 연결/복구의 origin URL 수동 입력을 제거했습니다.
+
+Standard recovery
+-----------------
+Automation Manager ZIP 하나 -> 압축 해제 -> 실행 -> 현재 폴더 Git 연결/복구.
+기본 origin/main은 program_catalog.json에서 자동 사용됩니다.
 
 Requirements
 ------------
-Automation_Manager_Requirements_260819_1.xlsx
-GitManager_Requirements_260819_1.xlsx
-BoardRepo_Requirements_v0_22.xlsx (BoardRepo Package Release 260819_1 / Technical v0.22)
+Automation_Manager_Requirements_260819_2.xlsx
+GitManager_Requirements_260819_2.xlsx
+BoardRepo_Requirements_v0_22.xlsx (BoardRepo Package Release 260819_2 / Technical v0.22)

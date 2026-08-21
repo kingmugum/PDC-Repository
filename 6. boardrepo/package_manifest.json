@@ -1,16 +1,31 @@
 {
-  "package": "BoardRepo_260819_1.zip",
-  "release": "260819_1",
+  "package": "BoardRepo_260819_2.zip",
+  "release": "260819_2",
   "technical_version": "0.22",
   "created": "2026-08-19",
   "managed_target_id": 6,
   "requirements_excel_runtime_dependency": false,
-  "git_recovery_boundary": "BoardRepo transports/stages target 5/6 packages only; no .git/commit/push actions",
+  "git_alias_patch_boundary": "Git Tree alias/recovery URL changes are target 5 Git Manager only; BoardRepo v0.22 functional code unchanged",
   "files": [
     {
       "path": "6. BoardRepo/BoardRepo_Requirements_v0_22.xlsx",
-      "size": 113448,
-      "sha256": "91205b0d92dd4bdf7ed031a4ed0707f537b59cb8ea5f9458bf71f49ba97773ea"
+      "size": 114182,
+      "sha256": "35fb3b321ee67867b2e40337400bfdeac7f2450e02c583757164957718631a67"
+    },
+    {
+      "path": "6. BoardRepo/MANUAL.txt",
+      "size": 995,
+      "sha256": "49542e314ba8c10d971092a5eda7bae2421dd9ce68eac75fcf3766e8afa8c802"
+    },
+    {
+      "path": "6. BoardRepo/PACKAGE_INFO.txt",
+      "size": 866,
+      "sha256": "e66c10008b7e2a8c79b72be08c979480db3372f11dc863249b8ed870937754a3"
+    },
+    {
+      "path": "6. BoardRepo/SELF_TEST_RESULTS.txt",
+      "size": 1093,
+      "sha256": "474c84940c8dccad80f8def40b844a254c7ccc31c537310d005cc0851f8c2e73"
     },
     {
       "path": "6. BoardRepo/current/BoardRepo.pyw",
@@ -20,7 +35,7 @@
     {
       "path": "6. BoardRepo/current/config.json",
       "size": 10300,
-      "sha256": "b29e957b4632824518908f5d6c8e6c6b6658fbd7fa20ea585766401911202d56"
+      "sha256": "4403756dd9a38bc6253440e8470e178f4ad1a618222469b32170b5c4660d73ac"
     },
     {
       "path": "6. BoardRepo/current/function/archive_selector.py",
@@ -126,21 +141,6 @@
       "path": "6. BoardRepo/current/site_profile.json",
       "size": 10277,
       "sha256": "09d917fdae911a5f08c62cf44e5c33aab238d8ef7a248e869c1541d8eb91d67a"
-    },
-    {
-      "path": "6. BoardRepo/MANUAL.txt",
-      "size": 856,
-      "sha256": "c711a229aa421b3bcd9dfb101dadbbae403564c8e4f7154964684edbfb37cd9d"
-    },
-    {
-      "path": "6. BoardRepo/PACKAGE_INFO.txt",
-      "size": 1264,
-      "sha256": "27d5e87fe0a2dde7c53745cc8b577958b17c3bbb67fbba83886f42836aa8097e"
-    },
-    {
-      "path": "6. BoardRepo/SELF_TEST_RESULTS.txt",
-      "size": 953,
-      "sha256": "db6171510e094e7ea2105d8ce72317cccbd38c7e8481a7bc5091240dde54a591"
     }
   ]
 }

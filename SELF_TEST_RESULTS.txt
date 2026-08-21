@@ -1,15 +1,14 @@
-Automation Manager 260819_1 Self Test Results
+Automation Manager 260819_2 Self Test Results
 ===============================================
 
 PASS - Python/PYW syntax checks: 23 files
-PASS - program_catalog 1~6 + no target 7 + Git recovery policy
-PASS - Git recovery UI/helper + mixed reset + ff-only/no-force/no-hard-reset policy
-PASS - BoardRepo v0.22 functional code unchanged; only package-release config changed; no Git recovery dependency
-PASS - current package Root adopts existing origin/main without new subfolder
-PASS - existing local files preserved; remote-only 1~4/01.old data hydrated
-PASS - 5/6 root history preserved while remote old current runtime is excluded
-PASS - failed Git recovery rolls back created .git and preserves package files
-PASS - nested Git recovery is blocked
-PASS - older local Automation Manager Release is blocked from Push
-PASS - latest three requirements workbooks are bundled
-PASS - requirements formula scans reported 0 errors and all new conflicts RESOLVED
+PASS - program_catalog release 260819_2 + 1~6 + no target 7 + automatic recovery URL policy
+PASS - legacy Git path `6. boardrepo` resolves for both HEAD/origin and yields identical Tree SHA
+PASS - Git Tree alias resolution is case-insensitive against catalog aliases
+PASS - real case-sensitive duplicate Git aliases remain `확인 필요` instead of auto-merging
+PASS - current-folder recovery uses catalog origin automatically; Clone/remote setting remain optional tools
+PASS - Git safety preserved: ff-only Pull, no force push/hard reset/clean/automatic merge
+PASS - BoardRepo v0.22 functional code unchanged byte-for-byte; only package-release metadata updated
+PASS - Automation/Git/BoardRepo release metadata aligned to 260819_2; BoardRepo Technical v0.22 retained
+PASS - latest three requirements workbooks bundled; artifact_tool formula scans reported 0 errors
+PASS - new conflict analyses record all discovered requirement intersections as RESOLVED
