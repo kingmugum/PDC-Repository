@@ -224,7 +224,7 @@ def _select_date_rev_counter(
     target_name: str,
     archives: list[Path],
 ) -> ArchiveSelection:
-    """Legacy versioned-archive strategy retained for Backup."""
+    """Legacy versioned-archive strategy retained for backward compatibility."""
     infos: list[ArchiveInfo] = []
     parse_errors: list[str] = []
     for path in archives:
@@ -237,7 +237,7 @@ def _select_date_rev_counter(
         raise ArchiveSelectionError(
             target_name,
             "비교 대상 압축파일 중 파일명 규칙을 해석할 수 없는 파일이 있습니다. "
-            "Backup 규칙에서는 revNN이 필요하고, 날짜를 쓴다면 YYMMDD가 유효해야 합니다.",
+            "Legacy date_rev_counter 규칙에서는 revNN이 필요하고, 날짜를 쓴다면 YYMMDD가 유효해야 합니다.",
             parse_errors,
         )
 

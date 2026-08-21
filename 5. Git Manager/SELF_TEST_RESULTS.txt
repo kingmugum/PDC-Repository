@@ -1,14 +1,18 @@
-Automation Manager 260819_2 Self Test Results
+Automation Manager 260821_1 Self Test Results
 ===============================================
 
-PASS - Python/PYW syntax checks: 23 files
-PASS - program_catalog release 260819_2 + 1~6 + no target 7 + automatic recovery URL policy
-PASS - legacy Git path `6. boardrepo` resolves for both HEAD/origin and yields identical Tree SHA
-PASS - Git Tree alias resolution is case-insensitive against catalog aliases
-PASS - real case-sensitive duplicate Git aliases remain `확인 필요` instead of auto-merging
-PASS - current-folder recovery uses catalog origin automatically; Clone/remote setting remain optional tools
-PASS - Git safety preserved: ff-only Pull, no force push/hard reset/clean/automatic merge
-PASS - BoardRepo v0.22 functional code unchanged byte-for-byte; only package-release metadata updated
-PASS - Automation/Git/BoardRepo release metadata aligned to 260819_2; BoardRepo Technical v0.22 retained
-PASS - latest three requirements workbooks bundled; artifact_tool formula scans reported 0 errors
-PASS - new conflict analyses record all discovered requirement intersections as RESOLVED
+PASS - Python source compileall
+PASS - program_catalog target order: 1 PassFail / 2 SignalExport / 3 WeeklyReport / 4 Ext / 5 GitManager / 6 BoardRepo
+PASS - WeeklyReport board/377 + versioned_archive + WeeklyMailAgent/WeeklyReport package aliases
+PASS - Ext board/376 + canonical 4. Ext + legacy 3. Ext alias
+PASS - BoardRepo Runtime Backup target/config/module/branch references removed
+PASS - WeeklyReport direct-folder selection ignores 01. old subfolder
+PASS - board/377 legacy [BoardRepo][Backup] title is ignored by WeeklyReport candidate parser
+PASS - generic catalog mode versioned download selects newest WeeklyReport YYMMDD_N
+PASS - Git self-bootstrap migration restores remote 3. Ext into local 4. Ext
+PASS - Git self-bootstrap does not hydrate remote 4. Backup into WeeklyReport/Ext
+PASS - Automation Manager remains non-managed target (no target 7)
+PASS - Git safety baseline retained: ff-only / no force / no auto merge / no auto push on recovery
+PASS - BoardRepo browser safety baseline retained: Chromium first / Edge fallback / no security bypass
+PASS - Requirements formula scan: 0 errors (final workbooks)
+PASS - Requirement conflict analysis: all new conflicts RESOLVED

@@ -1,31 +1,36 @@
 {
-  "package": "BoardRepo_260819_2.zip",
-  "release": "260819_2",
-  "technical_version": "0.22",
-  "created": "2026-08-19",
+  "package": "BoardRepo_260821_1.zip",
+  "release": "260821_1",
+  "technical_version": "0.23",
+  "created": "2026-08-21",
   "managed_target_id": 6,
   "requirements_excel_runtime_dependency": false,
-  "git_alias_patch_boundary": "Git Tree alias/recovery URL changes are target 5 Git Manager only; BoardRepo v0.22 functional code unchanged",
+  "managed_targets": [
+    "PassFail",
+    "SignalExport",
+    "WeeklyReport",
+    "Ext",
+    "GitManager",
+    "BoardRepo"
+  ],
+  "weekly_report": {
+    "board": "/board/377",
+    "mode": "versioned_archive",
+    "package_prefixes": [
+      "WeeklyMailAgent",
+      "WeeklyReport"
+    ]
+  },
+  "backup_target_removed": true,
+  "ext_migration": {
+    "canonical": "4. Ext",
+    "legacy_alias": "3. Ext"
+  },
   "files": [
     {
-      "path": "6. BoardRepo/BoardRepo_Requirements_v0_22.xlsx",
-      "size": 114182,
-      "sha256": "35fb3b321ee67867b2e40337400bfdeac7f2450e02c583757164957718631a67"
-    },
-    {
-      "path": "6. BoardRepo/MANUAL.txt",
-      "size": 995,
-      "sha256": "49542e314ba8c10d971092a5eda7bae2421dd9ce68eac75fcf3766e8afa8c802"
-    },
-    {
-      "path": "6. BoardRepo/PACKAGE_INFO.txt",
-      "size": 866,
-      "sha256": "e66c10008b7e2a8c79b72be08c979480db3372f11dc863249b8ed870937754a3"
-    },
-    {
-      "path": "6. BoardRepo/SELF_TEST_RESULTS.txt",
-      "size": 1093,
-      "sha256": "474c84940c8dccad80f8def40b844a254c7ccc31c537310d005cc0851f8c2e73"
+      "path": "6. BoardRepo/BoardRepo_Requirements_v0_23.xlsx",
+      "size": 120009,
+      "sha256": "c011d0a21062f26536bd4837e79d70941dfc3ceaa74682ca51553345122e83d4"
     },
     {
       "path": "6. BoardRepo/current/BoardRepo.pyw",
@@ -34,18 +39,13 @@
     },
     {
       "path": "6. BoardRepo/current/config.json",
-      "size": 10300,
-      "sha256": "4403756dd9a38bc6253440e8470e178f4ad1a618222469b32170b5c4660d73ac"
+      "size": 10305,
+      "sha256": "c28f8158ca7a0a02bb67a5920e88d0fb78c58a2b18a58461c9246a482e6633ff"
     },
     {
       "path": "6. BoardRepo/current/function/archive_selector.py",
-      "size": 11232,
-      "sha256": "57964cf620fc418e6bf326064bef0f8f9b731423f7a450ddc8e366cfdc77d129"
-    },
-    {
-      "path": "6. BoardRepo/current/function/backup_file_manager.py",
-      "size": 6923,
-      "sha256": "bc69e88520a64c76a0668bbe94aa2eb90abed607f0ad1367fa086ed5101bab14"
+      "size": 11265,
+      "sha256": "50c257b518cde1afd3c175dc3b9a3f8442ea4b3483d88fcfcc308843e96ea062"
     },
     {
       "path": "6. BoardRepo/current/function/board_post_navigation.py",
@@ -54,13 +54,13 @@
     },
     {
       "path": "6. BoardRepo/current/function/boardrepo.py",
-      "size": 55803,
-      "sha256": "53c58a1ba28949ba530a988c583ec43bd521686b0bbadb9c55178922ce351dc3"
+      "size": 53193,
+      "sha256": "093e878dadfab16767902ca462aba62eca4ae96a5a104c4498756aa8d808591f"
     },
     {
       "path": "6. BoardRepo/current/function/boardrepo_tab.py",
-      "size": 52735,
-      "sha256": "c213241fa1095b6c807528cd77a627b14be6704bd4b3364019fcaff5dbc16c91"
+      "size": 50125,
+      "sha256": "bcfced28b42dbf9e7c105cf6112c5f5719c10151eb62945acc7908ecf995dc7e"
     },
     {
       "path": "6. BoardRepo/current/function/browser_automation.py",
@@ -69,8 +69,8 @@
     },
     {
       "path": "6. BoardRepo/current/function/browser_download.py",
-      "size": 60037,
-      "sha256": "de909dfff8961ec48794bd6d7b24e2537a83a78bc1304f0bb991040906b7e11d"
+      "size": 50412,
+      "sha256": "f0434b692ece9f5b37d6b816b0bd833af1993d6eb1c506c65c28a30f54c26267"
     },
     {
       "path": "6. BoardRepo/current/function/browser_runtime.py",
@@ -84,8 +84,8 @@
     },
     {
       "path": "6. BoardRepo/current/function/duplicate_checker.py",
-      "size": 24527,
-      "sha256": "c4b3033b1a2cbb4044004044b3c5f669dc9fb0957e5c8fad7eed9c02aef8b5b9"
+      "size": 24504,
+      "sha256": "0b9e796142c5c9d37e4b600c1e3d96b4dbf36090c3c91ee4258e24d50efa8264"
     },
     {
       "path": "6. BoardRepo/current/function/environment_manager.py",
@@ -141,6 +141,21 @@
       "path": "6. BoardRepo/current/site_profile.json",
       "size": 10277,
       "sha256": "09d917fdae911a5f08c62cf44e5c33aab238d8ef7a248e869c1541d8eb91d67a"
+    },
+    {
+      "path": "6. BoardRepo/MANUAL.txt",
+      "size": 1277,
+      "sha256": "a989aa10bf8f49286be111348795035da1f44527a480a3ff880adc00d5bd02f6"
+    },
+    {
+      "path": "6. BoardRepo/PACKAGE_INFO.txt",
+      "size": 1011,
+      "sha256": "7edc00cea3f54aaf087d5a8edd742dfd8ab8e2856533c90dbe9bb86886602277"
+    },
+    {
+      "path": "6. BoardRepo/SELF_TEST_RESULTS.txt",
+      "size": 1286,
+      "sha256": "307f03829405de572e3e1bf69d6a7f8c02dcf05d25c9076c2529f81532b883a2"
     }
   ]
 }

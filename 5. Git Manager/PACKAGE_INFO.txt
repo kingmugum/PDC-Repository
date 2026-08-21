@@ -1,26 +1,21 @@
 Git Manager Package Release
 ===========================
-Release           : GitManager_260819_2
-Date              : 2026-08-19
+Release           : GitManager_260821_1
+Date              : 2026-08-21
 Primary GUI       : Automation_Manager.pyw (Automation Manager Root)
 Standalone GUI    : 5. Git Manager/current/Git_Manager.pyw
 Engine            : 5. Git Manager/current/git_manager.py
-Requirements      : GitManager_Requirements_260819_2.xlsx
-Integration SRS   : Automation_Manager_Requirements_260819_2.xlsx
+Requirements      : GitManager_Requirements_260821_1.xlsx
+Integration SRS   : Automation_Manager_Requirements_260821_1.xlsx
 
-260819_2 key change
+260821_1 key change
 -------------------
-- HEAD/origin Git Tree alias를 실제 Tree 경로 기준으로 case-insensitive resolve
-- legacy `6. boardrepo`와 canonical `6. BoardRepo` 상태 비교 호환
-- 동일 SHA이면 `동일`; false `원격만 있음` 제거
-- 실제 중복 alias만 `확인 필요`
-- 자동 case-only rename 금지
-- 현재 폴더 Git 연결/복구는 catalog origin URL을 자동 사용 (수동 URL 입력 불필요)
-
-Standard disaster recovery
---------------------------
-최신 Automation Manager ZIP 확보 -> 압축 해제 -> Automation_Manager.pyw 실행 ->
-[현재 폴더 Git 연결/복구]. 별도 Clone/추가 프로그램 파일 다운로드/Repository URL 재입력은 필수 아님.
+- 관리대상: 1.PassFail, 2.SignalExport, 3.WeeklyReport, 4.Ext, 5.Git Manager, 6.BoardRepo
+- legacy 3. Ext를 신규 4. Ext alias로 승계
+- Backup target/recovery mapping 제거
+- old 4. Backup 자료를 WeeklyReport/Ext로 자동 hydrate하지 않음
+- WeeklyReport package prefix: WeeklyMailAgent / WeeklyReport
+- 기존 self-bootstrap, catalog URL 자동복구, Git Tree alias 호환 유지
 
 Preserved Git policy
 --------------------
@@ -28,5 +23,4 @@ Preserved Git policy
 - no force push
 - no automatic merge/rebase/conflict resolution
 - local files preserved during self-bootstrap
-- 1~4 remote-only data hydration; 5~6 root-only; current excluded
 - automatic push disabled; older-local push guard retained

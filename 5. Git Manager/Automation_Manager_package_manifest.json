@@ -1,71 +1,66 @@
 {
-  "package": "Automation_Manager_260819_2.zip",
-  "release": "260819_2",
-  "created": "2026-08-19",
+  "package": "Automation_Manager_260821_1.zip",
+  "release": "260821_1",
+  "created": "2026-08-21",
   "managed_targets": 6,
   "automation_manager_is_target": false,
+  "target_order": [
+    "PassFail",
+    "SignalExport",
+    "WeeklyReport",
+    "Ext",
+    "GitManager",
+    "BoardRepo"
+  ],
+  "routing": {
+    "PassFail": 374,
+    "SignalExport": 375,
+    "WeeklyReport": 377,
+    "Ext": 376,
+    "GitManager": 392,
+    "BoardRepo": 393
+  },
   "module_releases": {
-    "GitManager": "GitManager_260819_2.zip",
-    "BoardRepo": "BoardRepo_260819_2.zip"
+    "GitManager": "GitManager_260821_1.zip",
+    "BoardRepo": "BoardRepo_260821_1.zip"
   },
   "requirements": {
-    "AutomationManager": "Automation_Manager_Requirements_260819_2.xlsx",
-    "GitManager": "GitManager_Requirements_260819_2.xlsx",
-    "BoardRepo": "BoardRepo_Requirements_v0_22.xlsx"
+    "AutomationManager": "Automation_Manager_Requirements_260821_1.xlsx",
+    "GitManager": "GitManager_Requirements_260821_1.xlsx",
+    "BoardRepo": "BoardRepo_Requirements_v0_23.xlsx"
   },
-  "requirements_excel_runtime_dependency": false,
   "standard_recovery": {
     "single_automation_manager_zip": true,
     "current_folder_self_bootstrap": true,
-    "remote_url_from_catalog_without_manual_entry": true,
     "clone_required": false,
-    "additional_program_download_required": false,
-    "remote_url": "https://github.com/kingmugum/PDC-Repository.git",
-    "branch": "main",
-    "current_local_files_overwritten": false,
-    "automatic_push": false
+    "remote_url_from_catalog_without_manual_entry": true
   },
-  "git_tree_alias": {
-    "legacy_6_boardrepo_compatible": true,
-    "head_and_origin_alias_resolved": true,
-    "automatic_case_only_rename": false,
-    "real_duplicate_alias_requires_review": true
+  "migration": {
+    "remove_backup_target": true,
+    "weekly_report_reuses_board_377": true,
+    "ext_canonical": "4. Ext",
+    "ext_legacy_alias": "3. Ext"
   },
   "files": [
     {
+      "path": "3. WeeklyReport/.gitkeep",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
       "path": "5. Git Manager/AUTOMATION_MANAGER_RELEASE_INFO.txt",
-      "size": 820,
-      "sha256": "3611b4ca8b685fe1053c6085c9000bef6c669e315af039680e395d386ea026df"
+      "size": 1391,
+      "sha256": "a52bd246abb881e3f89dd4164815ced06d42cd20d35b472923fed67229a89d91"
     },
     {
-      "path": "5. Git Manager/Automation_Manager_Requirements_260819_2.xlsx",
-      "size": 32151,
-      "sha256": "799949e9208eba588a182e6cfaabdefcac45102aa5a4315105a056f630829b0e"
+      "path": "5. Git Manager/Automation_Manager_Requirements_260821_1.xlsx",
+      "size": 35944,
+      "sha256": "cf4f2feb62a5d011c0ed6c0dd8fd64f8814675953b7c009bac14e9d7c1ead9e9"
     },
     {
-      "path": "5. Git Manager/GitManager_260819_2.zip",
-      "size": 94238,
-      "sha256": "0adf5a1a5ecc28a00530cd5fcb129aa72000430983031bfaec0291017deca314"
-    },
-    {
-      "path": "5. Git Manager/GitManager_Requirements_260819_2.xlsx",
-      "size": 41127,
-      "sha256": "cc5b8107ed4c910aff28699f7692767f829beb098ee78c65c0f32c458fc5b6f9"
-    },
-    {
-      "path": "5. Git Manager/MANUAL.txt",
-      "size": 2011,
-      "sha256": "f60dac7acd93f35d6f8dc711228303b7d40d4ee6ece1c08cf5744e0d27e1b464"
-    },
-    {
-      "path": "5. Git Manager/PACKAGE_INFO.txt",
-      "size": 1454,
-      "sha256": "d805e97d0782a6e1aa929072345524750ad60b8c03c7aedb4e275c109225727d"
-    },
-    {
-      "path": "5. Git Manager/SELF_TEST_RESULTS.txt",
-      "size": 1093,
-      "sha256": "474c84940c8dccad80f8def40b844a254c7ccc31c537310d005cc0851f8c2e73"
+      "path": "5. Git Manager/current/git_manager.py",
+      "size": 48469,
+      "sha256": "ad20d1084e461875302e9bd4bef3b5ef58121bcd6fe0074f22299efda6a1dfff"
     },
     {
       "path": "5. Git Manager/current/Git_Manager.pyw",
@@ -73,39 +68,44 @@
       "sha256": "a1c92ba460e5167ddc12c66ce70af78ab04223f4956c937a067bb0f1a0412660"
     },
     {
-      "path": "5. Git Manager/current/git_manager.py",
-      "size": 48469,
-      "sha256": "39a5473418296d9b069534491f23d1083fe7aee3f6fe8e0397aef76b492e6949"
+      "path": "5. Git Manager/GitManager_260821_1.zip",
+      "size": 100375,
+      "sha256": "3c2c3d7fabbb96084840e8907a70793d93d328a666e5175e9f09f9dba7b02a34"
+    },
+    {
+      "path": "5. Git Manager/GitManager_Requirements_260821_1.xlsx",
+      "size": 43778,
+      "sha256": "311bfdce4515509a3095f22a9fbe72b09f7f4e2ffe09a9b13fc3ed0fd191cf5f"
+    },
+    {
+      "path": "5. Git Manager/MANUAL.txt",
+      "size": 1135,
+      "sha256": "9a4d1c547cc8f8f776ae5ae341b11b258daee76647c9a03ffb269bdab34950e5"
+    },
+    {
+      "path": "5. Git Manager/PACKAGE_INFO.txt",
+      "size": 1111,
+      "sha256": "0f5cc7cc391286ac218a831aef97d19e77046a8851cec1bcfffea9fedf33d4f9"
     },
     {
       "path": "5. Git Manager/package_manifest.json",
-      "size": 2982,
-      "sha256": "df4db93f6c62b2c5965e7cc8dbb8867e3228a602f2808ec6af240e9362a06b44"
+      "size": 2828,
+      "sha256": "f69803149d3c547e8d4c6eeeb12e6e8ddabb3eb82b8ded0e4893df3b24ec761b"
     },
     {
-      "path": "6. BoardRepo/BoardRepo_260819_2.zip",
-      "size": 207844,
-      "sha256": "c8e8be00c2924dac1707a0647d662c5bf493ec35e2910aa60d44da0d204205f3"
+      "path": "5. Git Manager/SELF_TEST_RESULTS.txt",
+      "size": 1286,
+      "sha256": "307f03829405de572e3e1bf69d6a7f8c02dcf05d25c9076c2529f81532b883a2"
     },
     {
-      "path": "6. BoardRepo/BoardRepo_Requirements_v0_22.xlsx",
-      "size": 114182,
-      "sha256": "35fb3b321ee67867b2e40337400bfdeac7f2450e02c583757164957718631a67"
+      "path": "6. BoardRepo/BoardRepo_260821_1.zip",
+      "size": 209288,
+      "sha256": "8b3c2f09bc89b30ab3e55f34a790dc8ed4e974d85129ec15a25e88ab93476467"
     },
     {
-      "path": "6. BoardRepo/MANUAL.txt",
-      "size": 995,
-      "sha256": "49542e314ba8c10d971092a5eda7bae2421dd9ce68eac75fcf3766e8afa8c802"
-    },
-    {
-      "path": "6. BoardRepo/PACKAGE_INFO.txt",
-      "size": 866,
-      "sha256": "e66c10008b7e2a8c79b72be08c979480db3372f11dc863249b8ed870937754a3"
-    },
-    {
-      "path": "6. BoardRepo/SELF_TEST_RESULTS.txt",
-      "size": 1093,
-      "sha256": "474c84940c8dccad80f8def40b844a254c7ccc31c537310d005cc0851f8c2e73"
+      "path": "6. BoardRepo/BoardRepo_Requirements_v0_23.xlsx",
+      "size": 120009,
+      "sha256": "c011d0a21062f26536bd4837e79d70941dfc3ceaa74682ca51553345122e83d4"
     },
     {
       "path": "6. BoardRepo/current/BoardRepo.pyw",
@@ -114,18 +114,13 @@
     },
     {
       "path": "6. BoardRepo/current/config.json",
-      "size": 10300,
-      "sha256": "4403756dd9a38bc6253440e8470e178f4ad1a618222469b32170b5c4660d73ac"
+      "size": 10305,
+      "sha256": "c28f8158ca7a0a02bb67a5920e88d0fb78c58a2b18a58461c9246a482e6633ff"
     },
     {
       "path": "6. BoardRepo/current/function/archive_selector.py",
-      "size": 11232,
-      "sha256": "57964cf620fc418e6bf326064bef0f8f9b731423f7a450ddc8e366cfdc77d129"
-    },
-    {
-      "path": "6. BoardRepo/current/function/backup_file_manager.py",
-      "size": 6923,
-      "sha256": "bc69e88520a64c76a0668bbe94aa2eb90abed607f0ad1367fa086ed5101bab14"
+      "size": 11265,
+      "sha256": "50c257b518cde1afd3c175dc3b9a3f8442ea4b3483d88fcfcc308843e96ea062"
     },
     {
       "path": "6. BoardRepo/current/function/board_post_navigation.py",
@@ -134,13 +129,13 @@
     },
     {
       "path": "6. BoardRepo/current/function/boardrepo.py",
-      "size": 55803,
-      "sha256": "53c58a1ba28949ba530a988c583ec43bd521686b0bbadb9c55178922ce351dc3"
+      "size": 53193,
+      "sha256": "093e878dadfab16767902ca462aba62eca4ae96a5a104c4498756aa8d808591f"
     },
     {
       "path": "6. BoardRepo/current/function/boardrepo_tab.py",
-      "size": 52735,
-      "sha256": "c213241fa1095b6c807528cd77a627b14be6704bd4b3364019fcaff5dbc16c91"
+      "size": 50125,
+      "sha256": "bcfced28b42dbf9e7c105cf6112c5f5719c10151eb62945acc7908ecf995dc7e"
     },
     {
       "path": "6. BoardRepo/current/function/browser_automation.py",
@@ -149,8 +144,8 @@
     },
     {
       "path": "6. BoardRepo/current/function/browser_download.py",
-      "size": 60037,
-      "sha256": "de909dfff8961ec48794bd6d7b24e2537a83a78bc1304f0bb991040906b7e11d"
+      "size": 50412,
+      "sha256": "f0434b692ece9f5b37d6b816b0bd833af1993d6eb1c506c65c28a30f54c26267"
     },
     {
       "path": "6. BoardRepo/current/function/browser_runtime.py",
@@ -164,8 +159,8 @@
     },
     {
       "path": "6. BoardRepo/current/function/duplicate_checker.py",
-      "size": 24527,
-      "sha256": "c4b3033b1a2cbb4044004044b3c5f669dc9fb0957e5c8fad7eed9c02aef8b5b9"
+      "size": 24504,
+      "sha256": "0b9e796142c5c9d37e4b600c1e3d96b4dbf36090c3c91ee4258e24d50efa8264"
     },
     {
       "path": "6. BoardRepo/current/function/environment_manager.py",
@@ -223,24 +218,34 @@
       "sha256": "09d917fdae911a5f08c62cf44e5c33aab238d8ef7a248e869c1541d8eb91d67a"
     },
     {
+      "path": "6. BoardRepo/MANUAL.txt",
+      "size": 1277,
+      "sha256": "a989aa10bf8f49286be111348795035da1f44527a480a3ff880adc00d5bd02f6"
+    },
+    {
+      "path": "6. BoardRepo/PACKAGE_INFO.txt",
+      "size": 1011,
+      "sha256": "7edc00cea3f54aaf087d5a8edd742dfd8ab8e2856533c90dbe9bb86886602277"
+    },
+    {
       "path": "6. BoardRepo/package_manifest.json",
-      "size": 5185,
-      "sha256": "7b1c86a8255af1976637d0c5cb602240fb3535379e40c77bd93f7f7d14ae5095"
+      "size": 5267,
+      "sha256": "0c8e0b3ef92eff688df48a0a3f4197b1b1a598d4823b5955ae5b00c6dcd2559c"
+    },
+    {
+      "path": "6. BoardRepo/SELF_TEST_RESULTS.txt",
+      "size": 1286,
+      "sha256": "307f03829405de572e3e1bf69d6a7f8c02dcf05d25c9076c2529f81532b883a2"
     },
     {
       "path": "Automation_Manager.pyw",
-      "size": 3516,
-      "sha256": "90c3d4301722e60b921b528547b15a2c7b4f9cc9c4bbd782d14f9ed9e1095f97"
-    },
-    {
-      "path": "SELF_TEST_RESULTS.txt",
-      "size": 1093,
-      "sha256": "474c84940c8dccad80f8def40b844a254c7ccc31c537310d005cc0851f8c2e73"
+      "size": 3573,
+      "sha256": "960a637a31b2721ee644de1a1c719cab3c181cdc1668cdd5d3062c035958694c"
     },
     {
       "path": "function/common/catalog.py",
-      "size": 1803,
-      "sha256": "5e029a7f1464320fb8cc99962c62cf9f40267cdf5030165e9c1cc7484c5e7185"
+      "size": 1930,
+      "sha256": "b2dd77256c2e37ab24ecba4597f96157691de373ab90557d2aebcf5255dd89f8"
     },
     {
       "path": "function/common/release_rules.py",
@@ -254,8 +259,13 @@
     },
     {
       "path": "program_catalog.json",
-      "size": 4927,
-      "sha256": "543d2485846be3f96a75c68fc8b2a5988b0d5930185930e12ab4691893ffe3de"
+      "size": 5167,
+      "sha256": "9fcaa8f9d51872e641f5f61df4799ce3b20521ccde5afd44f115203cf67b591d"
+    },
+    {
+      "path": "SELF_TEST_RESULTS.txt",
+      "size": 1286,
+      "sha256": "307f03829405de572e3e1bf69d6a7f8c02dcf05d25c9076c2529f81532b883a2"
     }
   ]
 }

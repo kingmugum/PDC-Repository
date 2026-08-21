@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "260819_2",
+  "release": "260821_1",
   "targets": [
     {
       "id": 1,
@@ -56,46 +56,51 @@
     },
     {
       "id": 3,
+      "key": "WeeklyReport",
+      "display_name": "WeeklyReport",
+      "ui_label": "3. WeeklyReport",
+      "folder": "3. WeeklyReport",
+      "aliases": [
+        "3. WeeklyReport",
+        "WeeklyReport",
+        "Weekly Report",
+        "WeeklyMailAgent",
+        "Weekly Mail Agent",
+        "주간보고",
+        "주간 보고",
+        "주간보고메일",
+        "주간보고 메일"
+      ],
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/377",
+      "board_name": "AI 스냅샷_주간보고",
+      "mode": "versioned_archive",
+      "archive_strategy": "date_counter_release",
+      "package_prefixes": [
+        "WeeklyReport",
+        "WeeklyMailAgent"
+      ],
+      "recommended_filename": "WeeklyMailAgent_YYMMDD_N.zip"
+    },
+    {
+      "id": 4,
       "key": "Ext",
       "display_name": "Ext",
-      "ui_label": "3. Ext",
-      "folder": "3. Ext",
+      "ui_label": "4. Ext",
+      "folder": "4. Ext",
       "aliases": [
-        "3. Ext",
+        "4. Ext",
         "Ext",
         "EXT",
         "Etc",
         "ETC",
         "기타",
         "기타자료",
-        "Extra"
+        "Extra",
+        "3. Ext"
       ],
       "board_url": "https://gw.suresofttech.com/app/community/130/board/376",
       "board_name": "AI 스냅샷_기타",
       "mode": "file_hash",
-      "package_prefixes": []
-    },
-    {
-      "id": 4,
-      "key": "Backup",
-      "display_name": "Backup",
-      "ui_label": "4. Backup",
-      "folder": "4. Backup",
-      "aliases": [
-        "4. Backup",
-        "Backup",
-        "BackUp",
-        "DataBackup",
-        "Data_Backup",
-        "Data-Backup",
-        "Data Backup",
-        "자료백업",
-        "자료_백업",
-        "자료 백업"
-      ],
-      "board_url": "https://gw.suresofttech.com/app/community/130/board/377",
-      "board_name": "AI 스냅샷_자료백업",
-      "mode": "archive_family",
       "package_prefixes": []
     },
     {
@@ -162,8 +167,8 @@
       "target_preserve_mode": {
         "PassFail": "recursive",
         "SignalExport": "recursive",
+        "WeeklyReport": "recursive",
         "Ext": "recursive",
-        "Backup": "recursive",
         "GitManager": "root_only",
         "BoardRepo": "root_only"
       },

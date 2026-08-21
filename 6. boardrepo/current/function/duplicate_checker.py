@@ -32,7 +32,7 @@ class RemoteCheckItem:
     board_url: str
     file_path: Path
     exact_title: str
-    kind: str  # "versioned" | "ext" | "backup"
+    kind: str  # "versioned" | "ext"
     sha256: str | None = None
 
 
@@ -504,7 +504,7 @@ def _scan_current_page_for_item(
                 f"행링크={'있음' if row_match and row_match.post_url else '없음'}"
             )
 
-        if item.kind in {"versioned", "backup"}:
+        if item.kind == "versioned":
             if (
                 duplicate_cfg.get("standard_match_exact_title", True)
                 and title_seen

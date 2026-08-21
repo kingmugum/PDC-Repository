@@ -8,7 +8,6 @@ from typing import Callable
 from urllib.parse import urljoin
 
 from archive_selector import ArchiveSelectionError, select_latest_archive
-from backup_file_manager import BackupFileError, select_latest_backup_archives
 from board_post_navigation import open_board_post_by_title
 from browser_runtime import launch_persistent_context_auto
 from browser_automation import (
@@ -52,6 +51,7 @@ class DownloadTarget:
     board_url: str
     folder: Path
     aliases: tuple[str, ...]
+    mode: str = "versioned_archive"
 
 
 @dataclass(frozen=True)
@@ -174,11 +174,13 @@ def _extract_body_filename(body_text: str) -> str | None:
     return None
 
 
+def _is_versioned_target(target: DownloadTarget) -> bool:
+    return str(target.mode or "").casefold() == "versioned_archive"
+
+
 def _post_prefix(target: DownloadTarget) -> str:
-    if target.target_key in {"PassFail", "SignalExport", "GitManager", "BoardRepo"}:
+    if _is_versioned_target(target):
         return f"[BoardRepo] {target.display_name}_"
-    if target.target_key == "Backup":
-        return "[BoardRepo][Backup] "
     if target.target_key == "Ext":
         return "[BoardRepo][Ext] "
     return "[BoardRepo] "
@@ -311,24 +313,6 @@ def _canonical_versioned_board_title(
     return "[BoardRepo] " + title_compact[len("[BoardRepo]"):]
 
 
-def _canonical_backup_board_title(value: str) -> str | None:
-    normalized = _normalize_dom_text(value)
-    compact_prefix = "[BoardRepo][Backup]"
-    pos = normalized.find(compact_prefix)
-    if pos < 0:
-        return None
-
-    tail = normalized[pos:]
-    match = re.search(
-        r"(?i)^\[BoardRepo\]\[Backup\]\s*(.+?\.(?:zip|7z|rar))",
-        tail,
-    )
-    if not match:
-        return None
-
-    filename = match.group(1).strip()
-    return f"[BoardRepo][Backup] {filename}"
-
 
 def _canonical_ext_board_title(value: str) -> str | None:
     normalized = _normalize_dom_text(value)
@@ -351,10 +335,8 @@ def _canonical_title_from_text(
     target: DownloadTarget,
     value: str,
 ) -> str | None:
-    if target.target_key in {"PassFail", "SignalExport", "GitManager", "BoardRepo"}:
+    if _is_versioned_target(target):
         return _canonical_versioned_board_title(target, value)
-    if target.target_key == "Backup":
-        return _canonical_backup_board_title(value)
     if target.target_key == "Ext":
         return _canonical_ext_board_title(value)
     return None
@@ -724,7 +706,7 @@ def _candidate_from_title(
     title: str,
     post_url: str,
 ) -> RemotePost | None:
-    if target.target_key in {"PassFail", "SignalExport", "GitManager", "BoardRepo"}:
+    if _is_versioned_target(target):
         parsed = _versioned_title_release(target, title)
         if parsed is None:
             return None
@@ -735,26 +717,6 @@ def _candidate_from_title(
             post_url=post_url,
             filename="",
             kind="versioned",
-            family=family,
-            date_token=date_token,
-            counter=counter,
-        )
-
-    if target.target_key == "Backup":
-        canonical = _canonical_backup_board_title(title)
-        if not canonical:
-            return None
-        filename = canonical[len("[BoardRepo][Backup] "):].strip()
-        parsed = parse_release_identity(filename)
-        if parsed:
-            family, date_token, counter = parsed
-        else:
-            family, date_token, counter = Path(filename).stem, None, 0
-        return RemotePost(
-            title=canonical,
-            post_url=post_url,
-            filename=filename,
-            kind="backup",
             family=family,
             date_token=date_token,
             counter=counter,
@@ -798,7 +760,7 @@ def _select_remote_candidates(
             f"{invalid}건"
         )
 
-    if target.target_key in {"PassFail", "SignalExport", "GitManager", "BoardRepo"}:
+    if _is_versioned_target(target):
         if not raw:
             return []
         best = max(raw, key=lambda x: _release_key(x.date_token, x.counter))
@@ -809,55 +771,6 @@ def _select_remote_candidates(
         )
         return [best]
 
-    if target.target_key == "Backup":
-        groups: dict[str, list[RemotePost]] = {}
-        for item in raw:
-            groups.setdefault(
-                (item.family or item.filename).casefold(),
-                [],
-            ).append(item)
-
-        selected: list[RemotePost] = []
-        for _family_key, items in groups.items():
-            versioned = [x for x in items if x.date_token]
-            standalone = [x for x in items if not x.date_token]
-
-            if versioned and standalone:
-                names = ", ".join(x.filename for x in items)
-                log(
-                    "Backup 원격 동일 계열에 날짜형/무버전 게시글이 혼재하여 "
-                    f"자동 최신판 선택 제외: {names}"
-                )
-                continue
-
-            if versioned:
-                selected.append(
-                    max(
-                        versioned,
-                        key=lambda x: _release_key(
-                            x.date_token,
-                            x.counter,
-                        ),
-                    )
-                )
-            elif standalone:
-                # Board pages are scanned newest to older. Keep the newest
-                # standalone post of the same filename.
-                selected.append(standalone[0])
-
-        selected.sort(
-            key=lambda x: (
-                (x.family or "").casefold(),
-                x.filename.casefold(),
-            )
-        )
-
-        for item in selected:
-            log(
-                f"원격 최신 글 [Backup/{item.family}]: "
-                f"{item.title}"
-            )
-        return selected
 
     if target.target_key == "Ext":
         # Ext intentionally processes every valid standard Ext post. Local
@@ -906,7 +819,7 @@ def _validate_attachment_against_title(
     candidate: RemotePost,
     filename: str,
 ) -> None:
-    if target.target_key in {"PassFail", "SignalExport", "GitManager", "BoardRepo"}:
+    if _is_versioned_target(target):
         if Path(filename).suffix.casefold() not in _ARCHIVE_EXTS:
             raise BrowserAutomationError(
                 f"최신 글의 첨부파일이 압축파일이 아닙니다: {filename}"
@@ -931,13 +844,6 @@ def _validate_attachment_against_title(
             )
         return
 
-    if target.target_key == "Backup":
-        if filename.casefold() != candidate.filename.casefold():
-            raise BrowserAutomationError(
-                "Backup 게시글 제목의 파일명과 실제 첨부파일명이 다릅니다. "
-                f"제목={candidate.filename}, 첨부={filename}"
-            )
-        return
 
     if target.target_key == "Ext":
         if filename.casefold() != candidate.filename.casefold():
@@ -984,7 +890,7 @@ def _visible_attachment_filename(
                 # Some groupware attachment widgets combine filename and size.
                 return expected
 
-    if target.target_key in {"PassFail", "SignalExport", "GitManager", "BoardRepo"}:
+    if _is_versioned_target(target):
         for value in values:
             # Use only a filename-like token. Release validation later ensures
             # that it matches the selected post title.
@@ -1039,7 +945,7 @@ def _wait_for_detail_metadata(
         attempt += 1
         body = _page_body_text(page)
 
-        # candidate.filename comes from the title for Ext/Backup. It is not
+        # candidate.filename comes from the title for Ext. It is not
         # proof of the actual attachment. Observe body/attachment DOM first.
         body_filename = _extract_body_filename(body)
         visible_filename = _visible_attachment_filename(page, target, candidate)
@@ -1424,157 +1330,6 @@ def _sync_versioned_target(
         )
 
 
-def _sync_backup_target(
-    page,
-    target: DownloadTarget,
-    remotes: list[RemotePost],
-    config: dict,
-    log: Callable[[str], None],
-) -> list[DownloadResult]:
-    try:
-        local_selection = select_latest_backup_archives(
-            target.folder,
-            config.get("backup_upload") or {},
-        )
-        local_by_family = {
-            item.family.casefold(): item
-            for item in local_selection.selected
-        }
-    except BackupFileError as exc:
-        return [
-            DownloadResult(
-                target.target_key,
-                target.display_name,
-                STATUS_CONFLICT,
-                None,
-                f"로컬 Backup 최신 계열을 판단할 수 없습니다: {exc}",
-            )
-        ]
-
-    results: list[DownloadResult] = []
-
-    for remote in remotes:
-        family_key = (remote.family or Path(remote.filename).stem).casefold()
-        local = local_by_family.get(family_key)
-
-        if remote.date_token:
-            remote_key = _release_key(remote.date_token, remote.counter)
-            remote_text = _version_text(remote.date_token, remote.counter)
-
-            if local is None:
-                should_download = True
-                local_text = None
-            elif local.date_token is None:
-                results.append(
-                    DownloadResult(
-                        target.target_key,
-                        target.display_name,
-                        STATUS_CONFLICT,
-                        remote.filename,
-                        "동일 Backup 계열의 로컬 파일이 무버전 형식이라 자동 비교하지 않습니다.",
-                        local_version=local.path.name,
-                        remote_version=remote_text,
-                    )
-                )
-                continue
-            else:
-                local_key = _release_key(local.date_token, local.counter)
-                local_text = _version_text(local.date_token, local.counter)
-
-                if remote_key == local_key:
-                    results.append(
-                        DownloadResult(
-                            target.target_key,
-                            target.display_name,
-                            STATUS_UP_TO_DATE,
-                            remote.filename,
-                            "Backup 동일 계열의 로컬/원격 최신 Release가 같습니다.",
-                            local_version=local_text,
-                            remote_version=remote_text,
-                        )
-                    )
-                    continue
-                if remote_key < local_key:
-                    results.append(
-                        DownloadResult(
-                            target.target_key,
-                            target.display_name,
-                            STATUS_LOCAL_NEWER,
-                            remote.filename,
-                            "Backup 동일 계열에서 로컬 Release가 더 최신입니다.",
-                            local_version=local_text,
-                            remote_version=remote_text,
-                        )
-                    )
-                    continue
-                should_download = True
-
-            if should_download:
-                try:
-                    _download_attachment(page, remote, target.folder, config, log)
-                    results.append(
-                        DownloadResult(
-                            target.target_key,
-                            target.display_name,
-                            STATUS_DOWNLOADED,
-                            remote.filename,
-                            "Backup 동일 계열의 원격 최신 Release를 다운로드했습니다.",
-                            local_version=local_text,
-                            remote_version=remote_text,
-                        )
-                    )
-                except Exception as exc:
-                    results.append(
-                        DownloadResult(
-                            target.target_key,
-                            target.display_name,
-                            STATUS_ERROR,
-                            remote.filename,
-                            str(exc),
-                            local_version=local_text,
-                            remote_version=remote_text,
-                        )
-                    )
-            continue
-
-        # Standalone/non-versioned archive.
-        destination = target.folder / remote.filename
-        if destination.exists():
-            results.append(
-                DownloadResult(
-                    target.target_key,
-                    target.display_name,
-                    STATUS_UP_TO_DATE,
-                    remote.filename,
-                    "버전 규칙이 없는 동일 Backup 파일이 로컬에 이미 존재합니다.",
-                )
-            )
-            continue
-
-        try:
-            _download_attachment(page, remote, target.folder, config, log)
-            results.append(
-                DownloadResult(
-                    target.target_key,
-                    target.display_name,
-                    STATUS_DOWNLOADED,
-                    remote.filename,
-                    "로컬에 없는 독립 Backup 파일을 다운로드했습니다.",
-                )
-            )
-        except Exception as exc:
-            results.append(
-                DownloadResult(
-                    target.target_key,
-                    target.display_name,
-                    STATUS_ERROR,
-                    remote.filename,
-                    str(exc),
-                )
-            )
-
-    return results
-
 
 def _sync_ext_target(
     page,
@@ -1781,7 +1536,7 @@ def sync_selected_downloads(
                             )
                         continue
 
-                    if target.target_key in {"PassFail", "SignalExport", "GitManager", "BoardRepo"}:
+                    if _is_versioned_target(target):
                         results.append(
                             _sync_versioned_target(
                                 page,
@@ -1791,16 +1546,7 @@ def sync_selected_downloads(
                                 log,
                             )
                         )
-                    elif target.target_key == "Backup":
-                        results.extend(
-                            _sync_backup_target(
-                                page,
-                                target,
-                                remotes,
-                                config,
-                                log,
-                            )
-                        )
+
                     elif target.target_key == "Ext":
                         results.extend(
                             _sync_ext_target(

@@ -18,7 +18,7 @@ from catalog import load_catalog, target_map
 from release_rules import latest_release, parse_release_name
 
 APP_NAME = "Git Manager"
-APP_VERSION = "260819_2"
+APP_VERSION = "260821_1"
 VERSION_RE = re.compile(r"^(?P<date>\d{6})_(?P<num>\d+)$")
 CONFIG_DIR = Path.home() / ".pdc_git_manager"
 CONFIG_FILE = CONFIG_DIR / "projects.json"

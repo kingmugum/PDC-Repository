@@ -1,24 +1,26 @@
 BoardRepo Package Release
 =========================
-Package Release   : BoardRepo_260819_2
-Technical Version : v0.22
-Date              : 2026-08-19
+Package Release   : BoardRepo_260821_1
+Technical Version : v0.23
+Date              : 2026-08-21
 Primary GUI       : Automation_Manager.pyw > BoardRepo tab
 Standalone GUI    : 6. BoardRepo/current/BoardRepo.pyw
-Requirements      : BoardRepo_Requirements_v0_22.xlsx
+Requirements      : BoardRepo_Requirements_v0_23.xlsx
 
 Managed targets
 ---------------
-1. PassFail      -> board/374
-2. SignalExport  -> board/375
-3. Ext           -> board/376
-4. Backup        -> board/377
-5. Git Manager   -> board/392
-6. BoardRepo     -> board/393
+1. PassFail       -> board/374
+2. SignalExport   -> board/375
+3. WeeklyReport   -> board/377 (AI 스냅샷_주간보고)
+4. Ext            -> board/376
+5. Git Manager    -> board/392
+6. BoardRepo      -> board/393
 
-260819_2 integration alignment
-------------------------------
-- BoardRepo Technical 기능은 v0.22 그대로 유지
-- Git Manager의 legacy Git Tree alias 상태판정 및 recovery URL 자동화만 신규
-- BoardRepo는 Git recovery/alias 엔진에 의존하지 않음
-- BoardRepo는 target 5/6 Release 운반/staging 역할만 유지
+260821_1 / v0.23
+----------------
+- Backup target/4. Backup/backup_file_manager 제거
+- board/377을 WeeklyReport 전용 versioned target으로 전환
+- WeeklyReport package alias: WeeklyMailAgent, WeeklyReport
+- Ext canonical 폴더를 4. Ext로 변경하고 legacy 3. Ext alias 유지
+- board/377의 과거 [BoardRepo][Backup] 글은 WeeklyReport 후보에서 제외
+- versioned_archive download dispatch를 catalog mode 기반으로 일반화

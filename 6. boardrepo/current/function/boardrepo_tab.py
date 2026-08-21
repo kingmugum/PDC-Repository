@@ -15,7 +15,6 @@ from archive_selector import (
     select_latest_archive,
     version_label_from_archive,
 )
-from backup_file_manager import BackupFileError, select_latest_backup_archives
 from browser_automation import upload_snapshot
 from browser_download import (
     DownloadResult,
@@ -62,7 +61,7 @@ class UploadPlanItem:
     board_url: str
     folder: Path
     file_path: Path
-    kind: str  # "versioned" | "ext" | "backup"
+    kind: str  # "versioned" | "ext"
     title: str
     body: str
     sha256: str | None = None
@@ -408,63 +407,11 @@ class BoardRepoFrame(ttk.Frame):
                 )
             return plan
 
-        if key == "Backup":
-            backup_cfg = self.config_data.get("backup_upload") or {}
-            selection = select_latest_backup_archives(folder, backup_cfg)
-            backup_files = selection.selected
-
-            if not backup_files:
-                self.log(
-                    "Backup 폴더에 업로드할 압축파일이 없습니다. "
-                    "Backup은 빈 항목으로 처리합니다."
-                )
-
-            for old_info in selection.superseded:
-                self.log(
-                    "Backup 구버전 제외: "
-                    f"{old_info.path.name} "
-                    f"(계열={old_info.family}, "
-                    f"date={old_info.date_token or '없음'}, "
-                    f"counter={old_info.counter})"
-                )
-
-            for info in backup_files:
-                created = datetime.now().isoformat(timespec="seconds")
-                title = backup_cfg["title_template"].format(
-                    filename=info.path.name
-                )
-                body = backup_cfg["body_template"].format(
-                    filename=info.path.name,
-                    size_bytes=info.size_bytes,
-                    created=created,
-                    source_folder=folder.name,
-                )
-                plan.append(
-                    UploadPlanItem(
-                        target_key=key,
-                        display_name=display_name,
-                        board_url=target["board_url"],
-                        folder=folder,
-                        file_path=info.path,
-                        kind="backup",
-                        title=title,
-                        body=body,
-                        local_summary=(
-                            f"압축파일={info.path.name}, "
-                            f"계열={info.family}, "
-                            f"date={info.date_token or '없음'}, "
-                            f"counter={info.counter}, "
-                            f"size={info.size_bytes} bytes"
-                        ),
-                    )
-                )
-            return plan
-
         strategy = target.get("archive_strategy", "date_rev_counter")
         selection = select_latest_archive(
             folder=folder,
             target_name=display_name,
-            aliases=target["folder_aliases"],
+            aliases=target.get("package_aliases") or target["folder_aliases"],
             extensions=self._archive_extensions(),
             strategy=strategy,
         )
@@ -516,7 +463,7 @@ class BoardRepoFrame(ttk.Frame):
         """
         Build each target independently.
 
-        A broken PassFail/SignalExport/Ext/Backup target is recorded and skipped;
+        A broken selected target is recorded and skipped;
         unrelated checked targets continue to the remote duplicate phase.
         """
         plan: list[UploadPlanItem] = []
@@ -527,7 +474,7 @@ class BoardRepoFrame(ttk.Frame):
             try:
                 items = self._build_target_plan(key)
                 plan.extend(items)
-            except (ArchiveSelectionError, FolderResolutionError, ExtFileError, BackupFileError) as exc:
+            except (ArchiveSelectionError, FolderResolutionError, ExtFileError) as exc:
                 issue = PreflightIssue(
                     target_key=key,
                     display_name=target["display_name"],
@@ -1039,7 +986,8 @@ class BoardRepoFrame(ttk.Frame):
                         display_name=target["display_name"],
                         board_url=target["board_url"],
                         folder=folder,
-                        aliases=tuple(target["folder_aliases"]),
+                        aliases=tuple(target.get("package_aliases") or target["folder_aliases"]),
+                        mode=str(target.get("mode") or "versioned_archive"),
                     )
                 )
             except FolderResolutionError as exc:
@@ -1344,16 +1292,6 @@ class BoardRepoFrame(ttk.Frame):
                         f"- {item.file_path.name} "
                         f"({item.file_path.stat().st_size} bytes, "
                         f"SHA={item.sha256[:12]}...)"
-                    )
-                if len(items) > 20:
-                    lines.append(f"... 외 {len(items) - 20}개")
-                blocks.append("\n".join(lines))
-            elif key == "Backup":
-                lines = [f"[{display_name}] 계열별 최신 압축파일 후보 {len(items)}개"]
-                for item in items[:20]:
-                    lines.append(
-                        f"- {item.file_path.name} "
-                        f"({item.file_path.stat().st_size} bytes)"
                     )
                 if len(items) > 20:
                     lines.append(f"... 외 {len(items) - 20}개")

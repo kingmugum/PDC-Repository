@@ -32,6 +32,8 @@ def boardrepo_targets_from_catalog(catalog: dict) -> dict[str, dict]:
             "ui_label": t["ui_label"],
             "board_url": t["board_url"],
             "folder_aliases": list(t.get("aliases") or [t["folder"]]),
+            "package_aliases": list(t.get("package_prefixes") or t.get("aliases") or [t["folder"]]),
+            "mode": mode,
         }
         if mode == "versioned_archive":
             item.update({

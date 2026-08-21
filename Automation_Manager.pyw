@@ -16,7 +16,7 @@ from work_lock import OperationLock
 from git_manager import GitManagerFrame
 from boardrepo_tab import BoardRepoFrame
 
-APP_RELEASE = "260819_2"
+APP_RELEASE = "260821_1"
 
 
 class AutomationManager(tk.Tk):
@@ -71,7 +71,7 @@ class AutomationManager(tk.Tk):
         ttk.Button(buttons, text="전체 해제", command=self.clear_all).pack(side="left", padx=(6, 0))
         ttk.Label(
             buttons,
-            text="5. Git Manager → board/392 · 6. BoardRepo → board/393",
+            text="3. WeeklyReport → board/377 · 4. Ext → board/376 · 5. Git Manager → board/392 · 6. BoardRepo → board/393",
         ).pack(side="left", padx=(18, 0))
 
         notebook = ttk.Notebook(root)

@@ -1,27 +1,35 @@
-BoardRepo 260819_2 / Technical v0.22 간단 매뉴얼
+BoardRepo 260821_1 / Technical v0.23 간단 매뉴얼
 ================================================
-
-BoardRepo 기능 코드는 260819_1 v0.22와 동일합니다.
-이번 260819_2는 Git Manager의 Git Tree alias/복구 UX 수정과 통합 배포 기준선을 맞춘 Package Release입니다.
 
 1~6 게시판
 -----------
-1. PassFail      -> board/374
-2. SignalExport  -> board/375
-3. Ext           -> board/376
-4. Backup        -> board/377
-5. Git Manager   -> board/392
-6. BoardRepo     -> board/393
+1. PassFail       -> board/374
+2. SignalExport   -> board/375
+3. WeeklyReport   -> board/377
+4. Ext            -> board/376
+5. Git Manager    -> board/392
+6. BoardRepo      -> board/393
 
-역할 경계
+WeeklyReport
+------------
+- 3. WeeklyReport 폴더 바로 아래의 WeeklyMailAgent_YYMMDD_N.zip 또는 WeeklyReport_YYMMDD_N.zip을 사용합니다.
+- 최신판은 날짜(YYMMDD) 우선, 같은 날짜에서는 마지막 _N 순번 우선입니다.
+- 01. old 등 하위 폴더는 검색하지 않습니다.
+- 과거 board/377의 [BoardRepo][Backup] 게시글은 WeeklyReport 후보에서 제외합니다.
+
+Ext
+---
+- canonical 폴더는 4. Ext입니다.
+- 기존 3. Ext는 migration alias로 인식합니다.
+- Text Splitter 같은 소형 utility/일반 파일은 기존 파일명 + SHA-256 정책으로 관리할 수 있습니다.
+
+Backup
+------
+현행 관리대상에서는 제거되었습니다. Git Manager와 BoardRepo 자체 Release는 각각 전용 target 5/6에서 관리합니다.
+
+Preserved
 ---------
-BoardRepo는 GitManager/BoardRepo Release ZIP을 게시판에서 운반/업로드/다운로드합니다.
-Git Tree alias 판정, .git 연결, Commit/Push는 Git Manager 책임이며 BoardRepo가 호출하지 않습니다.
-
-Preserved v0.22
---------------
 - Playwright Chromium 우선 + Edge fallback
-- browser auto-download / online pip fallback 기본 OFF
 - 상세 본문/첨부 Ready Polling
-- Ext SHA grace Polling
-- 기존 업로드/DEXT5/중복검사 정책 유지
+- Ext SHA 비교
+- DEXT5/첨부/등록 및 중복검사 안전정책
