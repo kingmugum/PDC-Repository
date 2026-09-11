@@ -1,0 +1,32 @@
+PassFail rev87 - Runtime Bridge 고정 경로 / DBC ID 개선
+========================================================
+
+1. 변경 이유
+- rev79까지 PF_Stimulus_Bridge_CANx_ACTIVE.can이 각 PassFail 배포 폴더 안에 생성되었습니다.
+- 따라서 PassFail_260826_5 -> PassFail_260826_6처럼 배포 폴더가 바뀌면 CANoe Network Node가 이전 절대경로를 계속 참조하여 Compile 실패가 발생할 수 있었습니다.
+
+2. rev87 Runtime 고정 경로
+- PassFail 실행 폴더가 다음과 같을 때:
+  ...\\PassFail\\PassFail_260826_7\\
+- Runtime Bridge는 다음 공용 폴더에 생성됩니다:
+  ...\\PassFail\\PF_Stimulus_Runtime\\PF_Stimulus_Bridge_CAN1_ACTIVE.can
+  ...\\PassFail\\PF_Stimulus_Runtime\\PF_Stimulus_Bridge_CAN2_ACTIVE.can
+  ...\\PassFail\\PF_Stimulus_Runtime\\PF_Stimulus_Bridge_CAN3_ACTIVE.can
+
+3. 최초 1회 필요한 작업
+- 기존 CANoe/CANalyzer Network Node가 과거 PassFail_YYMMDD_N 폴더의 ACTIVE.can을 참조한다면,
+  rev87 실행 후 생성된 PF_Stimulus_Runtime 폴더의 해당 CANx_ACTIVE.can으로 Source 경로를 최초 1회 변경하고 Compile합니다.
+- PassFail은 Vector Configuration Node/Source 경로를 자동 수정하거나 저장하지 않습니다.
+- 한 번 고정 Runtime 경로로 변경한 뒤에는 다음 PassFail 배포 버전에서도 재연결할 필요가 없습니다.
+
+4. DBC ID 파일명
+- DBC 파일명이 예를 들어
+  20251226_STD_DB_CAR_R2.0_2024_FD_B1_v25.11.01.dbc
+  인 경우 rev87은 standalone token B1을 우선 인식하여 다음 canonical 파일을 생성합니다.
+  PF_Stimulus_Bridge_CAN1_B1_ACTIVE.can
+- C/M/E/T 또는 B2 등도 동일한 standalone token 규칙을 적용합니다.
+- 안전하게 식별할 수 없는 경우에는 임의 추측하지 않고 기존처럼 정리된 DBC 파일명 stem을 사용합니다.
+
+5. 정합성 보호
+- canonical/runtime Bridge에는 Logical CAN, Physical Channel, Source DBC ID, Source DBC SHA256이 기록됩니다.
+- Compile 전에 현재 선택 DBC와 Runtime Bridge의 ID/SHA256/채널이 일치하는지 검사하며 불일치하면 실행을 차단합니다.

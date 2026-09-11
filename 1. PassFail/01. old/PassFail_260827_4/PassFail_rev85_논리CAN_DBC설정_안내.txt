@@ -1,0 +1,12 @@
+PassFail rev85 - CANoe 논리 CAN / DBC 설정 변경
+
+1. 설정 탭의 Ch1~Ch4(물리 채널) 선택 콤보를 제거했습니다.
+2. PassFail은 VN1640A 물리 포트 번호를 직접 관리하지 않습니다.
+3. CANoe Configuration에서 보이는 논리 네트워크를 기준으로 고정 사용합니다.
+   - CAN1 -> 논리 채널 1
+   - CAN2 -> 논리 채널 2
+   - CAN3 -> 논리 채널 3
+4. 설정 화면에는 CAN1/CAN2/CAN3과 각 DBC 경로만 표시합니다.
+5. 예: VN1640A CH3가 CANoe Hardware Configuration에서 CAN1로 매핑되어 있어도 PassFail에는 CAN1의 DBC만 지정합니다.
+6. 과거 oracle_checker_gui_settings.json의 can_ch 값은 rev85에서 무시합니다.
+7. 실시간 COM, ASC/BLF 로그 재검토, TX/RX 정적분석/Stimulus 모두 동일한 논리 CAN 번호를 사용합니다.

@@ -1,0 +1,20 @@
+PassFail rev87 - 전체 입력 1/10 Dominance Boost + BLOCK 회색 표시
+
+1. 전체 입력 Signal 반복 송신 주기
+- rev81: Seat Slide Fwd/Bwd만 20ms 반복, 그 외 입력은 DBC nominal cycle 사용.
+- rev87: 모든 CAPL 입력 Frame을 DBC nominal cycle의 1/10 주기로 반복 송신.
+- 예: 200ms -> 20ms, 100ms -> 10ms.
+- 최소 주기는 10ms로 제한하여 빠른 Message에서 무제한 버스 부하 증가를 방지.
+- 기존 차량 송신원은 차단하지 않으므로 정확한 9:1 비율은 보장하지 않음.
+- CRC/Alive/E2E 자동 계산은 여전히 하지 않음. 엄격한 보호 Message는 반복 주기만으로 제어되지 않을 수 있음.
+
+2. 기대 효과
+- 원 ECU가 nominal 주기로 OFF 상태를 계속 송신하는 환경에서 PassFail Active Frame의 시간적 우세를 높임.
+- Slide뿐 아니라 Recline/Tilt/Height 등의 육안 동작 가능성 개선 기대.
+
+3. 차량 송수신 테스트 BLOCK 표시
+- PASS: 녹색
+- FAIL/ERROR: 빨간색
+- N/A: 주황색
+- BLOCK: 회색
+- BLOCK 판정 로직 자체는 이번 revision에서 변경하지 않음.

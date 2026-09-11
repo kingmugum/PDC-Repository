@@ -1,0 +1,27 @@
+PassFail rev85 - Runtime Bridge 사전 생성/갱신 안내
+
+목적
+- 새 PC에서 실제 TC를 실행하거나 일부러 FAIL/Compile 오류를 발생시키지 않고 Runtime Bridge를 미리 준비한다.
+- 회사 DBC는 로컬 PC에서만 읽으며 외부/ChatGPT 업로드가 필요하지 않다.
+
+권장 초기 설정 절차
+1) PassFail rev85 실행
+2) Oracle Excel/TC 목록 로드
+3) 설정 탭에서 CAN1/CAN2/CAN3에 사용할 DBC 지정
+4) 차량 송수신 테스트 탭의 [Runtime Bridge 사전 생성/갱신] 클릭
+5) PassFail 상위 폴더의 PF_Stimulus_Runtime 아래 CANx_ACTIVE.can 생성 확인
+6) 새 PC의 CANoe/CANalyzer Network Node에 해당 Runtime 파일을 최초 1회 연결하고 Compile
+7) 이후 정상 자동 P/F 사용
+
+사전 생성의 안전 경계
+- Measurement를 시작하지 않는다.
+- CAPL Compile을 자동 실행하지 않는다.
+- CAPL function/output()을 호출하지 않는다.
+- Signal.Value write를 수행하지 않는다.
+- 실제 CAN Frame을 송신하지 않는다.
+
+생성 범위
+- 현재 로드된 모든 유효 TC의 모든 입력 조건을 정적으로 검사한다.
+- 입력 조건이 여러 개인 TC도 Bridge 준비에는 포함한다.
+- 단, 실제 자동 P/F 실행 시 기존의 입력 1개 제한 및 CRC/Alive/E2E/critical/source-isolation 안전 gate는 그대로 유지한다.
+- 일부 입력을 DBC에서 찾지 못하면 해결 가능한 후보는 생성하고 미해결 개수/예시를 안내한다.

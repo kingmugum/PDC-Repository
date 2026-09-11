@@ -1,0 +1,22 @@
+PassFail rev85 - 전체 입력 Dominance Boost 안내
+
+[변경 배경]
+rev81까지는 Seat Slide Fwd/Bwd만 약 20ms로 반복 송신하고, Recline/Tilt/Height 등 일반 입력은 DBC nominal cycle(예: 200ms)을 사용했습니다.
+현장에서는 Slide는 육안 이동이 확인됐으나 일부 일반 입력은 P/F 출력 반응은 PASS여도 물리 이동이 눈에 띄지 않았습니다.
+
+[rev85 정책]
+- 모든 CAPL 입력 Frame: DBC nominal cycle의 1/10 주기로 Hold 동안 반복 송신
+- 200ms -> 20ms
+- 100ms -> 10ms
+- 50ms -> 10ms (최소 interval 10ms floor)
+- Seat Slide의 최소 2.0s Hold 보정은 별도로 유지
+
+[중요 한계]
+- 기존 ECU의 동일 ID 송신원을 차단하지 않습니다.
+- 따라서 정확히 9:1의 수신 비율이나 연속 물리 동작을 보장하지 않습니다.
+- CRC/Alive/Counter/E2E를 자동 계산하지 않습니다.
+- 엄격한 E2E 보호, ECU debounce, actuator protection이 있으면 반복 주기만으로 제어되지 않을 수 있습니다.
+- 10ms보다 빠른 자동 반복은 하지 않습니다.
+
+[확인 포인트]
+TXRX 실행 로그의 hold_mode=dbc_cycle_div10_dominance 및 tx_interval_ms를 확인하고, CANoe Trace에서 실제 Tx 간격과 차량 물리 반응을 함께 비교합니다.

@@ -1,0 +1,54 @@
+PassFail rev85 - Vector CAPL Stimulus / CANoe 01-0083 대응 안내
+================================================================
+
+1. CANoe Write 창 경고 01-0083
+   SetSignal was called ... but no signal driver is available.
+
+   rev64의 CANoe Signal.Value 방식은 COM Signal 값을 바꿀 수 있어도,
+   현재 CANoe Configuration에 Interaction Layer / Signal Driver가 없으면 실제 CAN Frame 송신으로 이어지지 않을 수 있습니다.
+   따라서 rev85의 차량 송수신 테스트는 CANoe 기본 송신 방식을 [CAPL Frame (권장)]으로 둡니다.
+
+2. rev85 권장 실제 송신 절차
+   1) 설정 탭에서 CAN1/CAN2/CAN3 DBC를 지정합니다.
+   2) 차량 송수신 테스트의 상단 TC 목록에서 원하는 TC를 클릭합니다.
+      - 입력 조건이 정확히 1개이고 DBC에서 논리 CAN 후보가 1개 이상 확인되면,
+        아래 수동 후보 입력창에 다음 4열이 자동 채워집니다.
+        CAN1    Message    Signal    ExpectedValue
+   3) [Vector CAPL Bridge 생성]을 누릅니다.
+   4) 생성된 .can 파일을 해당 CAN의 CANoe/CANalyzer SEND/Simulation branch에 수동 삽입합니다.
+   5) Compile 후 Measurement를 Stop -> Start 합니다.
+   6) 필요 시 CRC/Alive/Counter 경고 허용을 체크합니다.
+      - 이 옵션은 CRC/Alive를 계산하지 않습니다. 현재 정적 값으로만 탐색 시험합니다.
+   7) 동일 Message의 원래 ECU/Generator 송신원이 분리/비활성된 것이 실제로 확인된 경우에만
+      [CAPL Frame 실제 송신 전: 동일 Message 기존 송신원 분리·비활성 확인]을 체크합니다.
+   8) [후보 검증] -> [후보 묶음 1회 테스트]를 실행합니다.
+   9) 원복 처리가 끝난 뒤 [테스트 완료/원복 후 Measurement Stop]이 체크되어 있으면 Measurement를 자동 Stop합니다.
+
+3. CANoe 송신 방식
+   - CAPL Frame (권장)
+     * 실제 output() Frame 송신을 사용합니다.
+     * CANoe Signal Driver가 없어도 Signal.Value 01-0083 경고 경로에 의존하지 않습니다.
+     * rev85 생성 Bridge는 DBC 기반 CAN/CAN FD payload 1~64 byte를 8-byte chunk CAPL 함수로 전달하도록 구성합니다.
+     * 실제 CANoe/CANalyzer Compile 및 차량 반응은 현장 확인이 필요합니다.
+
+   - Signal.Value (IL driver 필요)
+     * 기존 호환 모드입니다.
+     * CANoe Configuration에 Signal Driver / Interaction Layer가 있어야 실제 Message 송신으로 연결됩니다.
+     * 01-0083이 발생하면 이 모드의 완료/원복은 COM 값 적용/복원 성공일 뿐 실제 TX 성공을 의미하지 않습니다.
+
+4. TC 클릭 자동 후보 적용
+   - 기본 ON: [상단 TC 클릭 시 입력 송신 후보 자동 채우기]
+   - 입력 조건이 1개인 TC는 Excel 4열을 수동 복사하지 않아도 자동 입력됩니다.
+   - 자동 입력은 텍스트 준비만 수행하며 Measurement Start나 실제 Signal/Frame 송신은 하지 않습니다.
+   - 입력 조건이 여러 개거나 DBC에서 논리 CAN 후보가 유일하지 않으면 자동 적용하지 않습니다.
+   - 필요하면 체크를 해제하여 기존 수동 1~8행 붙여넣기 방식을 그대로 사용할 수 있습니다.
+
+5. Measurement Stop
+   - 기본 ON: [테스트 완료/원복 후 Measurement Stop]
+   - 실제 Stimulus worker가 입력 -> Hold -> 원복/release를 끝낸 뒤 같은 worker COM 연결에서 Measurement.Stop을 수행합니다.
+   - GUI에 완료/원복이 표시되는 시점에는 Stop 시도까지 끝난 상태입니다.
+
+6. 기존 기능 보호
+   - 단일/다중 PASS/FAIL Observer/Judge 로직은 변경하지 않습니다.
+   - 실제 write/output은 stimulus 모듈에만 유지합니다.
+   - PassFail은 Vector Configuration을 자동 수정/저장하지 않습니다.

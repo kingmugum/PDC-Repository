@@ -1,0 +1,9 @@
+PassFail rev85 - TX/RX TC 자동 후보 / Measurement Stop 요약
+============================================================
+
+- 상단 TC 클릭 -> 입력 조건 1개 + 논리 CAN 유일 시 수동 후보 4열 자동 채움
+- CANoe 기본 실제 송신 방식 -> CAPL Frame (권장)
+- Signal.Value는 호환 모드로 유지하되 Interaction Layer signal driver 필요
+- Vector CAPL Bridge 생성 버튼으로 CANoe/CANalyzer용 Bridge 생성
+- 테스트 완료/원복 후 Measurement Stop 기본 ON
+- 자동 후보 채우기는 실제 송신을 하지 않으며 후보 텍스트와 검증 상태만 갱신

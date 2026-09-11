@@ -1,0 +1,49 @@
+PassFail rev85 - 1안 Replacement 실험 트랙 완전 분리 안내
+============================================================
+
+1. rev85 목적
+- 기존 `차량 송수신 테스트` 탭은 2안(Injection + Oracle)으로 그대로 유지합니다.
+- 그 오른쪽에 `테스트용 P/F 차량 테스트 (1안)` 탭을 새로 추가합니다.
+- 1안은 기존 차량 ECU의 대상 Message를 차단하고 PassFail/CANoe가 해당 Message를 대체하는
+  Replacement / Inline Gateway 방향을 실험하기 위한 별도 트랙입니다.
+
+2. 완전 분리 파일
+- oracle_checker_gui_replacement_rev85.py
+- oracle_checker_replacement_rev85.py
+
+두 파일은 1안만 담당합니다.
+1안 GUI/backend는 oracle_checker_gui_txrx_rev85.py, oracle_checker_stimulus_rev85.py,
+oracle_checker_main_rev85.py, oracle_checker_report_rev85.py, oracle_checker_collector_rev85.py를 import하지 않습니다.
+
+3. 폐기 방법
+- 위 두 파일을 삭제합니다.
+- oracle_checker_gui_front_rev85.pyw는 optional import + no-op fallback 구조이므로
+  파일이 없어도 프로그램이 정상 실행되고 1안 탭만 사라집니다.
+- 기존 설정 / 단일 TC / 결과 상세 / 다중 TC / 차량 송수신 테스트(2안)는 유지됩니다.
+- 즉 1안을 폐기하기 위해 2안 코드를 되돌리거나 stimulus/main/report를 수정할 필요가 없습니다.
+
+4. rev85에서 1안의 실제 기능 범위
+- 실제 CAN Message 차단: 미구현
+- CAN1↔CAN2 Gateway forwarding: 미구현
+- 실제 output()/송신: 미구현
+- Replacement frame 생성: 미구현
+- 구조/전제조건 Dry Run 검증: 구현
+
+이는 실제 차량 네트워크의 물리 분리 가능 여부를 확인하기 전에 실험 기능이 차량 Bus에 영향을 주지 않도록
+의도적으로 제한한 것입니다.
+
+5. 1안 탭에서 확인하는 항목
+- 원 송신 ECU/Message를 차량 측 Bus에서 물리적으로 분리할 수 있는가
+- VN1640A의 서로 다른 두 CAN 채널로 2-Segment Inline 구성이 가능한가
+- 분리 후 termination/저항 조건이 정상인가
+- Target Message 외 통신을 유지하기 위한 양방향 forwarding 정책이 필요한가
+- Target Message의 CRC/Alive/E2E 생성 규칙을 확보했는가
+
+6. 다음 개발 진입 조건
+1안 실제 Gateway 구현은 위 구조 검토 후 별도 revision에서 수행합니다.
+특히 원 송신 ECU가 동일 Bus에 계속 직접 연결된 구조라면 software만으로 이미 송신된 원 frame을 삭제할 수 없으므로,
+배선 분리/Inline topology 확보가 선행되어야 합니다.
+
+7. 2안 비회귀 원칙
+- rev72에서 성공한 Seat Slide Injection + Oracle 경로를 2안의 본선으로 유지합니다.
+- 1안의 성공/실패/폐기 여부는 2안의 기능 및 판정 로직에 영향을 주지 않습니다.

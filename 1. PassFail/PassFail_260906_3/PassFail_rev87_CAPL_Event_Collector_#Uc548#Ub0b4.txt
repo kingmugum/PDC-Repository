@@ -1,0 +1,43 @@
+PassFail rev87 - Optional CAPL Event Collector 안내
+===================================================
+
+1. 목적
+- 기존 Python COM polling은 매우 짧게 변하는 Signal Expected Value를 polling 사이에서 놓칠 수 있습니다.
+- rev87은 단일/다중 TC에 읽기 전용 CAPL Event Collector를 선택적으로 추가하여 CANoe/CANalyzer 내부 이벤트 시점에서 Expected Value 진입을 포착합니다.
+- 최종 PASS/FAIL 판정은 계속 Python Core가 담당합니다. Collector는 새로운 Judge가 아니라 추가 Observation Source입니다.
+
+2. 기본 동작
+- 설정의 `CAPL Event Collector 사용 (권장)` 체크박스는 기본 ON입니다.
+- 기존 설정 JSON에 collector_enabled 항목이 없는 경우에도 ON으로 시작합니다.
+- TC/DBC를 불러오면 현재 Oracle Excel + CAN1~CAN3 DBC를 기준으로 `PF_Observer_Collector_rev87.can`과 manifest를 생성/갱신합니다.
+- `CAPL Collector 생성/갱신` 버튼으로 수동 재생성도 가능합니다.
+
+3. CANoe/CANalyzer 준비
+- 생성된 `PF_Observer_Collector_rev87.can`을 현재 Configuration의 관측용 CAPL Node에 수동 추가하고 Compile하십시오.
+- PassFail은 Vector Configuration을 자동 변경/저장하지 않습니다.
+- Excel/DBC가 바뀌어 Collector signature가 달라지면 다시 생성한 뒤 Vector에서 Compile하십시오.
+
+4. 기존 구조와의 관계 / 원복성
+- Collector가 OFF이거나, collector Python 모듈이 없거나, generated .can/manifest가 없거나, Vector에 미삽입/미Compile 상태이거나, signature가 맞지 않으면 실행을 막지 않습니다.
+- 이때 기존 rev67 이하와 동일한 `Python COM polling → 필요 시 ASC/BLF 로그 재검토` 경로로 자동 fallback합니다.
+- Collector 기능을 제거하려면 체크를 OFF하거나 `oracle_checker_collector_rev87.py` 및 Collector CAPL Node를 제거하면 됩니다. 단일/다중 판정 Core와 로그 fallback은 그대로 유지됩니다.
+
+5. 읽기 전용 보장
+- Observer Collector CAPL에는 `output()`, `setSignal()`, Signal.Value write 같은 실제 CAN 송신/Signal 변경 코드가 없습니다.
+- TX/RX 탭의 `PF_Stimulus_Bridge_*`와는 별개의 파일/책임입니다.
+- Collector는 target ID, measurement time만 queue에 보관하여 Python에 전달합니다.
+
+6. 판정 우선순위/증거
+- 실시간 동안 Collector event hit와 기존 COM polling을 병행합니다.
+- 어느 한쪽에서 Expected Value를 관측하면 Python Core가 동일한 기존 판정 규칙으로 처리합니다.
+- `입력 이후` 출력 인정 규칙에서는 Collector measurement timestamp를 사용하여 입력 이전의 출력 event를 PASS 근거로 사용하지 않습니다.
+- 실시간에서 미통과하면 기존 ASC/BLF 로그 재검토가 마지막 fallback으로 그대로 동작합니다.
+
+7. 현장 확인 포인트
+- 체크박스 기본 ON 여부
+- `PF_Observer_Collector_rev87.can` 생성 및 현재 Configuration Compile 여부
+- 실행 로그의 `[COLLECTOR] 활성화 성공` 여부
+- 짧은 Signal에서 COM polling이 놓쳐도 Collector source로 PASS되는지
+- Collector를 OFF한 뒤 동일 TC가 기존 COM/log 경로로 그대로 수행되는지
+
+주의: 실제 CANoe 19 SP5에서 생성 CAPL의 Compile 및 이벤트 포착은 회사 환경에서 최종 현장 검증이 필요합니다.

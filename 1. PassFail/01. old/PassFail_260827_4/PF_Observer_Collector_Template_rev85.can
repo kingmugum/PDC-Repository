@@ -1,0 +1,20 @@
+/*@!Encoding:65001*/
+/*
+  Oracle Checker rev85 - OPTIONAL CAPL Event Collector TEMPLATE
+
+  실제 실행용 파일은 GUI [CAPL Collector 생성/갱신] 버튼으로 생성되는
+  PF_Observer_Collector_rev85.can 입니다.
+
+  이 Collector는 READ-ONLY입니다.
+  - on signal_update로 기대값 이벤트를 포착
+  - Python에 이벤트 ID/시간만 전달
+  - output(), setSignal(), Signal.Value write 없음
+  - Collector가 없거나 Compile되지 않아도 기존 COM polling + ASC/BLF 재검토로 자동 fallback
+*/
+
+variables
+{
+  /* generated file contains queue/state variables */
+}
+
+/* generated file contains PF_OBS_COUNT/POP_ID/LAST_MS/OVERFLOW/SIGNATURE and signal handlers */

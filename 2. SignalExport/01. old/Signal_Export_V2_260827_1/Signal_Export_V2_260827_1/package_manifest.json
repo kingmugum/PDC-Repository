@@ -1,0 +1,81 @@
+{
+  "schema": "signal-export-v2-package-manifest/v1",
+  "product": "Signal Export V2",
+  "package_name": "Signal_Export_V2_260827_1.zip",
+  "package_date": "2026-08-27",
+  "date_code": "260827",
+  "sequence": 1,
+  "previous_package": "Signal_Export_V2_260821_1.zip",
+  "naming_pattern": "Signal_Export_V2_YYMMDD_N.zip",
+  "sequence_rule": "Same date: increment N by 1. New date: reset N to 1.",
+  "module_revision_independent": true,
+  "requirements_document": "SignalAuto_Requirements_Management_rev57_V2.xlsx",
+  "same_day_next_package": "Signal_Export_V2_260827_2.zip",
+  "change_id": "CHG-057-001",
+  "recovery_sources": [
+    "ZIP filename",
+    "package_manifest.json",
+    "00_PACKAGE_NAMING_RULE.txt",
+    "SignalAuto_Requirements_Management_rev57_V2.xlsx / 09_배포패키지관리"
+  ],
+  "modules": [
+    {
+      "file": "Signal_Export_V2_Excel_Compat_rev_03.py",
+      "sha256": "95d9e38d5c45bea472e78d86ea6ba55014029fa95c87d454fc875787b65a6a86"
+    },
+    {
+      "file": "Signal_Export_V2_GUI_rev_23.pyw",
+      "sha256": "a9cdf156e7747e14c7171626fb17fa39870bbb2bd305fe59b43e2e89eda4a0d0"
+    },
+    {
+      "file": "Signal_Export_V2_Main_rev_15.py",
+      "sha256": "bf43da910dd90b1e4316c79273233660bf4e0b6d7e93a25dccbf0e21da761e34"
+    },
+    {
+      "file": "Signal_Export_V2_Report_rev_02.py",
+      "sha256": "36537761ba11f943a19bd48a20714179d8b7416acac8a1243df32c3754f41d61"
+    },
+    {
+      "file": "Signal_Export_V2_Step_1_BLF_to_ASC_rev_06.py",
+      "sha256": "c85f6dcfe736180160ee16eefb42af4fc3f21b6dcdd68ee9a79d83eb5d787854"
+    },
+    {
+      "file": "Signal_Export_V2_Step_2_Message_Group_rev_05.py",
+      "sha256": "c037e18a7b8054cc85d9ce906f7067a4fa16626abd0a2c50d0e0abc8f4f9634c"
+    },
+    {
+      "file": "Signal_Export_V2_Step_3_ASC_to_TXT_rev_04.py",
+      "sha256": "fd3f327c1a87ff1a535fab000504c551a5f77f0d128e61a4521c6b88c8bf7302"
+    },
+    {
+      "file": "Signal_Export_V2_Step_3_Global_ASC_to_TXT_rev_01.py",
+      "sha256": "1cc78ce4d3453189c95f99205c3f767a35c23551167f2d933ceda223a937a2f6"
+    },
+    {
+      "file": "Signal_Export_V2_Step_4_AI_Request_rev_05.py",
+      "sha256": "21cba36122c1eb5612d659ce01200f43abb12e9d3e2ee8e17e41c7f47f2214a5"
+    },
+    {
+      "file": "Signal_Export_V2_Step_5_AI_Signal_Select_rev_03.py",
+      "sha256": "e78ad611a0055a97316ce53a7b95fc1f26e82311d246c436ee99573426ecd18f"
+    },
+    {
+      "file": "Signal_Export_V2_Step_6_Signal_Detail_rev_04.py",
+      "sha256": "9bcf9db59930122b6a56ae38159c7152f66383fdfea94730477d9d83c488182f"
+    },
+    {
+      "file": "Signal_Export_V2_Step_7_Signal_Classification_rev_06.py",
+      "sha256": "f157defac67d8ed09a055b185c2207a7b8c0fb55d97c74fd91c5613ebe91ad28"
+    }
+  ],
+  "change_summary": "Add 12th CONNECT category for Connect UX TC review with exact TestCase sheet prefix, synchronized GUI/Main/Step1 detection, and curated Step2 include rules derived from existing categories",
+  "validation_notes": [
+    "All 12 Python/pyw files py_compile PASS",
+    "Main CONNECT config PASS: exact prefix/keywords, message_group_connect.txt, sender include=56, message-name include=36, TP/DEV exclude preserved",
+    "GUI xvfb PASS: CONNECT exposed in 12-category combo and exact prefix selected",
+    "GUI filename alias PASS: CONNECT/Connect/connect/커넥트/UX -> CONNECT; connected/블루 -> BLUELINK_CCS",
+    "Step1 synthetic filename normalization PASS for CONNECT/Connect/커넥트/UX; connected is not misclassified as CONNECT",
+    "Existing 11 Main CATEGORIES and Step1 CATEGORIES snapshots unchanged versus previous package",
+    "No real TestCase workbook integration run because the user did not upload the current workbook; exact prefix is wired as category_prefix/sheet_name input"
+  ]
+}

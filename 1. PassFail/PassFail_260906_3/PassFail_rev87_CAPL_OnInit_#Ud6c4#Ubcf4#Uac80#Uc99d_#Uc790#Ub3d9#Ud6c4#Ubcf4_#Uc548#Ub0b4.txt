@@ -1,0 +1,32 @@
+PassFail rev87 - CAPL OnInit / 후보 검증 / TC 자동후보 변경 안내
+
+1. 후보 검증은 DBC 정적 검사 전용
+- [후보 검증]은 Message/Signal/논리 CAN/ActiveValue/CRC·Alive sibling/CAPL payload 조건만 확인합니다.
+- 후보 검증 단계에서는 Vector COM 연결, Measurement Start/Stop, CAPL.GetFunction, 실제 write/output을 수행하지 않습니다.
+- 따라서 Bridge .can 파일을 아직 CANoe/CANalyzer에 넣지 않았더라도 DBC 후보가 유효하면 정적 검증은 완료될 수 있습니다.
+
+2. 실제 CAPL 함수 획득은 Measurement.OnInit
+- 실제 1회 테스트 worker가 자기 스레드에서 Vector COM에 연결합니다.
+- CAPL backend인 경우 실행 중 Measurement를 Stop한 뒤 OnInit event handler를 먼저 연결합니다.
+- Measurement Start -> OnInit 내부 CAPL.GetFunction(PF_TX_*_SETn / PF_TX_*_SEND) -> CAPLFunction registry -> 실제 Call/output 순서입니다.
+- Bridge 함수가 없으면 실제 실행 단계에서 어떤 PF_TX_* 함수가 누락됐는지 표시하고 차단합니다.
+
+3. Vector CAPL Bridge 준비 순서
+- [Vector CAPL Bridge 생성]으로 rev87 .can 파일 생성
+- 해당 CAN의 SEND/Simulation branch에 수동 삽입
+- Vector에서 Compile
+- PassFail [후보 검증]은 정적 확인
+- [후보 묶음 1회 테스트] 실행 시 worker가 Measurement를 재시작하며 OnInit에서 함수 획득
+
+4. 상단 TC 클릭 자동후보
+- 상단 TC 목록에서 입력조건 1개 TC를 클릭하면 기존 송신 가능성 정적분석 결과를 사용해 아래 4열을 자동 입력합니다.
+  CAN1<TAB>Message<TAB>Signal<TAB>ExpectedValue
+- 유일한 논리 CAN으로 확정되지 않으면 상태/실행 로그에 원인을 표시하며 실제 마우스 클릭에서는 팝업으로도 안내합니다.
+- TC 클릭만으로 Measurement나 실제 송신은 시작하지 않습니다.
+
+5. 유지되는 기존 정책
+- 단일/다중 TC 수행은 Observer/Judge(read-only) 역할 유지
+- 실제 Stimulus는 차량 송수신 테스트 탭 + oracle_checker_stimulus_rev87.py에만 격리
+- 다중 수행 자동 timeout 제거, 선택/PASS 행 음영, 전체검사 비동기 DBC cache, worker-owned COM 유지
+- Stimulus 원복/release 후 Measurement Stop 기본 ON 유지
+- CRC/Alive/Counter/E2E 자동계산 미지원 및 CAPL 송신 전 동일 Message 원 송신원 분리 확인 유지

@@ -1,0 +1,26 @@
+PassFail rev85 - TX/RX 전체 검사 성능 및 Stimulus COM 스레드 안정화
+
+1. 전체 가능성 검사
+- rev63: 각 TC마다 같은 DBC를 다시 로드하고 GUI 메인 스레드에서 순차 분석하여 TC가 많으면 창이 멈춘 것처럼 보일 수 있었음.
+- rev85: DBC mapping signature 기반 캐시를 사용하고 전체 검사는 background worker에서 수행함.
+- 동일 검사에서 DBC는 1회만 로드하며, 진행 상태는 20 TC 단위로 GUI에 표시함.
+
+2. 수동 후보 묶음 1회 테스트
+- rev63 원인: 후보 검증/Measurement Start는 GUI 스레드 COM 객체를 사용한 뒤, 실제 execute_group_once를 새 worker 스레드에서 같은 COM 객체로 호출함.
+- pywin32 COM 객체는 생성한 스레드와 다른 스레드에서 그대로 사용할 경우 is_connected()가 False가 되거나 COM 호출이 실패할 수 있음.
+- rev85: 실제 Stimulus worker가 자기 스레드에서 CANoe/CANalyzer에 새로 연결하고, Measurement 확인/Start → 실행 직전 재검증 → 실제 입력 → 원복까지 같은 worker에서 수행함.
+- [후보 검증] 결과는 fingerprint로 캐시하며, 후보 내용/DBC/Hold/Vector 제품 설정이 바뀌지 않았다면 [후보 묶음 1회 테스트] 버튼에서 무거운 검증을 GUI 스레드에서 다시 반복하지 않음.
+- 내용이 바뀌면 실행 대신 [후보 검증] 재실행을 요구함.
+
+3. 선택 TC 입력 1회 테스트
+- 동일한 COM 스레드 문제를 예방하기 위해 실제 execute_once도 worker-owned Vector connection으로 통일함.
+
+4. 이전 단일/다중 판정 종료 보호
+- 단일/다중 worker가 아직 종료 처리 중이면 실제 Stimulus 시작을 차단하고 종료 후 재시도하도록 안내함.
+- DBC 정적 분석인 [전체 가능성 검사]는 COM을 사용하지 않으므로 background에서 독립적으로 실행 가능함.
+
+5. 현장 확인 포인트
+- 전체 가능성 검사 클릭 후 창 이동/스크롤이 계속 가능한지 확인.
+- 실행 로그에 전체 검사 시작/완료 및 DBC load=1회가 표시되는지 확인.
+- 후보 검증 후 후보 묶음 1회 테스트 실행 시 Measurement가 실행 중인 상태에서 더 이상 "StimulusValidationError: Vector CANoe/CANalyzer 연결이 없습니다"가 발생하지 않는지 확인.
+- 실제 CANoe 19 SP5에서는 Trace와 차량 반응을 함께 확인.

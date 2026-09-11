@@ -1,0 +1,62 @@
+PassFail rev85 - 다중 버튼 / 차량 송수신 행 색상 Fix 안내
+==============================================================
+
+1. 다중 TC 수행
+- `전체 선택` 버튼: width=10 유지
+- `전체 선택 해제` 버튼: width=10 -> width=13
+  · rev76 대비 약 30% 확대
+  · 선택/해제 동작 로직은 변경하지 않음
+- 초록색 실행 버튼 문구:
+  · 기존 `선택 TC 다중 Start`
+  · rev85 `선택 Start`
+- 다중 실행 P/F/Measurement/로그 재검토 로직은 변경하지 않음
+
+2. 차량 송수신 테스트 - 체크/PASS/FAIL/N/A 행 색상 Fix
+현장 피드백:
+- 체크박스의 ☑ 표시는 정상적으로 바뀌지만 행 배경이 옅은 파란색으로 보이지 않음
+
+원인 가정:
+- Windows ttk Treeview theme에서 기본 normal-state background style map이
+  item tag background를 덮어쓸 수 있음
+
+rev85 조치:
+- 차량 송수신 Treeview에 전용 `TxRx.Treeview` style 적용
+- 기본 Treeview map 중 `!disabled + !selected` 강제 normal-state 색상 항목 제거
+- Treeview native selection/focus가 item tag를 덮지 않도록
+  selectmode=none / takefocus=False / selection_remove / focus clear 적용
+- 행 갱신 직후 update_idletasks()로 즉시 redraw
+
+표시 색상:
+- 체크된 TC : 옅은 파랑  #D6EAFE
+- PASS       : 옅은 초록  #D9F7DF
+- FAIL       : 옅은 빨강  #FADDDD
+- N/A        : 옅은 주황  #FFE7C2
+- ERROR/BLOCK: 빨강 계열
+- 결과 상태(PASS/FAIL/N/A/ERROR/BLOCK)가 체크 상태보다 우선
+
+3. 판정 로직 영향
+- 이번 변경은 Treeview 표시 경로만 수정
+- PASS/FAIL/N/A 판정 로직은 rev76과 동일
+- N/A = 출력 Signal sample 자체를 한 번도 읽지 못한 경우
+- FAIL = 출력 Signal은 읽혔으나 Expected 값에 도달하지 못한 경우
+
+4. 검증
+- 전체 Python/PYW 10개 py_compile
+- Xvfb GUI smoke:
+  · 전체 선택 width=10
+  · 전체 선택 해제 width=13
+  · 초록 버튼 text=`선택 Start`
+  · checked tag/background=#D6EAFE
+  · PASS tag/background=#D9F7DF
+  · FAIL tag/background=#FADDDD
+  · N/A tag/background=#FFE7C2
+  · native Treeview selection=없음
+- 1안 replacement 두 파일 삭제 사본:
+  · 기존 5개 탭 정상 실행
+  · 차량 송수신 테스트 유지
+  · 1안 탭만 제거
+
+5. 현장 확인 포인트
+- 차량 송수신 TC의 `선택` 칸을 클릭해 ☑로 바뀌는 즉시 행 전체가 옅은 파랑인지 확인
+- 자동 수행 후 PASS/FAIL/N/A 결과에 따라 초록/빨강/주황으로 바뀌는지 확인
+- 결과색이 적용된 상태에서 행 다른 열을 클릭해도 결과색이 유지되는지 확인

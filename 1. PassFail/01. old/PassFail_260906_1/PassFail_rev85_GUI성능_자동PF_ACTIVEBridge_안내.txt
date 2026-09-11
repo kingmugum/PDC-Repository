@@ -1,0 +1,240 @@
+PassFail rev85 - GUI 성능 / 차량송수신 자동 P/F / ACTIVE Bridge 안내
+===================================================================
+
+0. 이번 Revision의 목적
+----------------------
+rev85는 다음 세 가지를 한 번에 반영한 대규모 UI/자동화 Revision입니다.
+
+1) GUI 체감 렉과 화면 폭 문제 개선
+2) 차량 송수신 테스트(2안)를 간략화하고 여러 TC를 자동 Injection + Oracle P/F로 순차 수행
+3) CANoe CAPL Bridge 반복 수작업을 'ACTIVE Bridge' 방식으로 최대한 자동화
+
+※ 1안 Replacement/Inline Gateway 실험 탭은 rev73의 완전 분리 원칙을 그대로 유지합니다.
+   oracle_checker_gui_replacement_rev85.py + oracle_checker_replacement_rev85.py 두 파일을 삭제해도
+   기존 5개 탭은 정상 실행되도록 설계/검증했습니다.
+
+
+1. 전반 GUI 성능 개선
+--------------------
+[탭 전환]
+- Scrollable Notebook 탭의 레이아웃 재계산을 35ms debounce하여 Configure 이벤트 폭주를 줄였습니다.
+- 탭 전환 시 중앙에 작은 '화면 준비 중' 팝업과 녹색 진행 표시가 나타나고 완료 후 자동으로 사라집니다.
+
+[설정 > TC 목록 로드]
+- Oracle Excel/TC 조건 로드는 background worker에서 수행합니다.
+- 중앙에 작은 녹색 progress popup을 표시합니다.
+- 표시 %는 현재 parser가 행/byte 단위 callback을 제공하지 않으므로 '단계 기반 진행률'입니다.
+  즉 37%가 실제 Excel 37% 행 처리 완료라는 의미는 아니며, 현재 작업 단계를 직관적으로 보여주는 용도입니다.
+
+
+2. 단일 TC / 다중 TC 화면 폭 개선
+-------------------------------
+[단일 TC 수행]
+- 선택~보기 목록의 열 폭은 그대로 유지합니다.
+- 목록 viewport만 약 760px 수준으로 제한했습니다.
+- 목록 하단 내부 horizontal scrollbar로 오른쪽 열까지 이동할 수 있습니다.
+- 따라서 오른쪽 실행/상세 영역이 기본 화면에서 더 잘 보입니다.
+
+[다중 TC 수행]
+- 왼쪽 목록 viewport 약 760px, 오른쪽 실행 설정/상태 약 470px 기준으로 compact하게 구성했습니다.
+- 열 폭 자체는 줄이지 않고 내부 horizontal scrollbar를 유지합니다.
+- 실행 버튼 폭/간격도 줄였습니다.
+- 실행 설정과 선택 TC 상세 사이에 녹색 진행률 bar를 추가했습니다.
+- 준비 / Measurement / 관측 / 로그 선택 / 로그 검토 / 완료 등의 현재 단계를 함께 표시합니다.
+
+
+3. 차량 송수신 테스트(2안) GUI 간략화
+------------------------------------
+rev85부터 2안의 기본 사용자 흐름은 아래 세 단계입니다.
+
+  ① 상단에서 TC 1개 이상 체크
+  ② '테스트 실행 준비' 체크
+  ③ '선택 TC 자동 P/F 실행'
+
+상단 목록 열:
+- 선택
+- TC 번호
+- 소분류
+- 입력 송신 대상
+- 출력 감시 대상
+- PASS/FAIL
+- 자동 진단 요약
+
+제거한 visible 항목:
+- 자동화 방식 추천
+- 프리테스트 적합성
+- 다수의 전문가용 수동 후보/실험 기록 controls
+
+통합한 체크박스:
+- '테스트 실행 준비'
+  = 후보 검증
+  + 실험용 Stimulus 사용 인지
+  + CRC/Alive/Counter 경고 인지
+  + CAPL 실제 Frame 송신 인지
+
+중요:
+- 이 체크는 원 차량 송신원 차단(source isolation)을 의미하지 않습니다.
+- 2안은 기존 ECU sender가 살아 있을 수 있는 Injection 방식입니다.
+- CRC/Alive/Counter/E2E는 자동 계산하지 않습니다.
+
+
+4. AI 분석용 자동 로그
+--------------------
+차량 송수신 탭은 복잡한 수동 UI 대신 실행 세부 정보를 자동 로그에 남깁니다.
+
+기본 저장 위치:
+  <PassFail 실행 폴더>\txrx_logs\txrx_auto_YYYYMMDD_HHMMSS_rev85.log
+
+로그에는 다음 정보가 남습니다.
+- 2안 Injection 모드 여부
+- original sender가 살아 있을 수 있다는 한계
+- CRC/Alive/E2E auto-calc=False
+- 선택 TC / 입력 Message.Signal / Active 값 / Hold
+- CAPL backend / frame count / restore 결과
+- 각 출력 Expected의 hit/miss / last value / 최초 hit 시간
+- PASS / FAIL / ERROR와 전체 summary
+
+문제가 발생하면 해당 log를 GPT에 업로드하여 원인 분석용 증적으로 사용할 수 있습니다.
+
+
+5. rev85 차량 송수신 자동 P/F 판정
+---------------------------------
+rev85 최초 자동화 범위:
+- 안전 제외 TC가 아닐 것
+- 유효 TC일 것
+- 입력 조건 정확히 1개
+- 출력 조건 1개 이상
+- 입력/출력 Message.Signal이 DBC에서 확인될 것
+
+수행 방식:
+1) TC 입력 Signal을 CAPL Frame으로 송신
+2) Active Hold 중 약 40ms 간격으로 출력 Signal 관측
+3) Stimulus release 후 약 0.35초 추가 관측
+4) 모든 Output Expected가 각각 최소 1회 관측되면 PASS
+5) 일부 출력 미관측이면 FAIL
+6) Stimulus/원복/실행 오류는 ERROR
+7) 다음 선택 TC로 순차 진행
+
+예: 운전석 Seat Slide Forward
+입력:
+  PSS_DRV_FD_01_200ms : DPSS_StSldFwdMvBtn = 0x02
+
+출력 예:
+  PSeat_DrvSlideManualPlayCmd = 0x01
+  PSU_DRV_SlideFwdMtOutput    = 0x01
+
+두 출력이 각각 최소 1회 포착되면 rev85 2안 기준 PASS입니다.
+
+※ 이 PASS의 의미는 '외부 CAN Injection에 의해 기대 차량 기능 반응이 관측되었다'입니다.
+   '원래 버튼 ECU를 완전히 대체했다'는 의미가 아닙니다.
+
+rev85부터 모든 CAPL 입력은 DBC nominal cycle의 1/10 주기로 반복 송신합니다(최소 10ms).
+예: 200ms Message는 20ms, 100ms Message는 10ms입니다. 기존 송신원 차단/CRC 자동계산은 하지 않습니다.
+
+
+6. 여러 TC 자동 수행
+-------------------
+- 상단 체크박스로 여러 TC를 선택할 수 있습니다.
+- '선택 TC 자동 P/F 실행'을 누르면 목록 순서대로 하나씩 실행합니다.
+- 각 행의 PASS/FAIL 열이 실행 결과로 갱신됩니다.
+- 진행률 bar와 실행 로그에서 현재 TC/단계를 확인할 수 있습니다.
+- '중단/원복'을 누르면 stop_event를 요청하고 현재 Stimulus finally 원복 이후 종료합니다.
+
+주의:
+- rev85는 복합 입력 조건 TC를 임의로 해석하지 않습니다.
+- 입력 조건이 2개 이상인 TC는 '테스트 실행 준비' 단계에서 BLOCK합니다.
+- 복합 시퀀스/지속시간 판정은 후속 Revision에서 TC별 규칙으로 확장하는 것이 안전합니다.
+
+
+7. ACTIVE CAPL Bridge - 반복 수작업 최소화
+----------------------------------------
+rev71~73에서는 TC/후보가 바뀔 때 generated bridge 파일이 달라질 수 있어 CANoe Network Node의
+.can 경로를 사람이 다시 지정해야 하는 불편이 있었습니다.
+
+rev85는 고정 파일을 제공합니다.
+
+  PF_Stimulus_Bridge_CAN1_ACTIVE.can
+  PF_Stimulus_Bridge_CAN2_ACTIVE.can
+  PF_Stimulus_Bridge_CAN3_ACTIVE.can
+
+[최초 1회 - CAN1 예]
+1) CANoe Simulation Setup에서 CAN1의 실제 Network Node(예: ECU1)를 준비합니다.
+2) Node specification을 PassFail rev85 폴더의
+     PF_Stimulus_Bridge_CAN1_ACTIVE.can
+   에 연결합니다.
+3) Compile 성공 확인
+4) CANoe Configuration 저장
+
+[그 이후]
+PassFail rev85가 자동으로:
+1) 선택 TC용 generated bridge 생성
+2) 같은 CAN의 *_ACTIVE.can 내용 덮어쓰기
+3) 연결된 CANoe/CANalyzer의 기존 CAPL Node Compile 요청
+4) Measurement restart
+5) Measurement.OnInit에서 필요한 CAPL function binding
+6) Stimulus 실행 / 출력 관측 / PASS-FAIL 판정
+순서로 진행합니다.
+
+CAN2/CAN3를 실제 자동 송신에 사용할 경우에도 해당 ACTIVE 파일을 사용하는 Network Node를
+CAN별 최초 1회 만들어 두어야 합니다.
+
+
+8. 'Network Node 최초 생성'까지 완전 자동화하지 않은 이유
+------------------------------------------------------
+rev85는 CANoe Simulation Setup의 Network Node를 Python이 새로 생성하고 source path를 바꾸고
+configuration을 저장하는 UI 자동화를 넣지 않았습니다.
+
+이유:
+- 현재 안정적으로 사용 중인 COM 경로에서는 기존 CAPL Node의 Compile/Measurement/CAPL Function
+  호출 자동화에 집중하는 편이 안전합니다.
+- CANoe GUI 좌표/마우스/키보드를 강제로 조작하는 방식은 버전/창 배치에 취약하고 configuration을
+  잘못 건드릴 위험이 있습니다.
+
+따라서 'ACTIVE Node를 CAN별 최초 1회 연결'하는 작업만 사람에게 남기고,
+반복적으로 발생하는 bridge 생성/경로 변경/compile/binding 부분을 최대한 줄이는 구조를 채택했습니다.
+
+※ 실제 CANoe 19 SP5 환경에서 외부 ACTIVE 파일 덮어쓰기 후 COM Compile이 최신 파일을 바로 재반영하는지는
+   최초 현장 시험에서 확인해야 합니다. 만약 function bind가 실패하면 프로그램이 필요한 ACTIVE 경로를
+   명확히 출력하도록 했습니다.
+
+
+9. 1안 Replacement 완전 분리 유지
+--------------------------------
+rev85에서도 1안은 별도 두 파일입니다.
+
+  oracle_checker_gui_replacement_rev85.py
+  oracle_checker_replacement_rev85.py
+
+이 두 파일을 삭제하면:
+- '테스트용 P/F 차량 테스트 (1안)' 탭만 사라짐
+- 설정 / 단일 TC / 다중 TC / 결과 상세 / 차량 송수신 테스트(2안) = 기존 5탭 정상 유지
+
+rev85의 대규모 2안 변경은 1안에 의존하지 않습니다.
+1안은 여전히 Dry Run / topology validation only이며 실제 CAN blocking/forwarding을 수행하지 않습니다.
+
+
+10. 최초 현장 검증 권장 순서
+---------------------------
+처음부터 여러 TC를 한꺼번에 돌리지 말고 아래처럼 1개로 먼저 확인하는 것을 권장합니다.
+
+A. CANoe에서 최초 1회
+- CAN1 Network Node → PF_Stimulus_Bridge_CAN1_ACTIVE.can 연결
+- Compile
+- Configuration 저장
+
+B. PassFail rev85
+- 설정 → TC 목록 로드
+- 차량 송수신 테스트
+- Seat Slide Forward TC 1개만 체크
+- '테스트 실행 준비' 체크
+- '선택 TC 자동 P/F 실행'
+
+C. 확인
+- CANoe Trace Tx-only에서 PSS 0x3FB Active TX 확인
+- Seat가 까딱까딱하더라도 실제 전진 반응 확인
+- PSeat_DrvSlideManualPlayCmd = 0x01 관측
+- PSU_DRV_SlideFwdMtOutput = 0x01 관측
+- PassFail 상단 PASS/FAIL 열이 PASS로 갱신되는지 확인
+- txrx_logs의 자동 AI 로그 확인
+
+이 1개 TC가 정상 PASS되면 여러 TC 체크/순차 수행으로 확대합니다.

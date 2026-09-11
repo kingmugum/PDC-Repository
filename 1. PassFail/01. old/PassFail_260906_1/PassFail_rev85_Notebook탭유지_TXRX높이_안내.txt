@@ -1,0 +1,16 @@
+PassFail rev85 - Notebook 탭 유지 / TXRX 목록 높이 조정
+작성일: 2026-08-27
+
+1. 창 최대화/복원/리사이즈 시 선택 탭 유지
+- rev83 코드에는 `테스트용 P/F 차량 테스트 (1안)`을 창 최대화 시 직접 select하는 명령은 없었습니다.
+- 다만 모든 Notebook 탭이 Canvas 기반 scroll wrapper이고 1안 탭이 optional mixin에서 마지막으로 추가되는 구조라,
+  Windows ttk의 대량 <Configure> 재배치 시 선택 상태가 비의도 변경될 가능성을 방어할 필요가 있습니다.
+- rev85는 사용자가 탭 헤더를 클릭했거나 프로그램이 명시적으로 전환한 탭을 intended tab으로 저장합니다.
+- Top-level 창 Configure(maximize/restore/resize) 후 80ms debounce 시 현재 탭이 intended tab과 다르면 원래 탭으로 복원합니다.
+- 사용자가 직접 다른 탭을 클릭하거나 TC 목록 로드 완료 후 단일 TC 수행 탭으로 이동하는 정상 전환은 유지합니다.
+
+2. 차량 송수신 TC 목록 높이
+- rev83: Treeview height=24, TC당 2행이므로 약 12 TC 가시
+- rev85: Treeview height=20, TC당 2행이므로 약 10 TC 가시
+- 실제 가시 개수는 Windows theme/DPI에 따라 약간 달라질 수 있습니다.
+- 내부 세로 스크롤, 기대행+실제관측행 2행 구조, Shift 선택, 실행/판정/로그 기능은 변경하지 않습니다.
