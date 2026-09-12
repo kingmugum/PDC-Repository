@@ -1,8 +1,8 @@
 {
-  "package": "BoardRepo_260821_1.zip",
-  "release": "260821_1",
-  "technical_version": "0.23",
-  "created": "2026-08-21",
+  "package": "BoardRepo_260912_2.zip",
+  "release": "260912_2",
+  "technical_version": "0.25",
+  "created": "2026-09-12",
   "managed_target_id": 6,
   "requirements_excel_runtime_dependency": false,
   "managed_targets": [
@@ -11,151 +11,164 @@
     "WeeklyReport",
     "Ext",
     "GitManager",
-    "BoardRepo"
+    "BoardRepo",
+    "ALIRAManual",
+    "ALIRARuntime"
   ],
-  "weekly_report": {
-    "board": "/board/377",
-    "mode": "versioned_archive",
-    "package_prefixes": [
-      "WeeklyMailAgent",
-      "WeeklyReport"
-    ]
+  "governance": {
+    "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
+    "document_version": "v0.3",
+    "sha256": "9b69954425a97a5ca5871b5bd010e83e6937684aca2a672b958235f87d57140a"
   },
-  "backup_target_removed": true,
-  "ext_migration": {
-    "canonical": "4. Ext",
-    "legacy_alias": "3. Ext"
+  "alira_targets": {
+    "manual": {
+      "id": 7,
+      "board_name": "AI 스냅샷_ALIRA_매뉴얼",
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/394",
+      "board_url_status": "READY"
+    },
+    "runtime": {
+      "id": 8,
+      "board_name": "AI 스냅샷_ALIRA_구동",
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/395",
+      "board_url_status": "READY"
+    }
   },
   "files": [
     {
-      "path": "6. BoardRepo/BoardRepo_Requirements_v0_23.xlsx",
-      "size": 120009,
-      "sha256": "c011d0a21062f26536bd4837e79d70941dfc3ceaa74682ca51553345122e83d4"
+      "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
+      "size": 39671,
+      "sha256": "9b69954425a97a5ca5871b5bd010e83e6937684aca2a672b958235f87d57140a"
     },
     {
-      "path": "6. BoardRepo/current/BoardRepo.pyw",
+      "path": "BoardRepo_Requirements_v0_25.xlsx",
+      "size": 127395,
+      "sha256": "aa0d15d76831df300c54c42d73ea71f292bc08cdd0616e34564c0d46a79750fd"
+    },
+    {
+      "path": "MANUAL.txt",
+      "size": 420,
+      "sha256": "bcf38eebc5c5af7d2d7ec8877425bdfef7e18077aede822af3a3a0a6f569ddfc"
+    },
+    {
+      "path": "PACKAGE_INFO.txt",
+      "size": 534,
+      "sha256": "fd6f4f88395425a533898de492a5f1a0bf193128a983b99ae4bd09023d4d8061"
+    },
+    {
+      "path": "SELF_TEST_RESULTS.txt",
+      "size": 415,
+      "sha256": "96a724cd9f65f6999e061afcbd3112fda99126a8cb2914ec950ece490c51283f"
+    },
+    {
+      "path": "current/BoardRepo.pyw",
       "size": 935,
       "sha256": "2d55440b46d5de84134cef2b4181f64199ca72da8a39e0e0780a3b6bab149f7d"
     },
     {
-      "path": "6. BoardRepo/current/config.json",
-      "size": 10305,
-      "sha256": "c28f8158ca7a0a02bb67a5920e88d0fb78c58a2b18a58461c9246a482e6633ff"
+      "path": "current/config.json",
+      "size": 12537,
+      "sha256": "58838c4aa81e3f9b181f3ab4642c29e376753b28bca04e2172d92424ee3db1ef"
     },
     {
-      "path": "6. BoardRepo/current/function/archive_selector.py",
+      "path": "current/function/archive_selector.py",
       "size": 11265,
       "sha256": "50c257b518cde1afd3c175dc3b9a3f8442ea4b3483d88fcfcc308843e96ea062"
     },
     {
-      "path": "6. BoardRepo/current/function/board_post_navigation.py",
+      "path": "current/function/board_post_navigation.py",
       "size": 9366,
       "sha256": "3a15056ab5a936b96ae3cd133f9ca322c9e3a934d9014b49d7e2e61770dc0e26"
     },
     {
-      "path": "6. BoardRepo/current/function/boardrepo.py",
-      "size": 53193,
-      "sha256": "093e878dadfab16767902ca462aba62eca4ae96a5a104c4498756aa8d808591f"
+      "path": "current/function/boardrepo.py",
+      "size": 53969,
+      "sha256": "aacc7f14a39c227bae6f95824a66382708b8e98f8ce934f9e2cc0cfb7da1c5b9"
     },
     {
-      "path": "6. BoardRepo/current/function/boardrepo_tab.py",
-      "size": 50125,
-      "sha256": "bcfced28b42dbf9e7c105cf6112c5f5719c10151eb62945acc7908ecf995dc7e"
+      "path": "current/function/boardrepo_tab.py",
+      "size": 50935,
+      "sha256": "87ae6c675e1b49f76d2029c6aace964f4bd16bb2f21944546c820718b77b0087"
     },
     {
-      "path": "6. BoardRepo/current/function/browser_automation.py",
+      "path": "current/function/browser_automation.py",
       "size": 68490,
       "sha256": "fe86b0d177b61637ec49fdbd79a2d65e22421fd0eb0ae6b44c5e3e7a2d9f836a"
     },
     {
-      "path": "6. BoardRepo/current/function/browser_download.py",
+      "path": "current/function/browser_download.py",
       "size": 50412,
       "sha256": "f0434b692ece9f5b37d6b816b0bd833af1993d6eb1c506c65c28a30f54c26267"
     },
     {
-      "path": "6. BoardRepo/current/function/browser_runtime.py",
+      "path": "current/function/browser_runtime.py",
       "size": 8823,
       "sha256": "648f95a14de3522dee2f6e015806a2996e2300c6b72d530ec60d0af07b2af648"
     },
     {
-      "path": "6. BoardRepo/current/function/credential_store.py",
+      "path": "current/function/credential_store.py",
       "size": 1179,
       "sha256": "0bbd0be162643dcbcedbf8c144735616e9175edb2bcc7fbc40397968143608d9"
     },
     {
-      "path": "6. BoardRepo/current/function/duplicate_checker.py",
+      "path": "current/function/duplicate_checker.py",
       "size": 24504,
       "sha256": "0b9e796142c5c9d37e4b600c1e3d96b4dbf36090c3c91ee4258e24d50efa8264"
     },
     {
-      "path": "6. BoardRepo/current/function/environment_manager.py",
+      "path": "current/function/environment_manager.py",
       "size": 16091,
       "sha256": "9df7224f7313cb141fa2629c05c2562630a232fbac91afadd1973eda42d9fdd7"
     },
     {
-      "path": "6. BoardRepo/current/function/ext_file_manager.py",
+      "path": "current/function/ext_file_manager.py",
       "size": 1868,
       "sha256": "40b44cc6d965195bda46959f6b73dd37df100d7a7f97bd237c260eae6f2a9df6"
     },
     {
-      "path": "6. BoardRepo/current/function/folder_resolver.py",
+      "path": "current/function/folder_resolver.py",
       "size": 2409,
       "sha256": "b71252a95f331be1659d6920b31f55b4aae5b1f78e68d1b9d732531d09d071af"
     },
     {
-      "path": "6. BoardRepo/current/function/package_release.py",
+      "path": "current/function/package_release.py",
       "size": 1013,
       "sha256": "8b78fb1ef834192413146231c42d7a9d3ff049c02e82d0b14f7d08e087b20343"
     },
     {
-      "path": "6. BoardRepo/current/function/site_profile.py",
+      "path": "current/function/site_profile.py",
       "size": 1003,
       "sha256": "320e41399e4ccd38abe585209d012dbef6a6dc1cac72bd46b080906fe0d04d03"
     },
     {
-      "path": "6. BoardRepo/current/function/snapshot.py",
+      "path": "current/function/snapshot.py",
       "size": 2666,
       "sha256": "a37a92edfd52900301b230140aa9443ad2be00e7c8dc01a86705ddea0d85fe82"
     },
     {
-      "path": "6. BoardRepo/current/offline_packages/README.txt",
+      "path": "current/offline_packages/README.txt",
       "size": 1170,
       "sha256": "de2c9f99da600eab361e128c8a1fce164763e5277379f661339d21ffd5748f07"
     },
     {
-      "path": "6. BoardRepo/current/offline_packages/windows_x64/.gitkeep",
+      "path": "current/offline_packages/windows_x64/.gitkeep",
       "size": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "6. BoardRepo/current/offline_requirements_windows.txt",
+      "path": "current/offline_requirements_windows.txt",
       "size": 178,
       "sha256": "f3c8cf9171c73215d5089bc3698b727f1f26ec5100ad8ff0e6569fbd0f676a0f"
     },
     {
-      "path": "6. BoardRepo/current/requirements.txt",
+      "path": "current/requirements.txt",
       "size": 31,
       "sha256": "529a500530cbd43cfbed8af0efedaf9564beddfc2dfaf580f794ce6445fe7af8"
     },
     {
-      "path": "6. BoardRepo/current/site_profile.json",
+      "path": "current/site_profile.json",
       "size": 10277,
       "sha256": "09d917fdae911a5f08c62cf44e5c33aab238d8ef7a248e869c1541d8eb91d67a"
-    },
-    {
-      "path": "6. BoardRepo/MANUAL.txt",
-      "size": 1277,
-      "sha256": "a989aa10bf8f49286be111348795035da1f44527a480a3ff880adc00d5bd02f6"
-    },
-    {
-      "path": "6. BoardRepo/PACKAGE_INFO.txt",
-      "size": 1011,
-      "sha256": "7edc00cea3f54aaf087d5a8edd742dfd8ab8e2856533c90dbe9bb86886602277"
-    },
-    {
-      "path": "6. BoardRepo/SELF_TEST_RESULTS.txt",
-      "size": 1286,
-      "sha256": "307f03829405de572e3e1bf69d6a7f8c02dcf05d25c9076c2529f81532b883a2"
     }
   ]
 }

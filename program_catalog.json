@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "260821_1",
+  "release": "260912_1",
   "targets": [
     {
       "id": 1,
@@ -149,6 +149,59 @@
         "BoardRepo"
       ],
       "recommended_filename": "BoardRepo_YYMMDD_N.zip"
+    },
+    {
+      "id": 7,
+      "key": "ALIRAManual",
+      "display_name": "ALIRA_Manual",
+      "ui_label": "7. ALIRA 매뉴얼",
+      "folder": "7. ALIRA 매뉴얼",
+      "aliases": [
+        "7. ALIRA 매뉴얼",
+        "7. ALIRA Manual",
+        "ALIRA Manual",
+        "ALIRA_Manual",
+        "ALIRA 매뉴얼",
+        "7. ALIRA_매뉴얼",
+        "ALIRA매뉴얼"
+      ],
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/394",
+      "board_name": "AI 스냅샷_ALIRA_매뉴얼",
+      "mode": "versioned_archive",
+      "archive_strategy": "date_counter_release",
+      "package_prefixes": [
+        "ALIRA_Manual"
+      ],
+      "recommended_filename": "ALIRA_Manual_YYMMDD_N.zip",
+      "configuration_status": "READY"
+    },
+    {
+      "id": 8,
+      "key": "ALIRARuntime",
+      "display_name": "ALIRA_Runtime",
+      "ui_label": "8. ALIRA 구동",
+      "folder": "8. ALIRA 구동",
+      "aliases": [
+        "8. ALIRA 구동",
+        "8. ALIRA Runtime",
+        "ALIRA Runtime",
+        "ALIRA_Runtime",
+        "ALIRA 구동",
+        "8. ALIRA_구동",
+        "ALIRA구동",
+        "ALIRA Tools",
+        "ALIRA_Tools"
+      ],
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/395",
+      "board_name": "AI 스냅샷_ALIRA_구동",
+      "mode": "versioned_archive",
+      "archive_strategy": "date_counter_release",
+      "package_prefixes": [
+        "ALIRA_Runtime",
+        "ALIRA_Tools"
+      ],
+      "recommended_filename": "ALIRA_Runtime_YYMMDD_N.zip",
+      "configuration_status": "READY"
     }
   ],
   "automation_manager": {
@@ -170,7 +223,9 @@
         "WeeklyReport": "recursive",
         "Ext": "recursive",
         "GitManager": "root_only",
-        "BoardRepo": "root_only"
+        "BoardRepo": "root_only",
+        "ALIRAManual": "root_only",
+        "ALIRARuntime": "root_only"
       },
       "local_files_take_precedence": true,
       "automatic_push": false,
@@ -180,5 +235,14 @@
       "tree_alias_compare_case_insensitive": true,
       "automatic_case_only_rename": false
     }
+  },
+  "governance": {
+    "required": true,
+    "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
+    "minimum_document_version": "v0.3",
+    "carry_forward_on_release": true,
+    "manifest_sha256_required": true,
+    "development_baseline": true,
+    "requirements_authority_note": "기능 요구사항의 최종 기준은 각 프로젝트 최신 승인 Requirements이며 Governance는 공통 개발 절차/AI 행동 통제 및 프로젝트 고유 운영 규칙을 정의한다."
   }
 }

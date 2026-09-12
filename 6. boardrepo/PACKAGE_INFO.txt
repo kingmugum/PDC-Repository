@@ -1,26 +1,13 @@
-BoardRepo Package Release
-=========================
-Package Release   : BoardRepo_260821_1
-Technical Version : v0.23
-Date              : 2026-08-21
-Primary GUI       : Automation_Manager.pyw > BoardRepo tab
-Standalone GUI    : 6. BoardRepo/current/BoardRepo.pyw
-Requirements      : BoardRepo_Requirements_v0_23.xlsx
+BoardRepo Package Information
+=============================
+Package Release   : BoardRepo_260912_2
+Technical Version : v0.25
+Package rule      : BoardRepo_YYMMDD_N.zip
+Requirements      : BoardRepo_Requirements_v0_25.xlsx
+Governance        : 00_AI_DEVELOPMENT_GOVERNANCE.md v0.3 (ALM/ALR Profile v0.2)
 
-Managed targets
----------------
-1. PassFail       -> board/374
-2. SignalExport   -> board/375
-3. WeeklyReport   -> board/377 (AI 스냅샷_주간보고)
-4. Ext            -> board/376
-5. Git Manager    -> board/392
-6. BoardRepo      -> board/393
-
-260821_1 / v0.23
-----------------
-- Backup target/4. Backup/backup_file_manager 제거
-- board/377을 WeeklyReport 전용 versioned target으로 전환
-- WeeklyReport package alias: WeeklyMailAgent, WeeklyReport
-- Ext canonical 폴더를 4. Ext로 변경하고 legacy 3. Ext alias 유지
-- board/377의 과거 [BoardRepo][Backup] 글은 WeeklyReport 후보에서 제외
-- versioned_archive download dispatch를 catalog mode 기반으로 일반화
+260912_2 changes
+- 7.ALIRA 매뉴얼 -> board/394 활성화
+- 8.ALIRA 구동 -> board/395 활성화
+- Automation Manager outer ZIP Unicode folder entry 결함 수정
+- 기존 Browser/DEXT5/Ext SHA/상세 Ready 엔진 회귀 보존

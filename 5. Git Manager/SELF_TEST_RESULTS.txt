@@ -1,18 +1,8 @@
-Automation Manager 260821_1 Self Test Results
-===============================================
-
-PASS - Python source compileall
-PASS - program_catalog target order: 1 PassFail / 2 SignalExport / 3 WeeklyReport / 4 Ext / 5 GitManager / 6 BoardRepo
-PASS - WeeklyReport board/377 + versioned_archive + WeeklyMailAgent/WeeklyReport package aliases
-PASS - Ext board/376 + canonical 4. Ext + legacy 3. Ext alias
-PASS - BoardRepo Runtime Backup target/config/module/branch references removed
-PASS - WeeklyReport direct-folder selection ignores 01. old subfolder
-PASS - board/377 legacy [BoardRepo][Backup] title is ignored by WeeklyReport candidate parser
-PASS - generic catalog mode versioned download selects newest WeeklyReport YYMMDD_N
-PASS - Git self-bootstrap migration restores remote 3. Ext into local 4. Ext
-PASS - Git self-bootstrap does not hydrate remote 4. Backup into WeeklyReport/Ext
-PASS - Automation Manager remains non-managed target (no target 7)
-PASS - Git safety baseline retained: ff-only / no force / no auto merge / no auto push on recovery
-PASS - BoardRepo browser safety baseline retained: Chromium first / Edge fallback / no security bypass
-PASS - Requirements formula scan: 0 errors (final workbooks)
-PASS - Requirement conflict analysis: all new conflicts RESOLVED
+Git Manager 260912_2 Self Test Results
+======================================
+PASS - target 1~8 catalog
+PASS - ALIRA routing metadata board/394 / board/395
+PASS - Unicode canonical path handling
+PASS - current-folder Git recovery preserved
+PASS - ff-only / no-force / no-auto-conflict policies preserved
+PASS - Governance carry-forward

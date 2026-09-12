@@ -107,7 +107,7 @@ class BoardRepoFrame(ttk.Frame):
         ttk.Label(header, text="BoardRepo", font=("Segoe UI", 18, "bold")).pack(side="left")
         ttk.Label(
             header,
-            text="그룹웨어 게시판 ↔ 1~6 공용 폴더 업로드/다운로드",
+            text="그룹웨어 게시판 ↔ catalog 공용 대상 업로드/다운로드",
         ).pack(side="left", padx=(12, 0), pady=(6, 0))
 
         env_area = ttk.Frame(header)
@@ -126,7 +126,7 @@ class BoardRepoFrame(ttk.Frame):
         ttk.Separator(root).pack(fill="x", pady=10)
         ttk.Label(
             root,
-            text="대상 선택은 창 상단의 공통 1~6 체크박스를 사용합니다. 5=Git 게시판(board/392), 6=보드관리(board/393).",
+            text="대상 선택은 창 상단의 공통 체크박스를 사용합니다. URL 미설정 대상은 안전하게 확인 필요로 처리됩니다.",
         ).pack(anchor="w")
 
         actions = ttk.Frame(root)
@@ -365,6 +365,13 @@ class BoardRepoFrame(ttk.Frame):
         """
         target = self.config_data["targets"][key]
         display_name = target["display_name"]
+        board_url = str(target.get("board_url") or "").strip()
+        if not board_url:
+            board_name = target.get("board_name") or display_name
+            raise ValueError(
+                f"게시판 URL이 아직 설정되지 않았습니다: {board_name}. "
+                "실제 게시판 URL을 확인한 뒤 program_catalog.json에 등록해주세요."
+            )
         folder = resolve_target_folder(self.workspace_root, target["folder_aliases"])
         plan: list[UploadPlanItem] = []
 
@@ -525,10 +532,9 @@ class BoardRepoFrame(ttk.Frame):
         common_stop: bool = False,
     ) -> str:
         """
-        Build the compact four-checkbox summary shown at the top of problem popups.
+        Build the compact catalog-target summary shown at the top of problem popups.
 
-        All four canonical targets are listed. Unchecked targets are shown as
-        '미선택' so the popup mirrors the GUI checkbox area.
+        All catalog targets are listed. Unchecked targets are shown as '미선택'.
         """
         lines = ["[체크박스 실행 결과 요약]"]
 
@@ -976,6 +982,13 @@ class BoardRepoFrame(ttk.Frame):
         for key in selected:
             target = self.config_data["targets"][key]
             try:
+                board_url = str(target.get("board_url") or "").strip()
+                if not board_url:
+                    board_name = target.get("board_name") or target["display_name"]
+                    raise FolderResolutionError(
+                        f"게시판 URL이 아직 설정되지 않았습니다: {board_name}. "
+                        "실제 게시판 URL을 확인한 뒤 program_catalog.json에 등록해주세요."
+                    )
                 folder = resolve_target_folder(
                     self.workspace_root,
                     target["folder_aliases"],

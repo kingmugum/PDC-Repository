@@ -30,7 +30,9 @@ def boardrepo_targets_from_catalog(catalog: dict) -> dict[str, dict]:
         item = {
             "display_name": t["display_name"],
             "ui_label": t["ui_label"],
-            "board_url": t["board_url"],
+            "board_url": t.get("board_url", ""),
+            "board_name": t.get("board_name", ""),
+            "configuration_status": t.get("configuration_status", "READY" if t.get("board_url") else "TBD_BOARD_URL"),
             "folder_aliases": list(t.get("aliases") or [t["folder"]]),
             "package_aliases": list(t.get("package_prefixes") or t.get("aliases") or [t["folder"]]),
             "mode": mode,

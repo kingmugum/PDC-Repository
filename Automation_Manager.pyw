@@ -12,20 +12,22 @@ for path in [COMMON_DIR, GIT_DIR, BOARD_FUNCTION_DIR]:
     sys.path.insert(0, str(path))
 
 from catalog import load_catalog
+from governance_guard import check_governance
 from work_lock import OperationLock
 from git_manager import GitManagerFrame
 from boardrepo_tab import BoardRepoFrame
 
-APP_RELEASE = "260821_1"
+APP_RELEASE = "260912_1"
 
 
 class AutomationManager(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title(f"Automation Manager {APP_RELEASE}")
-        self.geometry("1220x860")
-        self.minsize(1040, 720)
+        self.geometry("1320x900")
+        self.minsize(1080, 760)
         self.catalog = load_catalog(ROOT / "program_catalog.json")
+        self.governance_status = check_governance(ROOT, self.catalog)
         self.operation_lock = OperationLock()
         self.target_vars = {
             t["key"]: tk.BooleanVar(value=False)
@@ -49,21 +51,32 @@ class AutomationManager(tk.Tk):
             root,
             text=(
                 "통합 GUI만 공유하며 Git Manager와 BoardRepo 엔진은 분리되어 있습니다. "
-                "Automation Manager 자체는 7번째 관리 대상이 아닙니다."
+                "Automation Manager 자체는 별도 관리 Target으로 중복 등록하지 않습니다."
             ),
-        ).pack(anchor="w", pady=(4, 8))
+        ).pack(anchor="w", pady=(4, 4))
+        ttk.Label(
+            root,
+            text=(
+                ("개발 기준: " + self.governance_status.message)
+                if self.governance_status.ok
+                else ("개발 기준 확인 필요: " + self.governance_status.message)
+            ),
+        ).pack(anchor="w", pady=(0, 8))
 
         select = ttk.LabelFrame(root, text="공통 관리 대상 (Git Manager / BoardRepo 탭 공용)", padding=10)
         select.pack(fill="x")
 
         checks = ttk.Frame(select)
         checks.pack(fill="x")
-        for t in self.catalog["targets"]:
+        for index, t in enumerate(self.catalog["targets"]):
+            label = t["ui_label"]
+            if not str(t.get("board_url") or "").strip():
+                label += " (URL 설정 필요)"
             ttk.Checkbutton(
                 checks,
-                text=t["ui_label"],
+                text=label,
                 variable=self.target_vars[t["key"]],
-            ).pack(side="left", padx=(0, 15))
+            ).grid(row=index // 4, column=index % 4, sticky="w", padx=(0, 18), pady=2)
 
         buttons = ttk.Frame(select)
         buttons.pack(fill="x", pady=(8, 0))
@@ -71,7 +84,10 @@ class AutomationManager(tk.Tk):
         ttk.Button(buttons, text="전체 해제", command=self.clear_all).pack(side="left", padx=(6, 0))
         ttk.Label(
             buttons,
-            text="3. WeeklyReport → board/377 · 4. Ext → board/376 · 5. Git Manager → board/392 · 6. BoardRepo → board/393",
+            text=(
+                "3. WeeklyReport→377 · 4. Ext→376 · 5. Git Manager→392 · 6. BoardRepo→393 · "
+                "7.ALIRA 매뉴얼→board/394 · 8.ALIRA 구동→board/395"
+            ),
         ).pack(side="left", padx=(18, 0))
 
         notebook = ttk.Notebook(root)

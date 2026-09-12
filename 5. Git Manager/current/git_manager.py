@@ -18,7 +18,7 @@ from catalog import load_catalog, target_map
 from release_rules import latest_release, parse_release_name
 
 APP_NAME = "Git Manager"
-APP_VERSION = "260821_1"
+APP_VERSION = "260912_1"
 VERSION_RE = re.compile(r"^(?P<date>\d{6})_(?P<num>\d+)$")
 CONFIG_DIR = Path.home() / ".pdc_git_manager"
 CONFIG_FILE = CONFIG_DIR / "projects.json"
@@ -594,7 +594,7 @@ class GitManagerFrame(ttk.Frame):
         header = ttk.Frame(self)
         header.pack(fill="x")
         ttk.Label(header, text="Git Manager", font=("Segoe UI", 18, "bold")).pack(side="left")
-        ttk.Label(header, text="Git 기반 Repository 동기화 · 1~6 대상 상태 확인", font=("Segoe UI", 10)).pack(side="left", padx=(12, 0), pady=(6, 0))
+        ttk.Label(header, text="Git 기반 Repository 동기화 · catalog 전체 대상 상태 확인", font=("Segoe UI", 10)).pack(side="left", padx=(12, 0), pady=(6, 0))
 
         repo_line = ttk.Frame(self)
         repo_line.pack(fill="x", pady=(10, 6))
@@ -768,7 +768,7 @@ class GitManagerFrame(ttk.Frame):
             f"Branch: {branch}\n\n"
             "안전 정책\n"
             "- 현재 로컬 파일은 덮어쓰지 않습니다.\n"
-            "- 원격에만 있는 1~6 보존 자료는 필요한 범위에서 복원합니다.\n"
+            "- 원격에만 있는 catalog 관리대상 보존 자료는 필요한 범위에서 복원합니다.\n"
             "- 5/6 current 런타임은 현재 압축본을 우선합니다.\n"
             "- 자동 Commit/Push는 하지 않습니다.\n"
             "- 연결 실패 시 이번 작업이 만든 .git을 제거하여 원상복구합니다.",
@@ -1036,7 +1036,7 @@ class GitManagerFrame(ttk.Frame):
             self.repo_info_var.set(
                 f"{repo} | branch={branch} | {div_text} | origin={origin or '-'} | AM {release_text}"
             )
-            self.log(f"1~6 상태 확인 완료: {len(rows)}개 대상")
+            self.log(f"관리대상 상태 확인 완료: {len(rows)}개 대상")
             self.log(f"Automation Manager Release 비교: {release_text}")
 
         self._run_locked("Git 상태 확인", work, done)

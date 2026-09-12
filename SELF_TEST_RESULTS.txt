@@ -1,18 +1,12 @@
-Automation Manager 260821_1 Self Test Results
-===============================================
-
-PASS - Python source compileall
-PASS - program_catalog target order: 1 PassFail / 2 SignalExport / 3 WeeklyReport / 4 Ext / 5 GitManager / 6 BoardRepo
-PASS - WeeklyReport board/377 + versioned_archive + WeeklyMailAgent/WeeklyReport package aliases
-PASS - Ext board/376 + canonical 4. Ext + legacy 3. Ext alias
-PASS - BoardRepo Runtime Backup target/config/module/branch references removed
-PASS - WeeklyReport direct-folder selection ignores 01. old subfolder
-PASS - board/377 legacy [BoardRepo][Backup] title is ignored by WeeklyReport candidate parser
-PASS - generic catalog mode versioned download selects newest WeeklyReport YYMMDD_N
-PASS - Git self-bootstrap migration restores remote 3. Ext into local 4. Ext
-PASS - Git self-bootstrap does not hydrate remote 4. Backup into WeeklyReport/Ext
-PASS - Automation Manager remains non-managed target (no target 7)
-PASS - Git safety baseline retained: ff-only / no force / no auto merge / no auto push on recovery
-PASS - BoardRepo browser safety baseline retained: Chromium first / Edge fallback / no security bypass
-PASS - Requirements formula scan: 0 errors (final workbooks)
-PASS - Requirement conflict analysis: all new conflicts RESOLVED
+Automation Manager 260912_2 Self Test Results
+==============================================
+PASS - Target 1~8 catalog load
+PASS - 7.ALIRA 매뉴얼 canonical folder exists
+PASS - 8.ALIRA 구동 canonical folder exists
+PASS - ALIRA Manual exact board URL = board/394
+PASS - ALIRA Runtime exact board URL = board/395
+PASS - Governance v0.3 carry-forward / ALM·ALR Profile v0.2
+PASS - Python source compile
+PASS - outer ZIP UTF-8 filename flag for Korean paths
+PASS - extracted folder names exactly preserve 7.ALIRA 매뉴얼 / 8.ALIRA 구동
+PASS - no __pycache__/pyc in distribution

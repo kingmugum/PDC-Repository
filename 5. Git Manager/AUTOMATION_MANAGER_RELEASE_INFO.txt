@@ -1,33 +1,9 @@
-Automation Manager Release
-==========================
-Release        : 260821_1
-Distribution   : Automation_Manager_260821_1.zip
-Owner target   : 5. Git Manager (Core/Launcher release ownership)
-Managed target : NO (Automation Manager is not target 7)
-
-Current managed targets
------------------------
-1. PassFail       -> board/374
-2. SignalExport   -> board/375
-3. WeeklyReport   -> board/377 (AI 스냅샷_주간보고)
-4. Ext            -> board/376
-5. Git Manager    -> board/392
-6. BoardRepo      -> board/393
-
-Key change
-----------
-기존 Backup target을 제거하고 board/377을 WeeklyReport 전용으로 전환했습니다.
-Ext는 3번에서 4번으로 이동하되 legacy 3. Ext Git/로컬 alias를 유지합니다.
-WeeklyReport는 WeeklyMailAgent_YYMMDD_N / WeeklyReport_YYMMDD_N versioned Release를 관리합니다.
-
-Standard recovery
------------------
-최신 Automation Manager ZIP 하나 -> 압축 해제 -> 실행 -> [현재 폴더 Git 연결/복구].
-기본 origin/main은 program_catalog.json에서 자동 사용됩니다.
-원격 기존 3. Ext 자료는 신규 4. Ext로 승계할 수 있지만 과거 4. Backup 자료는 WeeklyReport로 자동 변환하지 않습니다.
-
-Requirements
-------------
-Automation_Manager_Requirements_260821_1.xlsx
-GitManager_Requirements_260821_1.xlsx
-BoardRepo_Requirements_v0_23.xlsx (BoardRepo Package Release 260821_1 / Technical v0.23)
+Automation Manager Integration Release
+======================================
+Automation Manager : Automation_Manager_260912_2.zip
+Git Manager        : GitManager_260912_2.zip
+BoardRepo          : BoardRepo_260912_2.zip
+Targets            : 1~8
+ALIRA Manual       : board/394
+ALIRA Runtime      : board/395
+Governance         : 00_AI_DEVELOPMENT_GOVERNANCE.md v0.3

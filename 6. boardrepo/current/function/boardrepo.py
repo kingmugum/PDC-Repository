@@ -512,6 +512,13 @@ class BoardRepoApp(tk.Tk):
         """
         target = self.config_data["targets"][key]
         display_name = target["display_name"]
+        board_url = str(target.get("board_url") or "").strip()
+        if not board_url:
+            board_name = target.get("board_name") or display_name
+            raise ValueError(
+                f"게시판 URL이 아직 설정되지 않았습니다: {board_name}. "
+                "실제 게시판 URL을 확인한 뒤 config.json에 등록해주세요."
+            )
         folder = resolve_target_folder(APP_ROOT, target["folder_aliases"])
         plan: list[UploadPlanItem] = []
 
@@ -672,10 +679,9 @@ class BoardRepoApp(tk.Tk):
         common_stop: bool = False,
     ) -> str:
         """
-        Build the compact four-checkbox summary shown at the top of problem popups.
+        Build the compact catalog-target summary shown at the top of problem popups.
 
-        All four canonical targets are listed. Unchecked targets are shown as
-        '미선택' so the popup mirrors the GUI checkbox area.
+        All catalog targets are listed. Unchecked targets are shown as '미선택'.
         """
         lines = ["[체크박스 실행 결과 요약]"]
 
@@ -1123,6 +1129,13 @@ class BoardRepoApp(tk.Tk):
         for key in selected:
             target = self.config_data["targets"][key]
             try:
+                board_url = str(target.get("board_url") or "").strip()
+                if not board_url:
+                    board_name = target.get("board_name") or target["display_name"]
+                    raise FolderResolutionError(
+                        f"게시판 URL이 아직 설정되지 않았습니다: {board_name}. "
+                        "실제 게시판 URL을 확인한 뒤 config.json에 등록해주세요."
+                    )
                 folder = resolve_target_folder(
                     APP_ROOT,
                     target["folder_aliases"],

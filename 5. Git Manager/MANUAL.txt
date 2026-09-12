@@ -1,28 +1,9 @@
-Git Manager 260821_1 간단 매뉴얼
+Git Manager 260912_1 간단 매뉴얼
 ================================
-
-[표준 복구]
-1. 최신 Automation_Manager_YYMMDD_N.zip을 받습니다.
-2. 원하는 위치에 압축을 풉니다.
-3. Automation_Manager.pyw를 실행합니다.
-4. Git Manager 탭의 [현재 폴더 Git 연결/복구]를 누릅니다.
-5. program_catalog.json의 origin/main을 자동 사용합니다.
-6. 현재 폴더 자체에 기존 Git 이력이 연결되며 자동 Push는 하지 않습니다.
-
-[현재 관리대상]
-1. PassFail
-2. SignalExport
-3. WeeklyReport
-4. Ext
-5. Git Manager
-6. BoardRepo
-
-[260821_1 마이그레이션]
-- 기존 3. Ext 자료는 4. Ext로 승계할 수 있습니다.
-- 기존 4. Backup target은 제거되었습니다.
-- 기존 4. Backup 자료는 WeeklyReport로 자동 변환하지 않습니다.
-- WeeklyReport가 아직 비어 있을 때 .gitkeep은 폴더 추적용이며 BoardRepo 업로드 후보가 아닙니다.
-
-[Clone]
-Clone은 원격 기준으로 완전히 별도의 새 작업 폴더가 필요할 때만 선택적으로 사용합니다.
-재난복구 표준 절차에는 Clone/URL 재입력이 필요하지 않습니다.
+1) Automation_Manager.pyw 실행 후 Git Manager 탭을 사용합니다.
+2) 상태 확인 대상은 catalog의 1~8 공통 Target입니다.
+3) Pull / Commit+Push는 선택 Target만이 아니라 Repository 전체에 적용됩니다.
+4) 로컬 Git이 사라진 경우 '현재 폴더 Git 연결/복구'를 사용합니다.
+5) 7.ALIRA 매뉴얼/8.ALIRA 구동은 Git 상태/복구 대상에 포함됩니다.
+6) Governance v0.3 및 최신 Requirements를 변경 전 기준선으로 확인합니다.
+7) force push, 자동 conflict 해결, reset --hard/clean은 자동 수행하지 않습니다.

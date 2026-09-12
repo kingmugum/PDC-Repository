@@ -1,26 +1,13 @@
-Git Manager Package Release
-===========================
-Release           : GitManager_260821_1
-Date              : 2026-08-21
-Primary GUI       : Automation_Manager.pyw (Automation Manager Root)
-Standalone GUI    : 5. Git Manager/current/Git_Manager.pyw
-Engine            : 5. Git Manager/current/git_manager.py
-Requirements      : GitManager_Requirements_260821_1.xlsx
-Integration SRS   : Automation_Manager_Requirements_260821_1.xlsx
+Git Manager Package Information
+===============================
+Release           : GitManager_260912_2
+Package rule      : GitManager_YYMMDD_N.zip
+Integration       : Automation_Manager_260912_2.zip
+Requirements      : GitManager_Requirements_260912_2.xlsx
+Integration SRS   : Automation_Manager_Requirements_260912_2.xlsx
+Governance        : 00_AI_DEVELOPMENT_GOVERNANCE.md v0.3 (ALM/ALR Profile v0.2)
 
-260821_1 key change
--------------------
-- 관리대상: 1.PassFail, 2.SignalExport, 3.WeeklyReport, 4.Ext, 5.Git Manager, 6.BoardRepo
-- legacy 3. Ext를 신규 4. Ext alias로 승계
-- Backup target/recovery mapping 제거
-- old 4. Backup 자료를 WeeklyReport/Ext로 자동 hydrate하지 않음
-- WeeklyReport package prefix: WeeklyMailAgent / WeeklyReport
-- 기존 self-bootstrap, catalog URL 자동복구, Git Tree alias 호환 유지
-
-Preserved Git policy
---------------------
-- main / ff-only Pull
-- no force push
-- no automatic merge/rebase/conflict resolution
-- local files preserved during self-bootstrap
-- automatic push disabled; older-local push guard retained
+260912_2 changes
+- 공통 catalog ALIRA 실제 URL board/394, board/395 반영
+- Unicode canonical 7/8 path 보존 검증
+- 기존 self-bootstrap, ff-only, no-force, no-auto-conflict 정책 유지
