@@ -1,9 +1,8 @@
-Git Manager 260912_1 간단 매뉴얼
-================================
-1) Automation_Manager.pyw 실행 후 Git Manager 탭을 사용합니다.
-2) 상태 확인 대상은 catalog의 1~8 공통 Target입니다.
-3) Pull / Commit+Push는 선택 Target만이 아니라 Repository 전체에 적용됩니다.
-4) 로컬 Git이 사라진 경우 '현재 폴더 Git 연결/복구'를 사용합니다.
-5) 7.ALIRA 매뉴얼/8.ALIRA 구동은 Git 상태/복구 대상에 포함됩니다.
-6) Governance v0.3 및 최신 Requirements를 변경 전 기준선으로 확인합니다.
-7) force push, 자동 conflict 해결, reset --hard/clean은 자동 수행하지 않습니다.
+Git Manager 260912_3
+
+1) 상태 확인 대상은 program_catalog의 1~8 공통 Target입니다.
+2) Pull/Commit+Push는 Repository 전체에 적용되며 ff-only/no-force 정책을 유지합니다.
+3) 최신 Automation Manager ZIP을 풀고 [현재 폴더 Git 연결/복구]로 self-bootstrap할 수 있습니다.
+4) 7.ALIRA 매뉴얼은 일반파일 Target이며 Git 복구 시 recursive preserve를 사용합니다.
+5) 8.ALIRA 구동은 versioned Target이며 root_only preserve를 유지합니다.
+6) BoardRepo 엔진을 Git Manager가 직접 호출하지 않습니다.

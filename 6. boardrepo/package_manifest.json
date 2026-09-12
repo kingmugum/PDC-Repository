@@ -1,7 +1,7 @@
 {
-  "package": "BoardRepo_260912_2.zip",
-  "release": "260912_2",
-  "technical_version": "0.25",
+  "package": "BoardRepo_260912_3.zip",
+  "release": "260912_3",
+  "technical_version": "0.26",
   "created": "2026-09-12",
   "managed_target_id": 6,
   "requirements_excel_runtime_dependency": false,
@@ -18,47 +18,31 @@
   "governance": {
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
     "document_version": "v0.3",
-    "sha256": "9b69954425a97a5ca5871b5bd010e83e6937684aca2a672b958235f87d57140a"
+    "sha256": "10bc9151232e6e3d0c1ec1871410b7e1d4a7fda6cf8b98082c4ba014ad29d959"
   },
   "alira_targets": {
     "manual": {
       "id": 7,
-      "board_name": "AI 스냅샷_ALIRA_매뉴얼",
       "board_url": "https://gw.suresofttech.com/app/community/130/board/394",
-      "board_url_status": "READY"
+      "mode": "file_hash",
+      "duplicate_policy": "filename+sha256"
     },
     "runtime": {
       "id": 8,
-      "board_name": "AI 스냅샷_ALIRA_구동",
       "board_url": "https://gw.suresofttech.com/app/community/130/board/395",
-      "board_url_status": "READY"
+      "mode": "versioned_archive"
     }
   },
   "files": [
     {
       "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 39671,
-      "sha256": "9b69954425a97a5ca5871b5bd010e83e6937684aca2a672b958235f87d57140a"
+      "size": 40371,
+      "sha256": "10bc9151232e6e3d0c1ec1871410b7e1d4a7fda6cf8b98082c4ba014ad29d959"
     },
     {
-      "path": "BoardRepo_Requirements_v0_25.xlsx",
-      "size": 127395,
-      "sha256": "aa0d15d76831df300c54c42d73ea71f292bc08cdd0616e34564c0d46a79750fd"
-    },
-    {
-      "path": "MANUAL.txt",
-      "size": 420,
-      "sha256": "bcf38eebc5c5af7d2d7ec8877425bdfef7e18077aede822af3a3a0a6f569ddfc"
-    },
-    {
-      "path": "PACKAGE_INFO.txt",
-      "size": 534,
-      "sha256": "fd6f4f88395425a533898de492a5f1a0bf193128a983b99ae4bd09023d4d8061"
-    },
-    {
-      "path": "SELF_TEST_RESULTS.txt",
-      "size": 415,
-      "sha256": "96a724cd9f65f6999e061afcbd3112fda99126a8cb2914ec950ece490c51283f"
+      "path": "BoardRepo_Requirements_v0_26.xlsx",
+      "size": 130600,
+      "sha256": "395db5e9fe33767d3acf4c89c798c7135560b229d91487c31beff959ecd4e680"
     },
     {
       "path": "current/BoardRepo.pyw",
@@ -67,8 +51,8 @@
     },
     {
       "path": "current/config.json",
-      "size": 12537,
-      "sha256": "58838c4aa81e3f9b181f3ab4642c29e376753b28bca04e2172d92424ee3db1ef"
+      "size": 13525,
+      "sha256": "dbe30791fce4b8638b91fe9f4c6191f6b761b7f977329ff2fed83393a7ef4bde"
     },
     {
       "path": "current/function/archive_selector.py",
@@ -82,13 +66,13 @@
     },
     {
       "path": "current/function/boardrepo.py",
-      "size": 53969,
-      "sha256": "aacc7f14a39c227bae6f95824a66382708b8e98f8ce934f9e2cc0cfb7da1c5b9"
+      "size": 54259,
+      "sha256": "02f7dbe09e2ea900f6161c693fc0d4a41bc920b289c218e94e68e0f2cc8bf0f7"
     },
     {
       "path": "current/function/boardrepo_tab.py",
-      "size": 50935,
-      "sha256": "87ae6c675e1b49f76d2029c6aace964f4bd16bb2f21944546c820718b77b0087"
+      "size": 51225,
+      "sha256": "b9fd6843f4d935a0a3f684ceb8debe3ba50ad17f7e013e556b633ec6f742a8cd"
     },
     {
       "path": "current/function/browser_automation.py",
@@ -97,8 +81,8 @@
     },
     {
       "path": "current/function/browser_download.py",
-      "size": 50412,
-      "sha256": "f0434b692ece9f5b37d6b816b0bd833af1993d6eb1c506c65c28a30f54c26267"
+      "size": 50664,
+      "sha256": "4d774efc18104df35c81a920063a2ba4c73c29646c2eee8e294af997e19a1500"
     },
     {
       "path": "current/function/browser_runtime.py",
@@ -112,8 +96,8 @@
     },
     {
       "path": "current/function/duplicate_checker.py",
-      "size": 24504,
-      "sha256": "0b9e796142c5c9d37e4b600c1e3d96b4dbf36090c3c91ee4258e24d50efa8264"
+      "size": 24570,
+      "sha256": "85df15972890b9bc3fdb9d6fb39a44a22634540ecba3eb28a7ece975587ec8ed"
     },
     {
       "path": "current/function/environment_manager.py",
@@ -169,6 +153,21 @@
       "path": "current/site_profile.json",
       "size": 10277,
       "sha256": "09d917fdae911a5f08c62cf44e5c33aab238d8ef7a248e869c1541d8eb91d67a"
+    },
+    {
+      "path": "MANUAL.txt",
+      "size": 745,
+      "sha256": "f293cf6e4fc93cb192ed7b54710282b7a397e94a78059f9fdea121f74fe21a02"
+    },
+    {
+      "path": "PACKAGE_INFO.txt",
+      "size": 519,
+      "sha256": "0fdd6fac2a755a054ee9f75f18410c5b16d3a81b5a39ad79645fd7bb195eb4a3"
+    },
+    {
+      "path": "SELF_TEST_RESULTS.txt",
+      "size": 532,
+      "sha256": "b2b8c1326d504419262ea545707a0d2740c026f44c2d109f49e5fc1aa2985ab9"
     }
   ]
 }

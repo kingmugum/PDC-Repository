@@ -1,9 +1,13 @@
-BoardRepo v0.25 / 260912_2 Self Test Results
-============================================
+BoardRepo v0.26 / 260912_3 Self Test Results
+
 PASS - target 1~8 catalog
-PASS - ALIRA Manual board/394 exact route
-PASS - ALIRA Runtime board/395 exact route
-PASS - ALIRA versioned archive selection / 01.old ignored
-PASS - Unicode target folder names preserved
-PASS - existing browser/upload/download/Ext policies preserved
-PASS - Governance carry-forward / manifest hash
+PASS - ALIRA Manual board/394 / Runtime board/395
+PASS - ALIRA Manual mode=file_hash
+PASS - DOCX/PDF/MD/ZIP general-file candidates
+PASS - ALIRA Manual direct-only scan; nested file ignored
+PASS - generic file_hash title parser for Ext + ALIRA Manual
+PASS - generic file_hash SHA duplicate/download policy code path
+PASS - ALM recovery=recursive / ALR=root_only
+PASS - Python compile
+PASS - Governance ALM Profile v0.3
+PASS - Requirements formula error scan 0

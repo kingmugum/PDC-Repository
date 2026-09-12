@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "260912_1",
+  "release": "260912_3",
   "targets": [
     {
       "id": 1,
@@ -167,13 +167,12 @@
       ],
       "board_url": "https://gw.suresofttech.com/app/community/130/board/394",
       "board_name": "AI 스냅샷_ALIRA_매뉴얼",
-      "mode": "versioned_archive",
-      "archive_strategy": "date_counter_release",
-      "package_prefixes": [
-        "ALIRA_Manual"
-      ],
-      "recommended_filename": "ALIRA_Manual_YYMMDD_N.zip",
-      "configuration_status": "READY"
+      "mode": "file_hash",
+      "package_prefixes": [],
+      "configuration_status": "READY",
+      "file_policy": "filename_sha256",
+      "accepted_file_types": "all_regular_files",
+      "recursive": false
     },
     {
       "id": 8,
@@ -207,7 +206,7 @@
   "automation_manager": {
     "managed_target": false,
     "owner_target": "GitManager",
-    "reason": "Automation Manager는 5. Git Manager와 6. BoardRepo를 표시하는 통합 실행기/Core이며 7번째 관리 대상으로 중복 등록하지 않는다."
+    "reason": "Automation Manager는 통합 실행기/Core이며 1~8 관리대상을 표시한다. 자체는 별도 9번째 관리 대상으로 중복 등록하지 않는다."
   },
   "git_repository": {
     "url": "https://github.com/kingmugum/PDC-Repository.git",
@@ -224,7 +223,7 @@
         "Ext": "recursive",
         "GitManager": "root_only",
         "BoardRepo": "root_only",
-        "ALIRAManual": "root_only",
+        "ALIRAManual": "recursive",
         "ALIRARuntime": "root_only"
       },
       "local_files_take_precedence": true,

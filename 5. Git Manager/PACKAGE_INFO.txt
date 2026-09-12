@@ -1,13 +1,13 @@
-Git Manager Package Information
-===============================
-Release           : GitManager_260912_2
-Package rule      : GitManager_YYMMDD_N.zip
-Integration       : Automation_Manager_260912_2.zip
-Requirements      : GitManager_Requirements_260912_2.xlsx
-Integration SRS   : Automation_Manager_Requirements_260912_2.xlsx
-Governance        : 00_AI_DEVELOPMENT_GOVERNANCE.md v0.3 (ALM/ALR Profile v0.2)
+Git Manager Package
 
-260912_2 changes
-- 공통 catalog ALIRA 실제 URL board/394, board/395 반영
-- Unicode canonical 7/8 path 보존 검증
-- 기존 self-bootstrap, ff-only, no-force, no-auto-conflict 정책 유지
+Release           : GitManager_260912_3
+Created           : 2026-09-12
+Integration       : Automation_Manager_260912_3.zip
+Requirements      : GitManager_Requirements_260912_3.xlsx
+Integration SRS   : Automation_Manager_Requirements_260912_3.xlsx
+Governance        : v0.3 / SHA-256 10bc9151232e6e3d0c1ec1871410b7e1d4a7fda6cf8b98082c4ba014ad29d959
+
+260912_3 changes
+- ALIRA Manual file_hash target alignment
+- ALM recovery recursive / ALR root_only
+- 1~8 status/self-bootstrap policies preserved

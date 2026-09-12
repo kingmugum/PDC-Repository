@@ -1,8 +1,10 @@
-Git Manager 260912_2 Self Test Results
-======================================
+Git Manager 260912_3 Self Test Results
+
 PASS - target 1~8 catalog
-PASS - ALIRA routing metadata board/394 / board/395
-PASS - Unicode canonical path handling
-PASS - current-folder Git recovery preserved
-PASS - ff-only / no-force / no-auto-conflict policies preserved
-PASS - Governance carry-forward
+PASS - ALIRA Manual mode=file_hash status
+PASS - ALM recursive / ALR root_only recovery policy
+PASS - current-folder self-bootstrap policies preserved
+PASS - ff-only/no-force/no-auto-conflict policies preserved
+PASS - Python compile
+PASS - Governance/Profile alignment
+PASS - Requirements formula error scan 0

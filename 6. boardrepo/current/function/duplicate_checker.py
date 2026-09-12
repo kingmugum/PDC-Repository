@@ -32,7 +32,7 @@ class RemoteCheckItem:
     board_url: str
     file_path: Path
     exact_title: str
-    kind: str  # "versioned" | "ext"
+    kind: str  # "versioned" | "file_hash"
     sha256: str | None = None
 
 
@@ -368,7 +368,7 @@ def _wait_for_board_list_ready(
         page.wait_for_timeout(poll_ms)
 
 
-def _inspect_ext_existing_post(
+def _inspect_file_hash_existing_post(
     page,
     item: RemoteCheckItem,
     config: dict,
@@ -390,7 +390,7 @@ def _inspect_ext_existing_post(
             known_post_url=post_url,
         )
         log(
-            f"Ext 기존 게시글 상세 진입 [{item.file_path.name}]: "
+            f"일반파일 기존 게시글 상세 진입 [{item.file_path.name}]: "
             f"{detail_url}"
         )
     except Exception as exc:
@@ -398,7 +398,7 @@ def _inspect_ext_existing_post(
             item=item,
             status=STATUS_CONFLICT,
             evidence=(
-                "동일한 Ext 표준 제목은 확인했지만 기존 게시글 상세로 "
+                "동일한 일반파일 표준 제목은 확인했지만 기존 게시글 상세로 "
                 "진입하지 못해 SHA-256을 검증할 수 없습니다. "
                 f"{type(exc).__name__}: {exc}"
             ),
@@ -418,12 +418,12 @@ def _inspect_ext_existing_post(
 
     if existing_sha:
         log(
-            f"Ext 기존 SHA 확인 [{item.file_path.name}]: "
+            f"일반파일 기존 SHA 확인 [{item.file_path.name}]: "
             f"{existing_sha[:12]}..."
         )
     else:
         log(
-            f"Ext 기존 SHA 확인 실패 [{item.file_path.name}]: "
+            f"일반파일 기존 SHA 확인 실패 [{item.file_path.name}]: "
             "게시글 본문에서 SHA-256을 찾지 못함"
         )
 
@@ -432,7 +432,7 @@ def _inspect_ext_existing_post(
             item=item,
             status=STATUS_DUPLICATE,
             evidence=(
-                "동일 파일명 Ext 게시글의 SHA-256이 현재 파일과 일치합니다. "
+                "동일 파일명 게시글의 SHA-256이 현재 파일과 일치합니다. "
                 "기존 게시글을 유지하고 신규 업로드를 생략합니다."
             ),
             existing_sha256=existing_sha,
@@ -443,7 +443,7 @@ def _inspect_ext_existing_post(
             item=item,
             status=STATUS_CONFLICT,
             evidence=(
-                "동일 파일명 Ext 게시글이 존재하지만 SHA-256이 다릅니다. "
+                "동일 파일명 게시글이 존재하지만 SHA-256이 다릅니다. "
                 "같은 이름의 다른 내용으로 판단합니다."
             ),
             existing_sha256=existing_sha,
@@ -453,7 +453,7 @@ def _inspect_ext_existing_post(
         item=item,
         status=STATUS_CONFLICT,
         evidence=(
-            "동일 파일명 Ext 게시글이 존재하지만 기존 게시글에서 SHA-256을 "
+            "동일 파일명 게시글이 존재하지만 기존 게시글에서 SHA-256을 "
             "확인할 수 없어 동일 파일 여부를 자동 판정할 수 없습니다."
         ),
         existing_sha256=existing_sha,
@@ -531,10 +531,10 @@ def _scan_current_page_for_item(
                     ),
                 )
 
-        elif item.kind == "ext":
+        elif item.kind in {"ext", "file_hash"}:
             if title_seen:
                 post_url = row_match.post_url if row_match else None
-                return _inspect_ext_existing_post(
+                return _inspect_file_hash_existing_post(
                     page,
                     item,
                     duplicate_cfg,
@@ -551,7 +551,7 @@ def _scan_current_page_for_item(
                     status=STATUS_CONFLICT,
                     evidence=(
                         "게시판 목록에서 동일 파일명은 확인되지만 "
-                        "BoardRepo 표준 Ext 제목의 게시글이 아니어서 "
+                        "BoardRepo 표준 일반파일 제목의 게시글이 아니어서 "
                         "SHA-256을 자동 검증할 수 없습니다."
                     ),
                 )

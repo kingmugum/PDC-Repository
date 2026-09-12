@@ -883,11 +883,11 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | Project ID | `ALM` |
 | Project Name | ALIRA Manual |
 | Status | `DRAFT` |
-| Profile Version | v0.2 |
+| Profile Version | v0.3 |
 | Requirements Mode | `TBD` |
 | Requirements Pattern | `TBD` |
-| Package Pattern | `ALIRA_Manual_YYMMDD_N.zip` |
-| Primary Environment | 문서/매뉴얼, Windows |
+| Package Pattern | 고정 패키지 없음 — 일반 파일 Inbox (`file_hash`) |
+| Primary Environment | DOCX/PDF/XLSX/PPTX/MD 등 문서·매뉴얼 및 일반 파일, Windows |
 
 ### C6.2 현재 승인 범위
 
@@ -895,7 +895,11 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 - Automation Manager/BoardRepo Target 7로 배치한다.
 - 그룹웨어 게시판 명칭은 `AI 스냅샷_ALIRA_매뉴얼`이다.
 - 실제 Board URL은 `https://gw.suresofttech.com/app/community/130/board/394`로 확정한다.
-- 최신판은 `YYMMDD_N`으로 판정한다.
+- BoardRepo Target 7은 `file_hash` 일반 파일 Inbox로 운영한다.
+- 압축파일만 요구하지 않으며 DOCX/PDF/XLSX/PPTX/MD/TXT/이미지/ZIP 등 일반 파일을 직접 보관할 수 있다.
+- 각 파일은 파일명 + SHA-256으로 중복을 판정한다.
+- 같은 파일명에 다른 SHA-256이면 자동 덮어쓰지 않고 확인 필요로 처리한다.
+- 폴더 바로 아래의 일반 파일만 대상으로 하며 하위 폴더는 자동 재귀 업로드하지 않는다.
 
 ## C7. `[ALR]` ALIRA Runtime / Tools
 
@@ -994,6 +998,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | v0.2 | 2026-09-11 | 공통 헌법과 Project Rules를 단일 Governance로 통합, Project ID 선택·격리·신규 등록 규칙 추가, PF·SE 프로필 등록 | 모든 프로젝트, PF, SE |
 | v0.3 | 2026-09-12 | Governance Carry-Forward/Manifest 기준 추가, AM·GM·BR 프로필 ACTIVE 등록, ALIRA Manual(ALM)·Runtime(ALR) DRAFT 등록, Automation Manager Target 7·8 확장 기준 추가 | 모든 프로젝트, AM, GM, BR, ALM, ALR |
 | v0.3 (Profile Update) | 2026-09-12 | ALM·ALR Profile v0.2: 실제 그룹웨어 Board URL board/394·395 확정 | ALM, ALR |
+| v0.3 (Profile Update) | 2026-09-12 | ALM Profile v0.3: Target 7을 압축 Release 방식에서 일반 파일 Inbox(file_hash, 파일명+SHA-256) 방식으로 변경 | ALM |
 
 ---
 

@@ -178,11 +178,15 @@ def _is_versioned_target(target: DownloadTarget) -> bool:
     return str(target.mode or "").casefold() == "versioned_archive"
 
 
+def _is_file_hash_target(target: DownloadTarget) -> bool:
+    return str(target.mode or "").casefold() == "file_hash"
+
+
 def _post_prefix(target: DownloadTarget) -> str:
     if _is_versioned_target(target):
         return f"[BoardRepo] {target.display_name}_"
-    if target.target_key == "Ext":
-        return "[BoardRepo][Ext] "
+    if _is_file_hash_target(target):
+        return f"[BoardRepo][{target.display_name}] "
     return "[BoardRepo] "
 
 
@@ -314,9 +318,12 @@ def _canonical_versioned_board_title(
 
 
 
-def _canonical_ext_board_title(value: str) -> str | None:
+def _canonical_file_hash_board_title(
+    target: DownloadTarget,
+    value: str,
+) -> str | None:
     normalized = _normalize_dom_text(value)
-    prefix = "[BoardRepo][Ext]"
+    prefix = f"[BoardRepo][{target.display_name}]"
     pos = normalized.find(prefix)
     if pos < 0:
         return None
@@ -325,10 +332,7 @@ def _canonical_ext_board_title(value: str) -> str | None:
     rest = tail[len(prefix):].strip()
     if not rest:
         return None
-
-    # Prefer the exact title cell/anchor text. This intentionally does not
-    # impose an extension whitelist because Ext is the general-file board.
-    return f"[BoardRepo][Ext] {rest}"
+    return f"{prefix} {rest}"
 
 
 def _canonical_title_from_text(
@@ -337,8 +341,8 @@ def _canonical_title_from_text(
 ) -> str | None:
     if _is_versioned_target(target):
         return _canonical_versioned_board_title(target, value)
-    if target.target_key == "Ext":
-        return _canonical_ext_board_title(value)
+    if _is_file_hash_target(target):
+        return _canonical_file_hash_board_title(target, value)
     return None
 
 
@@ -722,18 +726,19 @@ def _candidate_from_title(
             counter=counter,
         )
 
-    if target.target_key == "Ext":
-        canonical = _canonical_ext_board_title(title)
+    if _is_file_hash_target(target):
+        canonical = _canonical_file_hash_board_title(target, title)
         if not canonical:
             return None
-        filename = canonical[len("[BoardRepo][Ext] "):].strip()
+        prefix = f"[BoardRepo][{target.display_name}] "
+        filename = canonical[len(prefix):].strip()
         if not filename:
             return None
         return RemotePost(
             title=canonical,
             post_url=post_url,
             filename=filename,
-            kind="ext",
+            kind="file_hash",
         )
 
     return None
@@ -772,11 +777,11 @@ def _select_remote_candidates(
         return [best]
 
 
-    if target.target_key == "Ext":
-        # Ext intentionally processes every valid standard Ext post. Local
+    if _is_file_hash_target(target):
+        # General-file targets process every valid standard post. Local
         # filename + SHA comparison later decides download/skip/conflict.
         log(
-            f"Ext 원격 대상: 유효한 BoardRepo Ext 게시글 전체 "
+            f"일반파일 원격 대상 [{target.display_name}]: 유효한 BoardRepo 게시글 전체 "
             f"{len(raw)}건"
         )
         return raw
@@ -845,10 +850,10 @@ def _validate_attachment_against_title(
         return
 
 
-    if target.target_key == "Ext":
+    if _is_file_hash_target(target):
         if filename.casefold() != candidate.filename.casefold():
             raise BrowserAutomationError(
-                "Ext 게시글 제목의 파일명과 실제 첨부파일명이 다릅니다. "
+                f"{target.display_name} 게시글 제목의 파일명과 실제 첨부파일명이 다릅니다. "
                 f"제목={candidate.filename}, 첨부={filename}"
             )
 
@@ -957,8 +962,8 @@ def _wait_for_detail_metadata(
             first_filename_at = time.monotonic()
 
         sha_needed = (
-            target.target_key == "Ext"
-            and bool(download_cfg.get("verify_ext_sha256", True))
+            _is_file_hash_target(target)
+            and bool(download_cfg.get("verify_file_hash_sha256", download_cfg.get("verify_ext_sha256", True)))
         )
         sha_grace_done = (
             not sha_needed
@@ -1331,7 +1336,7 @@ def _sync_versioned_target(
 
 
 
-def _sync_ext_target(
+def _sync_file_hash_target(
     page,
     target: DownloadTarget,
     remotes: list[RemotePost],
@@ -1386,7 +1391,7 @@ def _sync_ext_target(
                     target.display_name,
                     STATUS_DOWNLOADED,
                     remote.filename,
-                    "로컬에 없는 Ext 파일을 다운로드했습니다.",
+                    f"로컬에 없는 {target.display_name} 파일을 다운로드했습니다.",
                 )
             )
         except Exception as exc:
@@ -1547,9 +1552,9 @@ def sync_selected_downloads(
                             )
                         )
 
-                    elif target.target_key == "Ext":
+                    elif _is_file_hash_target(target):
                         results.extend(
-                            _sync_ext_target(
+                            _sync_file_hash_target(
                                 page,
                                 target,
                                 remotes,

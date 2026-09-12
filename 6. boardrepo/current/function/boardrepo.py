@@ -60,7 +60,7 @@ class UploadPlanItem:
     board_url: str
     folder: Path
     file_path: Path
-    kind: str  # "versioned" | "ext"
+    kind: str  # "versioned" | "file_hash"
     title: str
     body: str
     sha256: str | None = None
@@ -522,20 +522,21 @@ class BoardRepoApp(tk.Tk):
         folder = resolve_target_folder(APP_ROOT, target["folder_aliases"])
         plan: list[UploadPlanItem] = []
 
-        if key == "Ext":
-            ext_cfg = self.config_data.get("ext_upload") or {}
-            ext_files = list_ext_files(folder, ext_cfg)
+        if str(target.get("mode") or "").casefold() == "file_hash":
+            file_cfg = self.config_data.get("file_hash_upload") or self.config_data.get("ext_upload") or {}
+            ext_files = list_ext_files(folder, file_cfg)
 
             if not ext_files:
                 self.log(
-                    "Ext 폴더에 업로드할 일반파일이 없습니다. "
-                    "Ext는 빈 항목으로 처리합니다."
+                    f"{display_name} 폴더에 업로드할 일반파일이 없습니다. "
+                    "빈 항목으로 처리합니다."
                 )
 
             for info in ext_files:
                 created = datetime.now().isoformat(timespec="seconds")
-                title = ext_cfg["title_template"].format(filename=info.path.name)
-                body = ext_cfg["body_template"].format(
+                title = file_cfg["title_template"].format(display_name=display_name, filename=info.path.name)
+                body = file_cfg["body_template"].format(
+                    display_name=display_name,
                     filename=info.path.name,
                     size_bytes=info.size_bytes,
                     sha256=info.sha256,
@@ -549,7 +550,7 @@ class BoardRepoApp(tk.Tk):
                         board_url=target["board_url"],
                         folder=folder,
                         file_path=info.path,
-                        kind="ext",
+                        kind="file_hash",
                         title=title,
                         body=body,
                         sha256=info.sha256,
@@ -1096,9 +1097,9 @@ class BoardRepoApp(tk.Tk):
         self.log(f"대상: {item.display_name} ({item.target_key})")
         self.log(f"원본 폴더: {item.folder.name}")
         self.log(f"첨부 파일: {item.file_path.name}")
-        if item.kind == "ext":
+        if item.kind in {"ext", "file_hash"}:
             self.log(
-                f"Ext 파일 정보: size={item.file_path.stat().st_size} bytes, "
+                f"일반파일 정보 [{item.display_name}]: size={item.file_path.stat().st_size} bytes, "
                 f"sha256={item.sha256}"
             )
 
@@ -1445,7 +1446,7 @@ class BoardRepoApp(tk.Tk):
                 blocks.append(f"[{display_name}]\n업로드할 파일 없음")
                 continue
 
-            if key == "Ext":
+            if str(self.config_data["targets"][key].get("mode") or "").casefold() == "file_hash":
                 lines = [f"[{display_name}] 일반파일 후보 {len(items)}개"]
                 for item in items[:20]:
                     lines.append(

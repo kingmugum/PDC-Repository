@@ -1,12 +1,13 @@
-Automation Manager 260912_2 Self Test Results
-==============================================
+Automation Manager 260912_3 Self Test Results
+
 PASS - Target 1~8 catalog load
-PASS - 7.ALIRA 매뉴얼 canonical folder exists
-PASS - 8.ALIRA 구동 canonical folder exists
-PASS - ALIRA Manual exact board URL = board/394
-PASS - ALIRA Runtime exact board URL = board/395
-PASS - Governance v0.3 carry-forward / ALM·ALR Profile v0.2
-PASS - Python source compile
-PASS - outer ZIP UTF-8 filename flag for Korean paths
-PASS - extracted folder names exactly preserve 7.ALIRA 매뉴얼 / 8.ALIRA 구동
-PASS - no __pycache__/pyc in distribution
+PASS - 7.ALIRA 매뉴얼 canonical folder / board 394
+PASS - 8.ALIRA 구동 canonical folder / board 395
+PASS - Target 7 mode=file_hash, Target 8 mode=versioned_archive
+PASS - ALIRA Manual direct general files candidate test
+PASS - generic file_hash engine for Ext + ALIRA Manual
+PASS - ALM recovery recursive / ALR root_only
+PASS - Governance v0.3 / ALM Profile v0.3 carry-forward
+PASS - Python compile
+PASS - Unicode folder names preserved
+PASS - Requirements formula scans 0

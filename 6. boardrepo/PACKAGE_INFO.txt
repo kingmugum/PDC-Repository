@@ -1,13 +1,13 @@
-BoardRepo Package Information
-=============================
-Package Release   : BoardRepo_260912_2
-Technical Version : v0.25
-Package rule      : BoardRepo_YYMMDD_N.zip
-Requirements      : BoardRepo_Requirements_v0_25.xlsx
-Governance        : 00_AI_DEVELOPMENT_GOVERNANCE.md v0.3 (ALM/ALR Profile v0.2)
+BoardRepo Package
 
-260912_2 changes
-- 7.ALIRA 매뉴얼 -> board/394 활성화
-- 8.ALIRA 구동 -> board/395 활성화
-- Automation Manager outer ZIP Unicode folder entry 결함 수정
-- 기존 Browser/DEXT5/Ext SHA/상세 Ready 엔진 회귀 보존
+Package Release   : BoardRepo_260912_3
+Technical Version : v0.26
+Created           : 2026-09-12
+Requirements      : BoardRepo_Requirements_v0_26.xlsx
+Governance        : v0.3 / SHA-256 10bc9151232e6e3d0c1ec1871410b7e1d4a7fda6cf8b98082c4ba014ad29d959
+
+260912_3 changes
+- Target 7 ALIRA Manual: versioned archive -> general file_hash inbox
+- Ext/ALIRA Manual file_hash dispatch generalized by catalog mode
+- ALIRA Manual board/394, Runtime board/395 유지
+- ALM Git recovery recursive / ALR root_only

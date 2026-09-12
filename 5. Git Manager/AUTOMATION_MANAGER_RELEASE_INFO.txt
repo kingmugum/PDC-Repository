@@ -1,9 +1,8 @@
 Automation Manager Integration Release
-======================================
-Automation Manager : Automation_Manager_260912_2.zip
-Git Manager        : GitManager_260912_2.zip
-BoardRepo          : BoardRepo_260912_2.zip
+
+Automation Manager : Automation_Manager_260912_3.zip
+Git Manager        : GitManager_260912_3.zip
+BoardRepo          : BoardRepo_260912_3.zip
 Targets            : 1~8
-ALIRA Manual       : board/394
-ALIRA Runtime      : board/395
-Governance         : 00_AI_DEVELOPMENT_GOVERNANCE.md v0.3
+ALIRA Manual       : file_hash general files / board 394
+ALIRA Runtime      : versioned archive / board 395
