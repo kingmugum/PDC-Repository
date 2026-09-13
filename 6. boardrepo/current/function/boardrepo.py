@@ -512,6 +512,7 @@ class BoardRepoApp(tk.Tk):
         """
         target = self.config_data["targets"][key]
         display_name = target["display_name"]
+        post_display_name = target.get("post_display_name") or display_name
         board_url = str(target.get("board_url") or "").strip()
         if not board_url:
             board_name = target.get("board_name") or display_name
@@ -537,6 +538,7 @@ class BoardRepoApp(tk.Tk):
                 title = file_cfg["title_template"].format(display_name=display_name, filename=info.path.name)
                 body = file_cfg["body_template"].format(
                     display_name=display_name,
+                    post_display_name=post_display_name,
                     filename=info.path.name,
                     size_bytes=info.size_bytes,
                     sha256=info.sha256,

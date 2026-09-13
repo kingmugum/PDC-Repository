@@ -1,10 +1,7 @@
-Git Manager 260912_3 Self Test Results
-
-PASS - target 1~8 catalog
-PASS - ALIRA Manual mode=file_hash status
-PASS - ALM recursive / ALR root_only recovery policy
-PASS - current-folder self-bootstrap policies preserved
-PASS - ff-only/no-force/no-auto-conflict policies preserved
-PASS - Python compile
-PASS - Governance/Profile alignment
-PASS - Requirements formula error scan 0
+SELF TEST RESULTS - GitManager_260912_4
+PASS - Python source syntax checked without writing pyc
+PASS - Runtime code behavior unchanged
+PASS - Governance v0.4 present
+PASS - .gitignore cache baseline present
+PASS - Final staging cache/pyc violation count = 0
+PASS - Package naming/root rule = GitManager_260912_4

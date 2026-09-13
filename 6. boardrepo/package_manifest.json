@@ -1,48 +1,45 @@
 {
-  "package": "BoardRepo_260912_3.zip",
-  "release": "260912_3",
-  "technical_version": "0.26",
+  "package": "BoardRepo_260912_5.zip",
+  "release": "260912_5",
+  "technical_version": "0.28",
   "created": "2026-09-12",
   "managed_target_id": 6,
-  "requirements_excel_runtime_dependency": false,
-  "managed_targets": [
-    "PassFail",
-    "SignalExport",
-    "WeeklyReport",
-    "Ext",
-    "GitManager",
-    "BoardRepo",
-    "ALIRAManual",
-    "ALIRARuntime"
-  ],
   "governance": {
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "document_version": "v0.3",
-    "sha256": "10bc9151232e6e3d0c1ec1871410b7e1d4a7fda6cf8b98082c4ba014ad29d959"
+    "document_version": "v0.4",
+    "sha256": "c77488127f78d8c02aa009bdc2cedf54241e70fcd190362510dd7aefe15b200a"
   },
-  "alira_targets": {
-    "manual": {
-      "id": 7,
-      "board_url": "https://gw.suresofttech.com/app/community/130/board/394",
-      "mode": "file_hash",
-      "duplicate_policy": "filename+sha256"
-    },
-    "runtime": {
-      "id": 8,
-      "board_url": "https://gw.suresofttech.com/app/community/130/board/395",
-      "mode": "versioned_archive"
-    }
+  "requirements": "BoardRepo_Requirements_v0_28.xlsx",
+  "distribution_hygiene": {
+    "governance_rule": "A18",
+    "cache_excluded": true,
+    "final_violation_count": 0
   },
   "files": [
     {
       "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 40371,
-      "sha256": "10bc9151232e6e3d0c1ec1871410b7e1d4a7fda6cf8b98082c4ba014ad29d959"
+      "size": 44069,
+      "sha256": "c77488127f78d8c02aa009bdc2cedf54241e70fcd190362510dd7aefe15b200a"
     },
     {
-      "path": "BoardRepo_Requirements_v0_26.xlsx",
-      "size": 130600,
-      "sha256": "395db5e9fe33767d3acf4c89c798c7135560b229d91487c31beff959ecd4e680"
+      "path": "BoardRepo_Requirements_v0_28.xlsx",
+      "size": 134728,
+      "sha256": "23d94e8c995596303dac25356237a174d6a2f0a824685f9ccf71dd221719ee22"
+    },
+    {
+      "path": "MANUAL.txt",
+      "size": 426,
+      "sha256": "57a11fd3c221a2f3b2caa96f37df140d340871cd69937e9ffb76f37e850bdd08"
+    },
+    {
+      "path": "PACKAGE_INFO.txt",
+      "size": 423,
+      "sha256": "09a5be718b6a1b6db7ff14173cf4ced18afae89b93839b27229413692d5cfed6"
+    },
+    {
+      "path": "SELF_TEST_RESULTS.txt",
+      "size": 399,
+      "sha256": "dd5b6772f4550d1b8d87d203d5f8d2d642fddb1fe1c6047978c0d4ce7765a170"
     },
     {
       "path": "current/BoardRepo.pyw",
@@ -51,8 +48,8 @@
     },
     {
       "path": "current/config.json",
-      "size": 13525,
-      "sha256": "dbe30791fce4b8638b91fe9f4c6191f6b761b7f977329ff2fed83393a7ef4bde"
+      "size": 13567,
+      "sha256": "84fc756e4b94735ceeaf498638df820f1457b22c433b7144ae718203dad6f0ed"
     },
     {
       "path": "current/function/archive_selector.py",
@@ -66,13 +63,13 @@
     },
     {
       "path": "current/function/boardrepo.py",
-      "size": 54259,
-      "sha256": "02f7dbe09e2ea900f6161c693fc0d4a41bc920b289c218e94e68e0f2cc8bf0f7"
+      "size": 54392,
+      "sha256": "9e18b65a6ce6ed3ed012339433c4f64befaeb8fb1406d53b6ed35385f42b08dd"
     },
     {
       "path": "current/function/boardrepo_tab.py",
-      "size": 51225,
-      "sha256": "b9fd6843f4d935a0a3f684ceb8debe3ba50ad17f7e013e556b633ec6f742a8cd"
+      "size": 51358,
+      "sha256": "5f61035b581623ed786afa7b6df2c05decebaa0d8d5ea6fe08abe3deeefe3814"
     },
     {
       "path": "current/function/browser_automation.py",
@@ -153,21 +150,6 @@
       "path": "current/site_profile.json",
       "size": 10277,
       "sha256": "09d917fdae911a5f08c62cf44e5c33aab238d8ef7a248e869c1541d8eb91d67a"
-    },
-    {
-      "path": "MANUAL.txt",
-      "size": 745,
-      "sha256": "f293cf6e4fc93cb192ed7b54710282b7a397e94a78059f9fdea121f74fe21a02"
-    },
-    {
-      "path": "PACKAGE_INFO.txt",
-      "size": 519,
-      "sha256": "0fdd6fac2a755a054ee9f75f18410c5b16d3a81b5a39ad79645fd7bb195eb4a3"
-    },
-    {
-      "path": "SELF_TEST_RESULTS.txt",
-      "size": 532,
-      "sha256": "b2b8c1326d504419262ea545707a0d2740c026f44c2d109f49e5fc1aa2985ab9"
     }
   ]
 }

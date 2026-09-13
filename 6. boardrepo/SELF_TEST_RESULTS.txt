@@ -1,13 +1,8 @@
-BoardRepo v0.26 / 260912_3 Self Test Results
-
-PASS - target 1~8 catalog
-PASS - ALIRA Manual board/394 / Runtime board/395
-PASS - ALIRA Manual mode=file_hash
-PASS - DOCX/PDF/MD/ZIP general-file candidates
-PASS - ALIRA Manual direct-only scan; nested file ignored
-PASS - generic file_hash title parser for Ext + ALIRA Manual
-PASS - generic file_hash SHA duplicate/download policy code path
-PASS - ALM recovery=recursive / ALR=root_only
-PASS - Python compile
-PASS - Governance ALM Profile v0.3
-PASS - Requirements formula error scan 0
+SELF TEST RESULTS - BoardRepo_260912_5 / v0.28
+PASS - Python source syntax checked without writing pyc
+PASS - Existing BoardRepo runtime behavior unchanged
+PASS - ALIRA Manual file_hash/body format baseline retained
+PASS - Governance v0.4 present
+PASS - Final staging cache/pyc violation count = 0
+PASS - Unicode target folder metadata unchanged
+PASS - Package naming/root rule = BoardRepo_260912_5

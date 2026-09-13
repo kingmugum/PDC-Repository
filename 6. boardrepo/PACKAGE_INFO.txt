@@ -1,13 +1,13 @@
 BoardRepo Package
 
-Package Release   : BoardRepo_260912_3
-Technical Version : v0.26
+Package Release   : BoardRepo_260912_5
+Technical Version : v0.28
 Created           : 2026-09-12
-Requirements      : BoardRepo_Requirements_v0_26.xlsx
-Governance        : v0.3 / SHA-256 10bc9151232e6e3d0c1ec1871410b7e1d4a7fda6cf8b98082c4ba014ad29d959
+Requirements      : BoardRepo_Requirements_v0_28.xlsx
+Governance        : v0.4
 
-260912_3 changes
-- Target 7 ALIRA Manual: versioned archive -> general file_hash inbox
-- Ext/ALIRA Manual file_hash dispatch generalized by catalog mode
-- ALIRA Manual board/394, Runtime board/395 유지
-- ALM Git recovery recursive / ALR root_only
+260912_5 changes
+- Clean Distribution: __pycache__/pyc/pyo/development cache excluded
+- Final Clean performed after syntax/self-test
+- .gitignore cache baseline included
+- Governance v0.4 Package Naming / Manifest rules applied

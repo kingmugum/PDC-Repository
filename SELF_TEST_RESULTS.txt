@@ -1,13 +1,9 @@
-Automation Manager 260912_3 Self Test Results
-
-PASS - Target 1~8 catalog load
-PASS - 7.ALIRA 매뉴얼 canonical folder / board 394
-PASS - 8.ALIRA 구동 canonical folder / board 395
-PASS - Target 7 mode=file_hash, Target 8 mode=versioned_archive
-PASS - ALIRA Manual direct general files candidate test
-PASS - generic file_hash engine for Ext + ALIRA Manual
-PASS - ALM recovery recursive / ALR root_only
-PASS - Governance v0.3 / ALM Profile v0.3 carry-forward
-PASS - Python compile
-PASS - Unicode folder names preserved
-PASS - Requirements formula scans 0
+SELF TEST RESULTS - Automation_Manager_260912_5
+PASS - Python source syntax checked: 23 files (no pyc written)
+PASS - 8-target catalog retained
+PASS - Governance v0.4 present
+PASS - .gitignore cache baseline present
+PASS - Component releases: GitManager_260912_4 / BoardRepo_260912_5
+PASS - Final staging cache/pyc violation count = 0
+PASS - Unicode folders 7. ALIRA 매뉴얼 / 8. ALIRA 구동 retained
+PASS - Package naming/root rule = Automation_Manager_260912_5

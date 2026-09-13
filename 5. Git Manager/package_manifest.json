@@ -1,69 +1,44 @@
 {
-  "package": "GitManager_260912_3.zip",
-  "release": "260912_3",
+  "package": "GitManager_260912_4.zip",
+  "release": "260912_4",
   "created": "2026-09-12",
   "managed_target_id": 5,
-  "requirements_excel_runtime_dependency": false,
-  "target_order": [
-    "PassFail",
-    "SignalExport",
-    "WeeklyReport",
-    "Ext",
-    "GitManager",
-    "BoardRepo",
-    "ALIRAManual",
-    "ALIRARuntime"
-  ],
+  "runtime_changed": false,
   "governance": {
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "document_version": "v0.3",
-    "sha256": "10bc9151232e6e3d0c1ec1871410b7e1d4a7fda6cf8b98082c4ba014ad29d959"
+    "document_version": "v0.4",
+    "sha256": "c77488127f78d8c02aa009bdc2cedf54241e70fcd190362510dd7aefe15b200a"
   },
-  "git_recovery": {
-    "current_folder_adopt": true,
-    "default_branch": "main",
-    "automatic_push": false,
-    "preserve_modes": {
-      "PassFail": "recursive",
-      "SignalExport": "recursive",
-      "WeeklyReport": "recursive",
-      "Ext": "recursive",
-      "GitManager": "root_only",
-      "BoardRepo": "root_only",
-      "ALIRAManual": "recursive",
-      "ALIRARuntime": "root_only"
-    }
+  "distribution_hygiene": {
+    "governance_rule": "A18",
+    "cache_excluded": true,
+    "final_violation_count": 0
   },
   "files": [
     {
       "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 40371,
-      "sha256": "10bc9151232e6e3d0c1ec1871410b7e1d4a7fda6cf8b98082c4ba014ad29d959"
+      "size": 44069,
+      "sha256": "c77488127f78d8c02aa009bdc2cedf54241e70fcd190362510dd7aefe15b200a"
     },
     {
       "path": "AUTOMATION_MANAGER_RELEASE_INFO.txt",
-      "size": 315,
-      "sha256": "cdef025beeb663eed9ee445c39308b32183c2bb35744c7e1fb62be058079cf20"
+      "size": 341,
+      "sha256": "91e3ad92c723e1b8fa06eec94487066e1c2e7155918be996bd49a78727549665"
     },
     {
-      "path": "Automation_Manager_Requirements_260912_3.xlsx",
-      "size": 42226,
-      "sha256": "7b89b7f20cfda5ce9b1b7f7fdd82fa1684ad0b5130d6ac3e82bc7c611f370655"
+      "path": "Automation_Manager_Requirements_260912_5.xlsx",
+      "size": 45693,
+      "sha256": "7fb481993db58b127c91c2508726ea9e72a179fb19c2799abd235c96b0b7488f"
     },
     {
-      "path": "current/git_manager.py",
-      "size": 48506,
-      "sha256": "8dd9104dc72d4431deb73697b82e76c7765296bdc4a53f31b56def48f7128589"
+      "path": "Automation_Manager_package_manifest.json",
+      "size": 302,
+      "sha256": "5c0f5a7040c92a40d41059fcb521b9ecf3d14176da230c8766030675991f348d"
     },
     {
-      "path": "current/Git_Manager.pyw",
-      "size": 904,
-      "sha256": "a1c92ba460e5167ddc12c66ce70af78ab04223f4956c937a067bb0f1a0412660"
-    },
-    {
-      "path": "GitManager_Requirements_260912_3.xlsx",
-      "size": 48880,
-      "sha256": "c0171c8528e50c291ac7a94802ebadc34282bd4e93c278a3c33ac39460eed359"
+      "path": "GitManager_Requirements_260912_4.xlsx",
+      "size": 50072,
+      "sha256": "5911e5cd50665edbef81525fd494ca936274799e6bae121c3349c5ab4c2a2056"
     },
     {
       "path": "MANUAL.txt",
@@ -72,13 +47,23 @@
     },
     {
       "path": "PACKAGE_INFO.txt",
-      "size": 516,
-      "sha256": "a0e622fd6237940ee3b21bb2fbc756c0412b37d3d329a6443d486bedb652103e"
+      "size": 490,
+      "sha256": "ab008951ca42b6d75cade459fd770653dbd8f86806dc3d78641836b746e40cc4"
     },
     {
       "path": "SELF_TEST_RESULTS.txt",
-      "size": 376,
-      "sha256": "533e3b40f50f31248345c24a59874d33053e82fb6f0b2ee2a972071ccbb73e55"
+      "size": 312,
+      "sha256": "52857650e75f5884eb1620b98ee485832f10141dcf78d360628d8d0462e3726b"
+    },
+    {
+      "path": "current/Git_Manager.pyw",
+      "size": 904,
+      "sha256": "a1c92ba460e5167ddc12c66ce70af78ab04223f4956c937a067bb0f1a0412660"
+    },
+    {
+      "path": "current/git_manager.py",
+      "size": 48506,
+      "sha256": "8dd9104dc72d4431deb73697b82e76c7765296bdc4a53f31b56def48f7128589"
     }
   ]
 }

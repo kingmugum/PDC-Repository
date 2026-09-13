@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "260912_3",
+  "release": "260912_5",
   "targets": [
     {
       "id": 1,
@@ -172,7 +172,8 @@
       "configuration_status": "READY",
       "file_policy": "filename_sha256",
       "accepted_file_types": "all_regular_files",
-      "recursive": false
+      "recursive": false,
+      "post_display_name": "ALIRA 매뉴얼"
     },
     {
       "id": 8,
@@ -238,7 +239,7 @@
   "governance": {
     "required": true,
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "minimum_document_version": "v0.3",
+    "minimum_document_version": "v0.4",
     "carry_forward_on_release": true,
     "manifest_sha256_required": true,
     "development_baseline": true,

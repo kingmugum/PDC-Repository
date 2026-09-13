@@ -1,6 +1,6 @@
 # 00_AI_DEVELOPMENT_GOVERNANCE.md
 
-> **Document Version:** v0.3  
+> **Document Version:** v0.4  
 > **Status:** Draft / Living Document  
 > **Effective Date:** 2026-09-12  
 > **Purpose:** 모든 AI 보조 개발 프로젝트에 적용할 공통 개발헌법과 Project ID별 고유 운영 규칙을 하나의 문서에서 관리한다.  
@@ -330,6 +330,94 @@ AI가 완료를 선언하기 전에 각 항목의 결과를 `완료`, `부분완
 8. 기능·입력·출력·판정·예외의 최종 기준은 계속 최신 승인 Requirements이며, Governance는 공통 개발 절차·AI 행동 통제·프로젝트 고유 운영 규칙의 기준이다.
 
 따라서 사용자가 단순히 “기능 추가/수정”을 요청하더라도 AI는 패키지에 동봉된 Governance → 활성 Project Profile → 최신 Requirements → Architecture/Code/Test 순으로 영향과 충돌을 확인한 뒤 작업한다.
+
+
+## A18. 배포 패키지 명명·생성·청결성 규칙
+
+배포 패키지는 재현 가능하고 다른 PC에서 안전하게 사용할 수 있는 **소스·설정·승인 산출물 중심의 Clean Distribution**이어야 한다.
+
+### A18.1 Package Naming
+
+1. 실제 생성일을 `YYMMDD`로 사용한다. 임의의 과거 날짜를 새 패키지명에 재사용하지 않는다.
+2. 같은 프로젝트·같은 날짜의 패키지는 `_1`, `_2`, `_3` 순으로 증가시키고 날짜가 바뀌면 다시 `_1`부터 시작한다.
+3. Package Sequence는 Code/Requirements/Governance의 Technical Version 또는 Revision과 독립적으로 관리한다.
+4. 동일 이름의 기존 ZIP을 조용히 덮어쓰지 않는다.
+5. 정확한 Prefix와 파일명 Pattern은 활성 Project Profile의 `Package Pattern`을 따른다.
+6. 외부 ZIP 파일명과 ZIP 내부 최상위 Root 폴더명은 특별한 Requirement가 없는 한 확장자를 제외하고 동일하게 유지한다.
+7. 한글 등 비ASCII 경로는 ZIP UTF-8 filename metadata로 보존하고, 압축 해제 후 canonical 폴더명이 원본과 동일한지 확인한다.
+
+예:
+
+```text
+Automation_Manager_260912_5.zip
+└─ Automation_Manager_260912_5/
+
+BoardRepo_260912_5.zip
+└─ BoardRepo_260912_5/
+```
+
+### A18.2 Package에 포함하지 않는 생성·Cache 파일
+
+다음 항목은 Runtime이 필요 시 다시 만들 수 있는 생성물 또는 개발 Cache이므로 **배포 ZIP과 Git 추적 대상에서 재귀적으로 제외**한다.
+
+- `__pycache__/`
+- `*.pyc`
+- `*.pyo`
+- `.pytest_cache/`
+- `.mypy_cache/`
+- `.ruff_cache/`
+- Python/도구가 생성한 기타 명백한 일회성 Cache
+- `.DS_Store`, `Thumbs.db` 등 OS 임시 메타데이터
+
+비밀번호, Token, 실제 로그인 Profile, 개인 PC 경로를 포함한 민감정보는 A9에 따라 별도로 배제한다.
+
+### A18.3 Build/Test 후 Final Clean 단계
+
+Compile, Import, Self-Test 과정에서 `__pycache__` 또는 `*.pyc`가 생성될 수 있으므로 최종 배포는 다음 순서를 따른다.
+
+```text
+구현/수정
+  ↓
+Compile / Test / Regression
+  ↓
+배포 Staging 구성
+  ↓
+Cache·임시파일 재귀 제거
+  ↓
+Requirements / Governance / Manifest 최종 반영
+  ↓
+금지 항목 0건 검사
+  ↓
+ZIP 생성
+  ↓
+ZIP 내부 금지 항목 0건 + Unicode 경로 + 필수 파일 검증
+```
+
+최종 ZIP을 만든 뒤 검증을 위해 프로그램을 다시 실행하여 Cache가 생성되었다면, 그 Staging을 그대로 재압축하지 않고 다시 Clean 단계를 거친다.
+
+### A18.4 Git Ignore 기본선
+
+Automation Manager 계열 Git Repository는 최소한 다음 패턴을 `.gitignore`에 유지한다.
+
+```gitignore
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+Thumbs.db
+```
+
+프로젝트 고유 산출물을 추가 제외할 때는 승인 Requirements 또는 활성 Project Profile의 배포 규칙과 충돌하지 않는지 확인한다.
+
+### A18.5 Manifest와 Requirements 동기화
+
+- Package Manifest는 실제 최종 ZIP에 들어가는 Clean Staging을 기준으로 생성한다.
+- Manifest에 금지 Cache 파일이 기록되어 있으면 패키지를 승인하지 않는다.
+- Governance 변경 시 Document Version과 SHA-256을 Manifest에 갱신한다.
+- Requirements가 변경된 프로젝트는 최신 승인 Requirements를 함께 동봉한다.
+- 패키지 생성/명명/청결성 정책 변경은 Requirements의 Packaging/Distribution 항목과 본 Governance에 함께 추적한다.
 
 # Part B. Project ID 선택과 통합 문서 운영 규칙
 
@@ -999,6 +1087,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | v0.3 | 2026-09-12 | Governance Carry-Forward/Manifest 기준 추가, AM·GM·BR 프로필 ACTIVE 등록, ALIRA Manual(ALM)·Runtime(ALR) DRAFT 등록, Automation Manager Target 7·8 확장 기준 추가 | 모든 프로젝트, AM, GM, BR, ALM, ALR |
 | v0.3 (Profile Update) | 2026-09-12 | ALM·ALR Profile v0.2: 실제 그룹웨어 Board URL board/394·395 확정 | ALM, ALR |
 | v0.3 (Profile Update) | 2026-09-12 | ALM Profile v0.3: Target 7을 압축 Release 방식에서 일반 파일 Inbox(file_hash, 파일명+SHA-256) 방식으로 변경 | ALM |
+| v0.4 | 2026-09-12 | 공통 Package Naming, Clean Distribution, Cache/임시파일 제외, Build/Test 후 Final Clean, `.gitignore`, Manifest 동기화 규칙 추가 | 모든 프로젝트 |
 
 ---
 

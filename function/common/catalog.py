@@ -29,6 +29,7 @@ def boardrepo_targets_from_catalog(catalog: dict) -> dict[str, dict]:
         mode = t.get("mode")
         item = {
             "display_name": t["display_name"],
+            "post_display_name": t.get("post_display_name", t["display_name"]),
             "ui_label": t["ui_label"],
             "board_url": t.get("board_url", ""),
             "board_name": t.get("board_name", ""),
