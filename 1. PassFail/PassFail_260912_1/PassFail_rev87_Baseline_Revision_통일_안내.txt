@@ -1,0 +1,31 @@
+PassFail Baseline Revision 통일 안내
+
+기준일: 2026-09-06
+배포 패키지: PassFail_260906_3.zip
+PassFail Baseline Revision: rev87
+요구사항 문서: PassFail_Requirements_Management_rev87.xlsx
+
+1. 변경 목적
+- 기존에는 S/W rev85와 Requirements rev87처럼 번호가 분리될 수 있었습니다.
+- 앞으로 PassFail은 코드와 Requirements를 하나의 Baseline Revision으로 관리합니다.
+- ZIP 날짜/순번은 Baseline Revision과 별개로 계속 관리합니다.
+
+2. rev87 Baseline 구성
+- Python/PYW 모듈명: *_rev87.py / *_rev87.pyw
+- CAPL Template: *_rev87.can
+- Requirements: PassFail_Requirements_Management_rev87.xlsx
+- Governance: 00_AI_DEVELOPMENT_CONSTITUTION.md, 01_PROJECT_RULES.md
+
+3. 이번 코드 변경의 의미
+- rev85에서 검토된 기능 로직을 rev87 Baseline으로 revision rollover 했습니다.
+- 모듈명, import 경로, 로그/Bridge revision 표기, 현재 Baseline 안내 문자열을 rev87로 동기화했습니다.
+- 신규 기능 요구사항을 추가한 작업은 아닙니다.
+
+4. 향후 규칙
+- 기능/요구사항 변경으로 Baseline이 올라가면 S/W와 Requirements는 동일한 rev를 사용합니다.
+- 문서만 바뀌는 경우에도 배포 기준 Requirements가 변경되어 Baseline을 올릴 필요가 있다면 코드도 기능 변경 없이 revision rollover하여 동일 rev로 맞춥니다.
+- ZIP은 PassFail_YYMMDD_N 규칙을 유지합니다. 예: rev88이라도 같은 날 세 번째 ZIP이면 PassFail_260906_3.zip일 수 있습니다.
+
+5. 주의
+- revision rollover는 실차 회귀시험 완료를 의미하지 않습니다.
+- AI_07_회귀테스트의 미수행/부분확인 항목은 별도 현장 검증 대상으로 유지합니다.

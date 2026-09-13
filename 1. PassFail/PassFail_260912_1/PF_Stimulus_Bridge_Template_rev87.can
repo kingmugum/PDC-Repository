@@ -1,0 +1,35 @@
+/*@!Encoding:1252*/
+/*
+  Oracle Checker rev87 - Vector CAPL Stimulus Bridge TEMPLATE
+
+  IMPORTANT
+  - This template does NOT transmit any real CAN/CAN FD message by itself.
+  - rev87 compact 차량 송수신 테스트 automatically generates a bridge for selected TC(s).
+  - ONE-TIME SETUP: Add PF_Stimulus_Bridge_CAN1_ACTIVE.can (and CAN2/CAN3 only if needed) to a
+    matching CANoe Network Node and compile it once. Future runs overwrite that fixed ACTIVE source
+    and call COM CAPL Compile + Measurement restart/binding automatically.
+  - PassFail does not create/insert or save Vector configuration nodes automatically.
+  - 2안 is injection: the original sender may remain active. The GUI logs this explicitly; CRC/Alive/E2E
+    are not recalculated. Full source replacement remains isolated in the separate 1안 experimental track.
+  - rev87 generated bridges use 8-byte chunk setter functions plus a SEND function so database-defined
+    CAN/CAN FD messages up to 64 bytes can be transferred through the COM CAPL function interface.
+
+  Generated bridge shape (COMMENTED EXAMPLE ONLY):
+
+  variables
+  {
+    // message YOUR_MESSAGE pfMsg_1_ABCD;
+  }
+
+  // void PF_TX_1234ABCD_SET0(long b0, long b1, long b2, long b3,
+  //                          long b4, long b5, long b6, long b7)
+  // {
+  //   pfMsg_1_ABCD.byte(0) = (byte)b0;
+  //   ...
+  // }
+  //
+  // void PF_TX_1234ABCD_SEND()
+  // {
+  //   output(pfMsg_1_ABCD);
+  // }
+*/

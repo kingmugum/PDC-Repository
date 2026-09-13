@@ -1,0 +1,28 @@
+Signal Export V2 rev60 - 통합 Governance 전환 안내
+
+[변경 범위]
+- 기능 코드 변경 없음: Python/PYW 12개 파일은 Signal_Export_V2_260907_1과 byte-identical 유지
+- Requirements: rev59 -> rev60
+- Governance: 00_AI_DEVELOPMENT_GOVERNANCE.md v0.3 / SE Profile v1.2
+- 구 00_AI_DEVELOPMENT_CONSTITUTION.md 및 01_PROJECT_RULES.md는 통합 Governance로 대체되어 신규 ZIP에서 제거
+
+[충돌 검토 및 해소]
+1. Governance v0.2의 '유효 Requirement는 승인된 상위 시나리오에 연결' 문구와 SE의 24개 '검토중' 역복원 시나리오가 충돌
+   -> v0.3에서 검토중 시나리오도 Traceability 연결을 유지할 수 있도록 정정
+2. 구 Constitution/Project Rules와 통합 Governance를 동시에 포함하면 규칙 권한이 중복
+   -> 신규 ZIP은 통합 Governance만 포함
+3. 통합 원본 Governance에는 PF/SE 프로필이 함께 있으므로 외부 전달 시 타 프로젝트 규칙 노출 위험
+   -> 사내/개발 패키지는 통합 원본, 고객 외부 전달은 Part A + SE 프로필의 Project-resolved 사본 사용
+
+[SE Profile에 보존한 기존 규칙]
+- 사용자 시나리오 7열 + AI_01~AI_10, 총 11개 시트 기본 구조
+- 시나리오명 분류 말머리 사용, 별도 기능분류 열 기본 미사용
+- 활성 FR과 상위 시나리오의 양방향 추적성
+- 과거 미사용 FR-023/041/042/044/051/053/060/071/073 재사용 금지, 다음 신규 FR 참고값 FR-152
+- 기능 요청만 받아도 Requirements/LOCK/Regression/코드근거/충돌검토/Package Naming 자동 적용
+
+[검증]
+- Requirements 수식 오류 스캔 0건
+- 기존 12개 Python/PYW py_compile 재검증
+- package_manifest 코드 SHA가 이전 기준선과 동일한지 확인
+- ZIP 무결성 검사

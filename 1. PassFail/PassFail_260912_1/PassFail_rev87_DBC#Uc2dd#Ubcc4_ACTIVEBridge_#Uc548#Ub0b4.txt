@@ -1,0 +1,54 @@
+PassFail rev87 - DBC 식별형 ACTIVE Bridge 안내
+==============================================
+
+1. 변경 목적
+- 기존 PF_Stimulus_Bridge_CAN1_ACTIVE.can 이름만으로는 현재 Bridge가 B1/C/M/E 등 어떤 DBC 기준인지 식별하기 어려웠습니다.
+- rev87는 DBC 파일을 ChatGPT/외부에 업로드하지 않고 회사 PC의 로컬 DBC 설정만 사용해 식별 가능한 Bridge를 자동 생성합니다.
+
+2. 새 canonical 파일명
+- 규칙: PF_Stimulus_Bridge_CAN{N}_{DBC_ID}_ACTIVE.can
+- 예: CAN1에 B1.dbc 설정 -> PF_Stimulus_Bridge_CAN1_B1_ACTIVE.can
+- DBC_ID는 선택한 DBC 파일의 파일명(stem)에서 자동 추출합니다.
+- 공백/특수문자는 파일명 안전성을 위해 '_'로 정규화됩니다.
+
+3. 기존 고정 ACTIVE 파일은 삭제하지 않음
+- PF_Stimulus_Bridge_CAN1_ACTIVE.can
+- PF_Stimulus_Bridge_CAN2_ACTIVE.can
+- PF_Stimulus_Bridge_CAN3_ACTIVE.can
+위 파일은 CANoe/CANalyzer Network Node가 최초 1회 연결하는 runtime mirror로 유지됩니다.
+따라서 DBC가 B1 -> E로 바뀌어 canonical 파일명이 바뀌어도 Vector Configuration의 Node 경로를 매번 다시 지정할 필요가 없습니다.
+
+4. 생성 흐름
+(1) 사용자가 PassFail 설정 탭에서 로컬 DBC 선택
+(2) 기존 DBC resolver로 필요한 Message/Signal 확인
+(3) CAPL Bridge 생성
+(4) DBC 파일명에서 DBC_ID 추출
+(5) DBC SHA-256 계산
+(6) CANx_<DBC_ID>_ACTIVE.can 생성
+(7) 같은 내용을 CANx_ACTIVE.can runtime mirror에 반영
+(8) DBC ID/SHA-256/물리 CAN 채널 정합성 검증
+(9) 검증 성공 시 기존 CAPL Compile/Measurement/Stimulus 흐름 계속
+
+5. DBC-Bridge 불일치 차단
+다음 경우 rev87는 자동 실행을 차단합니다.
+- 현재 DBC와 Bridge header의 DBC ID 불일치
+- 동일한 DBC 파일명이지만 DBC 내용이 변경되어 SHA-256이 불일치
+- CAN1용 Bridge를 CAN2로 잘못 사용하는 등 Physical Channel 불일치
+차단 시 현재 DBC 기준으로 Bridge를 재생성하면 됩니다.
+
+6. 보안/외부 업로드
+- DBC 원문을 ChatGPT나 외부 서비스로 업로드하지 않습니다.
+- DBC 파일은 사용자의 로컬 PC에서 PassFail이 직접 읽습니다.
+- Bridge에는 DBC ID와 SHA-256만 기록합니다.
+
+7. 기존 안전 조건 유지
+- CRC/Alive/E2E 자동 계산 금지/경고 정책 유지
+- 안전핵심 TC preflight BLOCK 유지
+- CAPL 실제 송신 전 기존 송신원 분리/비활성 확인 정책 유지
+- Vector Configuration Node 자동 생성/수정/저장 금지 유지
+- replacement 1안 optional 삭제 구조 유지
+
+8. 배포
+- S/W revision: rev87
+- 배포 ZIP: PassFail_260826_6.zip
+- ZIP 순번과 S/W revision은 서로 독립입니다.

@@ -1,0 +1,34 @@
+PassFail rev87 - AI Development Governance v0.2 적용 안내
+작성일: 2026-09-12
+패키지: PassFail_260912_1.zip
+Baseline: rev87 (기능 코드 변경 없음)
+
+1. Governance 통합
+- 기존 00_AI_DEVELOPMENT_CONSTITUTION.md 제거
+- 기존 01_PROJECT_RULES.md 제거
+- 신규 00_AI_DEVELOPMENT_GOVERNANCE.md로 통합 대체
+- Governance Document Version: v0.2
+- PF Profile Version: v1.3
+
+2. PassFail(PF) 프로필 보강
+- 기능 요청만으로 Requirements/LOCK/Regression/Conflict/Package 규칙을 자동 적용하는 계약을 명시
+- Governance-only 변경이며 기능 Requirement/Code가 불변이면 Baseline Revision을 올리지 않는다고 명확화
+- S/W rev = Requirements rev = Baseline rev87 규칙 유지
+- ZIP Package Sequence는 Baseline과 독립 유지
+- 1안 optional seam 및 차량 Stimulus 안전 경계 유지
+
+3. Requirements 갱신
+- AI_01: 통합 Governance 및 PF 프로필을 신규 기준으로 지정
+- AI_08: Governance migration 코드/문서 근거 추가
+- AI_09: 구 Constitution/Project Rules 참조를 통합 Governance 참조로 변경
+- AI_10: Governance 충돌검토(CONFLICT-117~119) 추가, 미해소 충돌 0건
+
+4. 기능 영향
+- Python/PYW/CAPL 기능 코드 변경 없음
+- 기존 rev87 Baseline 유지
+- 기존 AI_07의 미수행/부분확인 현장 시험 상태는 변경하지 않음
+
+5. Signal Export
+- 신규 Governance의 [SE] 프로필 C2.6에서 향후 Signal Export V2 배포 ZIP에도
+  00_AI_DEVELOPMENT_GOVERNANCE.md를 필수 포함하도록 규정함.
+- Signal Export 실제 패키지 교체는 해당 최신 ZIP을 작업할 때 수행.
