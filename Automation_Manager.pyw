@@ -17,7 +17,7 @@ from work_lock import OperationLock
 from git_manager import GitManagerFrame
 from boardrepo_tab import BoardRepoFrame
 
-APP_RELEASE = "260912_5"
+APP_RELEASE = "260913_1"
 
 
 class AutomationManager(tk.Tk):

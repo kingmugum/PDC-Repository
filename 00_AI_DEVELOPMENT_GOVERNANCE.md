@@ -1,8 +1,8 @@
 # 00_AI_DEVELOPMENT_GOVERNANCE.md
 
-> **Document Version:** v0.4  
+> **Document Version:** v0.5  
 > **Status:** Draft / Living Document  
-> **Effective Date:** 2026-09-12  
+> **Effective Date:** 2026-09-13  
 > **Purpose:** 모든 AI 보조 개발 프로젝트에 적용할 공통 개발헌법과 Project ID별 고유 운영 규칙을 하나의 문서에서 관리한다.  
 > **Registered Projects:** `PF` PassFail, `SE` Signal Export V2, `AM` Automation Manager, `GM` Git Manager, `BR` BoardRepo, `ALM` ALIRA Manual, `ALR` ALIRA Runtime / Tools  
 > **Supersedes:** `00_AI_DEVELOPMENT_CONSTITUTION.md` + 프로젝트별 `01_PROJECT_RULES.md`
@@ -410,6 +410,8 @@ Thumbs.db
 ```
 
 프로젝트 고유 산출물을 추가 제외할 때는 승인 Requirements 또는 활성 Project Profile의 배포 규칙과 충돌하지 않는지 확인한다.
+
+승인된 관리 Target의 필수 Release artifact가 사용자 PC의 global Git ignore 또는 repository-local ignore에 의해 숨겨지는 경우, 해당 Target의 승인된 파일명/확장자/버전 규칙을 만족하는 파일에 한해서만 명시적으로 추적할 수 있다. 이 예외는 Target별 opt-in이어야 하며 `__pycache__`, `*.pyc` 같은 Cache 또는 임의 하위 파일을 광범위하게 `git add -f`하는 근거로 사용하지 않는다.
 
 ### A18.5 Manifest와 Requirements 동기화
 
@@ -998,10 +1000,10 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | Project ID | `ALR` |
 | Project Name | ALIRA Runtime / Tools |
 | Status | `DRAFT` |
-| Profile Version | v0.2 |
+| Profile Version | v0.3 |
 | Requirements Mode | `TBD` |
 | Requirements Pattern | `TBD` |
-| Package Pattern | `ALIRA_Runtime_YYMMDD_N.zip` |
+| Package Pattern | `ALIRA_V<major>.<minor>[.<patch>].zip` |
 | Primary Environment | Python 및 ALIRA 구동·보조 프로그램, Windows |
 
 ### C7.2 현재 승인 범위
@@ -1010,7 +1012,11 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 - Automation Manager/BoardRepo Target 8로 배치한다.
 - 그룹웨어 게시판 명칭은 `AI 스냅샷_ALIRA_구동`이다.
 - 실제 Board URL은 `https://gw.suresofttech.com/app/community/130/board/395`로 확정한다.
-- 최신판은 `YYMMDD_N`으로 판정한다.
+- 배포 ZIP은 `ALIRA_V0.15.zip`, `ALIRA_V0.16.zip`, `ALIRA_V1.0.zip`과 같이 `Vmajor.minor[.patch]` 형식을 사용한다.
+- 최신판은 날짜가 아니라 Semantic Version의 숫자 비교로 판정한다. 예: `V0.15 < V0.16 < V1.0`.
+- BoardRepo 게시글 제목의 안정 식별자는 `[BoardRepo] ALIRA_Runtime_Vx.y` 형식을 사용하고 첨부파일의 Semantic Version과 교차검증한다.
+- Git 상태는 새 `ALIRA_Vx.y.zip`이 아직 Commit되지 않았거나 PC의 Git ignore에 의해 숨겨져 있어도 관리대상 변경으로 식별해야 한다.
+- ALIRA Runtime Target에 한해 승인된 Semantic Version 압축파일이 Git ignore에 걸린 경우 해당 파일만 제한적으로 force-add할 수 있다. Cache/임의 파일에는 이 예외를 확대하지 않는다.
 
 
 # Part D. 신규 프로젝트 프로필 양식
@@ -1088,6 +1094,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | v0.3 (Profile Update) | 2026-09-12 | ALM·ALR Profile v0.2: 실제 그룹웨어 Board URL board/394·395 확정 | ALM, ALR |
 | v0.3 (Profile Update) | 2026-09-12 | ALM Profile v0.3: Target 7을 압축 Release 방식에서 일반 파일 Inbox(file_hash, 파일명+SHA-256) 방식으로 변경 | ALM |
 | v0.4 | 2026-09-12 | 공통 Package Naming, Clean Distribution, Cache/임시파일 제외, Build/Test 후 Final Clean, `.gitignore`, Manifest 동기화 규칙 추가 | 모든 프로젝트 |
+| v0.5 | 2026-09-13 | ALR Profile v0.3: `ALIRA_Vmajor.minor[.patch].zip` Semantic Version 관리, BoardRepo 제목/첨부 교차검증, Git ignore에 숨은 승인 ALIRA Release의 제한적 추적 예외 규칙 추가 | 모든 프로젝트 Git Hygiene, ALR |
 
 ---
 

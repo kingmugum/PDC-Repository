@@ -11,6 +11,7 @@ _REV_RE = re.compile(r"(?:^|[_\-\s])rev(?:ision)?[_\-\s]?(\d+)(?=$|[_\-\s])", re
 _DATE_RE = re.compile(r"(?:^|[_\-\s])(\d{6})(?=$|[_\-\s])")
 _COUNTER_RE = re.compile(r"[_\-\s](\d{1,3})$")
 _SANITIZE_RE = re.compile(r"[^0-9a-z가-힣]+", re.IGNORECASE)
+_SEMVER_RE = re.compile(r"(?:^|[_\-\s])V(?P<version>\d+(?:\.\d+){1,3})(?=$|[_\-\s])", re.IGNORECASE)
 
 
 class ArchiveSelectionError(RuntimeError):
@@ -34,6 +35,8 @@ class ArchiveInfo:
     date_token: str | None
     date_value: date | None
     counter: int
+    semantic_version: tuple[int, int, int, int] | None = None
+    semantic_label: str | None = None
 
     @property
     def display_order(self) -> str:
@@ -64,6 +67,22 @@ def _matches_target_prefix(stem: str, aliases: Iterable[str]) -> bool:
         reverse=True,
     )
     return any(normalized_stem.startswith(alias) for alias in normalized_aliases)
+
+
+def parse_semantic_version_identity(name: str) -> tuple[tuple[int, int, int, int], str] | None:
+    raw = str(name)
+    suffix = Path(raw).suffix.casefold()
+    text_value = Path(raw).stem if suffix in {".zip", ".7z", ".rar"} else raw
+    matches = list(_SEMVER_RE.finditer(text_value))
+    if not matches:
+        return None
+    match = matches[-1]
+    raw_parts = tuple(int(x) for x in match.group("version").split("."))
+    if len(raw_parts) < 2 or len(raw_parts) > 4:
+        return None
+    padded = raw_parts + (0,) * (4 - len(raw_parts))
+    label = "V" + ".".join(str(x) for x in raw_parts)
+    return padded, label
 
 
 def _parse_date(token: str) -> date | None:
@@ -219,6 +238,56 @@ def _select_date_counter_release(
     )
 
 
+def _select_semantic_version(
+    folder: Path,
+    target_name: str,
+    archives: list[Path],
+) -> ArchiveSelection:
+    infos: list[ArchiveInfo] = []
+    parse_errors: list[str] = []
+    for path in archives:
+        parsed = parse_semantic_version_identity(path.name)
+        if parsed is None:
+            parse_errors.append(f"{path.name}  (Vmajor.minor 형식 버전을 찾을 수 없음)")
+            continue
+        version_key, label = parsed
+        infos.append(ArchiveInfo(
+            path=path,
+            rev=None,
+            date_token=None,
+            date_value=None,
+            counter=0,
+            semantic_version=version_key,
+            semantic_label=label,
+        ))
+
+    if parse_errors:
+        raise ArchiveSelectionError(
+            target_name,
+            "Semantic Version 패키지는 ALIRA_V0.15.zip처럼 Vmajor.minor[.patch] 형식을 사용해야 합니다.",
+            parse_errors,
+        )
+    if not infos:
+        raise ArchiveSelectionError(target_name, "해석 가능한 Semantic Version 압축파일이 없습니다.")
+
+    highest = max(info.semantic_version for info in infos if info.semantic_version is not None)
+    finalists = [info for info in infos if info.semantic_version == highest]
+    if len(finalists) != 1:
+        raise ArchiveSelectionError(
+            target_name,
+            "가장 높은 Semantic Version이 같은 압축파일이 여러 개라 자동 선택할 수 없습니다.",
+            [info.path.name for info in finalists],
+        )
+    return ArchiveSelection(
+        target_name=target_name,
+        folder=folder,
+        selected=finalists[0],
+        candidates=tuple(infos),
+        rule_summary="Semantic Version: Vmajor.minor[.patch] 숫자 비교 (예: V0.15 < V0.16 < V1.0)",
+        strategy="semantic_version",
+    )
+
+
 def _select_date_rev_counter(
     folder: Path,
     target_name: str,
@@ -305,6 +374,8 @@ def select_latest_archive(
 
     if strategy == "date_counter_release":
         return _select_date_counter_release(folder, target_name, archives)
+    if strategy == "semantic_version":
+        return _select_semantic_version(folder, target_name, archives)
     if strategy == "date_rev_counter":
         return _select_date_rev_counter(folder, target_name, archives)
 
@@ -314,7 +385,11 @@ def select_latest_archive(
     )
 
 
-def version_label_from_archive(path: Path, display_name: str) -> str:
+def version_label_from_archive(path: Path, display_name: str, strategy: str | None = None) -> str:
+    if strategy == "semantic_version":
+        parsed = parse_semantic_version_identity(path.name)
+        if parsed is not None:
+            return parsed[1]
     stem = path.stem
     prefix = f"{display_name}_"
     if stem.casefold().startswith(prefix.casefold()):

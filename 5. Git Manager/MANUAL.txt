@@ -1,8 +1,7 @@
-Git Manager 260912_3
+Git Manager 260913_1
 
-1) 상태 확인 대상은 program_catalog의 1~8 공통 Target입니다.
-2) Pull/Commit+Push는 Repository 전체에 적용되며 ff-only/no-force 정책을 유지합니다.
-3) 최신 Automation Manager ZIP을 풀고 [현재 폴더 Git 연결/복구]로 self-bootstrap할 수 있습니다.
-4) 7.ALIRA 매뉴얼은 일반파일 Target이며 Git 복구 시 recursive preserve를 사용합니다.
-5) 8.ALIRA 구동은 versioned Target이며 root_only preserve를 유지합니다.
-6) BoardRepo 엔진을 Git Manager가 직접 호출하지 않습니다.
+- Automation Manager의 1~8 Target Git 상태/복구를 관리합니다.
+- 8. ALIRA 구동은 ALIRA_V0.15.zip 같은 Semantic Version을 인식합니다.
+- ALIRA Runtime 승인 ZIP이 Git ignore에 숨겨져도 로컬 변경으로 감지합니다.
+- force-add는 Target 8의 승인된 직속 Semantic ZIP에만 제한됩니다.
+- Pull/Push는 기존 ff-only/no-force/no-auto-merge 안전정책을 유지합니다.

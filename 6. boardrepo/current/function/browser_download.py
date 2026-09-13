@@ -7,7 +7,7 @@ import re
 from typing import Callable
 from urllib.parse import urljoin
 
-from archive_selector import ArchiveSelectionError, select_latest_archive
+from archive_selector import (ArchiveSelectionError, select_latest_archive, parse_semantic_version_identity)
 from board_post_navigation import open_board_post_by_title
 from browser_runtime import launch_persistent_context_auto
 from browser_automation import (
@@ -52,6 +52,7 @@ class DownloadTarget:
     folder: Path
     aliases: tuple[str, ...]
     mode: str = "versioned_archive"
+    archive_strategy: str = "date_counter_release"
 
 
 @dataclass(frozen=True)
@@ -65,6 +66,8 @@ class RemotePost:
     counter: int = 0
     sha256: str | None = None
     size_bytes: int | None = None
+    version_label: str | None = None
+    version_key: tuple[int, int, int, int] | None = None
 
 
 @dataclass(frozen=True)
@@ -289,16 +292,7 @@ def _canonical_versioned_board_title(
     target: DownloadTarget,
     value: str,
 ) -> str | None:
-    """
-    Extract one valid versioned BoardRepo title from a possibly wrapped cell.
-
-    Example visual text:
-      [BoardRepo] SignalExport_Signal_Export_V2_26080
-      8_2
-
-    becomes:
-      [BoardRepo] SignalExport_Signal_Export_V2_260808_2
-    """
+    """Extract one valid versioned BoardRepo title from a possibly wrapped cell."""
     compact = _compact_dom_text(value)
     prefix = _compact_dom_text(f"[BoardRepo] {target.display_name}_")
     pos = compact.find(prefix)
@@ -306,16 +300,20 @@ def _canonical_versioned_board_title(
         return None
 
     tail = compact[pos:]
+    if str(target.archive_strategy or "").casefold() == "semantic_version":
+        matches = list(re.finditer(r"(?i)(?<![A-Za-z0-9])V(\d+(?:\.\d+){1,3})(?![\d.])", tail))
+        if not matches:
+            return None
+        match = matches[-1]
+        title_compact = tail[:match.end()]
+        return "[BoardRepo] " + title_compact[len("[BoardRepo]"):]
+
     matches = _valid_release_matches(tail)
     if not matches:
         return None
-
-    # The package Release date/counter is the final valid release token in the
-    # title. This mirrors the upload filename's trailing YYMMDD[_N] convention.
     match = matches[-1]
     title_compact = tail[:match.end()]
     return "[BoardRepo] " + title_compact[len("[BoardRepo]"):]
-
 
 
 def _canonical_file_hash_board_title(
@@ -711,6 +709,24 @@ def _candidate_from_title(
     post_url: str,
 ) -> RemotePost | None:
     if _is_versioned_target(target):
+        if str(target.archive_strategy or "").casefold() == "semantic_version":
+            canonical = _canonical_versioned_board_title(target, title)
+            if not canonical:
+                return None
+            parsed = parse_semantic_version_identity(canonical)
+            if parsed is None:
+                return None
+            version_key, version_label = parsed
+            return RemotePost(
+                title=canonical,
+                post_url=post_url,
+                filename="",
+                kind="versioned",
+                family=target.display_name,
+                version_label=version_label,
+                version_key=version_key,
+            )
+
         parsed = _versioned_title_release(target, title)
         if parsed is None:
             return None
@@ -768,6 +784,13 @@ def _select_remote_candidates(
     if _is_versioned_target(target):
         if not raw:
             return []
+        if str(target.archive_strategy or "").casefold() == "semantic_version":
+            best = max(raw, key=lambda x: x.version_key or (0, 0, 0, 0))
+            log(
+                f"원격 최신 글 [{target.display_name}]: "
+                f"{best.title} (Version={best.version_label})"
+            )
+            return [best]
         best = max(raw, key=lambda x: _release_key(x.date_token, x.counter))
         log(
             f"원격 최신 글 [{target.display_name}]: "
@@ -829,6 +852,21 @@ def _validate_attachment_against_title(
             raise BrowserAutomationError(
                 f"최신 글의 첨부파일이 압축파일이 아닙니다: {filename}"
             )
+
+        if str(target.archive_strategy or "").casefold() == "semantic_version":
+            parsed_sem = parse_semantic_version_identity(filename)
+            if parsed_sem is None:
+                raise BrowserAutomationError(
+                    "최신 글 제목은 Semantic Version 형식이지만 첨부파일명에서 "
+                    f"Vmajor.minor 버전을 해석할 수 없습니다: {filename}"
+                )
+            version_key, version_label = parsed_sem
+            if version_key != candidate.version_key:
+                raise BrowserAutomationError(
+                    "최신 글 제목과 첨부파일 Semantic Version이 일치하지 않습니다. "
+                    f"제목={candidate.version_label}, 첨부={version_label}, 파일={filename}"
+                )
+            return
 
         parsed = parse_release_identity(filename)
         if parsed is None:
@@ -1083,7 +1121,7 @@ def _local_versioned_latest(
             target_name=target.display_name,
             aliases=target.aliases,
             extensions=allowed,
-            strategy="date_counter_release",
+            strategy=target.archive_strategy or "date_counter_release",
         )
         return selection.selected
     except ArchiveSelectionError as exc:
@@ -1262,8 +1300,12 @@ def _sync_versioned_target(
             remote_version=_version_text(remote.date_token, remote.counter),
         )
 
-    remote_key = _release_key(remote.date_token, remote.counter)
-    remote_text = _version_text(remote.date_token, remote.counter)
+    if str(target.archive_strategy or "").casefold() == "semantic_version":
+        remote_key = remote.version_key or (0, 0, 0, 0)
+        remote_text = remote.version_label
+    else:
+        remote_key = _release_key(remote.date_token, remote.counter)
+        remote_text = _version_text(remote.date_token, remote.counter)
 
     if local is None:
         try:
@@ -1287,8 +1329,12 @@ def _sync_versioned_target(
                 remote_version=remote_text,
             )
 
-    local_key = _release_key(local.date_token, local.counter)
-    local_text = _version_text(local.date_token, local.counter)
+    if str(target.archive_strategy or "").casefold() == "semantic_version":
+        local_key = local.semantic_version or (0, 0, 0, 0)
+        local_text = local.semantic_label
+    else:
+        local_key = _release_key(local.date_token, local.counter)
+        local_text = _version_text(local.date_token, local.counter)
 
     if remote_key == local_key:
         return DownloadResult(
@@ -1444,10 +1490,7 @@ def _discover_detailed_remotes(
                     STATUS_CONFLICT,
                     candidate.filename or candidate.title,
                     reason,
-                    remote_version=_version_text(
-                        candidate.date_token,
-                        candidate.counter,
-                    ),
+                    remote_version=(candidate.version_label if str(target.archive_strategy or "").casefold() == "semantic_version" else _version_text(candidate.date_token, candidate.counter)),
                 )
             )
             log(

@@ -1,7 +1,8 @@
 {
-  "package": "Automation_Manager_260912_5.zip",
-  "release": "260912_5",
-  "governance_version": "v0.4",
-  "authoritative_manifest": "../../package_manifest.json",
-  "note": "Embedded pointer; root package_manifest.json is authoritative."
+  "package": "Automation_Manager_260913_1.zip",
+  "release": "260913_1",
+  "governance_version": "v0.5",
+  "requirements": "Automation_Manager_Requirements_260913_1.xlsx",
+  "git_component": "GitManager_260913_1.zip",
+  "boardrepo_component": "BoardRepo_260913_1.zip"
 }

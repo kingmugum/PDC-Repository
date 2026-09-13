@@ -43,6 +43,7 @@ def boardrepo_targets_from_catalog(catalog: dict) -> dict[str, dict]:
                 "archive_strategy": t.get("archive_strategy", "date_counter_release"),
                 "recommended_filename": t.get("recommended_filename", f"{t['key']}_YYMMDD_N.zip"),
                 "revision_in_package_name": False,
+                "semantic_version_example": t.get("semantic_version_example"),
             })
         elif mode == "archive_family":
             item.update({

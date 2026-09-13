@@ -426,7 +426,7 @@ class BoardRepoFrame(ttk.Frame):
             strategy=strategy,
         )
         archive = selection.selected
-        version = version_label_from_archive(archive.path, display_name)
+        version = version_label_from_archive(archive.path, display_name, strategy)
         created = datetime.now().isoformat(timespec="seconds")
         title = self.config_data["upload"]["title_template"].format(
             display_name=display_name,
@@ -450,10 +450,11 @@ class BoardRepoFrame(ttk.Frame):
                 title=title,
                 body=body,
                 local_summary=(
-                    f"파일={archive.path.name}, date={archive.date_token or '없음'}, "
-                    f"rev={archive.rev if archive.rev is not None else '미사용'}, "
-                    f"counter={archive.counter}, 전략={selection.strategy}, "
-                    f"규칙={selection.rule_summary}"
+                    (
+                            f"파일={archive.path.name}, version={archive.semantic_label}, 전략={selection.strategy}, 규칙={selection.rule_summary}"
+                            if selection.strategy == "semantic_version"
+                            else f"파일={archive.path.name}, date={archive.date_token or '없음'}, rev={archive.rev if archive.rev is not None else '미사용'}, counter={archive.counter}, 전략={selection.strategy}, 규칙={selection.rule_summary}"
+                        )
                 ),
             )
         )
@@ -1004,6 +1005,7 @@ class BoardRepoFrame(ttk.Frame):
                         folder=folder,
                         aliases=tuple(target.get("package_aliases") or target["folder_aliases"]),
                         mode=str(target.get("mode") or "versioned_archive"),
+                        archive_strategy=str(target.get("archive_strategy") or "date_counter_release"),
                     )
                 )
             except FolderResolutionError as exc:

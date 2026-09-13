@@ -1,8 +1,11 @@
-SELF TEST RESULTS - BoardRepo_260912_5 / v0.28
-PASS - Python source syntax checked without writing pyc
-PASS - Existing BoardRepo runtime behavior unchanged
-PASS - ALIRA Manual file_hash/body format baseline retained
-PASS - Governance v0.4 present
-PASS - Final staging cache/pyc violation count = 0
-PASS - Unicode target folder metadata unchanged
-PASS - Package naming/root rule = BoardRepo_260912_5
+SELF TEST RESULTS - BoardRepo_260913_1 / v0.29
+PASS - Python compile
+PASS - ALIRA_V0.15 parser
+PASS - Semantic latest order V0.9 < V0.15 < V0.16 < V1.0
+PASS - [BoardRepo] ALIRA_Runtime_V0.15 title parser
+PASS - Semantic attachment identity parser
+PASS - date-counter target regression
+PASS - proven browser_automation.py unchanged in this patch
+PASS - Governance v0.5 present
+PASS - cache violations = 0
+NOT RUN - live groupware board/395 upload/download (user environment required)

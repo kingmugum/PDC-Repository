@@ -15,10 +15,10 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox, simpledialog
 
 from catalog import load_catalog, target_map
-from release_rules import latest_release, parse_release_name
+from release_rules import latest_release, latest_semantic_release, parse_release_name, parse_semantic_release_name
 
 APP_NAME = "Git Manager"
-APP_VERSION = "260912_1"
+APP_VERSION = "260913_1"
 VERSION_RE = re.compile(r"^(?P<date>\d{6})_(?P<num>\d+)$")
 CONFIG_DIR = Path.home() / ".pdc_git_manager"
 CONFIG_FILE = CONFIG_DIR / "projects.json"
@@ -436,9 +436,72 @@ def _working_changed_aliases(repo: Path, *folders: str) -> bool:
     if not unique:
         return False
     try:
-        return bool(run_git(repo, "status", "--porcelain", "--", *unique))
+        return bool(run_git(repo, "status", "--porcelain", "--untracked-files=all", "--", *unique))
     except Exception:
         return False
+
+
+def _managed_ignored_files(repo: Path, local_folder: Path, target: dict) -> list[Path]:
+    """Return intentionally managed direct files hidden by Git ignore rules.
+
+    This is opt-in per catalog target. It exists for Release archives such as
+    ALIRA_V0.15.zip when a user's global Git ignore contains *.zip. Cache and
+    nested files are never force-added by this helper.
+    """
+    if not target.get("git_force_track_ignored_managed_files"):
+        return []
+    if not local_folder.is_dir():
+        return []
+
+    strategy = str(target.get("archive_strategy") or "").casefold()
+    prefixes = [str(x).casefold() for x in (target.get("package_prefixes") or [])]
+    allowed_exts = {".zip", ".7z", ".rar"}
+    result: list[Path] = []
+    for path in local_folder.iterdir():
+        if not path.is_file() or path.suffix.casefold() not in allowed_exts:
+            continue
+        stem_cf = path.stem.casefold()
+        if prefixes and not any(stem_cf.startswith(p) for p in prefixes):
+            continue
+        if strategy == "semantic_version" and parse_semantic_release_name(path.name) is None:
+            continue
+        try:
+            proc = subprocess.run(
+                ["git", "-C", str(repo), "check-ignore", "-q", "--", str(path.relative_to(repo))],
+                capture_output=True, text=True, creationflags=(subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0),
+            )
+            if proc.returncode == 0:
+                result.append(path)
+        except Exception:
+            continue
+    return result
+
+
+def _force_add_managed_ignored_files(repo: Path, catalog: dict) -> list[str]:
+    added: list[str] = []
+    for target in catalog.get("targets") or []:
+        if not target.get("git_force_track_ignored_managed_files"):
+            continue
+        local_folder, issue = _resolve_local_target_folder(repo, target)
+        if issue:
+            raise GitError(f"Git 업로드 중 대상 폴더 별칭 충돌: {issue}")
+        for path in _managed_ignored_files(repo, local_folder, target):
+            rel = str(path.relative_to(repo)).replace("\\", "/")
+            run_git(repo, "add", "-f", "--", rel)
+            added.append(rel)
+    return added
+
+
+def _all_managed_ignored_files(repo: Path, catalog: dict) -> list[Path]:
+    pending: list[Path] = []
+    for target in catalog.get("targets") or []:
+        if not target.get("git_force_track_ignored_managed_files"):
+            continue
+        local_folder, issue = _resolve_local_target_folder(repo, target)
+        if issue:
+            continue
+        pending.extend(_managed_ignored_files(repo, local_folder, target))
+    return pending
 
 
 def _file_sha256(path: Path) -> str:
@@ -560,6 +623,10 @@ def _resolve_remote_folder_name(repo: Path, ref: str | None, target: dict) -> tu
 def _release_summary(names: list[str], target: dict) -> str:
     mode = target.get("mode")
     if mode == "versioned_archive":
+        strategy = str(target.get("archive_strategy") or "date_counter_release").casefold()
+        if strategy == "semantic_version":
+            rel = latest_semantic_release(names, target.get("package_prefixes") or [])
+            return rel.label if rel else "-"
         rel = latest_release(names, target.get("package_prefixes") or [])
         return rel.label if rel else "-"
     if mode == "file_hash":
@@ -988,6 +1055,9 @@ class GitManagerFrame(ttk.Frame):
                 changed = _working_changed_aliases(
                     repo, physical_folder_name, head_folder_name, remote_folder_name, t["folder"]
                 )
+                ignored_managed = _managed_ignored_files(repo, local_folder, t)
+                if ignored_managed:
+                    changed = True
                 alias_issue = local_alias_issue or head_alias_issue or remote_alias_issue
                 if alias_issue:
                     state = "확인 필요"
@@ -1019,6 +1089,8 @@ class GitManagerFrame(ttk.Frame):
                         alias_parts.append(f"FS:{physical_folder_name}")
                     if alias_parts:
                         tree_note += " | 별칭 호환: " + " / ".join(alias_parts)
+                    if ignored_managed:
+                        tree_note += " | Git ignore 신규관리파일: " + ", ".join(p.name for p in ignored_managed[:3])
                 rows.append((t["ui_label"], local_summary, remote_summary, state, tree_note))
             div = tracking_divergence(repo)
             local_release = _local_automation_release(repo)
@@ -1046,8 +1118,8 @@ class GitManagerFrame(ttk.Frame):
         if not repo or not is_git_repo(repo):
             messagebox.showinfo(APP_NAME, "Git Repository를 선택해주세요.")
             return
-        if local_changes(repo):
-            messagebox.showwarning(APP_NAME, "미Commit 로컬 변경이 있어 Pull을 중단합니다. 먼저 Commit/정리해주세요.")
+        if local_changes(repo) or _all_managed_ignored_files(repo, self.catalog):
+            messagebox.showwarning(APP_NAME, "미Commit 로컬 변경(관리 대상 Git ignore 파일 포함)이 있어 Pull을 중단합니다. 먼저 Commit/정리해주세요.")
             return
         if not origin_url(repo):
             messagebox.showwarning(APP_NAME, "origin 원격 저장소가 없습니다.")
@@ -1089,7 +1161,8 @@ class GitManagerFrame(ttk.Frame):
         if not origin_url(repo):
             messagebox.showwarning(APP_NAME, "origin 원격 저장소가 없습니다.")
             return
-        if not local_changes(repo):
+        pending_ignored = _all_managed_ignored_files(repo, self.catalog)
+        if not local_changes(repo) and not pending_ignored:
             messagebox.showinfo(APP_NAME, "현재 변경된 파일이 없습니다.")
             return
         if not git_identity_ok(repo):
@@ -1109,6 +1182,9 @@ class GitManagerFrame(ttk.Frame):
                 raise GitError("원격 저장소에 더 최신 변경이 있습니다. 먼저 Pull해주세요.")
             _guard_not_older_than_remote(repo, branch)
             tag = next_version_tag(repo)
+            forced = _force_add_managed_ignored_files(repo, self.catalog)
+            for rel in forced:
+                self.log(f"Git ignore 예외 관리파일 강제 추가: {rel}")
             run_git(repo, "add", "-A")
             run_git(repo, "commit", "-m", f"[{tag}] {msg.strip()}", timeout=180)
             run_git(repo, "tag", "-a", tag, "-m", msg.strip())

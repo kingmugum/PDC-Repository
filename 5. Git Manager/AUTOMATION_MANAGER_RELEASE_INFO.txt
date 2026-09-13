@@ -1,6 +1,6 @@
-Automation Manager Integration Baseline
-Integration Release : Automation_Manager_260912_5.zip
-Git Component        : GitManager_260912_4.zip
-BoardRepo Component  : BoardRepo_260912_5.zip
-Governance           : v0.4
-Clean Distribution   : enabled; cache/pyc excluded recursively
+Automation Manager Integration
+Integration Release : Automation_Manager_260913_1.zip
+Git Component        : GitManager_260913_1.zip
+BoardRepo Component  : BoardRepo_260913_1.zip
+Governance           : v0.5
+Target 8 Rule        : ALIRA_V<major>.<minor>[.<patch>].zip

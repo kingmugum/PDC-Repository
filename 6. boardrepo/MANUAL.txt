@@ -1,7 +1,11 @@
-BoardRepo 260912_4 / v0.27
+BoardRepo 260913_1 / v0.29
 
-ALIRA Manual 일반파일 업로드 본문 표시를 수정했습니다.
-- 게시글 제목 Prefix는 [BoardRepo][ALIRA_Manual] 그대로 유지합니다.
-- 본문 대상 표시는 "ALIRA 매뉴얼"로 표시합니다.
-- 줄바꿈은 실제 개행으로 기록하며 문자 그대로의 \n을 표시하지 않습니다.
-- 과거 게시글은 자동 수정하거나 재업로드하지 않습니다.
+Target 8 ALIRA Runtime
+- Board: board/395
+- File pattern: ALIRA_V<major>.<minor>[.<patch>].zip
+- Example: ALIRA_V0.15.zip
+- Latest selection: Semantic Version numeric comparison (V0.9 < V0.15 < V1.0)
+- Upload title: [BoardRepo] ALIRA_Runtime_V0.15
+- Download: latest semantic title -> actual attachment version cross-check
+
+Target 7 ALIRA Manual remains general file + SHA-256.

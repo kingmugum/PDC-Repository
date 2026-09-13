@@ -1,7 +1,9 @@
-SELF TEST RESULTS - GitManager_260912_4
-PASS - Python source syntax checked without writing pyc
-PASS - Runtime code behavior unchanged
-PASS - Governance v0.4 present
-PASS - .gitignore cache baseline present
-PASS - Final staging cache/pyc violation count = 0
-PASS - Package naming/root rule = GitManager_260912_4
+SELF TEST RESULTS - GitManager_260913_1
+PASS - Python compile
+PASS - ALIRA V0.9/V0.15/V1.0 Semantic ordering
+PASS - ALIRA V0.15 local/Git summary parser
+PASS - ignored managed ALIRA Release detection
+PASS - bounded force-add excludes nested/unapproved/cache files
+PASS - date-counter targets regression
+PASS - Governance v0.5 present
+PASS - cache violations = 0

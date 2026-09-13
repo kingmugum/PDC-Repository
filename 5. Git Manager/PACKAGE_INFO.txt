@@ -1,13 +1,15 @@
 Git Manager Package
 
-Package Release    : GitManager_260912_4
-Runtime Function   : unchanged from prior approved runtime
-Created            : 2026-09-12
-Requirements       : GitManager_Requirements_260912_4.xlsx
-Integration SRS    : Automation_Manager_Requirements_260912_5.xlsx
-Governance         : v0.4
+Package Release    : GitManager_260913_1
+Runtime Version    : 260913_1
+Created            : 2026-09-13
+Requirements       : GitManager_Requirements_260913_1.xlsx
+Integration SRS    : Automation_Manager_Requirements_260913_1.xlsx
+Governance         : v0.5
 
-260912_4 changes
-- Clean Distribution: __pycache__/pyc/pyo/development cache excluded
-- .gitignore cache baseline included
-- Governance v0.4 Package Naming / Final Clean rules applied
+260913_1 changes
+- Target 8 ALIRA Runtime uses ALIRA_Vx.y[.z] Semantic Version.
+- Local/Git summary recognizes V0.15 style releases.
+- Ignored approved ALIRA Runtime release ZIP is detected as local change.
+- Commit may force-add only approved direct Semantic ZIP; Pull is guarded.
+- Clean Distribution / Governance v0.5 rules applied.

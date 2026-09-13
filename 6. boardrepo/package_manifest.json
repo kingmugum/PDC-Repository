@@ -1,15 +1,20 @@
 {
-  "package": "BoardRepo_260912_5.zip",
-  "release": "260912_5",
-  "technical_version": "0.28",
-  "created": "2026-09-12",
+  "package": "BoardRepo_260913_1.zip",
+  "release": "260913_1",
+  "technical_version": "0.29",
+  "created": "2026-09-13",
   "managed_target_id": 6,
   "governance": {
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "document_version": "v0.4",
-    "sha256": "c77488127f78d8c02aa009bdc2cedf54241e70fcd190362510dd7aefe15b200a"
+    "document_version": "v0.5",
+    "sha256": "63873c69cc9e0e5ef0d211b90507ff4b902da2651ac75ded02494eae5be553c5"
   },
-  "requirements": "BoardRepo_Requirements_v0_28.xlsx",
+  "requirements": "BoardRepo_Requirements_v0_29.xlsx",
+  "change_scope": {
+    "alira_runtime_strategy": "semantic_version",
+    "recommended_filename": "ALIRA_VX.Y.zip",
+    "board": "board/395"
+  },
   "distribution_hygiene": {
     "governance_rule": "A18",
     "cache_excluded": true,
@@ -18,28 +23,13 @@
   "files": [
     {
       "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 44069,
-      "sha256": "c77488127f78d8c02aa009bdc2cedf54241e70fcd190362510dd7aefe15b200a"
+      "size": 45565,
+      "sha256": "63873c69cc9e0e5ef0d211b90507ff4b902da2651ac75ded02494eae5be553c5"
     },
     {
-      "path": "BoardRepo_Requirements_v0_28.xlsx",
-      "size": 134728,
-      "sha256": "23d94e8c995596303dac25356237a174d6a2f0a824685f9ccf71dd221719ee22"
-    },
-    {
-      "path": "MANUAL.txt",
-      "size": 426,
-      "sha256": "57a11fd3c221a2f3b2caa96f37df140d340871cd69937e9ffb76f37e850bdd08"
-    },
-    {
-      "path": "PACKAGE_INFO.txt",
-      "size": 423,
-      "sha256": "09a5be718b6a1b6db7ff14173cf4ced18afae89b93839b27229413692d5cfed6"
-    },
-    {
-      "path": "SELF_TEST_RESULTS.txt",
-      "size": 399,
-      "sha256": "dd5b6772f4550d1b8d87d203d5f8d2d642fddb1fe1c6047978c0d4ce7765a170"
+      "path": "BoardRepo_Requirements_v0_29.xlsx",
+      "size": 138292,
+      "sha256": "017f6e21bbcb52ef47f464ae572578ddd4ba537d39302bb1f0081f8849404cd5"
     },
     {
       "path": "current/BoardRepo.pyw",
@@ -48,13 +38,13 @@
     },
     {
       "path": "current/config.json",
-      "size": 13567,
-      "sha256": "84fc756e4b94735ceeaf498638df820f1457b22c433b7144ae718203dad6f0ed"
+      "size": 13828,
+      "sha256": "81188391a768622a1abfb1ce06c1eac6a2f9c2e3ca9264c9c1b4408d3ca4fa43"
     },
     {
       "path": "current/function/archive_selector.py",
-      "size": 11265,
-      "sha256": "50c257b518cde1afd3c175dc3b9a3f8442ea4b3483d88fcfcc308843e96ea062"
+      "size": 14215,
+      "sha256": "8846618abc50aa4367f32890dfa257c01ece670f71b7d030d371091097f20c66"
     },
     {
       "path": "current/function/board_post_navigation.py",
@@ -63,13 +53,13 @@
     },
     {
       "path": "current/function/boardrepo.py",
-      "size": 54392,
-      "sha256": "9e18b65a6ce6ed3ed012339433c4f64befaeb8fb1406d53b6ed35385f42b08dd"
+      "size": 54721,
+      "sha256": "fa00539e1850bf6e988f4f329a7a552c11df52c41424f1d648cfd423d4d49c0b"
     },
     {
       "path": "current/function/boardrepo_tab.py",
-      "size": 51358,
-      "sha256": "5f61035b581623ed786afa7b6df2c05decebaa0d8d5ea6fe08abe3deeefe3814"
+      "size": 51687,
+      "sha256": "9e0fc00950bf7c38af397cce45e370136592ef6adf5ee10e67e8fc358153302a"
     },
     {
       "path": "current/function/browser_automation.py",
@@ -78,8 +68,8 @@
     },
     {
       "path": "current/function/browser_download.py",
-      "size": 50664,
-      "sha256": "4d774efc18104df35c81a920063a2ba4c73c29646c2eee8e294af997e19a1500"
+      "size": 53163,
+      "sha256": "0c127f82736263c7c0baa6ceaab29aa81746b0ea3d4dd8a80fb33e3c06f70636"
     },
     {
       "path": "current/function/browser_runtime.py",
@@ -150,6 +140,21 @@
       "path": "current/site_profile.json",
       "size": 10277,
       "sha256": "09d917fdae911a5f08c62cf44e5c33aab238d8ef7a248e869c1541d8eb91d67a"
+    },
+    {
+      "path": "MANUAL.txt",
+      "size": 406,
+      "sha256": "a1942f755f79a9f937183e2d2d409383064669d6d3907c76e615c58a7c6f5641"
+    },
+    {
+      "path": "PACKAGE_INFO.txt",
+      "size": 496,
+      "sha256": "b2ee5db73c9340b43b49abb6137e1da8f0fafc410ae22fa18a5f4e0dadce93f2"
+    },
+    {
+      "path": "SELF_TEST_RESULTS.txt",
+      "size": 483,
+      "sha256": "54a5c9f3c8917dc8352883ed85536c67a0ed10228545bd85f2a0ee08a7918c09"
     }
   ]
 }

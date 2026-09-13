@@ -1,13 +1,14 @@
 BoardRepo Package
 
-Package Release   : BoardRepo_260912_5
-Technical Version : v0.28
-Created           : 2026-09-12
-Requirements      : BoardRepo_Requirements_v0_28.xlsx
-Governance        : v0.4
+Package Release   : BoardRepo_260913_1
+Technical Version : v0.29
+Created           : 2026-09-13
+Requirements      : BoardRepo_Requirements_v0_29.xlsx
+Governance        : v0.5
 
-260912_5 changes
-- Clean Distribution: __pycache__/pyc/pyo/development cache excluded
-- Final Clean performed after syntax/self-test
-- .gitignore cache baseline included
-- Governance v0.4 Package Naming / Manifest rules applied
+260913_1 changes
+- Target 8 ALIRA Runtime: ALIRA_Vx.y[.z].zip Semantic Version.
+- Local latest and remote latest use numeric Semantic Version ordering.
+- Remote title and attachment version are cross-checked.
+- Target 7 ALIRA Manual file_hash policy is unchanged.
+- Clean Distribution rules retained.

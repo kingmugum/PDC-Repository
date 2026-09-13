@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "260912_5",
+  "release": "260913_1",
   "targets": [
     {
       "id": 1,
@@ -26,7 +26,8 @@
       "package_prefixes": [
         "PassFail"
       ],
-      "recommended_filename": "PassFail_YYMMDD_N.zip"
+      "recommended_filename": "PassFail_YYMMDD_N.zip",
+      "git_force_track_ignored_managed_files": false
     },
     {
       "id": 2,
@@ -52,7 +53,8 @@
         "SignalExport",
         "Signal_Export_V2"
       ],
-      "recommended_filename": "Signal_Export_V2_YYMMDD_N.zip"
+      "recommended_filename": "Signal_Export_V2_YYMMDD_N.zip",
+      "git_force_track_ignored_managed_files": false
     },
     {
       "id": 3,
@@ -79,7 +81,8 @@
         "WeeklyReport",
         "WeeklyMailAgent"
       ],
-      "recommended_filename": "WeeklyMailAgent_YYMMDD_N.zip"
+      "recommended_filename": "WeeklyMailAgent_YYMMDD_N.zip",
+      "git_force_track_ignored_managed_files": false
     },
     {
       "id": 4,
@@ -126,7 +129,8 @@
         "GitManager",
         "PDC_Version_Manager"
       ],
-      "recommended_filename": "GitManager_YYMMDD_N.zip"
+      "recommended_filename": "GitManager_YYMMDD_N.zip",
+      "git_force_track_ignored_managed_files": false
     },
     {
       "id": 6,
@@ -148,7 +152,8 @@
       "package_prefixes": [
         "BoardRepo"
       ],
-      "recommended_filename": "BoardRepo_YYMMDD_N.zip"
+      "recommended_filename": "BoardRepo_YYMMDD_N.zip",
+      "git_force_track_ignored_managed_files": false
     },
     {
       "id": 7,
@@ -195,13 +200,16 @@
       "board_url": "https://gw.suresofttech.com/app/community/130/board/395",
       "board_name": "AI 스냅샷_ALIRA_구동",
       "mode": "versioned_archive",
-      "archive_strategy": "date_counter_release",
+      "archive_strategy": "semantic_version",
       "package_prefixes": [
+        "ALIRA",
         "ALIRA_Runtime",
         "ALIRA_Tools"
       ],
-      "recommended_filename": "ALIRA_Runtime_YYMMDD_N.zip",
-      "configuration_status": "READY"
+      "recommended_filename": "ALIRA_VX.Y.zip",
+      "configuration_status": "READY",
+      "semantic_version_example": "ALIRA_V0.15.zip",
+      "git_force_track_ignored_managed_files": true
     }
   ],
   "automation_manager": {
@@ -239,7 +247,7 @@
   "governance": {
     "required": true,
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "minimum_document_version": "v0.4",
+    "minimum_document_version": "v0.5",
     "carry_forward_on_release": true,
     "manifest_sha256_required": true,
     "development_baseline": true,

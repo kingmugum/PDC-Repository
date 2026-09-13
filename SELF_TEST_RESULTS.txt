@@ -1,9 +1,13 @@
-SELF TEST RESULTS - Automation_Manager_260912_5
-PASS - Python source syntax checked: 23 files (no pyc written)
-PASS - 8-target catalog retained
-PASS - Governance v0.4 present
-PASS - .gitignore cache baseline present
-PASS - Component releases: GitManager_260912_4 / BoardRepo_260912_5
-PASS - Final staging cache/pyc violation count = 0
-PASS - Unicode folders 7. ALIRA 매뉴얼 / 8. ALIRA 구동 retained
-PASS - Package naming/root rule = Automation_Manager_260912_5
+SELF TEST RESULTS - Automation_Manager_260913_1
+PASS - Python compile for changed Automation/Git/BoardRepo modules
+PASS - 8 targets loaded from program_catalog.json
+PASS - ALIRA Runtime strategy = semantic_version
+PASS - ALIRA_V0.15.zip recognized, title = [BoardRepo] ALIRA_Runtime_V0.15
+PASS - Git ignored managed ALIRA Release detection
+PASS - bounded force-add only for approved direct ALIRA Semantic ZIP
+PASS - existing date-counter target regression
+PASS - Governance v0.5 present and SHA synchronized
+PASS - Requirements formula scan = 0 errors
+PASS - Clean Distribution cache violations = 0
+PASS - Unicode target folders 7/8 preserved
+NOT RUN - live groupware board/395 upload/download (user environment required)
