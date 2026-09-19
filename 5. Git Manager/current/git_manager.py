@@ -18,7 +18,7 @@ from catalog import load_catalog, target_map
 from release_rules import latest_release, latest_semantic_release, parse_release_name, parse_semantic_release_name
 
 APP_NAME = "Git Manager"
-APP_VERSION = "260913_1"
+APP_VERSION = "260919_1"
 VERSION_RE = re.compile(r"^(?P<date>\d{6})_(?P<num>\d+)$")
 CONFIG_DIR = Path.home() / ".pdc_git_manager"
 CONFIG_FILE = CONFIG_DIR / "projects.json"
@@ -445,7 +445,7 @@ def _managed_ignored_files(repo: Path, local_folder: Path, target: dict) -> list
     """Return intentionally managed direct files hidden by Git ignore rules.
 
     This is opt-in per catalog target. It exists for Release archives such as
-    ALIRA_V0.15.zip when a user's global Git ignore contains *.zip. Cache and
+    Requirement_Studio_V0.15.zip (or legacy ALIRA_V0.15.zip) when a user's global Git ignore contains *.zip. Cache and
     nested files are never force-added by this helper.
     """
     if not target.get("git_force_track_ignored_managed_files"):

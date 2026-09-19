@@ -1,13 +1,13 @@
-SELF TEST RESULTS - Automation_Manager_260913_1
-PASS - Python compile for changed Automation/Git/BoardRepo modules
-PASS - 8 targets loaded from program_catalog.json
-PASS - ALIRA Runtime strategy = semantic_version
-PASS - ALIRA_V0.15.zip recognized, title = [BoardRepo] ALIRA_Runtime_V0.15
-PASS - Git ignored managed ALIRA Release detection
-PASS - bounded force-add only for approved direct ALIRA Semantic ZIP
-PASS - existing date-counter target regression
-PASS - Governance v0.5 present and SHA synchronized
-PASS - Requirements formula scan = 0 errors
-PASS - Clean Distribution cache violations = 0
-PASS - Unicode target folders 7/8 preserved
-NOT RUN - live groupware board/395 upload/download (user environment required)
+SELF TEST RESULTS - Automation_Manager_260919_1
+
+PASS - Target 7/8 canonical GUI/folder names = Requirement Studio Manual/Runtime
+PASS - board/394 and board/395 URLs unchanged; board_name metadata renamed
+PASS - Requirement Studio Runtime new prefix + legacy ALIRA_V semantic ordering
+PASS - new BoardRepo title prefixes use Requirement_Studio_Manual/Runtime
+PASS - legacy ALIRA BoardRepo titles remain readable for duplicate/download
+PASS - stable internal keys ALIRAManual/ALIRARuntime and Project IDs ALM/ALR retained
+PASS - Governance v0.6 applied
+PASS - browser_automation.py unchanged from proven baseline
+PASS - Python compile/static unit tests
+PASS - Clean Distribution cache scan
+NOT RUN - live groupware board/394 and board/395 upload/download (user environment required)

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "260913_1",
+  "release": "260919_1",
   "targets": [
     {
       "id": 1,
@@ -158,10 +158,16 @@
     {
       "id": 7,
       "key": "ALIRAManual",
-      "display_name": "ALIRA_Manual",
-      "ui_label": "7. ALIRA 매뉴얼",
-      "folder": "7. ALIRA 매뉴얼",
+      "display_name": "Requirement_Studio_Manual",
+      "ui_label": "7. Requirement Studio 매뉴얼",
+      "folder": "7. Requirement Studio 매뉴얼",
       "aliases": [
+        "7. Requirement Studio 매뉴얼",
+        "7. Requirement Studio Manual",
+        "Requirement Studio 매뉴얼",
+        "Requirement Studio Manual",
+        "Requirement_Studio_Manual",
+        "7. Requirement_Studio_매뉴얼",
         "7. ALIRA 매뉴얼",
         "7. ALIRA Manual",
         "ALIRA Manual",
@@ -171,22 +177,33 @@
         "ALIRA매뉴얼"
       ],
       "board_url": "https://gw.suresofttech.com/app/community/130/board/394",
-      "board_name": "AI 스냅샷_ALIRA_매뉴얼",
+      "board_name": "AI 스냅샷_Requirement Studio_매뉴얼",
       "mode": "file_hash",
       "package_prefixes": [],
       "configuration_status": "READY",
       "file_policy": "filename_sha256",
       "accepted_file_types": "all_regular_files",
       "recursive": false,
-      "post_display_name": "ALIRA 매뉴얼"
+      "post_display_name": "Requirement Studio 매뉴얼",
+      "legacy_display_names": [
+        "ALIRA_Manual"
+      ]
     },
     {
       "id": 8,
       "key": "ALIRARuntime",
-      "display_name": "ALIRA_Runtime",
-      "ui_label": "8. ALIRA 구동",
-      "folder": "8. ALIRA 구동",
+      "display_name": "Requirement_Studio_Runtime",
+      "ui_label": "8. Requirement Studio 구동",
+      "folder": "8. Requirement Studio 구동",
       "aliases": [
+        "8. Requirement Studio 구동",
+        "8. Requirement Studio Runtime",
+        "Requirement Studio 구동",
+        "Requirement Studio Runtime",
+        "Requirement_Studio_Runtime",
+        "8. Requirement_Studio_구동",
+        "RequirementStudio Runtime",
+        "RequirementStudio_Runtime",
         "8. ALIRA 구동",
         "8. ALIRA Runtime",
         "ALIRA Runtime",
@@ -198,18 +215,24 @@
         "ALIRA_Tools"
       ],
       "board_url": "https://gw.suresofttech.com/app/community/130/board/395",
-      "board_name": "AI 스냅샷_ALIRA_구동",
+      "board_name": "AI 스냅샷_Requirement Studio_구동",
       "mode": "versioned_archive",
       "archive_strategy": "semantic_version",
       "package_prefixes": [
+        "Requirement_Studio",
+        "Requirement_Studio_Runtime",
+        "RequirementStudio",
         "ALIRA",
         "ALIRA_Runtime",
         "ALIRA_Tools"
       ],
-      "recommended_filename": "ALIRA_VX.Y.zip",
+      "recommended_filename": "Requirement_Studio_VX.Y.zip",
       "configuration_status": "READY",
-      "semantic_version_example": "ALIRA_V0.15.zip",
-      "git_force_track_ignored_managed_files": true
+      "semantic_version_example": "Requirement_Studio_V0.15.zip",
+      "git_force_track_ignored_managed_files": true,
+      "legacy_display_names": [
+        "ALIRA_Runtime"
+      ]
     }
   ],
   "automation_manager": {
@@ -247,7 +270,7 @@
   "governance": {
     "required": true,
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "minimum_document_version": "v0.5",
+    "minimum_document_version": "v0.6",
     "carry_forward_on_release": true,
     "manifest_sha256_required": true,
     "development_baseline": true,

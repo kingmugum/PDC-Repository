@@ -1,15 +1,11 @@
-Git Manager Package
+Package            : GitManager_260919_1.zip
+Created            : 2026-09-19
+Requirements       : GitManager_Requirements_260919_1.xlsx
+Automation Manager : Automation_Manager_260919_1.zip
+Governance         : v0.6
 
-Package Release    : GitManager_260913_1
-Runtime Version    : 260913_1
-Created            : 2026-09-13
-Requirements       : GitManager_Requirements_260913_1.xlsx
-Integration SRS    : Automation_Manager_Requirements_260913_1.xlsx
-Governance         : v0.5
-
-260913_1 changes
-- Target 8 ALIRA Runtime uses ALIRA_Vx.y[.z] Semantic Version.
-- Local/Git summary recognizes V0.15 style releases.
-- Ignored approved ALIRA Runtime release ZIP is detected as local change.
-- Commit may force-add only approved direct Semantic ZIP; Pull is guarded.
-- Clean Distribution / Governance v0.5 rules applied.
+Change Scope
+- Target 7/8 visible naming migrated from ALIRA to Requirement Studio.
+- Legacy ALIRA folder/package aliases remain compatible.
+- Target 8 preferred Release prefix is Requirement_Studio_Vx.y[.z].
+- Git core safety behavior is unchanged.

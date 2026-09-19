@@ -1,7 +1,7 @@
-Git Manager 260913_1
+Git Manager 260919_1
 
-- Automation Manager의 1~8 Target Git 상태/복구를 관리합니다.
-- 8. ALIRA 구동은 ALIRA_V0.15.zip 같은 Semantic Version을 인식합니다.
-- ALIRA Runtime 승인 ZIP이 Git ignore에 숨겨져도 로컬 변경으로 감지합니다.
-- force-add는 Target 8의 승인된 직속 Semantic ZIP에만 제한됩니다.
-- Pull/Push는 기존 ff-only/no-force/no-auto-merge 안전정책을 유지합니다.
+- Target 7/8 are displayed as Requirement Studio Manual / Runtime.
+- 8. Requirement Studio 구동 recognizes Requirement_Studio_V0.15.zip Semantic Version.
+- Legacy ALIRA_V0.15.zip remains compatible.
+- New/legacy Requirement Studio target folders are resolved as one target through catalog aliases.
+- Existing Git safety rules (ff-only / no force push / no destructive reset) remain unchanged.

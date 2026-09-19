@@ -658,8 +658,20 @@ class BoardRepoApp(tk.Tk):
         return plan, issues
 
     def _remote_check_items(self, plan: list[UploadPlanItem]) -> list[RemoteCheckItem]:
-        return [
-            RemoteCheckItem(
+        result = []
+        for item in plan:
+            target = self.config_data["targets"][item.target_key]
+            alternate_titles = []
+            for legacy_name in target.get("legacy_display_names") or []:
+                if item.kind == "file_hash":
+                    alternate_titles.append(f"[BoardRepo][{legacy_name}] {item.file_path.name}")
+                elif item.kind == "versioned":
+                    current_prefix = f"[BoardRepo] {item.display_name}_"
+                    if item.title.startswith(current_prefix):
+                        alternate_titles.append(
+                            f"[BoardRepo] {legacy_name}_" + item.title[len(current_prefix):]
+                        )
+            result.append(RemoteCheckItem(
                 target_key=item.target_key,
                 display_name=item.display_name,
                 board_url=item.board_url,
@@ -667,9 +679,9 @@ class BoardRepoApp(tk.Tk):
                 exact_title=item.title,
                 kind=item.kind,
                 sha256=item.sha256,
-            )
-            for item in plan
-        ]
+                alternate_titles=tuple(alternate_titles),
+            ))
+        return result
 
     def _target_result_summary(
         self,
@@ -1153,6 +1165,7 @@ class BoardRepoApp(tk.Tk):
                         aliases=tuple(target.get("package_aliases") or target["folder_aliases"]),
                         mode=str(target.get("mode") or "versioned_archive"),
                         archive_strategy=str(target.get("archive_strategy") or "date_counter_release"),
+                        title_aliases=tuple(target.get("legacy_display_names") or []),
                     )
                 )
             except FolderResolutionError as exc:

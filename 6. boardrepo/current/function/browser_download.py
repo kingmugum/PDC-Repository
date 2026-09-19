@@ -53,6 +53,7 @@ class DownloadTarget:
     aliases: tuple[str, ...]
     mode: str = "versioned_archive"
     archive_strategy: str = "date_counter_release"
+    title_aliases: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -288,32 +289,47 @@ def _valid_release_matches(text_value: str) -> list[re.Match]:
     return matches
 
 
+def _title_name_candidates(target: DownloadTarget) -> tuple[str, ...]:
+    values = [target.display_name, *target.title_aliases]
+    out = []
+    seen = set()
+    for value in values:
+        text = str(value or "").strip()
+        if not text:
+            continue
+        key = text.casefold()
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(text)
+    return tuple(out)
+
+
 def _canonical_versioned_board_title(
     target: DownloadTarget,
     value: str,
 ) -> str | None:
     """Extract one valid versioned BoardRepo title from a possibly wrapped cell."""
     compact = _compact_dom_text(value)
-    prefix = _compact_dom_text(f"[BoardRepo] {target.display_name}_")
-    pos = compact.find(prefix)
-    if pos < 0:
-        return None
+    for name in _title_name_candidates(target):
+        prefix = _compact_dom_text(f"[BoardRepo] {name}_")
+        pos = compact.find(prefix)
+        if pos < 0:
+            continue
+        tail = compact[pos + len(prefix):]
+        if str(target.archive_strategy or "").casefold() == "semantic_version":
+            matches = list(re.finditer(r"(?i)(?<![A-Za-z0-9])V(\d+(?:\.\d+){1,3})(?![\d.])", tail))
+            if not matches:
+                continue
+            match = matches[-1]
+            return f"[BoardRepo] {target.display_name}_" + tail[:match.end()]
 
-    tail = compact[pos:]
-    if str(target.archive_strategy or "").casefold() == "semantic_version":
-        matches = list(re.finditer(r"(?i)(?<![A-Za-z0-9])V(\d+(?:\.\d+){1,3})(?![\d.])", tail))
+        matches = _valid_release_matches(tail)
         if not matches:
-            return None
+            continue
         match = matches[-1]
-        title_compact = tail[:match.end()]
-        return "[BoardRepo] " + title_compact[len("[BoardRepo]"):]
-
-    matches = _valid_release_matches(tail)
-    if not matches:
-        return None
-    match = matches[-1]
-    title_compact = tail[:match.end()]
-    return "[BoardRepo] " + title_compact[len("[BoardRepo]"):]
+        return f"[BoardRepo] {target.display_name}_" + tail[:match.end()]
+    return None
 
 
 def _canonical_file_hash_board_title(
@@ -321,16 +337,16 @@ def _canonical_file_hash_board_title(
     value: str,
 ) -> str | None:
     normalized = _normalize_dom_text(value)
-    prefix = f"[BoardRepo][{target.display_name}]"
-    pos = normalized.find(prefix)
-    if pos < 0:
-        return None
-
-    tail = normalized[pos:]
-    rest = tail[len(prefix):].strip()
-    if not rest:
-        return None
-    return f"{prefix} {rest}"
+    for name in _title_name_candidates(target):
+        prefix = f"[BoardRepo][{name}]"
+        pos = normalized.find(prefix)
+        if pos < 0:
+            continue
+        tail = normalized[pos:]
+        rest = tail[len(prefix):].strip()
+        if rest:
+            return f"[BoardRepo][{target.display_name}] {rest}"
+    return None
 
 
 def _canonical_title_from_text(

@@ -1,6 +1,7 @@
-Automation Manager Integration
-Integration Release : Automation_Manager_260913_1.zip
-Git Component        : GitManager_260913_1.zip
-BoardRepo Component  : BoardRepo_260913_1.zip
-Governance           : v0.5
-Target 8 Rule        : ALIRA_V<major>.<minor>[.<patch>].zip
+Automation Manager : Automation_Manager_260919_1.zip
+Release            : 260919_1
+Governance         : v0.6
+Target Count       : 8
+Target 7            : Requirement Studio Manual (board/394)
+Target 8            : Requirement Studio Runtime (board/395)
+Target 8 Rule       : Requirement_Studio_V<major>.<minor>[.<patch>].zip (legacy ALIRA_V... accepted)

@@ -1,11 +1,14 @@
-BoardRepo 260913_1 / v0.29
+BoardRepo 260919_1 / v0.30
 
-Target 8 ALIRA Runtime
+Target 8 Requirement Studio Runtime
 - Board: board/395
-- File pattern: ALIRA_V<major>.<minor>[.<patch>].zip
-- Example: ALIRA_V0.15.zip
-- Latest selection: Semantic Version numeric comparison (V0.9 < V0.15 < V1.0)
-- Upload title: [BoardRepo] ALIRA_Runtime_V0.15
-- Download: latest semantic title -> actual attachment version cross-check
+- Preferred file pattern: Requirement_Studio_V<major>.<minor>[.<patch>].zip
+- Legacy compatible: ALIRA_V<major>.<minor>[.<patch>].zip
+- Example: Requirement_Studio_V0.15.zip
+- Semantic Version numeric comparison
+- New upload title: [BoardRepo] Requirement_Studio_Runtime_V0.15
+- Legacy [BoardRepo] ALIRA_Runtime_V0.15 posts remain readable for duplicate/download compatibility.
 
-Target 7 ALIRA Manual remains general file + SHA-256.
+Target 7 Requirement Studio Manual remains general file + SHA-256.
+- New upload title: [BoardRepo][Requirement_Studio_Manual] <filename>
+- Legacy [BoardRepo][ALIRA_Manual] posts remain compatible.

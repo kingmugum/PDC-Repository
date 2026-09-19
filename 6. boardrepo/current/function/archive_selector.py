@@ -264,7 +264,7 @@ def _select_semantic_version(
     if parse_errors:
         raise ArchiveSelectionError(
             target_name,
-            "Semantic Version 패키지는 ALIRA_V0.15.zip처럼 Vmajor.minor[.patch] 형식을 사용해야 합니다.",
+            "Semantic Version 패키지는 Requirement_Studio_V0.15.zip처럼 Vmajor.minor[.patch] 형식을 사용해야 합니다. (Legacy ALIRA_V...도 지원)",
             parse_errors,
         )
     if not infos:

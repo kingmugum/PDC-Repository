@@ -1,14 +1,12 @@
-BoardRepo Package
+Package           : BoardRepo_260919_1.zip
+Technical Version : v0.30
+Created           : 2026-09-19
+Requirements      : BoardRepo_Requirements_v0_30.xlsx
+Governance        : v0.6
 
-Package Release   : BoardRepo_260913_1
-Technical Version : v0.29
-Created           : 2026-09-13
-Requirements      : BoardRepo_Requirements_v0_29.xlsx
-Governance        : v0.5
-
-260913_1 changes
-- Target 8 ALIRA Runtime: ALIRA_Vx.y[.z].zip Semantic Version.
-- Local latest and remote latest use numeric Semantic Version ordering.
-- Remote title and attachment version are cross-checked.
-- Target 7 ALIRA Manual file_hash policy is unchanged.
-- Clean Distribution rules retained.
+Change Scope
+- Target 7/8 user-visible names renamed to Requirement Studio.
+- board/394 and board/395 URLs unchanged.
+- New BoardRepo post prefixes use Requirement_Studio_Manual / Requirement_Studio_Runtime.
+- Legacy ALIRA post/folder/package aliases remain readable.
+- Target 8 preferred Release filename: Requirement_Studio_Vx.y[.z].zip.

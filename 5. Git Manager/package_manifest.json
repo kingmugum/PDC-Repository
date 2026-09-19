@@ -1,19 +1,22 @@
 {
-  "package": "GitManager_260913_1.zip",
-  "release": "260913_1",
-  "created": "2026-09-13",
+  "package": "GitManager_260919_1.zip",
+  "release": "260919_1",
+  "created": "2026-09-19",
   "managed_target_id": 5,
   "runtime_changed": true,
   "governance": {
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "document_version": "v0.5",
-    "sha256": "63873c69cc9e0e5ef0d211b90507ff4b902da2651ac75ded02494eae5be553c5"
+    "document_version": "v0.6",
+    "sha256": "186fd24fb9eb34044b81c2b5d3416c861fe6d468371826449ec24633383ef586"
   },
-  "requirements": "GitManager_Requirements_260913_1.xlsx",
+  "requirements": "GitManager_Requirements_260919_1.xlsx",
   "change_scope": {
-    "alira_runtime_semantic_version": true,
-    "ignored_managed_release_detection": true,
-    "bounded_force_add": true
+    "target_7_8_rename": "Requirement Studio",
+    "legacy_alira_aliases": true,
+    "board_urls_unchanged": [
+      "board/394",
+      "board/395"
+    ]
   },
   "distribution_hygiene": {
     "governance_rule": "A18",
@@ -28,33 +31,33 @@
     },
     {
       "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 45565,
-      "sha256": "63873c69cc9e0e5ef0d211b90507ff4b902da2651ac75ded02494eae5be553c5"
+      "size": 47537,
+      "sha256": "186fd24fb9eb34044b81c2b5d3416c861fe6d468371826449ec24633383ef586"
     },
     {
       "path": "5. Git Manager/00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 45565,
-      "sha256": "63873c69cc9e0e5ef0d211b90507ff4b902da2651ac75ded02494eae5be553c5"
+      "size": 47537,
+      "sha256": "186fd24fb9eb34044b81c2b5d3416c861fe6d468371826449ec24633383ef586"
     },
     {
       "path": "5. Git Manager/Automation_Manager_package_manifest.json",
       "size": 272,
-      "sha256": "1a1000a9ae73a6f2123900dd0e7c4f3a32b657f26f0c01396f7ad2f04aa5eaed"
+      "sha256": "5e6e4f9e13ddce1cb12892a9ec0267f27c3662a8ed90a2d033fd4fba5f549724"
     },
     {
       "path": "5. Git Manager/AUTOMATION_MANAGER_RELEASE_INFO.txt",
-      "size": 266,
-      "sha256": "9ea94e494638f52911380fa3883fc882c7983a7a67cbc0c235b23af6d1d1e178"
+      "size": 354,
+      "sha256": "e35f2ca8c59fa84a46dfa22d1d603204b9985c1b53bf1dd9052109e562279233"
     },
     {
-      "path": "5. Git Manager/Automation_Manager_Requirements_260913_1.xlsx",
-      "size": 47526,
-      "sha256": "d99b1ea1daeb3c7762aeabde0fccc762f2b026d48ae13d2e28660b9bbe37b70a"
+      "path": "5. Git Manager/Automation_Manager_Requirements_260919_1.xlsx",
+      "size": 49827,
+      "sha256": "8f2b4844a956f8e31ff0eda8f7b804493d62d636a29e08b105f0f70d618b6947"
     },
     {
       "path": "5. Git Manager/current/git_manager.py",
-      "size": 52189,
-      "sha256": "698e64ef47366806839acc428018f9ba3645e818c9de5a099a35716fb0253947"
+      "size": 52230,
+      "sha256": "55bf18843ac31019a453c73daf8d443b072af7ec87b4050b7b273a22b4d0fdd8"
     },
     {
       "path": "5. Git Manager/current/Git_Manager.pyw",
@@ -62,34 +65,34 @@
       "sha256": "a1c92ba460e5167ddc12c66ce70af78ab04223f4956c937a067bb0f1a0412660"
     },
     {
-      "path": "5. Git Manager/GitManager_Requirements_260913_1.xlsx",
-      "size": 52320,
-      "sha256": "6aaaf9ee90f7bf17779104b8ebb84468664977dd5798fb358eda953ab039de75"
+      "path": "5. Git Manager/GitManager_Requirements_260919_1.xlsx",
+      "size": 54107,
+      "sha256": "74a7115f1644ee06e0bac488105f8aa65efb9ea57ef5c9317485c0675c870274"
     },
     {
       "path": "5. Git Manager/MANUAL.txt",
-      "size": 436,
-      "sha256": "21905cd82d031ec2493ed93b4f31fcbc0f71ff1af95d1397111327e1944d3e4b"
+      "size": 417,
+      "sha256": "697f5196030a590383ab5776bd91d7046a966af6ac5f1a17c7aad58378679d0c"
     },
     {
       "path": "5. Git Manager/PACKAGE_INFO.txt",
-      "size": 613,
-      "sha256": "40af926016c13ceec44b180b8e3c898de4e904cbe969e8144198956208b2495d"
+      "size": 466,
+      "sha256": "8b02c9988b1b266f469bcc34a8fbdd63e7a5a40ef30ccc60babf24ab66c5d949"
     },
     {
       "path": "5. Git Manager/SELF_TEST_RESULTS.txt",
-      "size": 362,
-      "sha256": "0bb5145947b6e945a2cab32a0a515e1e36572f82063edaff528789be04987c0c"
+      "size": 333,
+      "sha256": "08a4a21bee5572723e812a316121008ce69ca921542508abb8992e182f32ee66"
     },
     {
       "path": "Automation_Manager.pyw",
-      "size": 4297,
-      "sha256": "4a376d737d5777dfa030f1e946b741d493c6d9eed3ccc5759b0a255dd3f1e4b7"
+      "size": 4323,
+      "sha256": "789677138e345622ecfb06c72d66adc786c01b4a90421088dad0f477885c84ff"
     },
     {
       "path": "function/common/catalog.py",
-      "size": 2267,
-      "sha256": "acdec8ff49667b04bc2cf302db3e3445fd32e39ac9253576886df7f03520fd88"
+      "size": 2346,
+      "sha256": "dd86284db41051badc3cbb16029fd63412f8dfcb7c4f714aa3df891fdbaa5d2b"
     },
     {
       "path": "function/common/governance_guard.py",
@@ -108,8 +111,8 @@
     },
     {
       "path": "program_catalog.json",
-      "size": 7685,
-      "sha256": "0255fd864237f4ae26455ce5e3edba54331223248bcbe32533277d7a3fb1dcf9"
+      "size": 8602,
+      "sha256": "79db8273bebfcc51caceea911ee42b928fa97ecce3c2490e72944482b5760ae6"
     }
   ]
 }

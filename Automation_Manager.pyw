@@ -17,7 +17,7 @@ from work_lock import OperationLock
 from git_manager import GitManagerFrame
 from boardrepo_tab import BoardRepoFrame
 
-APP_RELEASE = "260913_1"
+APP_RELEASE = "260919_1"
 
 
 class AutomationManager(tk.Tk):
@@ -86,7 +86,7 @@ class AutomationManager(tk.Tk):
             buttons,
             text=(
                 "3. WeeklyReport→377 · 4. Ext→376 · 5. Git Manager→392 · 6. BoardRepo→393 · "
-                "7.ALIRA 매뉴얼→board/394 · 8.ALIRA 구동→board/395"
+                "7.Requirement Studio 매뉴얼→board/394 · 8.Requirement Studio 구동→board/395"
             ),
         ).pack(side="left", padx=(18, 0))
 

@@ -1,10 +1,10 @@
 # 00_AI_DEVELOPMENT_GOVERNANCE.md
 
-> **Document Version:** v0.5  
+> **Document Version:** v0.6  
 > **Status:** Draft / Living Document  
-> **Effective Date:** 2026-09-13  
+> **Effective Date:** 2026-09-19  
 > **Purpose:** 모든 AI 보조 개발 프로젝트에 적용할 공통 개발헌법과 Project ID별 고유 운영 규칙을 하나의 문서에서 관리한다.  
-> **Registered Projects:** `PF` PassFail, `SE` Signal Export V2, `AM` Automation Manager, `GM` Git Manager, `BR` BoardRepo, `ALM` ALIRA Manual, `ALR` ALIRA Runtime / Tools  
+> **Registered Projects:** `PF` PassFail, `SE` Signal Export V2, `AM` Automation Manager, `GM` Git Manager, `BR` BoardRepo, `ALM` Requirement Studio Manual, `ALR` Requirement Studio Runtime / Tools  
 > **Supersedes:** `00_AI_DEVELOPMENT_CONSTITUTION.md` + 프로젝트별 `01_PROJECT_RULES.md`
 
 ---
@@ -902,13 +902,13 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 4. Ext
 5. Git Manager
 6. BoardRepo
-7. ALIRA Manual
-8. ALIRA Runtime / Tools
+7. Requirement Studio Manual
+8. Requirement Studio Runtime / Tools
 
 7·8의 그룹웨어 Board URL은 사용자 확인으로 확정되었다.
 
-- Target 7 ALIRA Manual: `https://gw.suresofttech.com/app/community/130/board/394`
-- Target 8 ALIRA Runtime / Tools: `https://gw.suresofttech.com/app/community/130/board/395`
+- Target 7 Requirement Studio Manual: `https://gw.suresofttech.com/app/community/130/board/394`
+- Target 8 Requirement Studio Runtime / Tools: `https://gw.suresofttech.com/app/community/130/board/395`
 
 ## C4. `[GM]` Git Manager
 
@@ -964,16 +964,16 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 - 다음 수정은 동봉된 Governance와 최신 승인 BoardRepo Requirements를 먼저 읽고 영향·충돌·회귀를 검토한다.
 - Governance가 패키지에 있으므로 사용자가 동일 MD를 매 Release마다 별도로 다시 첨부하도록 요구하지 않는다.
 
-## C6. `[ALM]` ALIRA Manual
+## C6. `[ALM]` Requirement Studio Manual
 
 ### C6.1 프로필 정보
 
 | 항목 | 값 |
 |---|---|
 | Project ID | `ALM` |
-| Project Name | ALIRA Manual |
+| Project Name | Requirement Studio Manual |
 | Status | `DRAFT` |
-| Profile Version | v0.3 |
+| Profile Version | v0.4 |
 | Requirements Mode | `TBD` |
 | Requirements Pattern | `TBD` |
 | Package Pattern | 고정 패키지 없음 — 일반 파일 Inbox (`file_hash`) |
@@ -981,43 +981,54 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 
 ### C6.2 현재 승인 범위
 
-- ALIRA 프로젝트의 사용·운영 매뉴얼을 지속 작성·개정하는 독립 관리 대상이다.
+- Requirement Studio의 사용·운영 매뉴얼을 지속 작성·개정하는 독립 관리 대상이다.
 - Automation Manager/BoardRepo Target 7로 배치한다.
-- 그룹웨어 게시판 명칭은 `AI 스냅샷_ALIRA_매뉴얼`이다.
+- 그룹웨어 게시판 명칭은 `AI 스냅샷_Requirement Studio_매뉴얼`이다.
 - 실제 Board URL은 `https://gw.suresofttech.com/app/community/130/board/394`로 확정한다.
 - BoardRepo Target 7은 `file_hash` 일반 파일 Inbox로 운영한다.
 - 압축파일만 요구하지 않으며 DOCX/PDF/XLSX/PPTX/MD/TXT/이미지/ZIP 등 일반 파일을 직접 보관할 수 있다.
 - 각 파일은 파일명 + SHA-256으로 중복을 판정한다.
 - 같은 파일명에 다른 SHA-256이면 자동 덮어쓰지 않고 확인 필요로 처리한다.
 - 폴더 바로 아래의 일반 파일만 대상으로 하며 하위 폴더는 자동 재귀 업로드하지 않는다.
+- 신규 사용자 표시명과 BoardRepo 제목 식별자는 `Requirement Studio`를 사용한다.
+- BoardRepo 신규 게시글 제목은 `[BoardRepo][Requirement_Studio_Manual] <filename>`을 사용한다.
+- 과거 `[BoardRepo][ALIRA_Manual] ...` 게시글과 `7. ALIRA 매뉴얼` 폴더명은 Legacy Alias로 계속 인식하여 기존 자료를 손실하지 않는다.
+- 내부 Project ID `ALM`과 catalog key `ALIRAManual`은 호환성을 위해 유지하며 사용자 표시명과 분리한다.
 
-## C7. `[ALR]` ALIRA Runtime / Tools
+## C7. `[ALR]` Requirement Studio Runtime / Tools
 
 ### C7.1 프로필 정보
 
 | 항목 | 값 |
 |---|---|
 | Project ID | `ALR` |
-| Project Name | ALIRA Runtime / Tools |
+| Project Name | Requirement Studio Runtime / Tools |
 | Status | `DRAFT` |
-| Profile Version | v0.3 |
+| Profile Version | v0.4 |
 | Requirements Mode | `TBD` |
 | Requirements Pattern | `TBD` |
-| Package Pattern | `ALIRA_V<major>.<minor>[.<patch>].zip` |
-| Primary Environment | Python 및 ALIRA 구동·보조 프로그램, Windows |
+| Package Pattern | `Requirement_Studio_V<major>.<minor>[.<patch>].zip` (Legacy: `ALIRA_V...zip`) |
+| Primary Environment | Python 및 Requirement Studio 구동·보조 프로그램, Windows |
 
 ### C7.2 현재 승인 범위
 
-- ALIRA 실제 사용에 필요한 Python 프로그램, 구동 도구와 보조 산출물을 지속 개발·관리하는 독립 대상이다.
+- Requirement Studio 실제 사용에 필요한 Python 프로그램, 구동 도구와 보조 산출물을 지속 개발·관리하는 독립 대상이다.
 - Automation Manager/BoardRepo Target 8로 배치한다.
-- 그룹웨어 게시판 명칭은 `AI 스냅샷_ALIRA_구동`이다.
+- 그룹웨어 게시판 명칭은 `AI 스냅샷_Requirement Studio_구동`이다.
 - 실제 Board URL은 `https://gw.suresofttech.com/app/community/130/board/395`로 확정한다.
-- 배포 ZIP은 `ALIRA_V0.15.zip`, `ALIRA_V0.16.zip`, `ALIRA_V1.0.zip`과 같이 `Vmajor.minor[.patch]` 형식을 사용한다.
+- 신규 권장 배포 ZIP은 `Requirement_Studio_V0.15.zip`, `Requirement_Studio_V0.16.zip`, `Requirement_Studio_V1.0.zip`과 같이 `Vmajor.minor[.patch]` 형식을 사용한다. 과거 `ALIRA_V...zip`은 Legacy Alias로 계속 인식한다.
 - 최신판은 날짜가 아니라 Semantic Version의 숫자 비교로 판정한다. 예: `V0.15 < V0.16 < V1.0`.
-- BoardRepo 게시글 제목의 안정 식별자는 `[BoardRepo] ALIRA_Runtime_Vx.y` 형식을 사용하고 첨부파일의 Semantic Version과 교차검증한다.
-- Git 상태는 새 `ALIRA_Vx.y.zip`이 아직 Commit되지 않았거나 PC의 Git ignore에 의해 숨겨져 있어도 관리대상 변경으로 식별해야 한다.
-- ALIRA Runtime Target에 한해 승인된 Semantic Version 압축파일이 Git ignore에 걸린 경우 해당 파일만 제한적으로 force-add할 수 있다. Cache/임의 파일에는 이 예외를 확대하지 않는다.
+- 신규 BoardRepo 게시글 제목의 안정 식별자는 `[BoardRepo] Requirement_Studio_Runtime_Vx.y` 형식을 사용하고 첨부파일의 Semantic Version과 교차검증한다. 과거 `[BoardRepo] ALIRA_Runtime_Vx.y` 제목도 읽기/중복/다운로드 호환 대상으로 유지한다.
+- Git 상태는 새 `Requirement_Studio_Vx.y.zip` 또는 Legacy `ALIRA_Vx.y.zip`이 아직 Commit되지 않았거나 PC의 Git ignore에 의해 숨겨져 있어도 관리대상 변경으로 식별해야 한다.
+- Requirement Studio Runtime Target에 한해 승인된 Semantic Version 압축파일이 Git ignore에 걸린 경우 해당 파일만 제한적으로 force-add할 수 있다. Cache/임의 파일에는 이 예외를 확대하지 않는다.
 
+
+### C7.3 Rename / Legacy Compatibility
+
+- 2026-09-19부터 사용자 표시명은 `ALIRA`에서 `Requirement Studio`로 변경한다.
+- Project ID `ALM`/`ALR`과 catalog key `ALIRAManual`/`ALIRARuntime`은 기존 Git/Requirements/원격 게시글 호환을 위해 변경하지 않는다.
+- 폴더, GUI, 그룹웨어 Board Name, 신규 BoardRepo 제목과 신규 권장 Package Prefix는 `Requirement Studio`를 사용한다.
+- Legacy `ALIRA` 폴더명·게시글 제목·Package Prefix는 읽기/복구/중복검사 호환 목적으로만 유지하며 신규 생성의 기본값으로 사용하지 않는다.
 
 # Part D. 신규 프로젝트 프로필 양식
 
@@ -1095,6 +1106,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | v0.3 (Profile Update) | 2026-09-12 | ALM Profile v0.3: Target 7을 압축 Release 방식에서 일반 파일 Inbox(file_hash, 파일명+SHA-256) 방식으로 변경 | ALM |
 | v0.4 | 2026-09-12 | 공통 Package Naming, Clean Distribution, Cache/임시파일 제외, Build/Test 후 Final Clean, `.gitignore`, Manifest 동기화 규칙 추가 | 모든 프로젝트 |
 | v0.5 | 2026-09-13 | ALR Profile v0.3: `ALIRA_Vmajor.minor[.patch].zip` Semantic Version 관리, BoardRepo 제목/첨부 교차검증, Git ignore에 숨은 승인 ALIRA Release의 제한적 추적 예외 규칙 추가 | 모든 프로젝트 Git Hygiene, ALR |
+| v0.6 | 2026-09-19 | Target 7·8 사용자 표시명을 ALIRA에서 Requirement Studio로 변경. board/394·395 URL은 유지하고 게시판 명칭, 폴더/GUI, 신규 게시글 제목/권장 Package Prefix를 Requirement Studio로 전환. ALM/ALR Project ID와 ALIRA Legacy Alias는 호환을 위해 유지 | AM, GM, BR, ALM, ALR |
 
 ---
 

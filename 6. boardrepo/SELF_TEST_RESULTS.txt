@@ -1,11 +1,11 @@
-SELF TEST RESULTS - BoardRepo_260913_1 / v0.29
-PASS - Python compile
-PASS - ALIRA_V0.15 parser
-PASS - Semantic latest order V0.9 < V0.15 < V0.16 < V1.0
-PASS - [BoardRepo] ALIRA_Runtime_V0.15 title parser
-PASS - Semantic attachment identity parser
-PASS - date-counter target regression
-PASS - proven browser_automation.py unchanged in this patch
-PASS - Governance v0.5 present
-PASS - cache violations = 0
-NOT RUN - live groupware board/395 upload/download (user environment required)
+SELF TEST RESULTS - BoardRepo_260919_1 / v0.30
+
+PASS - Requirement Studio Manual new title prefix parser
+PASS - legacy [BoardRepo][ALIRA_Manual] title parser
+PASS - Requirement Studio Runtime new title prefix parser
+PASS - legacy [BoardRepo] ALIRA_Runtime_V0.15 title parser
+PASS - Requirement_Studio_V0.16 + ALIRA_V0.15 semantic selection
+PASS - board/394 and board/395 exact URLs retained
+PASS - Governance v0.6 present
+PASS - proven browser_automation.py unchanged
+NOT RUN - live groupware upload/download (user environment required)

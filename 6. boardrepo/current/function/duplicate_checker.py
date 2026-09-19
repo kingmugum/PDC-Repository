@@ -34,6 +34,7 @@ class RemoteCheckItem:
     exact_title: str
     kind: str  # "versioned" | "file_hash"
     sha256: str | None = None
+    alternate_titles: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -50,6 +51,7 @@ class BoardRowMatch:
     filename_match: bool
     post_url: str | None
     row_text: str
+    matched_title: str | None = None
 
 
 _SHA_RE = re.compile(r"\b[0-9a-fA-F]{64}\b")
@@ -229,7 +231,8 @@ def _post_url_from_row(row: dict, page_url: str) -> str | None:
 
 
 def _find_board_row_match(page, item: RemoteCheckItem) -> BoardRowMatch | None:
-    exact_compact = _compact_text(item.exact_title)
+    exact_titles = [item.exact_title, *item.alternate_titles]
+    exact_compacts = [(_compact_text(title), title) for title in exact_titles if str(title or "").strip()]
     filename_compact = _compact_text(item.file_path.name)
 
     filename_only: BoardRowMatch | None = None
@@ -246,13 +249,12 @@ def _find_board_row_match(page, item: RemoteCheckItem) -> BoardRowMatch | None:
         title_compact = _compact_text(searchable_title)
         row_compact = _compact_text(row_text)
 
-        title_match = (
-            bool(exact_compact)
-            and (
-                exact_compact in title_compact
-                or exact_compact in row_compact
-            )
-        )
+        matched_title = None
+        for exact_compact, original_title in exact_compacts:
+            if exact_compact and (exact_compact in title_compact or exact_compact in row_compact):
+                matched_title = original_title
+                break
+        title_match = matched_title is not None
         filename_match = (
             bool(filename_compact)
             and (
@@ -266,6 +268,7 @@ def _find_board_row_match(page, item: RemoteCheckItem) -> BoardRowMatch | None:
             filename_match=filename_match,
             post_url=_post_url_from_row(row, page.url),
             row_text=_normalize_text(row_text),
+            matched_title=matched_title,
         )
 
         if title_match:
@@ -375,6 +378,7 @@ def _inspect_file_hash_existing_post(
     site_profile: dict,
     log: Callable[[str], None],
     post_url: str | None = None,
+    expected_title_override: str | None = None,
 ) -> RemoteCheckResult:
     expected_sha = (item.sha256 or "").lower()
 
@@ -382,7 +386,7 @@ def _inspect_file_hash_existing_post(
         detail_url = open_board_post_by_title(
             page,
             board_url=item.board_url,
-            expected_title=item.exact_title,
+            expected_title=expected_title_override or item.exact_title,
             config=config,
             site_profile=site_profile,
             log=log,
@@ -541,6 +545,7 @@ def _scan_current_page_for_item(
                     site_profile,
                     log,
                     post_url=post_url,
+                    expected_title_override=(row_match.matched_title if row_match else None),
                 )
 
             # Same filename is visible but not under the standard BoardRepo Ext
