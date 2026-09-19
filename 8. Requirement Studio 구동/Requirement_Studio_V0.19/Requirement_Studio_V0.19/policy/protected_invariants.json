@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "rules": [
+    {
+      "id": "INV-001",
+      "rule": "Never invent numeric thresholds, states, signals, timing, limits, IDs, interfaces, or facts absent from the current source."
+    },
+    {
+      "id": "INV-002",
+      "rule": "Every extracted requirement must have at least one source evidence item with source document, source location, and source text."
+    },
+    {
+      "id": "INV-003",
+      "rule": "Reference examples are style/structure guidance only. The current source document is the factual Source of Truth."
+    },
+    {
+      "id": "INV-004",
+      "rule": "If information required for a testable requirement is missing, record a gap/TBD instead of completing it by inference."
+    },
+    {
+      "id": "INV-005",
+      "rule": "Pre-execution SWE.6 generation must not fabricate Output Value, PASS/FAIL, or Capture results."
+    }
+  ]
+}

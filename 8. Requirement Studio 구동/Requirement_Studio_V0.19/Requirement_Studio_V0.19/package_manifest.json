@@ -1,0 +1,326 @@
+{
+  "project_id": "ALR",
+  "project_name": "Requirement Studio",
+  "package": "Requirement_Studio_V0.19.zip",
+  "requirements": "Requirement_Studio_Requirements_Management_rev17.xlsx",
+  "governance": "00_AI_DEVELOPMENT_GOVERNANCE.md",
+  "manual": "docs/Requirement_Studio_사용자_매뉴얼_v0.4_V0.19.docx",
+  "created_at": "2026-09-19T02:59:28",
+  "baseline": "V0.19 Dashboard Refinement / Governance-Requirements synchronized",
+  "correction_notice": "This V0.19 package is the explicit consistency-completed replacement for the earlier V0.19 draft that was created before download delivery and Governance/Requirements synchronization were completed.",
+  "changes": [
+    "Approved dashboard visual structure applied while latest Requirements remain functional source of truth",
+    "ALIRA/GPT/Gemini radio selection with explicit selected state",
+    "Refined model dropdown and removed unnecessary text shading",
+    "Exact Analysis & Requirement Extraction Start label with delayed cooperative Stop transition",
+    "Waiting/current/complete/error stage colors",
+    "Dual overall/current progress bars",
+    "Global output folder access independent of result tabs",
+    "Automatic analysis DOCX and Canonical Requirement JSON saving",
+    "Drag & drop/file select input support preserving original files",
+    "Seven-item checklist and detailed cause popup",
+    "User manual v0.4 included"
+  ],
+  "verification": {
+    "python_compile": "PASS (19 Python/PYW files)",
+    "requirements_formula_error_scan": "PASS (0 matches)",
+    "static_requirement_traceability": "PASS for FR-116~FR-126 key implementation points",
+    "windows_pyside_layout": "UNTESTED - user environment required",
+    "real_provider_runtime": "UNTESTED - user environment required",
+    "cooperative_stop_runtime": "UNTESTED - user environment required"
+  },
+  "static_checks": {
+    "APP v0.19": true,
+    "exact primary label": true,
+    "provider radios": true,
+    "dual progress": true,
+    "7 checklist items": true,
+    "global output": true,
+    "no manual result save button": true,
+    "auto DOCX": true,
+    "stop timer": true,
+    "cooperative stop": true,
+    "log clear": true,
+    "actual steps": true,
+    "gov v0.19": true,
+    "architecture neutral schema": true,
+    "manual in package": true
+  },
+  "files": [
+    {
+      "path": ".alira/agents/document_analyzer.md",
+      "size": 809,
+      "sha256": "19944c201c58481b3f127e762317b7d5b2aa246f543d4e6d702bde88f51025f9"
+    },
+    {
+      "path": ".alira/agents/requirement_extractor.md",
+      "size": 2023,
+      "sha256": "4a1f191881dafbbbc658470a6e8258fee04287fcd8e900c503c334719d36fffd"
+    },
+    {
+      "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
+      "size": 56255,
+      "sha256": "05cd907add08520dd552e80f1a7a09bac19a83eb3179e4cc516046ced521b475"
+    },
+    {
+      "path": "ARCHITECTURE.md",
+      "size": 6730,
+      "sha256": "fb2535eca1abb597506a7011fb3dc23507a80af7b9b86ad71f15a7115759ae39"
+    },
+    {
+      "path": "README.md",
+      "size": 3335,
+      "sha256": "16380dd6fe9319392f88bf1744760240bd3fa9094bad5b332a72e3d4d6d33005"
+    },
+    {
+      "path": "Requirement Studio.exe",
+      "size": 8192,
+      "sha256": "977a299cde855348754f0592835c313aea4e73092af9fc84870d5d43d38e6d85"
+    },
+    {
+      "path": "Requirement_Studio_Requirements_Management_rev17.xlsx",
+      "size": 93372,
+      "sha256": "ba06e591d28931257086c00cc19449f43e997558f75baa504d4ac08453c8f586"
+    },
+    {
+      "path": "api_keys/.gitkeep",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "api_keys/README_API_KEY_사용법.txt",
+      "size": 670,
+      "sha256": "dd8653080cea68913acddf2b2c6806aae4eca25679ab8ad93a9d3460af0db4cc"
+    },
+    {
+      "path": "app/ALIRA.pyw",
+      "size": 9567,
+      "sha256": "b887365a5cac605a14069eab44c9b0b28ebd581fecf5e47eee23cb8f09ec1df6"
+    },
+    {
+      "path": "assets/RequirementStudio.ico",
+      "size": 29401,
+      "sha256": "f1e1e009440c3329ed03d72d058e7ed7f51fe10d28b0d9ff5753ce41eff8b10c"
+    },
+    {
+      "path": "assets/RequirementStudio.png",
+      "size": 5271,
+      "sha256": "932c95f7c4b1d703a7b465216c3967c13452d40e17317999867122c4926673c7"
+    },
+    {
+      "path": "config/provider_config.json",
+      "size": 644,
+      "sha256": "8ba64f8f85382de18a97d000ca7267ee561a95b0ab9a774d330c1438c3c81740"
+    },
+    {
+      "path": "contracts/canonical_requirement_schema.json",
+      "size": 1276,
+      "sha256": "b5c187d2af56acce2c8273e8891a3b007416ee56061543114b5542378c18e48d"
+    },
+    {
+      "path": "contracts/swe1_swe6_mapping.json",
+      "size": 2099,
+      "sha256": "a4533dc48d67e117ede817f90ed08f0c51df34ed9e7abdb391e6d3ca988e08c5"
+    },
+    {
+      "path": "core/__init__.py",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "core/ai_job_runner.py",
+      "size": 9112,
+      "sha256": "4a739f0778a511653696128302831c527d99ff19df63145ae922decff44eba3d"
+    },
+    {
+      "path": "core/alira_client.py",
+      "size": 10699,
+      "sha256": "424c273ff26ee20ac01132b56afe4390c2964abd7a78a1f4e828bcb2d8c6b05c"
+    },
+    {
+      "path": "core/document_manager.py",
+      "size": 1947,
+      "sha256": "695e8c31e02a1008447995993ca6d32e8e50e632573e297b4d024da2283ed266"
+    },
+    {
+      "path": "core/document_normalizer.py",
+      "size": 11038,
+      "sha256": "79a095218210d51f4c7fc4f7fa7b33b71af1e60f200e16682c39d534fc1274e7"
+    },
+    {
+      "path": "core/prompt_builder.py",
+      "size": 6732,
+      "sha256": "16c652408ff0360d140ebd7f67f45c44e4921edfc216c58361a0c6a737faf34c"
+    },
+    {
+      "path": "core/requirement_engine.py",
+      "size": 12876,
+      "sha256": "c3e492b1e00296bd7b99e52d5b7895d6c0ea8e8db087d5a098bc1e2bca4cbfa3"
+    },
+    {
+      "path": "core/result_exporter.py",
+      "size": 2756,
+      "sha256": "263ca01d95d9b123a0268c3bf88e0cba3b5b9135a0cb7f5062dd6884be721583"
+    },
+    {
+      "path": "core/worker.py",
+      "size": 2477,
+      "sha256": "1a4757c400959ebafdfdd7134feb703df5a09fc79533c7e45bf0a5f82bd464c2"
+    },
+    {
+      "path": "docs/Requirement_Studio_사용자_매뉴얼_v0.4_V0.19.docx",
+      "size": 811765,
+      "sha256": "40bff3da6a821771bbf1ebcdd5b5cad3724fdbe092ad504681cb3c2bad7babc3"
+    },
+    {
+      "path": "evaluation/EVALUATION_GUIDE.md",
+      "size": 1090,
+      "sha256": "cab206e04e262352623bfaf438e7f5591a14f5773cebd1e4f342455db17de934"
+    },
+    {
+      "path": "evaluation/REFERENCE_CONTRACT_EVALUATION.md",
+      "size": 2858,
+      "sha256": "8b0f016809af2e6495a8a05b4ad3e33dd3a219ab3e007ac4022360229626fb30"
+    },
+    {
+      "path": "input/.gitkeep",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "input/README_input_사용법.txt",
+      "size": 211,
+      "sha256": "e8a6c8ae2eeebdacbfd6bc56525b14e3e6f0d641614f92c5b284c2bf4d8b5081"
+    },
+    {
+      "path": "main.py",
+      "size": 63343,
+      "sha256": "55f770c9cbd68652349bbeb876f957ef571e80d86174afa1f2eea432fa831368"
+    },
+    {
+      "path": "output/.gitkeep",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "package_manifest.json",
+      "size": 1047,
+      "sha256": "71833be56242cc7229dcb32ecf5ea8af57378b4a1c416cd46d7623d844b5e51c"
+    },
+    {
+      "path": "policy/protected_invariants.json",
+      "size": 879,
+      "sha256": "d6539102fcbee171aad43714e826304535eb136bace2cbcee355b7e5d2cbdf1a"
+    },
+    {
+      "path": "policy/requirement_judgment_policy.json",
+      "size": 1236,
+      "sha256": "8ea21b22083e6ad421f5a9650c329dbbe2acbf873867205a440a592690a03fcb"
+    },
+    {
+      "path": "providers/__init__.py",
+      "size": 167,
+      "sha256": "6868e7f5102a139a8e4c93c1697b53b631d89b0bc31ea35be2aebcb31536f553"
+    },
+    {
+      "path": "providers/alira_provider.py",
+      "size": 1915,
+      "sha256": "a33790facec161a5a01c97fbfd84a6b0c314f58be241acfbeaad85af25bb6715"
+    },
+    {
+      "path": "providers/base.py",
+      "size": 886,
+      "sha256": "22d791b1a9b66d52f49b9752889afddf21cb6ca0e04e3d093f2f0947a86a553c"
+    },
+    {
+      "path": "providers/config_store.py",
+      "size": 2358,
+      "sha256": "04808ab6261c99764b9e3c13db557451b281b407061326ee7f502bf11094132e"
+    },
+    {
+      "path": "providers/factory.py",
+      "size": 700,
+      "sha256": "46f60240e9c3ac5eb9b0600d261702fc581f2279c7eb0928d202b8df317f30f6"
+    },
+    {
+      "path": "providers/hchat_credentials.py",
+      "size": 3200,
+      "sha256": "d40772f124c5010bb950d94424dc6c6392b85e56312555e1f69421feb8924771"
+    },
+    {
+      "path": "providers/hchat_provider.py",
+      "size": 8423,
+      "sha256": "72bd013c4236e4a8cdc93370dcb8e5526b63d187ee8e0493edd9d2406f6892e7"
+    },
+    {
+      "path": "reference_architecture/SIGNAL_EXPORT_HCHAT_API_REFERENCE.md",
+      "size": 2437,
+      "sha256": "fd1e4c49f7ce2df8791631ee9a0ed277757ec8518feaa3114a5060866e369b68"
+    },
+    {
+      "path": "reference_library/raw/PassFail_Requirements_Management_rev87.xlsx",
+      "size": 259583,
+      "sha256": "af7daaf52e77ddc3edfa74bae2db4414d58fa0e937abbdf384470fa55f5f5267"
+    },
+    {
+      "path": "reference_library/raw/SignalAuto_Requirements_Management_rev60_V2.xlsx",
+      "size": 205787,
+      "sha256": "fc803690594213300f5699d475751dcf5ca4ef4896bccb3f46d29d938a97eac7"
+    },
+    {
+      "path": "reference_library/reference_examples.json",
+      "size": 19152,
+      "sha256": "28200fe8b4c1b0747cd3f2b57a92b7909fcb679be2e82df31b71a03cec781616"
+    },
+    {
+      "path": "requirements.txt",
+      "size": 85,
+      "sha256": "c475c6231c8d0f78426ca126daae2d2f1042036ed1526f80271fc875902f0563"
+    },
+    {
+      "path": "sample_inputs/README_샘플_사용법.md",
+      "size": 892,
+      "sha256": "4064adf9451cb14da385e96551e17a9551eaaa200505b113f6e3c12fa7ab6dde"
+    },
+    {
+      "path": "sample_inputs/sample_vcu_lite_implicit_behavior.docx",
+      "size": 38514,
+      "sha256": "5bdf60386b3cd1bd0b2c494dc7e826080e1f7439b362e14429c3a2a297383d97"
+    },
+    {
+      "path": "sample_inputs/sample_vcu_lite_implicit_behavior.pdf",
+      "size": 96380,
+      "sha256": "da8d16fd6c5f30719bcb0e9f9ddb2ae5bd69f93fe4651f4a1c32e50f4d246e37"
+    },
+    {
+      "path": "sample_inputs/sample_vcu_lite_implicit_behavior.pptx",
+      "size": 32320,
+      "sha256": "9d730ca53852bb8a7032c0c9cd40f46a3b0dc919516f2ab65172b37f63ac7610"
+    },
+    {
+      "path": "sample_inputs/sample_vcu_lite_implicit_behavior.xlsx",
+      "size": 5556,
+      "sha256": "28f95209fcd6891cb3bc521d14081476833e907e21223c8a98a096d040d76409"
+    },
+    {
+      "path": "tools/RequirementStudio_launcher_diagnostic.py",
+      "size": 975,
+      "sha256": "35bd96ca26bdfa5ec29c657c9602d027f2865035e4a3c5fe6cdc73d14645fdad"
+    },
+    {
+      "path": "work/ai_requests/.gitkeep",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/ai_responses/.gitkeep",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/normalized/.gitkeep",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

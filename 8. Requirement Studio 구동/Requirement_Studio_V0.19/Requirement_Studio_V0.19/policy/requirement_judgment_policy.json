@@ -1,0 +1,22 @@
+{
+  "policy_version": "1.0",
+  "description": "User-editable requirement extraction judgment policy.",
+  "editable_rules": {
+    "extract_explicit_requirements": true,
+    "extract_implicit_behavior_requirements": true,
+    "mark_implicit_separately": true,
+    "atomicity_rule": "Split by independently testable behavior; do not force one requirement per source sentence/function.",
+    "scenario_grouping": "ALIRA judges scenario grouping from user goal/context; requirement count is not pre-fixed.",
+    "gap_handling": "Do not fill missing facts. Record missing/ambiguous information in clarification_needed and gaps.",
+    "source_traceability_level": "Every requirement must include document + location + source_text.",
+    "confidence_review_threshold": 0.7,
+    "allow_requirement_count_target": false,
+    "test_case_generation_stage": "disabled_in_v0.14",
+    "reference_usage": "Use examples for format/pattern only; never copy their domain facts into the current document."
+  },
+  "user_notes": [
+    "You may edit this JSON between runs.",
+    "Changing these rules changes ALIRA judgment behavior without changing Python code.",
+    "Protected invariants are stored separately and cannot be overridden by this file."
+  ]
+}

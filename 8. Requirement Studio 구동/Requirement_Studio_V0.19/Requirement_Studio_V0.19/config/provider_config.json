@@ -1,0 +1,25 @@
+{
+  "selected_provider": "alira",
+  "alira": {
+    "model": "hosted_vllm/Qwen/Qwen3.6-27B",
+    "api_base": "http://10.10.10.200:19640/v1",
+    "timeout_seconds": 600
+  },
+  "hchat": {
+    "backend": "gpt",
+    "base_url": "https://internal-apigw-kr.hmg-corp.io/hchat-in/api/v3",
+    "project_id": "",
+    "api_version": "2025-04-01-preview",
+    "gpt_model": "gpt-5.6-terra",
+    "gpt_model_options": [
+      "gpt-5.6-terra",
+      "gpt-5.4",
+      "gpt-5.2"
+    ],
+    "gemini_model": "gemini-3.1-pro-preview",
+    "gemini_stream_option": "generateContent",
+    "timeout_seconds": 120,
+    "max_retry": 3,
+    "retry_wait_seconds": 2.0
+  }
+}
