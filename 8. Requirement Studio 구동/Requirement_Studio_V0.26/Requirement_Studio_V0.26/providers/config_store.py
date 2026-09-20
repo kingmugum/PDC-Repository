@@ -6,7 +6,7 @@ from typing import Any
 
 
 DEFAULT_CONFIG: dict[str, Any] = {
-    "selected_provider": "alira",
+    "selected_provider": "hchat_gpt",
     "alira": {
         "model": "hosted_vllm/Qwen/Qwen3.6-27B",
         "api_base": "http://10.10.10.200:19640/v1",

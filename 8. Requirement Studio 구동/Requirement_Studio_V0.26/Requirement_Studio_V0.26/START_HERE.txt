@@ -1,0 +1,15 @@
+Requirement Studio V0.26
+
+실행 방법
+1) 압축 해제
+2) 먼저 `Requirement Studio.exe`를 더블클릭합니다.
+3) Windows 보안 제품이 EXE 다운로드/실행을 차단하는 경우 `Requirement Studio.pyw`를 더블클릭합니다.
+4) .pyw 연결이 없는 PC에서는 PowerShell/CMD에서 다음 중 하나를 사용할 수 있습니다.
+   pythonw "Requirement Studio.pyw"
+   pyw "Requirement Studio.pyw"
+
+주의
+- V0.26 EXE는 Root의 `Requirement Studio.pyw`를 여는 최소 Launcher입니다.
+- EXE는 코드서명되지 않았으므로 Defender/브라우저 정책에 따라 차단될 수 있습니다.
+- 보안 기능을 끄거나 예외 등록을 강제하는 기능은 포함하지 않습니다.
+- API Key, license.lic 등 실제 Credential은 배포 ZIP에 포함하지 않습니다.

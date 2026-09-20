@@ -41,8 +41,10 @@ class AIJobRunner:
         self.requirement_engine = requirement_engine
         self.request_dir = self.root / "work" / "ai_requests"
         self.response_dir = self.root / "work" / "ai_responses"
+        self.failure_dir = self.root / "work" / "recovery_failures"
         self.request_dir.mkdir(parents=True, exist_ok=True)
         self.response_dir.mkdir(parents=True, exist_ok=True)
+        self.failure_dir.mkdir(parents=True, exist_ok=True)
         self.last_normalized: NormalizedDocument | None = None
 
     def _ensure_not_cancelled(self, cancel_callback: CancelCallback, log_callback: LogCallback = None):
@@ -52,7 +54,7 @@ class AIJobRunner:
             raise PipelineCancelledError("사용자 중지 요청으로 작업이 중지되었습니다.")
 
     def _exchange_name(self, source: Path, kind: str, part: PromptPart) -> str:
-        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
         return f"{stamp}_{kind}_{source.stem}_p{part.part_index:02d}of{part.part_count:02d}"
 
     def _call(self, source: Path, kind: str, part: PromptPart) -> str:
@@ -65,6 +67,135 @@ class AIJobRunner:
         tmp.write_text(response, encoding="utf-8")
         tmp.replace(rsp_path)
         return response
+
+    def _save_parse_failure_detail(self, source: Path, raw: str, error: Exception, *, label: str) -> Path:
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+        path = self.failure_dir / f"{stamp}_{label}_{source.stem}.txt"
+        body = (
+            f"source={source}\n"
+            f"error={error}\n"
+            f"response_chars={len(raw or '')}\n\n"
+            "=== RAW RESPONSE ===\n"
+            + (raw or "")
+        )
+        path.write_text(body, encoding="utf-8")
+        return path
+
+    def _extract_requirement_with_recovery(
+        self,
+        document: Path,
+        part: PromptPart,
+        *,
+        part_index: int,
+        part_total: int,
+        log_callback: LogCallback = None,
+        cancel_callback: CancelCallback = None,
+    ) -> list[dict]:
+        def log(message: str):
+            if log_callback:
+                log_callback(message)
+
+        raw = self._call(document, "requirements", part)
+        try:
+            return [self.requirement_engine.extract_json(raw)]
+        except Exception as first_exc:
+            detail_path = self._save_parse_failure_detail(document, raw, first_exc, label=f"requirements_p{part_index:02d}")
+            log(
+                f"Requirement JSON 파싱 실패 · Part {part_index}/{part_total} · "
+                f"자동 분할 재추출 시작 · 상세 원문 보존: {detail_path.name}"
+            )
+
+        recovery_parts = self.prompt_builder.build_requirement_recovery_parts(part)
+        if len(recovery_parts) <= 1:
+            raise RuntimeError(
+                "Requirement JSON 생성이 완전한 형태로 종료되지 않았습니다. "
+                f"자동 분할이 불가능하여 중단했습니다. 상세 원문: {detail_path}"
+            )
+
+        parsed: list[dict] = []
+        recovery_failures: list[str] = []
+        for ridx, recovery_part in enumerate(recovery_parts, start=1):
+            self._ensure_not_cancelled(cancel_callback, log_callback)
+            log(f"자동 복구 재추출 {ridx}/{len(recovery_parts)} → {self.provider.metadata().display_name}")
+            retry_raw = self._call(document, "requirements_recovery", recovery_part)
+            try:
+                parsed.append(self.requirement_engine.extract_json(retry_raw))
+                log(f"자동 복구 재추출 {ridx}/{len(recovery_parts)} JSON 확인 완료")
+            except Exception as retry_exc:
+                retry_path = self._save_parse_failure_detail(
+                    document, retry_raw, retry_exc, label=f"recovery_{ridx:02d}of{len(recovery_parts):02d}"
+                )
+                recovery_failures.append(f"{ridx}/{len(recovery_parts)}: {retry_exc} ({retry_path.name})")
+
+        if recovery_failures:
+            raise RuntimeError(
+                "Requirement JSON 자동 복구에 실패했습니다. "
+                f"분할 재추출 {len(recovery_parts)}개 중 {len(recovery_failures)}개 실패. "
+                "전체 Raw 응답은 work/recovery_failures에 보존했습니다.\n- "
+                + "\n- ".join(recovery_failures)
+            )
+
+        log(f"Requirement JSON 자동 복구 완료 · {len(recovery_parts)}개 분할 결과 병합 예정")
+        return parsed
+
+
+    def run_batch_analysis_and_requirements(self, documents, *, stage_callback: StageCallback = None, progress_callback: ProgressCallback = None, log_callback: LogCallback = None, cancel_callback: CancelCallback = None) -> dict:
+        docs = [Path(d).resolve() for d in documents]
+        if not docs:
+            raise RuntimeError("분석할 입력 문서가 없습니다.")
+
+        batch_results = []
+        batch_failures = []
+        total_docs = len(docs)
+
+        def log(message: str):
+            if log_callback:
+                log_callback(message)
+
+        for doc_index, document in enumerate(docs, start=1):
+            self._ensure_not_cancelled(cancel_callback, log_callback)
+            log(f"[{doc_index}/{total_docs}] 문서 작업 시작 · {document.name}")
+
+            def wrapped_stage(no: int, title: str):
+                if stage_callback:
+                    stage_callback(no, f"[{doc_index}/{total_docs}] {title}")
+
+            def wrapped_progress(overall: int, current: int, message: str):
+                batch_overall = round((((doc_index - 1) + (overall / 100.0)) / total_docs) * 100)
+                if progress_callback:
+                    progress_callback(batch_overall, current, f"[{doc_index}/{total_docs}] {message}")
+
+            try:
+                result = self.run_analysis_and_requirements(
+                    document,
+                    stage_callback=wrapped_stage,
+                    progress_callback=wrapped_progress,
+                    log_callback=log_callback,
+                    cancel_callback=cancel_callback,
+                )
+                result = dict(result)
+                result["document"] = str(document)
+                batch_results.append(result)
+                log(f"[{doc_index}/{total_docs}] 문서 작업 완료 · {document.name}")
+            except PipelineCancelledError:
+                raise
+            except Exception as exc:
+                batch_failures.append({"document": document.name, "error": str(exc)})
+                log(f"[{doc_index}/{total_docs}] 문서 작업 실패 · {document.name} · {exc}")
+                if progress_callback:
+                    progress_callback(round((doc_index / total_docs) * 100), 100, f"[{doc_index}/{total_docs}] 실패 후 다음 문서로 이동")
+
+        if not batch_results:
+            details = "\n".join(f"- {x['document']}: {x['error']}" for x in batch_failures)
+            raise RuntimeError("모든 입력 문서 처리에 실패했습니다.\n" + details)
+
+        if progress_callback:
+            progress_callback(100, 100, "Batch 처리 완료")
+        return {
+            "batch_results": batch_results,
+            "batch_failures": batch_failures,
+            "document_count": total_docs,
+        }
 
     def normalize_only(self, document: Path) -> NormalizedDocument:
         self.last_normalized = self.normalizer.normalize(document)
@@ -141,22 +272,23 @@ class AIJobRunner:
         self._ensure_not_cancelled(cancel_callback, log_callback)
         stage(5)
         parsed: list[dict] = []
-        raw_errors: list[str] = []
         total = max(1, len(req_parts))
         for idx, part in enumerate(req_parts, start=1):
             self._ensure_not_cancelled(cancel_callback, log_callback)
             before = round(((idx - 1) / total) * 80) + 5
             report(5, before, f"요구사항 추출 AI 요청 {idx}/{total} 전송 · 응답 대기")
             log(f"요구사항 추출 요청 {idx}/{total} → {meta.display_name}")
-            raw = self._call(document, "requirements", part)
-            try:
-                parsed.append(self.requirement_engine.extract_json(raw))
-            except Exception as exc:
-                raw_errors.append(f"Part {idx}/{total}: {exc}\n\n{raw}")
+            extracted_parts = self._extract_requirement_with_recovery(
+                document,
+                part,
+                part_index=idx,
+                part_total=total,
+                log_callback=log_callback,
+                cancel_callback=cancel_callback,
+            )
+            parsed.extend(extracted_parts)
             after = round((idx / total) * 90)
-            report(5, after, f"요구사항 응답 {idx}/{total} 수신")
-        if raw_errors:
-            raise RuntimeError("일부 Requirement 응답을 Canonical JSON으로 해석하지 못했습니다.\n\n" + "\n\n---\n\n".join(raw_errors))
+            report(5, after, f"요구사항 응답 {idx}/{total} 확인 완료")
         finish_stage(5, "Requirement Candidate 추출 완료")
 
         self._ensure_not_cancelled(cancel_callback, log_callback)

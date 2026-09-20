@@ -1,51 +1,45 @@
 {
   "project_id": "ALR",
   "project_name": "Requirement Studio",
-  "package": "Requirement_Studio_V0.19.zip",
-  "requirements": "Requirement_Studio_Requirements_Management_rev17.xlsx",
+  "package": "Requirement_Studio_V0.26.zip",
+  "requirements": "Requirement_Studio_Requirements_Management_rev24.xlsx",
   "governance": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-  "manual": "docs/Requirement_Studio_사용자_매뉴얼_v0.4_V0.19.docx",
-  "created_at": "2026-09-19T02:59:28",
-  "baseline": "V0.19 Dashboard Refinement / Governance-Requirements synchronized",
-  "correction_notice": "This V0.19 package is the explicit consistency-completed replacement for the earlier V0.19 draft that was created before download delivery and Governance/Requirements synchronization were completed.",
+  "manual": "docs/Requirement_Studio_사용자_매뉴얼_v0.11_V0.26.docx",
+  "created_at": "2026-09-20T11:19:00+09:00",
+  "baseline": "V0.26 Connection State Persistence + Requirement JSON Recovery",
+  "next_fr": "FR-170",
+  "launcher": {
+    "primary": "Requirement Studio.exe",
+    "fallback": "Requirement Studio.pyw",
+    "exe_target": "Requirement Studio.pyw",
+    "security_note": "Unsigned custom EXE may be blocked by Defender/browser reputation. No security bypass is included."
+  },
   "changes": [
-    "Approved dashboard visual structure applied while latest Requirements remain functional source of truth",
-    "ALIRA/GPT/Gemini radio selection with explicit selected state",
-    "Refined model dropdown and removed unnecessary text shading",
-    "Exact Analysis & Requirement Extraction Start label with delayed cooperative Stop transition",
-    "Waiting/current/complete/error stage colors",
-    "Dual overall/current progress bars",
-    "Global output folder access independent of result tabs",
-    "Automatic analysis DOCX and Canonical Requirement JSON saving",
-    "Drag & drop/file select input support preserving original files",
-    "Seven-item checklist and detailed cause popup",
-    "User manual v0.4 included"
+    "Connection test popup displays elapsed seconds together with progress percentage",
+    "Successful AI connection state is preserved while Provider/Model/API credential signature remains unchanged",
+    "All-green checklist action text changes to 모든 항목 확인됨",
+    "로그 복사 action copies current runtime log to Clipboard and saves a UTF-8 TXT snapshot under output/logs",
+    "Runtime log snapshots are automatically saved on complete, partial-complete, and failure paths",
+    "Malformed/truncated Requirement JSON raw responses are archived under work/recovery_failures",
+    "Failed Requirement SOURCE is automatically split into smaller non-overlapping recovery prompts and re-extracted",
+    "Recovery failure UI/log returns concise parser summary and diagnostic file location instead of dumping full raw JSON",
+    "AI exchange filenames now use microsecond timestamps to prevent rapid recovery-call collisions",
+    "Requirements rev24, Governance v0.26, Architecture v0.26, Manual v0.11 updated"
   ],
   "verification": {
-    "python_compile": "PASS (19 Python/PYW files)",
-    "requirements_formula_error_scan": "PASS (0 matches)",
-    "static_requirement_traceability": "PASS for FR-116~FR-126 key implementation points",
-    "windows_pyside_layout": "UNTESTED - user environment required",
-    "real_provider_runtime": "UNTESTED - user environment required",
-    "cooperative_stop_runtime": "UNTESTED - user environment required"
+    "python_compile": "PASS (20 .py/.pyw files)",
+    "requirements_formula_scan": "PASS (0 formula errors)",
+    "manual_render": "PASS (9 pages rendered and visually reviewed)",
+    "synthetic_json_recovery": "PASS (initial malformed response -> 5 smaller recovery responses -> merge success)",
+    "synthetic_recovery_failure_message": "PASS (concise error, raw body excluded, diagnostic path retained)",
+    "static_feature_checks": "PASS (elapsed status, state signature, checklist wording, log copy, recovery split/orchestrator/archive, microsecond filenames)",
+    "exe_static": "PASS (PE32+ x64 Windows GUI, Requirement Studio.pyw target)",
+    "windows_gui_runtime": "UNTESTED - user environment required",
+    "windows_clipboard_runtime": "UNTESTED - user environment required",
+    "actual_alira_hchat_json_recovery": "UNTESTED - user environment required",
+    "windows_defender_download": "UNTESTED - unsigned EXE may still be blocked"
   },
-  "static_checks": {
-    "APP v0.19": true,
-    "exact primary label": true,
-    "provider radios": true,
-    "dual progress": true,
-    "7 checklist items": true,
-    "global output": true,
-    "no manual result save button": true,
-    "auto DOCX": true,
-    "stop timer": true,
-    "cooperative stop": true,
-    "log clear": true,
-    "actual steps": true,
-    "gov v0.19": true,
-    "architecture neutral schema": true,
-    "manual in package": true
-  },
+  "runtime_artifacts_in_package": "NONE (input/output/work cleaned; empty runtime directory placeholders only)",
   "files": [
     {
       "path": ".alira/agents/document_analyzer.md",
@@ -59,28 +53,43 @@
     },
     {
       "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 56255,
-      "sha256": "05cd907add08520dd552e80f1a7a09bac19a83eb3179e4cc516046ced521b475"
+      "size": 61503,
+      "sha256": "3df3bbfceb2589439aa25bbd5d24c3816f70b413d761605ef1454b94f982b36a"
     },
     {
       "path": "ARCHITECTURE.md",
-      "size": 6730,
-      "sha256": "fb2535eca1abb597506a7011fb3dc23507a80af7b9b86ad71f15a7115759ae39"
+      "size": 9394,
+      "sha256": "f7949dedcb182e83929d4d88cc2d9f4ea703a8ea22dc83e92226cb5adebe14d7"
+    },
+    {
+      "path": "HCHAT_API_KEY_GUIDE.md",
+      "size": 1170,
+      "sha256": "e09aa220c8fb0c689074093a9c466939628e256ed7d22d56021a962c8107aed4"
     },
     {
       "path": "README.md",
-      "size": 3335,
-      "sha256": "16380dd6fe9319392f88bf1744760240bd3fa9094bad5b332a72e3d4d6d33005"
+      "size": 2031,
+      "sha256": "50f29873d4bb5a6723337cabfa00886de4baa01cb327fe70d7db7cae409d3aff"
     },
     {
       "path": "Requirement Studio.exe",
       "size": 8192,
-      "sha256": "977a299cde855348754f0592835c313aea4e73092af9fc84870d5d43d38e6d85"
+      "sha256": "f97fab1e33ef3ec4670bbc34702ceac7343b0a95e04f872e2ee67a4f6f5a0184"
     },
     {
-      "path": "Requirement_Studio_Requirements_Management_rev17.xlsx",
-      "size": 93372,
-      "sha256": "ba06e591d28931257086c00cc19449f43e997558f75baa504d4ac08453c8f586"
+      "path": "Requirement Studio.pyw",
+      "size": 216,
+      "sha256": "9aa4a18754aa78065c37bc5eba5aa0b3cfb1e6dfefc6ab8d9d65119e77f20257"
+    },
+    {
+      "path": "Requirement_Studio_Requirements_Management_rev24.xlsx",
+      "size": 127022,
+      "sha256": "93361355a6762f878ff67fec2b4021029c3115ba12c1acc4702b5fe057a33c17"
+    },
+    {
+      "path": "START_HERE.txt",
+      "size": 807,
+      "sha256": "2043b1c2b80b5b03e2d570a1327b3463bf9f31a7454732af037cce6cadb873d0"
     },
     {
       "path": "api_keys/.gitkeep",
@@ -108,9 +117,64 @@
       "sha256": "932c95f7c4b1d703a7b465216c3967c13452d40e17317999867122c4926673c7"
     },
     {
+      "path": "assets/action_copy.png",
+      "size": 391,
+      "sha256": "fb1266e732e49b6a618c0658ca807652d8889cc78808cee7ec7b17f8187b5bff"
+    },
+    {
+      "path": "assets/action_folder.png",
+      "size": 364,
+      "sha256": "dd84d4e8d9944f0b5b878f7e1bf0f70539ae0b9e07eed2bbb1c4136c33a59b3b"
+    },
+    {
+      "path": "assets/action_trash.png",
+      "size": 349,
+      "sha256": "24cb8f681190c758816317833032d9da37feba297c721c0466604048fa5011a2"
+    },
+    {
+      "path": "assets/dropdown_arrow.png",
+      "size": 127,
+      "sha256": "e307daf2cde33d88d3526f67f26a75e9274a8a048dead1a36c0d61218f3e8cda"
+    },
+    {
+      "path": "assets/result_analysis.png",
+      "size": 406,
+      "sha256": "6535580ee71b8af5ac371c0837a8eed984623270ef3150b273fc4056c88f463e"
+    },
+    {
+      "path": "assets/result_log.png",
+      "size": 434,
+      "sha256": "25d34eb8e41a0647b606361376029b81a3987d3ec7c6d1d68b0070a63d4156a8"
+    },
+    {
+      "path": "assets/result_requirements.png",
+      "size": 317,
+      "sha256": "f3e97f737acc82abb654d8df8041e2326fb7f684e7f4b496e1cad392f8c6db4e"
+    },
+    {
+      "path": "assets/section_check.png",
+      "size": 216,
+      "sha256": "f7188d05f0dd70479b67799cbf7dfbb998ca00c640ca6c10cc4d4a5a56ff2f03"
+    },
+    {
+      "path": "assets/section_folder.png",
+      "size": 175,
+      "sha256": "ef36c79ad4462eddda8a77ec929073b01a495988799ebadf4849e798275d3fdf"
+    },
+    {
+      "path": "assets/section_gear.png",
+      "size": 211,
+      "sha256": "5d67d0094c2a9ade467e777fc94eb6df3639b97370b4afc09887b8761ac2d3be"
+    },
+    {
+      "path": "assets/section_list.png",
+      "size": 146,
+      "sha256": "4732484bcd41af0a31aba3829e2f1aba9caf143d9853011d49cb1505765356be"
+    },
+    {
       "path": "config/provider_config.json",
-      "size": 644,
-      "sha256": "8ba64f8f85382de18a97d000ca7267ee561a95b0ab9a774d330c1438c3c81740"
+      "size": 647,
+      "sha256": "b3b8505f3135752d54d26f78adc37d256b86e036d87ce8c8901826e38acc738c"
     },
     {
       "path": "contracts/canonical_requirement_schema.json",
@@ -129,8 +193,8 @@
     },
     {
       "path": "core/ai_job_runner.py",
-      "size": 9112,
-      "sha256": "4a739f0778a511653696128302831c527d99ff19df63145ae922decff44eba3d"
+      "size": 15125,
+      "sha256": "a189db31928e15ddca0af1291820a18a2776df702cc4676021003f5b44109eb3"
     },
     {
       "path": "core/alira_client.py",
@@ -139,8 +203,8 @@
     },
     {
       "path": "core/document_manager.py",
-      "size": 1947,
-      "sha256": "695e8c31e02a1008447995993ca6d32e8e50e632573e297b4d024da2283ed266"
+      "size": 2052,
+      "sha256": "95a2aad1f6095f54dde463acec9786a2ed7467fbc33eddcede2090c033598766"
     },
     {
       "path": "core/document_normalizer.py",
@@ -149,18 +213,18 @@
     },
     {
       "path": "core/prompt_builder.py",
-      "size": 6732,
-      "sha256": "16c652408ff0360d140ebd7f67f45c44e4921edfc216c58361a0c6a737faf34c"
+      "size": 9275,
+      "sha256": "561f0de1951ffe526874720f48b2f960b12dc4837395366618fa2b8b64efee6d"
     },
     {
       "path": "core/requirement_engine.py",
-      "size": 12876,
-      "sha256": "c3e492b1e00296bd7b99e52d5b7895d6c0ea8e8db087d5a098bc1e2bca4cbfa3"
+      "size": 13019,
+      "sha256": "a958b3acbbb8f3c3c387cce98ab1a78e5e867ff594a794535d10ab8c144d9de0"
     },
     {
       "path": "core/result_exporter.py",
-      "size": 2756,
-      "sha256": "263ca01d95d9b123a0268c3bf88e0cba3b5b9135a0cb7f5062dd6884be721583"
+      "size": 2869,
+      "sha256": "f716e1f24cc4bedfc1f869cf6460638e32337541632b15bff1c2ee53bffacb1c"
     },
     {
       "path": "core/worker.py",
@@ -168,9 +232,9 @@
       "sha256": "1a4757c400959ebafdfdd7134feb703df5a09fc79533c7e45bf0a5f82bd464c2"
     },
     {
-      "path": "docs/Requirement_Studio_사용자_매뉴얼_v0.4_V0.19.docx",
-      "size": 811765,
-      "sha256": "40bff3da6a821771bbf1ebcdd5b5cad3724fdbe092ad504681cb3c2bad7babc3"
+      "path": "docs/Requirement_Studio_사용자_매뉴얼_v0.11_V0.26.docx",
+      "size": 48717,
+      "sha256": "1dc1b5cfabf17c6957a877f999577690d06d464ee72d3296f937cbff1dcb4c35"
     },
     {
       "path": "evaluation/EVALUATION_GUIDE.md",
@@ -189,13 +253,13 @@
     },
     {
       "path": "input/README_input_사용법.txt",
-      "size": 211,
-      "sha256": "e8a6c8ae2eeebdacbfd6bc56525b14e3e6f0d641614f92c5b284c2bf4d8b5081"
+      "size": 688,
+      "sha256": "cd9fedd7e5efc653e0fafd2ca6a8fb974c3c369b53a717c2a93b5e1e989d2aa8"
     },
     {
       "path": "main.py",
-      "size": 63343,
-      "sha256": "55f770c9cbd68652349bbeb876f957ef571e80d86174afa1f2eea432fa831368"
+      "size": 87174,
+      "sha256": "c033004006de8d9f8bce78e701e204b16b77ba135e0753344a134ae092d81e14"
     },
     {
       "path": "output/.gitkeep",
@@ -203,9 +267,9 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "package_manifest.json",
-      "size": 1047,
-      "sha256": "71833be56242cc7229dcb32ecf5ea8af57378b4a1c416cd46d7623d844b5e51c"
+      "path": "output/logs/.gitkeep",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "path": "policy/protected_invariants.json",
@@ -234,8 +298,8 @@
     },
     {
       "path": "providers/config_store.py",
-      "size": 2358,
-      "sha256": "04808ab6261c99764b9e3c13db557451b281b407061326ee7f502bf11094132e"
+      "size": 2362,
+      "sha256": "25a28d36a926b959b936eb18235867f9750a673b9d5fa50c56415e35c2abefc4"
     },
     {
       "path": "providers/factory.py",
@@ -308,6 +372,11 @@
       "sha256": "35bd96ca26bdfa5ec29c657c9602d027f2865035e4a3c5fe6cdc73d14645fdad"
     },
     {
+      "path": "work/.gitkeep",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
       "path": "work/ai_requests/.gitkeep",
       "size": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -319,6 +388,11 @@
     },
     {
       "path": "work/normalized/.gitkeep",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/recovery_failures/.gitkeep",
       "size": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }

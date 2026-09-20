@@ -34,9 +34,10 @@ class AnalysisResultExporter:
             raise ValueError("저장할 문서 분석 결과가 없습니다.")
 
         source_document = Path(source_document)
-        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        source_type = re.sub(r"[^A-Za-z0-9]+", "", source_document.suffix.lstrip(".")) or "doc"
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
         filename = (
-            f"RequirementStudio_Analysis_{self._safe_stem(source_document.name)}_{stamp}.docx"
+            f"RequirementStudio_Analysis_{self._safe_stem(source_document.name)}_{source_type}_{stamp}.docx"
         )
         out_path = self.output_dir / filename
 

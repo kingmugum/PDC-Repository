@@ -1,4 +1,4 @@
-# Requirement Studio Architecture — v0.17
+# Requirement Studio Architecture — v0.26
 
 ## Product / Provider 경계
 
@@ -47,10 +47,10 @@ Future: SWE.1 Renderer → TC Derivation → SWE.6 Renderer
 | Module | Responsibility |
 |---|---|
 | `main.py` | PySide6 GUI, Provider 선택, 작업 Orchestration, 상태 표시 |
-| `core/document_manager.py` | input 폴더와 단일 Source Document Gate |
+| `core/document_manager.py` | input 폴더와 복수 Source Document Batch 목록 관리 |
 | `core/document_normalizer.py` | PDF/DOCX/PPTX/XLSX/XLSM → Local Document IR |
-| `core/prompt_builder.py` | 공통 판단정책/Reference/Schema + Compact Source Prompt 생성 및 안전 분할 |
-| `core/ai_job_runner.py` | Normalize → Prompt → Provider → Raw Exchange → Merge 흐름 |
+| `core/prompt_builder.py` | 공통 판단정책/Reference/Schema + Compact Source Prompt 생성, 안전 분할, JSON 실패 Recovery용 Source 소분할 |
+| `core/ai_job_runner.py` | Normalize → Prompt → Provider → Raw Exchange → Parse/Recovery → Merge 흐름 |
 | `core/requirement_engine.py` | Canonical JSON Parse/Merge/Structure Validate/Save |
 | `providers/base.py` | Provider 공통 Interface/Metadata |
 | `providers/alira_provider.py` | ALIRA Headless Adapter |
@@ -65,7 +65,8 @@ Future: SWE.1 Renderer → TC Derivation → SWE.6 Renderer
 | `work/normalized/` | 로컬 Document IR Runtime 영역 |
 | `work/ai_requests/` | 실제 AI 전송용 Compact Text Runtime 기록 |
 | `work/ai_responses/` | Raw AI 응답 Runtime 기록 |
-| `output/` | 승인 산출물/Canonical Requirement JSON |
+| `work/recovery_failures/` | malformed/truncated JSON Raw 응답 및 Parser 오류 진단 보존 |
+| `output/` | 승인 산출물/Canonical Requirement JSON/분석 DOCX/로그 Snapshot |
 
 ## 4. H-Chat Adapter
 
@@ -143,7 +144,7 @@ v0.16:
 - H-Chat 실제 Runtime: 접근권한/실 API 호출 미확인
 
 
-## V0.19 Dashboard UX
+## V0.20 Dashboard UX
 
 - 상단 좌측: 파일 및 옵션 설정 (Drag & Drop / 파일 선택 / 폴더 열기 / 새로고침)
 - 상단 우측: AI 설정 (ALIRA/GPT/Gemini Radio, Model Dropdown, API Key 상태, Connection Test, Primary Action)
@@ -152,3 +153,71 @@ v0.16:
 - 하단: 진행 로그 / 문서 분석 결과 / 요구사항 후보 Tab, Global `output 폴더 열기`
 - 성공 시 분석 결과 DOCX와 Canonical Requirement JSON을 자동 저장한다.
 - 실행 후 1.8초 arming 뒤 `중지`로 전환하며, 중지는 외부 AI 호출 강제 Kill이 아닌 Cooperative Stop을 사용한다.
+
+
+## Multi-document Batch
+
+V0.20부터 input 폴더는 지원문서를 1개 이상 허용한다.
+
+```text
+input/
+ ├─ spec_A.pdf
+ ├─ spec_B.docx
+ └─ spec_C.xlsx
+       ↓
+문서별 독립 Pipeline (순차)
+       ↓
+A: IR → Prompt → AI → Canonical JSON → DOCX
+B: IR → Prompt → AI → Canonical JSON → DOCX
+C: IR → Prompt → AI → Canonical JSON → DOCX
+```
+
+- 여러 문서를 하나의 거대한 Prompt로 합치지 않는다.
+- 전체 Progress는 Batch 전체 기준, 현재 Progress는 현재 문서/Step 기준이다.
+- 문서 수와 총 분량이 늘어나면 실행 시간과 AI 호출량은 거의 비례해 증가한다.
+- 한 문서가 실패해도 사용자 중지가 아니라면 다음 문서를 계속 처리한다.
+- 서로 다른 문서를 하나의 통합 Spec으로 Cross-reference하는 Bundle Mode는 아직 지원하지 않는다.
+
+## V0.26 Runtime Robustness
+
+### Connection State
+
+- Connection Test Popup은 Provider progress와 실제 경과시간을 함께 표시한다.
+- 연결 성공 상태는 Provider ID / Model / API Base / Credential source signature가 동일한 동안 유지한다.
+- 단순 분석 시작을 위한 Provider 객체 재생성은 연결 상태를 초기화하지 않는다.
+- Provider/Model/Signature가 달라질 때만 `AI 연결 확인 전`으로 되돌린다.
+
+### Requirement JSON Recovery
+
+```text
+Requirement AI Response
+        ↓
+Strict JSON Parse
+   ├─ Success → Merge / Validate
+   └─ Fail
+        ↓
+Raw Response Archive
+(work/recovery_failures)
+        ↓
+Failed SOURCE only
+non-overlap small split
+        ↓
+AI re-extraction per split
+        ↓
+Strict JSON Parse
+        ↓
+Deterministic Merge
+```
+
+- 잘린 JSON을 로컬에서 임의로 완성하지 않는다.
+- 정상 응답에는 Recovery 추가 호출이 발생하지 않는다.
+- Parse 실패 때만 작은 Source 단위로 재추출하여 AI 출력 길이를 줄인다.
+- Recovery가 다시 실패하면 GUI에는 전체 Raw JSON 대신 실패 개수/Parser 요약/진단파일 위치만 표시한다.
+- Request/Response 파일명은 microsecond timestamp를 사용하여 빠른 Recovery 요청 간 덮어쓰기를 방지한다.
+
+### Runtime Log
+
+- `로그 복사`는 Clipboard 복사와 `output/logs` TXT Snapshot을 동시에 수행한다.
+- 완료/부분완료/실패 시에도 Log Snapshot을 자동 보존한다.
+- Credential 평문은 기존 정책대로 Log에 기록하지 않는다.
+

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -146,3 +147,59 @@ class PromptBuilder:
             )
             prompts.append(PromptPart(i + 1, len(bodies), system, f"{context}\n\n{part_note}\n\n[SOURCE]\n{body}"))
         return prompts
+    def build_requirement_recovery_parts(
+        self,
+        failed_part: PromptPart,
+        *,
+        max_source_blocks: int = 4,
+        max_source_chars: int = 12000,
+    ) -> list[PromptPart]:
+        """Split a malformed/truncated Requirement response source into smaller retry prompts.
+
+        The source blocks remain non-overlapping. This reduces model output size instead of
+        asking the model to repair a potentially truncated giant JSON object.
+        """
+        marker = "\n\n[SOURCE]\n"
+        if marker not in failed_part.user_prompt:
+            return [failed_part]
+
+        prefix, source = failed_part.user_prompt.split(marker, 1)
+        blocks = [x.strip() for x in re.split(r"(?=^\[SRC )", source, flags=re.MULTILINE) if x.strip()]
+        if not blocks:
+            blocks = [source.strip()]
+
+        groups: list[list[str]] = []
+        current: list[str] = []
+        current_chars = 0
+        for block in blocks:
+            # Very large single block: split conservatively by character count only as a fallback.
+            block_parts = [block]
+            if len(block) > max_source_chars:
+                block_parts = [block[i:i + max_source_chars] for i in range(0, len(block), max_source_chars)]
+            for item in block_parts:
+                item_chars = len(item) + 2
+                if current and (len(current) >= max_source_blocks or current_chars + item_chars > max_source_chars):
+                    groups.append(current)
+                    current = []
+                    current_chars = 0
+                current.append(item)
+                current_chars += item_chars
+        if current:
+            groups.append(current)
+
+        if len(groups) <= 1:
+            return [failed_part]
+
+        result: list[PromptPart] = []
+        count = len(groups)
+        for idx, group in enumerate(groups, start=1):
+            note = (
+                f"[AUTO_RECOVERY_SPLIT {idx}/{count}]\n"
+                "이전 응답이 완전한 JSON으로 종료되지 않아 SOURCE를 더 작은 단위로 재추출합니다. "
+                "이 SOURCE 조각에 근거한 항목만 생성하고, 반드시 시작부터 끝까지 완전한 JSON object 하나로 종료하세요. "
+                "다른 조각의 내용을 추정하거나 이어서 만들지 마세요."
+            )
+            user_prompt = f"{prefix}\n\n{note}{marker}" + "\n\n".join(group)
+            result.append(PromptPart(idx, count, failed_part.system_message, user_prompt))
+        return result
+

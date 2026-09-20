@@ -267,9 +267,11 @@ class RequirementEngine:
         }
 
     def save_result(self, source_document: Path, data: dict[str, Any]) -> Path:
-        stem = re.sub(r'[<>:"/\\|?*]+', "_", Path(source_document).stem)
-        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        path = self.output_dir / f"RequirementStudio_Requirements_{stem}_{stamp}.json"
+        source_path = Path(source_document)
+        stem = re.sub(r'[<>:"/\\|?*]+', "_", source_path.stem)
+        source_type = re.sub(r"[^A-Za-z0-9]+", "", source_path.suffix.lstrip(".")) or "doc"
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+        path = self.output_dir / f"RequirementStudio_Requirements_{stem}_{source_type}_{stamp}.json"
         path.write_text(
             json.dumps(data, ensure_ascii=False, indent=2),
             encoding="utf-8",

@@ -910,7 +910,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | Project ID | `ALR` |
 | Project Name | Requirement Studio |
 | Status | `ACTIVE` |
-| Profile Version | v0.19 |
+| Profile Version | v0.26 |
 | Requirements Mode | `DUAL_LAYER_XLSX_V1` |
 | Requirements Pattern | `Requirement_Studio_Requirements_Management_revXX.xlsx` |
 | Package Pattern | `Requirement_Studio_V<Major>.<Minor>.zip` |
@@ -941,6 +941,13 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 - v0.17에서 제품명을 `Requirement Studio`로 변경하고 ALIRA를 선택형 Provider 중 하나로 재정의하였다. 프로그램 시작 및 Provider 변경 시 자동 Connection Test를 제거하고 수동 `AI 연결 테스트` 기능만 유지한다.
 - v0.18에서 업무 중심 Dashboard를 도입하고 Provider Radio, API Key 파일/수동 입력, Connection Test Popup, 7단계 Pipeline, 2중 Progress, Checklist/상세 원인, Timestamp Log를 통합하였다.
 - v0.19에서 사용자 승인 Dashboard 시안을 시각 기준으로 적용하되 실제 기능 항목은 최신 Requirements를 우선한다. Provider 선택 파란 원형 표시, 정돈된 Model Dropdown, 일반 텍스트 음영 제거, 정확한 `분석 & 요구사항 추출 시작` 문구, 1.8초 후 Cooperative Stop 버튼 전환, 단계 상태색, 결과영역 상단 Output 접근, 분석 DOCX 자동 저장, Drag & Drop 입력을 반영한다.
+- v0.20에서 File Card의 중복 상태/지원형식 문구를 제거하고, AI 모델 설정 Card를 Provider 설명/Model Dropdown/API Key 상태 중심으로 재정리한다. 전체 QWidget 배경 상속을 제거하여 일반 문구 뒤 회색 Patch를 없앤다. input은 복수 지원문서를 허용하며 문서별 독립 Pipeline으로 순차 Batch 처리하고, 문서별 JSON/DOCX 결과와 부분실패 로그를 유지한다. 동일 stem/동일 초 Batch 산출물 충돌을 방지하기 위해 결과 파일명에 Source 확장자와 microsecond timestamp를 포함한다.
+- v0.21에서 File Card의 `폴더 열기`를 `입력 폴더 열기`로 명확화하고, Provider 선택 Radio를 Solid Blue Fill 방식으로 변경하며 Provider 하단 설명문을 제거한다. AI 연결 상태와 API/연결/실행 Action은 AI 설정 Card에 통합한다. Checklist는 7개 항목을 compact row + 상태 Pill로 표현하고 Pipeline Card와 높이를 정렬하며, 결과 Tab 3개와 로그 지우기/output 폴더 열기 버튼을 동일 상단선에 배치한다.
+- v0.22에서 Main Window 전체를 Scrollable Viewport로 전환한다. Dashboard는 최소 1180x820 크기를 유지하고 Window는 720x480까지 축소 가능하다. 작은 창에서는 우측/하단 Main Scroll Bar로 전체 화면을 탐색한다. Pipeline/Checklist Card는 228px로 축소하며 Checklist 내부 7개 항목은 별도 Vertical Scroll Area로 탐색하고 상세 원인 확인 버튼은 Card 하단에 고정한다.
+- v0.23에서 AI Provider 표시 순서를 `GPT (H-Chat) → Gemini (H-Chat) → ALIRA`로 변경하고 신규 패키지 기본 Provider를 GPT로 설정한다. Model Dropdown에 명확한 ▼ Indicator를 표시하고, Dashboard Section Icon을 전용 Blue line asset으로 통일한다. Pipeline Step은 상태 Icon/STEP/단계명/상태가 분리된 Card로 재구성하며 Step 사이 `>`는 Box 사이 중앙 Grid column에 균등 배치한다.
+- v0.24에서 결과영역의 중복 영문 제목을 제거하고 3개 Tab의 중앙 Empty-state를 통일하며 실제 데이터 수신 시 Text 결과로 자동 전환한다.
+- v0.25에서 결과영역을 Custom Tab Header + QStackedWidget 구조로 변경하여 좌측 Tab과 Content Panel을 자연스럽게 결합한다. `로그 지우기`/`output 폴더 열기`는 Tab보다 약간 위의 독립 Action으로 분리하고 네 면 Border를 유지한다. 배포에는 `Requirement Studio.exe`와 `Requirement Studio.pyw`를 함께 제공하며 EXE는 Root PYw만 실행한다.
+- v0.26에서 AI 연결 테스트에 경과시간+진행률 표시를 추가하고, 동일 Provider/Model/API 연결 Signature의 성공 상태를 실제 분석 시작 시 유지한다. Checklist 7개가 모두 정상일 때 `모든 항목 확인됨`으로 표시하며, `로그 복사`로 Clipboard 복사와 `output/logs` TXT Snapshot을 제공한다. Requirement JSON 파싱 실패 시 Raw 응답을 `work/recovery_failures`에 보존하고 SOURCE를 더 작은 non-overlap 단위로 자동 분할 재추출하여 긴 JSON 절단/문법 오류를 복구한다. 복구 실패 Popup에는 Raw 전체를 노출하지 않고 요약 원인과 상세파일 위치만 표시한다.
 - Automation Manager/BoardRepo Target 8로 배치하며, 그룹웨어 게시판 명칭은 `AI 스냅샷_ALIRA_구동`이다.
 - 실제 Board URL은 `https://gw.suresofttech.com/app/community/130/board/395`로 유지한다.
 
@@ -979,26 +986,27 @@ Requirement_Studio_V0.19.zip
 
 ### C7.5 Architecture와 Module 책임 경계
 
-현재 v0.19 기준 책임 경계는 다음과 같다.
+현재 v0.26 기준 책임 경계는 다음과 같다.
 
 | 영역 | 책임 |
 |---|---|
-| `Requirement Studio.exe` | 사용자가 더블클릭하는 Root 실행 진입점 |
+| `Requirement Studio.exe` | 선택적 Root GUI Launcher. 같은 폴더의 `Requirement Studio.pyw`를 ShellExecute로 실행 |
+| `Requirement Studio.pyw` | EXE 차단 시 사용하는 공식 Python-first fallback 진입점 |
 | `app/ALIRA.pyw` | Legacy 호환용 Python Bootstrap 파일명. 사용자 표시명은 Requirement Studio |
-| `main.py` | PySide6 Dashboard, Provider/Model 선택, 파일 Drag & Drop, Checklist, Step/Progress, Connection Popup, Start/Stop Orchestration |
+| `main.py` | PySide6 Dashboard, Provider/Model 선택, 파일 Drag & Drop, Checklist, Step/Progress, Connection Popup, 연결상태 Signature 유지, Log Copy/Snapshot, Start/Stop Orchestration |
 | `providers/base.py` | Provider 공통 Interface |
 | `providers/factory.py` | 선택 Provider Adapter 생성 |
 | `providers/alira_provider.py` | ALIRA/Qwen Headless Adapter |
 | `providers/hchat_provider.py` | H-Chat GPT/Gemini API Adapter |
 | `core/document_normalizer.py` | Source Document → Local Document IR |
-| `core/prompt_builder.py` | Provider 독립 Compact Prompt 생성 |
-| `core/ai_job_runner.py` | Normalize → Prompt → Provider → Local Result Pipeline |
+| `core/prompt_builder.py` | Provider 독립 Compact Prompt 생성 + malformed Requirement 응답 Recovery용 Source 분할 Prompt 생성 |
+| `core/ai_job_runner.py` | Normalize → Prompt → Provider → Local Result Pipeline + JSON Parse 실패 Raw 보존/자동 분할 재추출 |
 | `core/requirement_engine.py` | Canonical Requirement JSON 파싱·병합·구조검사 |
 | `policy/` | 사용자 조정 판단정책 + 보호 Invariant |
 | `reference_library/` | SWE.1/SWE.6 Reference Example |
 | `input/` | 사용자 원본 문서 입력 |
-| `work/` | Local IR / AI Request / Raw Response Runtime 영역 |
-| `output/` | Canonical JSON 및 승인 산출물 저장 |
+| `work/` | Local IR / AI Request / Raw Response / Recovery Failure 진단 Runtime 영역 |
+| `output/` | Canonical JSON, 분석 DOCX, 진행 로그 Snapshot 등 승인 산출물 저장 |
 
 - GUI가 특정 Provider의 API 세부 구현을 직접 소유하지 않는다.
 - Provider별 차이는 Adapter에 제한하고 판단정책·Prompt Contract·Canonical Output은 공통으로 유지한다.
@@ -1022,7 +1030,7 @@ Requirement_Studio_V0.19.zip
 - PySide6 GUI 실행 확인
 - ALIRA 설치·라이선스·Model 연결 확인
 - 실제 사내 Qwen 질의/응답 확인
-- `input` 문서 탐색·단일 문서 Gate 확인
+- `input` 복수 문서 탐색·Batch 처리 확인
 - 실제 PDF/DOCX/PPTX/XLSX 문서 분석 확인
 - 원본 파일 무변경 확인
 - 변경 기능 Test와 관련 Regression 확인
@@ -1039,16 +1047,16 @@ v0.5 Baseline에서 확인된 상태:
 
 미수행 항목을 전체 PASS로 표현하지 않는다.
 
-v0.19 정합성 완료본 검증 상태:
+v0.26 정합성 완료본 검증 상태:
 
 - Python Syntax Compile: 확인 완료
-- Requirements rev17 formula error scan: 확인 완료
-- V0.19 UI/동작 Requirements 코드 정합성: 정적 확인 완료
-- 실제 Windows PySide6 Dashboard 렌더: 미수행
-- 실제 ALIRA/H-Chat Provider 통합 실행: 미수행
+- Requirements rev24 formula error scan: 확인 완료
+- V0.26 Connection Persistence/Log Copy/JSON Recovery 코드 정합성: 정적·합성 확인 완료
+- V0.25/V0.26 EXE PE32+ GUI / Resource / Root PYw target: 기존 정적 확인 유지
+- 실제 Windows PySide6 V0.26 신규 UI/Clipboard 동작: 미수행
+- 실제 ALIRA/H-Chat Provider에서 JSON 자동복구 Runtime: 미수행
 - 실제 실행 중 Cooperative Stop Timing: 미수행
 
-동일 Version 정합성 수정은 최초 V0.19 산출물이 다운로드 안내 및 Governance/Requirements 동기화 이전에 생성된 점을 명시적으로 기록하며, 이번 패키지를 V0.19 정합성 완료본으로 취급한다.
 
 ### C7.8 배포 구성
 
@@ -1059,8 +1067,9 @@ v0.19 정합성 완료본 검증 상태:
 - `package_manifest.json`
 - `README.md`
 - `ARCHITECTURE.md`
-- 사용자 매뉴얼: `docs/Requirement_Studio_사용자_매뉴얼_v0.4_V0.19.docx`
+- 사용자 매뉴얼(기능 참조): `docs/Requirement_Studio_사용자_매뉴얼_v0.11_V0.26.docx` — V0.26 연결/로그/JSON 복구 반영
 - Root 실행 파일: `Requirement Studio.exe`
+- Root Python Launcher: `Requirement Studio.pyw`
 - Python Bootstrap: `app/ALIRA.pyw` (legacy compatibility)
 - Launcher 진단 도구: `tools/RequirementStudio_launcher_diagnostic.py`
 - 애플리케이션 아이콘 자산: `assets/RequirementStudio.ico`, `assets/RequirementStudio.png`
@@ -1080,14 +1089,20 @@ v0.19 정합성 완료본 검증 상태:
 
 > 아래 값은 현재 Baseline 식별을 위한 참고이며, 기능의 최종 기준은 최신 승인 Requirements와 실제 Package Manifest를 우선한다.
 
-- 기준일: 2026-09-19
-- Package Baseline: `Requirement_Studio_V0.19.zip`
-- Requirements: `Requirement_Studio_Requirements_Management_rev17.xlsx`
-- 기능 기반: Provider-independent Pipeline + Local Normalizer + Canonical Requirement + v0.19 Dashboard/Start-Stop/Auto-save UX
+- 기준일: 2026-09-20
+- Package Baseline: `Requirement_Studio_V0.26.zip`
+- Requirements: `Requirement_Studio_Requirements_Management_rev24.xlsx`
+- 기능 기반: Provider-independent Pipeline + Multi-document Batch + v0.22 Scrollable Viewport / Compact Checklist UX
 - 실제 확인 완료: v0.1 연결 PoC / GUI / 사내 Qwen 응답
-- 미확인: v0.19 Windows Dashboard 실제 렌더/Drag & Drop/Stop Timing / ALIRA·H-Chat 실제 Provider Runtime / Requirement Extraction semantic quality / 향후 SWE.1 Renderer 및 SWE.6 TC Derivation
-- 다음 신규 FR: `FR-127`
+- 미확인: v0.26 Windows Connection elapsed UI/Clipboard Runtime / V0.25~V0.26 EXE Defender 판정 / 실제 ALIRA·H-Chat JSON Recovery Runtime / Main Scroll Runtime / 복수 Drag & Drop/Batch Runtime/Stop Timing / Requirement Extraction semantic quality / 향후 SWE.1 Renderer 및 SWE.6 TC Derivation
+- 다음 신규 FR: `FR-170`
 | v0.3 (Profile Update) | 2026-09-19 | Requirement Studio v0.19: 승인 Dashboard 시안 기반 UI 정리, Provider/Model UX, Cooperative Stop, Stage/Progress, Global Output, 자동 저장, Checklist 7항목, Requirements rev17 정합성 완료 | ALR |
+
+| v0.3 (Profile Update) | 2026-09-20 | Requirement Studio v0.21: 입력 폴더 문구, Provider Solid Blue Radio, 설명문 제거, AI 설정 통합 Card, Checklist 7행/Pill, 중단 Card 높이 정렬, Result Header 동일선, Requirements rev19 반영 | ALR |
+| v0.3 (Profile Update) | 2026-09-20 | Requirement Studio v0.22: Main H/V Scrollable Viewport, Dashboard minimum canvas, Window minimum 축소, Pipeline/Checklist 228px compact, Checklist inner vertical scroll, Requirements rev20 반영 | ALR |
+| v0.3 (Profile Update) | 2026-09-20 | Requirement Studio v0.23: Provider 순서 GPT/Gemini/ALIRA, 신규 기본 GPT, H-Chat Label, Model ▼ Indicator, Blue line Section Icon, 균등 Step Arrow/Grid, 상태별 Step Card, Requirements rev21 반영 | ALR |
+| v0.3 (Profile Update) | 2026-09-20 | Requirement Studio v0.25: Custom Result Tab-Content 결합, 우측 Utility Action 분리/Full Border, QStackedWidget 전환, EXE→Root PYw Launcher 재시도 + PYw fallback, Requirements rev23 반영 | ALR |
+| v0.3 (Profile Update) | 2026-09-20 | Requirement Studio v0.26: Connection elapsed/상태 유지, Checklist 완료문구, Log Copy/TXT Snapshot, Requirement JSON Parse 실패 Raw 보존 및 Source 분할 자동 재추출, 간결 오류 UX, Requirements rev24 반영 | ALR |
 
 # Part D. 신규 프로젝트 프로필 양식
 
@@ -1190,3 +1205,4 @@ v0.19 정합성 완료본 검증 상태:
 > 신규 프로젝트는 DRAFT로 등록하고 사용자 승인 후 ACTIVE로 전환한다.  
 > 외부 배포 시 다른 프로젝트의 내부 프로필을 노출하지 않는다.
 | v0.3 (Profile Update) | 2026-09-19 | Requirement Studio v0.17: 제품명 일반화, ALIRA를 선택형 Provider로 재정의, 시작/Provider 변경 시 자동 Connection 제거, 수동 AI Connection Test 유지, Requirements rev15 반영 | ALR |
+| v0.3 (Profile Update) | 2026-09-20 | Requirement Studio v0.20: File Card 단순화, AI 모델 설정 시안 정렬, 일반 Label/Radio 배경 투명화, 복수문서 독립 Batch, Batch Progress/부분실패, Requirements rev18 반영 | ALR |

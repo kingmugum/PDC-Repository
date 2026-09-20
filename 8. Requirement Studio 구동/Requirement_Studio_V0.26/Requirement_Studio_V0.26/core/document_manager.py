@@ -41,19 +41,19 @@ class DocumentManager:
             key=lambda p: p.name.lower(),
         )
 
+    def get_documents(self):
+        """Return every supported input document in deterministic name order."""
+        return self.list_documents()
+
     def get_single_document(self) -> DocumentLookupResult:
+        """Legacy helper kept for compatibility with older callers."""
         documents = self.list_documents()
-
-        if len(documents) == 0:
-            return DocumentLookupResult(
-                error="지원 문서가 0개입니다. sample_inputs에서 샘플 1개를 input 폴더로 복사해주세요."
-            )
-
+        if not documents:
+            return DocumentLookupResult(error="입력 문서가 없습니다.")
         if len(documents) > 1:
             return DocumentLookupResult(
-                error=f"지원 문서가 {len(documents)}개입니다. 현재는 input 폴더의 문서 1개만 분석할 수 있습니다."
+                error=f"입력 문서가 {len(documents)}개입니다. 단일 문서 호출에서는 1개만 선택할 수 있습니다."
             )
-
         return DocumentLookupResult(document=documents[0])
 
     @staticmethod
