@@ -1,12 +1,11 @@
-Package           : BoardRepo_260919_1.zip
-Technical Version : v0.30
-Created           : 2026-09-19
-Requirements      : BoardRepo_Requirements_v0_30.xlsx
-Governance        : v0.6
+Package           : BoardRepo_260927_1.zip
+Technical Version : v0.31
+Created           : 2026-09-27
+Requirements      : BoardRepo_Requirements_v0_31.xlsx
+Governance        : v0.7
 
 Change Scope
-- Target 7/8 user-visible names renamed to Requirement Studio.
-- board/394 and board/395 URLs unchanged.
-- New BoardRepo post prefixes use Requirement_Studio_Manual / Requirement_Studio_Runtime.
-- Legacy ALIRA post/folder/package aliases remain readable.
-- Target 8 preferred Release filename: Requirement_Studio_Vx.y[.z].zip.
+- Automation Manager 시작 시 BoardRepo 자동 환경 확인의 공용 Lock Busy 경고 Modal 제거.
+- Busy 상태에서는 자동으로 재시도하여 초기 Git 상태 확인과 충돌하지 않도록 처리.
+- 사용자가 직접 실행한 BoardRepo 작업의 경고/오류 Modal은 유지.
+- 공용 OperationLock observer와 호환하여 통합 Compact Status에 BoardRepo 작업 상태도 반영.

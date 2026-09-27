@@ -1,7 +1,7 @@
 {
-  "package": "Automation_Manager_260919_1.zip",
-  "release": "260919_1",
-  "created": "2026-09-19",
+  "package": "Automation_Manager_260927_1.zip",
+  "release": "260927_1",
+  "created": "2026-09-27",
   "managed_targets": [
     "PassFail",
     "SignalExport",
@@ -26,35 +26,38 @@
   ],
   "governance": {
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "document_version": "v0.6",
-    "sha256": "186fd24fb9eb34044b81c2b5d3416c861fe6d468371826449ec24633383ef586",
+    "document_version": "v0.7",
+    "profile_am_version": "v1.1",
+    "sha256": "e6ab35ceda0aa342484ed26438c477b5a6fff13ff3c75db4d08b7bfa75c77118",
     "changed_in_this_release": true
   },
   "components": {
-    "GitManager": "GitManager_260919_1.zip",
-    "BoardRepo": "BoardRepo_260919_1.zip"
+    "GitManager": "GitManager_260927_1.zip",
+    "BoardRepo": "BoardRepo_260927_1.zip"
   },
   "requirements": {
-    "AutomationManager": "Automation_Manager_Requirements_260919_1.xlsx",
-    "GitManager": "GitManager_Requirements_260919_1.xlsx",
-    "BoardRepo": "BoardRepo_Requirements_v0_30.xlsx"
+    "AutomationManager": "Automation_Manager_Requirements_260927_1.xlsx",
+    "GitManager": "GitManager_Requirements_260927_1.xlsx",
+    "BoardRepo": "BoardRepo_Requirements_v0_31.xlsx"
   },
-  "requirement_studio": {
-    "manual": {
-      "target_id": 7,
-      "board_url": "https://gw.suresofttech.com/app/community/130/board/394",
-      "board_name": "AI 스냅샷_Requirement Studio_매뉴얼",
-      "mode": "file_hash",
-      "legacy_display": "ALIRA_Manual"
+  "ui_status": {
+    "location": "Git Manager header",
+    "style": "compact_only",
+    "busy": {
+      "text": "작업 중",
+      "tone": "orange"
     },
-    "runtime": {
-      "target_id": 8,
-      "board_url": "https://gw.suresofttech.com/app/community/130/board/395",
-      "board_name": "AI 스냅샷_Requirement Studio_구동",
-      "archive_strategy": "semantic_version",
-      "recommended_filename": "Requirement_Studio_VX.Y.zip",
-      "legacy_package_prefix": "ALIRA"
-    }
+    "ready": {
+      "text": "사용 가능",
+      "tone": "green"
+    },
+    "unavailable": {
+      "text": "사용 불가",
+      "tone": "gray"
+    },
+    "shared_operation_lock": true,
+    "startup_automatic_modal_suppressed": true,
+    "manual_safety_modals_retained": true
   },
   "distribution_hygiene": {
     "governance_rule": "A18",
@@ -73,10 +76,9 @@
     "zip_root_matches_filename": true
   },
   "change_scope": {
-    "project": "Target 7/8 rename ALIRA -> Requirement Studio",
-    "boardrepo_technical_version": "0.30",
-    "stable_internal_ids_retained": true,
-    "legacy_alira_compatibility": true
+    "project": "Compact Operation Status + Silent Startup Auto Checks",
+    "boardrepo_technical_version": "0.31",
+    "governance_version": "v0.7"
   },
   "files": [
     {
@@ -86,8 +88,8 @@
     },
     {
       "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 47537,
-      "sha256": "186fd24fb9eb34044b81c2b5d3416c861fe6d468371826449ec24633383ef586"
+      "size": 48864,
+      "sha256": "e6ab35ceda0aa342484ed26438c477b5a6fff13ff3c75db4d08b7bfa75c77118"
     },
     {
       "path": "3. WeeklyReport/.gitkeep",
@@ -96,28 +98,48 @@
     },
     {
       "path": "5. Git Manager/00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 47537,
-      "sha256": "186fd24fb9eb34044b81c2b5d3416c861fe6d468371826449ec24633383ef586"
+      "size": 48864,
+      "sha256": "e6ab35ceda0aa342484ed26438c477b5a6fff13ff3c75db4d08b7bfa75c77118"
+    },
+    {
+      "path": "5. Git Manager/AUTOMATION_MANAGER_RELEASE_INFO.txt",
+      "size": 507,
+      "sha256": "14bf83abc1fa3fe8631d67c10e976c9e338a8b4516edd275e118fc0a167e5dba"
+    },
+    {
+      "path": "5. Git Manager/Automation_Manager_Requirements_260927_1.xlsx",
+      "size": 52149,
+      "sha256": "5c26ee7baed46205b89fd61a36f5ac6d5000e57a7835e51d975f38086a8570f5"
     },
     {
       "path": "5. Git Manager/Automation_Manager_package_manifest.json",
       "size": 272,
-      "sha256": "5e6e4f9e13ddce1cb12892a9ec0267f27c3662a8ed90a2d033fd4fba5f549724"
+      "sha256": "fe1e352136ec542fcb55b26570a15dbc93d94352103261e894d6b2bd5c5d78b1"
     },
     {
-      "path": "5. Git Manager/AUTOMATION_MANAGER_RELEASE_INFO.txt",
-      "size": 354,
-      "sha256": "e35f2ca8c59fa84a46dfa22d1d603204b9985c1b53bf1dd9052109e562279233"
+      "path": "5. Git Manager/GitManager_260927_1.zip",
+      "size": 165059,
+      "sha256": "7d44b2a8afc15790cb04749f2d5b3b1e47360a993a4c925708c8efb0dd5e79bf"
     },
     {
-      "path": "5. Git Manager/Automation_Manager_Requirements_260919_1.xlsx",
-      "size": 49827,
-      "sha256": "8f2b4844a956f8e31ff0eda8f7b804493d62d636a29e08b105f0f70d618b6947"
+      "path": "5. Git Manager/GitManager_Requirements_260927_1.xlsx",
+      "size": 56375,
+      "sha256": "1019d54feee5f0b74b005da14add006c2cbf399cabf8b7777efc26974c626198"
     },
     {
-      "path": "5. Git Manager/current/git_manager.py",
-      "size": 52230,
-      "sha256": "55bf18843ac31019a453c73daf8d443b072af7ec87b4050b7b273a22b4d0fdd8"
+      "path": "5. Git Manager/MANUAL.txt",
+      "size": 403,
+      "sha256": "af917a6938c2ee043eb91e3cadfdc70d29483c4beffa2d69499791e56f8d4b03"
+    },
+    {
+      "path": "5. Git Manager/PACKAGE_INFO.txt",
+      "size": 614,
+      "sha256": "b94bf1d5f95a6e6cf171fb1e7069872433e20646ef15f838be4ce9f33e618012"
+    },
+    {
+      "path": "5. Git Manager/SELF_TEST_RESULTS.txt",
+      "size": 492,
+      "sha256": "a3c69702a8fc401c7b9322d15a711c286f0fa051c6d438b73514b531c43257d8"
     },
     {
       "path": "5. Git Manager/current/Git_Manager.pyw",
@@ -125,49 +147,44 @@
       "sha256": "a1c92ba460e5167ddc12c66ce70af78ab04223f4956c937a067bb0f1a0412660"
     },
     {
-      "path": "5. Git Manager/GitManager_260919_1.zip",
-      "size": 158494,
-      "sha256": "c0a80feb675f6bb1adb7b7278ad03a3b230d6a3720c3f43a81885392137bfa78"
-    },
-    {
-      "path": "5. Git Manager/GitManager_Requirements_260919_1.xlsx",
-      "size": 54107,
-      "sha256": "74a7115f1644ee06e0bac488105f8aa65efb9ea57ef5c9317485c0675c870274"
-    },
-    {
-      "path": "5. Git Manager/MANUAL.txt",
-      "size": 417,
-      "sha256": "697f5196030a590383ab5776bd91d7046a966af6ac5f1a17c7aad58378679d0c"
-    },
-    {
-      "path": "5. Git Manager/PACKAGE_INFO.txt",
-      "size": 466,
-      "sha256": "8b02c9988b1b266f469bcc34a8fbdd63e7a5a40ef30ccc60babf24ab66c5d949"
+      "path": "5. Git Manager/current/git_manager.py",
+      "size": 54472,
+      "sha256": "4e6a08f42d67c8af7882eb7f994f39ba8e81221c66d77ea62d4fc378d78c05d5"
     },
     {
       "path": "5. Git Manager/package_manifest.json",
-      "size": 3751,
-      "sha256": "a490180f57be44ce8e32af94c0321e7fa7c44427439bbe5b8246908d0d710048"
-    },
-    {
-      "path": "5. Git Manager/SELF_TEST_RESULTS.txt",
-      "size": 333,
-      "sha256": "08a4a21bee5572723e812a316121008ce69ca921542508abb8992e182f32ee66"
+      "size": 3933,
+      "sha256": "c9841d68bafa0b9472c679e5db5ca3e7bf6234ee5a132db845d0c397765af569"
     },
     {
       "path": "6. BoardRepo/00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 47537,
-      "sha256": "186fd24fb9eb34044b81c2b5d3416c861fe6d468371826449ec24633383ef586"
+      "size": 48864,
+      "sha256": "e6ab35ceda0aa342484ed26438c477b5a6fff13ff3c75db4d08b7bfa75c77118"
     },
     {
-      "path": "6. BoardRepo/BoardRepo_260919_1.zip",
-      "size": 264174,
-      "sha256": "b635659dd232903b76676a2dd2937a2d7ae2922d3435628a8ce290829fd93dfc"
+      "path": "6. BoardRepo/BoardRepo_260927_1.zip",
+      "size": 267125,
+      "sha256": "d2bcf013f2ce53cdb07126100d9c9632c57b2c49c8f7d69dd71648ee161e6696"
     },
     {
-      "path": "6. BoardRepo/BoardRepo_Requirements_v0_30.xlsx",
-      "size": 141674,
-      "sha256": "91623f954c9b1560750c8cdcfa4b322df9f569ebd331402a93ba0f7a9f80af58"
+      "path": "6. BoardRepo/BoardRepo_Requirements_v0_31.xlsx",
+      "size": 143515,
+      "sha256": "5d9aab9af7a590f3239975600421b9f57fd32c6684f9b7a568d0ea24b6e5578d"
+    },
+    {
+      "path": "6. BoardRepo/MANUAL.txt",
+      "size": 361,
+      "sha256": "064779c3019e45b2189b435f0996ddeed6445540d96987e07254fe93b0f9ce0c"
+    },
+    {
+      "path": "6. BoardRepo/PACKAGE_INFO.txt",
+      "size": 599,
+      "sha256": "fe18aa8c599ec219ba5e9bfa6feaa43fd989c2b22393c1bd96abc04bc0252b54"
+    },
+    {
+      "path": "6. BoardRepo/SELF_TEST_RESULTS.txt",
+      "size": 514,
+      "sha256": "16ad6913db1ce4241594f83b664c1ad94fed0cfe3b9263edcdab3dd236fb3696"
     },
     {
       "path": "6. BoardRepo/current/BoardRepo.pyw",
@@ -177,7 +194,7 @@
     {
       "path": "6. BoardRepo/current/config.json",
       "size": 15014,
-      "sha256": "c757edd0c5fb596e9b89303a9cefed83eff24be18e0edada44ce7a697d69aa01"
+      "sha256": "fd31ac835921e23e1ae45a5b8061bc582bd5e514717d961cbdae6436933cae8d"
     },
     {
       "path": "6. BoardRepo/current/function/archive_selector.py",
@@ -196,8 +213,8 @@
     },
     {
       "path": "6. BoardRepo/current/function/boardrepo_tab.py",
-      "size": 52524,
-      "sha256": "3a9bbea08d9c92e0b3dfb1d0bb0f44755cc07b97298085a83dde19e62021b82e"
+      "size": 52922,
+      "sha256": "de6465a5e4e687b8143c8702fd8b81115b5557f7ca006201489c7693097a4ef9"
     },
     {
       "path": "6. BoardRepo/current/function/browser_automation.py",
@@ -280,24 +297,9 @@
       "sha256": "09d917fdae911a5f08c62cf44e5c33aab238d8ef7a248e869c1541d8eb91d67a"
     },
     {
-      "path": "6. BoardRepo/MANUAL.txt",
-      "size": 659,
-      "sha256": "ba425bce5e39a0aa37c7cb66972b00ea5abf28cd7bfde5ba8499457b6caa1554"
-    },
-    {
-      "path": "6. BoardRepo/PACKAGE_INFO.txt",
-      "size": 520,
-      "sha256": "f5c385a5cfee1c7b3014b3ccfa75f817122b37cce55429047ac64fcc56e4a4a9"
-    },
-    {
       "path": "6. BoardRepo/package_manifest.json",
-      "size": 5963,
-      "sha256": "17b1e30689ed6a2262c36c951cbffcfbb2a9494ef896af04c37b65446a633f30"
-    },
-    {
-      "path": "6. BoardRepo/SELF_TEST_RESULTS.txt",
-      "size": 537,
-      "sha256": "54f89d212c66e7146b0a549618cbba5e65f7e55d489f4f9e1954eb90485434e5"
+      "size": 6033,
+      "sha256": "b4dd4c605d9706d83e1b215537775e98c9bf438b3ee420ee4b89969fb37800f9"
     },
     {
       "path": "7. Requirement Studio 매뉴얼/.gitkeep",
@@ -312,12 +314,17 @@
     {
       "path": "Automation_Manager.pyw",
       "size": 4323,
-      "sha256": "789677138e345622ecfb06c72d66adc786c01b4a90421088dad0f477885c84ff"
+      "sha256": "5b96df62960031da9d002d09610904dd681e2a7006a2d5b833ac64812d016993"
     },
     {
-      "path": "Automation_Manager_Requirements_260919_1.xlsx",
-      "size": 49827,
-      "sha256": "8f2b4844a956f8e31ff0eda8f7b804493d62d636a29e08b105f0f70d618b6947"
+      "path": "Automation_Manager_Requirements_260927_1.xlsx",
+      "size": 52149,
+      "sha256": "5c26ee7baed46205b89fd61a36f5ac6d5000e57a7835e51d975f38086a8570f5"
+    },
+    {
+      "path": "SELF_TEST_RESULTS.txt",
+      "size": 726,
+      "sha256": "c0c328a7ee72722b7cad0c69a14d3dad9d6ceb0082eb7ed502ea1d6bf167c701"
     },
     {
       "path": "function/common/catalog.py",
@@ -336,18 +343,13 @@
     },
     {
       "path": "function/common/work_lock.py",
-      "size": 672,
-      "sha256": "27825b89d1d0bb8e78501e362408ffd02c4a57c070399034051d09c6341eeb4f"
+      "size": 1160,
+      "sha256": "d2c8254beb99acf29a7f7f0a84505af885cc897a4971f08c2f60f8cffbebe81b"
     },
     {
       "path": "program_catalog.json",
       "size": 8602,
-      "sha256": "79db8273bebfcc51caceea911ee42b928fa97ecce3c2490e72944482b5760ae6"
-    },
-    {
-      "path": "SELF_TEST_RESULTS.txt",
-      "size": 782,
-      "sha256": "aee733124230e31d48fce41b9c4a76c396defd4ff6b79b6ba0e3fc56969075be"
+      "sha256": "7223068678e1c205e1eebdb9aa8f4e02fc753a6ccee6f21bb590125392db761e"
     }
   ]
 }

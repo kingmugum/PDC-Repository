@@ -1,14 +1,5 @@
-BoardRepo 260919_1 / v0.30
+BoardRepo 260927_1 / v0.31
 
-Target 8 Requirement Studio Runtime
-- Board: board/395
-- Preferred file pattern: Requirement_Studio_V<major>.<minor>[.<patch>].zip
-- Legacy compatible: ALIRA_V<major>.<minor>[.<patch>].zip
-- Example: Requirement_Studio_V0.15.zip
-- Semantic Version numeric comparison
-- New upload title: [BoardRepo] Requirement_Studio_Runtime_V0.15
-- Legacy [BoardRepo] ALIRA_Runtime_V0.15 posts remain readable for duplicate/download compatibility.
-
-Target 7 Requirement Studio Manual remains general file + SHA-256.
-- New upload title: [BoardRepo][Requirement_Studio_Manual] <filename>
-- Legacy [BoardRepo][ALIRA_Manual] posts remain compatible.
+- Automation Manager 통합 실행 시 시작 직후 자동 환경 확인은 Busy Modal 없이 대기/재시도합니다.
+- 수동 업로드/다운로드/환경설치의 기존 안전 경고는 유지됩니다.
+- 그룹웨어 업로드/다운로드 기능 자체와 브라우저 자동화 엔진은 기존 동작을 유지합니다.

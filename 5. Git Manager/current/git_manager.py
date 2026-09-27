@@ -18,7 +18,7 @@ from catalog import load_catalog, target_map
 from release_rules import latest_release, latest_semantic_release, parse_release_name, parse_semantic_release_name
 
 APP_NAME = "Git Manager"
-APP_VERSION = "260919_1"
+APP_VERSION = "260927_1"
 VERSION_RE = re.compile(r"^(?P<date>\d{6})_(?P<num>\d+)$")
 CONFIG_DIR = Path.home() / ".pdc_git_manager"
 CONFIG_FILE = CONFIG_DIR / "projects.json"
@@ -655,13 +655,29 @@ class GitManagerFrame(ttk.Frame):
         self._load_projects()
         self._auto_register_workspace()
         self._update_recovery_ui()
-        self.after(250, self.refresh_status)
+        if self.operation_lock and hasattr(self.operation_lock, "subscribe"):
+            self.operation_lock.subscribe(self._on_operation_owner_changed)
+        else:
+            self._refresh_header_status()
+        self.after(250, lambda: self.refresh_status(silent=True, retry_on_busy=True))
 
     def _build_ui(self):
         header = ttk.Frame(self)
         header.pack(fill="x")
         ttk.Label(header, text="Git Manager", font=("Segoe UI", 18, "bold")).pack(side="left")
         ttk.Label(header, text="Git 기반 Repository 동기화 · catalog 전체 대상 상태 확인", font=("Segoe UI", 10)).pack(side="left", padx=(12, 0), pady=(6, 0))
+        self.header_status = tk.Label(
+            header,
+            text="준비 중",
+            bg="#ECEFF3",
+            fg="#5C6570",
+            padx=12,
+            pady=4,
+            bd=0,
+            relief="flat",
+            font=("Segoe UI", 9, "bold"),
+        )
+        self.header_status.pack(side="left", padx=(20, 0), pady=(2, 0))
 
         repo_line = ttk.Frame(self)
         repo_line.pack(fill="x", pady=(10, 6))
@@ -711,6 +727,32 @@ class GitManagerFrame(ttk.Frame):
         self.log_text = tk.Text(log_frame, height=15, state="disabled", wrap="word")
         self.log_text.pack(fill="both", expand=True)
         ttk.Label(self, textvariable=self.status_var).pack(anchor="w", pady=(5, 0))
+
+    def _set_header_status(self, state: str):
+        styles = {
+            "busy": ("작업 중", "#FFF1D6", "#8A4B08"),
+            "ready": ("사용 가능", "#E2F4E8", "#1F6B3A"),
+            "unavailable": ("사용 불가", "#ECEFF3", "#5C6570"),
+            "checking": ("준비 중", "#ECEFF3", "#5C6570"),
+        }
+        text, bg, fg = styles.get(state, styles["checking"])
+        try:
+            self.header_status.configure(text=text, bg=bg, fg=fg)
+        except (tk.TclError, AttributeError):
+            pass
+
+    def _refresh_header_status(self):
+        if self.operation_lock and self.operation_lock.owner:
+            self._set_header_status("busy")
+            return
+        repo = self.selected_repo()
+        self._set_header_status("ready" if repo and is_git_repo(repo) else "unavailable")
+
+    def _on_operation_owner_changed(self, owner):
+        try:
+            self.after(0, lambda: self._set_header_status("busy") if owner else self._refresh_header_status())
+        except tk.TclError:
+            pass
 
     def log(self, text: str):
         stamp = datetime.now().strftime("%H:%M:%S")
@@ -987,14 +1029,17 @@ class GitManagerFrame(ttk.Frame):
         else:
             subprocess.Popen(["xdg-open", str(repo)])
 
-    def _run_locked(self, label: str, work, done=None):
+    def _run_locked(self, label: str, work, done=None, *, silent=False) -> bool:
         if self.busy:
-            messagebox.showinfo(APP_NAME, "Git Manager 작업이 이미 진행 중입니다.")
-            return
+            if not silent:
+                messagebox.showinfo(APP_NAME, "Git Manager 작업이 이미 진행 중입니다.")
+            return False
         if self.operation_lock and not self.operation_lock.acquire("Git Manager"):
-            messagebox.showwarning(APP_NAME, f"현재 {self.operation_lock.owner} 작업이 진행 중입니다. 완료 후 다시 실행해주세요.")
-            return
+            if not silent:
+                messagebox.showwarning(APP_NAME, f"현재 {self.operation_lock.owner} 작업이 진행 중입니다. 완료 후 다시 실행해주세요.")
+            return False
         self.busy = True
+        self._set_header_status("busy")
         self.status_var.set(label)
         self.log(f"===== {label} 시작 =====")
 
@@ -1012,22 +1057,28 @@ class GitManagerFrame(ttk.Frame):
             if error:
                 self.status_var.set("오류")
                 self.log(f"실패: {error}")
-                messagebox.showerror(APP_NAME, str(error))
+                self._set_header_status("unavailable")
+                if not silent:
+                    messagebox.showerror(APP_NAME, str(error))
             else:
                 self.status_var.set("완료")
                 self.log(f"===== {label} 완료 =====")
+                self._refresh_header_status()
                 if done:
                     done(result)
 
         threading.Thread(target=job, daemon=True).start()
+        return True
 
-    def refresh_status(self):
+    def refresh_status(self, silent=False, retry_on_busy=False):
         repo = self.selected_repo()
         if not repo:
             self.repo_info_var.set("Repository를 선택해주세요.")
+            self._set_header_status("unavailable")
             return
         if not is_git_repo(repo):
             self.repo_info_var.set(f"Git Repository 아님: {repo}")
+            self._set_header_status("unavailable")
             return
         selected = self.selected_target_keys()
         if not selected:
@@ -1111,7 +1162,9 @@ class GitManagerFrame(ttk.Frame):
             self.log(f"관리대상 상태 확인 완료: {len(rows)}개 대상")
             self.log(f"Automation Manager Release 비교: {release_text}")
 
-        self._run_locked("Git 상태 확인", work, done)
+        started = self._run_locked("Git 상태 확인", work, done, silent=silent)
+        if not started and silent and retry_on_busy:
+            self.after(700, lambda: self.refresh_status(silent=True, retry_on_busy=True))
 
     def pull_repo(self):
         repo = self.selected_repo()

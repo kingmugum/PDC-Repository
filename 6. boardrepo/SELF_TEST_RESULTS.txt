@@ -1,11 +1,10 @@
-SELF TEST RESULTS - BoardRepo_260919_1 / v0.30
+SELF TEST RESULTS - BoardRepo_260927_1 / v0.31
 
-PASS - Requirement Studio Manual new title prefix parser
-PASS - legacy [BoardRepo][ALIRA_Manual] title parser
-PASS - Requirement Studio Runtime new title prefix parser
-PASS - legacy [BoardRepo] ALIRA_Runtime_V0.15 title parser
-PASS - Requirement_Studio_V0.16 + ALIRA_V0.15 semantic selection
-PASS - board/394 and board/395 exact URLs retained
-PASS - Governance v0.6 present
+PASS - startup environment check invokes silent_if_busy=True / retry_on_busy=True
+PASS - startup busy path contains no warning modal
+PASS - manual _set_running default still shows existing busy warning
+PASS - shared OperationLock release/acquire compatibility retained
 PASS - proven browser_automation.py unchanged
-NOT RUN - live groupware upload/download (user environment required)
+PASS - Governance v0.7 C3.4 present
+PASS - Python compile
+NOT RUN - live groupware upload/download and Windows GUI startup (user environment required)

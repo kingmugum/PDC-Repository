@@ -1,7 +1,9 @@
-Automation Manager : Automation_Manager_260919_1.zip
-Release            : 260919_1
-Governance         : v0.6
+Automation Manager : Automation_Manager_260927_1.zip
+Release            : 260927_1
+Governance         : v0.7
 Target Count       : 8
 Target 7            : Requirement Studio Manual (board/394)
 Target 8            : Requirement Studio Runtime (board/395)
 Target 8 Rule       : Requirement_Studio_V<major>.<minor>[.<patch>].zip (legacy ALIRA_V... accepted)
+UI Status           : gray unavailable / orange busy / green available
+Startup Modal       : automatic checks are silent; manual safety dialogs retained

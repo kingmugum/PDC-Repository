@@ -1,11 +1,12 @@
-Package            : GitManager_260919_1.zip
-Created            : 2026-09-19
-Requirements       : GitManager_Requirements_260919_1.xlsx
-Automation Manager : Automation_Manager_260919_1.zip
-Governance         : v0.6
+Package            : GitManager_260927_1.zip
+Created            : 2026-09-27
+Requirements       : GitManager_Requirements_260927_1.xlsx
+Automation Manager : Automation_Manager_260927_1.zip
+Governance         : v0.7
 
 Change Scope
-- Target 7/8 visible naming migrated from ALIRA to Requirement Studio.
-- Legacy ALIRA folder/package aliases remain compatible.
-- Target 8 preferred Release prefix is Requirement_Studio_Vx.y[.z].
-- Git core safety behavior is unchanged.
+- Git Manager Header에 Compact Status 추가.
+- 상태: 주황 작업 중 / 초록 사용 가능 / 회색 사용 불가.
+- 공용 OperationLock listener로 Git Manager와 BoardRepo 작업 상태를 함께 표시.
+- 시작 시 자동 Git 상태 확인의 Busy/Error Modal을 억제하고 Busy 시 자동 재시도.
+- 사용자가 직접 실행한 Git 작업의 안전 Modal은 유지.

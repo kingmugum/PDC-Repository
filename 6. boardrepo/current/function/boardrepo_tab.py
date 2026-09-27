@@ -96,7 +96,7 @@ class BoardRepoFrame(ttk.Frame):
         }
         self._build_ui()
         self.after(100, self._poll_events)
-        self.after(250, self.check_environment_async)
+        self.after(350, lambda: self.check_environment_async(silent_if_busy=True, retry_on_busy=True))
 
     def _build_ui(self):
         root = ttk.Frame(self, padding=12)
@@ -208,15 +208,17 @@ class BoardRepoFrame(ttk.Frame):
 
         self.after(100, self._poll_events)
 
-    def _set_running(self, status_text="작업 중..."):
+    def _set_running(self, status_text="작업 중...", *, silent_if_busy=False):
         if self._running:
-            messagebox.showinfo("BoardRepo", "이미 작업을 수행 중입니다.")
+            if not silent_if_busy:
+                messagebox.showinfo("BoardRepo", "이미 작업을 수행 중입니다.")
             return False
         if self.operation_lock and not self.operation_lock.acquire("BoardRepo"):
-            messagebox.showwarning(
-                "BoardRepo",
-                f"현재 {self.operation_lock.owner} 작업이 진행 중입니다. 완료 후 다시 실행해주세요.",
-            )
+            if not silent_if_busy:
+                messagebox.showwarning(
+                    "BoardRepo",
+                    f"현재 {self.operation_lock.owner} 작업이 진행 중입니다. 완료 후 다시 실행해주세요.",
+                )
             return False
         self._running = True
         self._set_controls_state("disabled")
@@ -226,10 +228,12 @@ class BoardRepoFrame(ttk.Frame):
     # -----------------------
     # Environment management
     # -----------------------
-    def check_environment_async(self):
+    def check_environment_async(self, silent_if_busy=False, retry_on_busy=False):
         if self._running:
             return
-        if not self._set_running("환경 확인 중..."):
+        if not self._set_running("환경 확인 중...", silent_if_busy=silent_if_busy):
+            if silent_if_busy and retry_on_busy:
+                self.after(700, lambda: self.check_environment_async(silent_if_busy=True, retry_on_busy=True))
             return
         threading.Thread(target=self._check_environment_worker, daemon=True).start()
 

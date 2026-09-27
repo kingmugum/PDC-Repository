@@ -1,7 +1,6 @@
-Git Manager 260919_1
+Git Manager 260927_1
 
-- Target 7/8 are displayed as Requirement Studio Manual / Runtime.
-- 8. Requirement Studio 구동 recognizes Requirement_Studio_V0.15.zip Semantic Version.
-- Legacy ALIRA_V0.15.zip remains compatible.
-- New/legacy Requirement Studio target folders are resolved as one target through catalog aliases.
-- Existing Git safety rules (ff-only / no force push / no destructive reset) remain unchanged.
+- Automation Manager 통합 GUI에서는 Header Compact Status로 공용 작업 상태를 확인합니다.
+- 주황: 작업 중 / 초록: 사용 가능 / 회색: 사용 불가
+- 프로그램 시작 시 자동 상태 확인은 Modal 없이 수행됩니다.
+- Pull/Push/Clone/복구 등 사용자가 직접 실행하는 작업의 확인/경고 Modal은 기존대로 유지됩니다.

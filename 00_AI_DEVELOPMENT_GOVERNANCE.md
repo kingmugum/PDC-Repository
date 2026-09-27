@@ -1,8 +1,8 @@
 # 00_AI_DEVELOPMENT_GOVERNANCE.md
 
-> **Document Version:** v0.6  
+> **Document Version:** v0.7  
 > **Status:** Draft / Living Document  
-> **Effective Date:** 2026-09-19  
+> **Effective Date:** 2026-09-27  
 > **Purpose:** 모든 AI 보조 개발 프로젝트에 적용할 공통 개발헌법과 Project ID별 고유 운영 규칙을 하나의 문서에서 관리한다.  
 > **Registered Projects:** `PF` PassFail, `SE` Signal Export V2, `AM` Automation Manager, `GM` Git Manager, `BR` BoardRepo, `ALM` Requirement Studio Manual, `ALR` Requirement Studio Runtime / Tools  
 > **Supersedes:** `00_AI_DEVELOPMENT_CONSTITUTION.md` + 프로젝트별 `01_PROJECT_RULES.md`
@@ -880,7 +880,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | Project ID | `AM` |
 | Project Name | Automation Manager |
 | Status | `ACTIVE` |
-| Profile Version | v1.0 |
+| Profile Version | v1.1 |
 | Requirements Mode | `CUSTOM` |
 | Requirements Pattern | `Automation_Manager_Requirements_YYMMDD_N.xlsx` |
 | Package Pattern | `Automation_Manager_YYMMDD_N.zip` |
@@ -909,6 +909,16 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 
 - Target 7 Requirement Studio Manual: `https://gw.suresofttech.com/app/community/130/board/394`
 - Target 8 Requirement Studio Runtime / Tools: `https://gw.suresofttech.com/app/community/130/board/395`
+
+### C3.4 통합 GUI 상태 표시 및 시작 동작
+
+- Automation Manager 시작 시 Git Manager/BoardRepo의 자동 초기 점검 때문에 `작업 중` 또는 오류 Modal을 즉시 표시하지 않는다. 자동 초기 점검의 Busy/오류 상태는 로그와 상단 상태 표시로 전달한다.
+- Git Manager Header의 Compact Status는 공용 Operation Lock 상태를 반영한다.
+  - 주황색 `작업 중`: Git Manager 또는 BoardRepo의 공용 작업이 실행 중
+  - 초록색 `사용 가능`: 공용 작업이 없고 선택된 Git Repository가 정상 사용 가능
+  - 회색 `사용 불가`: Repository 미연결/비정상 등으로 Git Manager 작업을 시작할 수 없음
+- 상태 표시는 요약 문구만 제공하며 별도 설명 영역을 추가하지 않는다. 상세 원인은 기존 로그와 Repository 정보에서 확인한다.
+- 사용자가 직접 실행한 작업에서 필요한 확인/경고/오류 Modal은 기존 안전 정책을 유지한다. 본 규칙은 프로그램 시작 시 자동 점검에 의한 불필요한 Modal 억제에 한정한다.
 
 ## C4. `[GM]` Git Manager
 
@@ -1107,6 +1117,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | v0.4 | 2026-09-12 | 공통 Package Naming, Clean Distribution, Cache/임시파일 제외, Build/Test 후 Final Clean, `.gitignore`, Manifest 동기화 규칙 추가 | 모든 프로젝트 |
 | v0.5 | 2026-09-13 | ALR Profile v0.3: `ALIRA_Vmajor.minor[.patch].zip` Semantic Version 관리, BoardRepo 제목/첨부 교차검증, Git ignore에 숨은 승인 ALIRA Release의 제한적 추적 예외 규칙 추가 | 모든 프로젝트 Git Hygiene, ALR |
 | v0.6 | 2026-09-19 | Target 7·8 사용자 표시명을 ALIRA에서 Requirement Studio로 변경. board/394·395 URL은 유지하고 게시판 명칭, 폴더/GUI, 신규 게시글 제목/권장 Package Prefix를 Requirement Studio로 전환. ALM/ALR Project ID와 ALIRA Legacy Alias는 호환을 위해 유지 | AM, GM, BR, ALM, ALR |
+| v0.7 | 2026-09-27 | Automation Manager 시작 시 자동 초기 점검의 Busy/Error Modal을 억제하고 Git Manager Header에 공용 Operation 상태를 Compact Status로 표시하는 규칙 추가. AM Profile v1.1 | AM, GM, BR |
 
 ---
 

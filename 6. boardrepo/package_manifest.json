@@ -1,21 +1,20 @@
 {
-  "package": "BoardRepo_260919_1.zip",
-  "release": "260919_1",
-  "technical_version": "0.30",
-  "created": "2026-09-19",
+  "package": "BoardRepo_260927_1.zip",
+  "release": "260927_1",
+  "technical_version": "0.31",
+  "created": "2026-09-27",
   "managed_target_id": 6,
   "governance": {
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "document_version": "v0.6",
-    "sha256": "186fd24fb9eb34044b81c2b5d3416c861fe6d468371826449ec24633383ef586"
+    "document_version": "v0.7",
+    "sha256": "e6ab35ceda0aa342484ed26438c477b5a6fff13ff3c75db4d08b7bfa75c77118"
   },
-  "requirements": "BoardRepo_Requirements_v0_30.xlsx",
+  "requirements": "BoardRepo_Requirements_v0_31.xlsx",
   "change_scope": {
-    "target_7_8_rename": "Requirement Studio",
-    "board_394_name": "AI 스냅샷_Requirement Studio_매뉴얼",
-    "board_395_name": "AI 스냅샷_Requirement Studio_구동",
-    "runtime_recommended_filename": "Requirement_Studio_VX.Y.zip",
-    "legacy_alira_compatibility": true
+    "startup_auto_environment_modal_suppressed": true,
+    "retry_when_shared_lock_busy": true,
+    "manual_safety_modals_retained": true,
+    "shared_operation_status_compatible": true
   },
   "distribution_hygiene": {
     "governance_rule": "A18",
@@ -30,18 +29,33 @@
     },
     {
       "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 47537,
-      "sha256": "186fd24fb9eb34044b81c2b5d3416c861fe6d468371826449ec24633383ef586"
+      "size": 48864,
+      "sha256": "e6ab35ceda0aa342484ed26438c477b5a6fff13ff3c75db4d08b7bfa75c77118"
     },
     {
       "path": "6. BoardRepo/00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 47537,
-      "sha256": "186fd24fb9eb34044b81c2b5d3416c861fe6d468371826449ec24633383ef586"
+      "size": 48864,
+      "sha256": "e6ab35ceda0aa342484ed26438c477b5a6fff13ff3c75db4d08b7bfa75c77118"
     },
     {
-      "path": "6. BoardRepo/BoardRepo_Requirements_v0_30.xlsx",
-      "size": 141674,
-      "sha256": "91623f954c9b1560750c8cdcfa4b322df9f569ebd331402a93ba0f7a9f80af58"
+      "path": "6. BoardRepo/BoardRepo_Requirements_v0_31.xlsx",
+      "size": 143515,
+      "sha256": "5d9aab9af7a590f3239975600421b9f57fd32c6684f9b7a568d0ea24b6e5578d"
+    },
+    {
+      "path": "6. BoardRepo/MANUAL.txt",
+      "size": 361,
+      "sha256": "064779c3019e45b2189b435f0996ddeed6445540d96987e07254fe93b0f9ce0c"
+    },
+    {
+      "path": "6. BoardRepo/PACKAGE_INFO.txt",
+      "size": 599,
+      "sha256": "fe18aa8c599ec219ba5e9bfa6feaa43fd989c2b22393c1bd96abc04bc0252b54"
+    },
+    {
+      "path": "6. BoardRepo/SELF_TEST_RESULTS.txt",
+      "size": 514,
+      "sha256": "16ad6913db1ce4241594f83b664c1ad94fed0cfe3b9263edcdab3dd236fb3696"
     },
     {
       "path": "6. BoardRepo/current/BoardRepo.pyw",
@@ -51,7 +65,7 @@
     {
       "path": "6. BoardRepo/current/config.json",
       "size": 15014,
-      "sha256": "c757edd0c5fb596e9b89303a9cefed83eff24be18e0edada44ce7a697d69aa01"
+      "sha256": "fd31ac835921e23e1ae45a5b8061bc582bd5e514717d961cbdae6436933cae8d"
     },
     {
       "path": "6. BoardRepo/current/function/archive_selector.py",
@@ -70,8 +84,8 @@
     },
     {
       "path": "6. BoardRepo/current/function/boardrepo_tab.py",
-      "size": 52524,
-      "sha256": "3a9bbea08d9c92e0b3dfb1d0bb0f44755cc07b97298085a83dde19e62021b82e"
+      "size": 52922,
+      "sha256": "de6465a5e4e687b8143c8702fd8b81115b5557f7ca006201489c7693097a4ef9"
     },
     {
       "path": "6. BoardRepo/current/function/browser_automation.py",
@@ -154,19 +168,9 @@
       "sha256": "09d917fdae911a5f08c62cf44e5c33aab238d8ef7a248e869c1541d8eb91d67a"
     },
     {
-      "path": "6. BoardRepo/MANUAL.txt",
-      "size": 659,
-      "sha256": "ba425bce5e39a0aa37c7cb66972b00ea5abf28cd7bfde5ba8499457b6caa1554"
-    },
-    {
-      "path": "6. BoardRepo/PACKAGE_INFO.txt",
-      "size": 520,
-      "sha256": "f5c385a5cfee1c7b3014b3ccfa75f817122b37cce55429047ac64fcc56e4a4a9"
-    },
-    {
-      "path": "6. BoardRepo/SELF_TEST_RESULTS.txt",
-      "size": 537,
-      "sha256": "54f89d212c66e7146b0a549618cbba5e65f7e55d489f4f9e1954eb90485434e5"
+      "path": "6. BoardRepo/package_manifest.json",
+      "size": 6033,
+      "sha256": "fd94132328139ad92113c830d729884ca3fdcc2e476b6237cd2ec6b1252eb2b8"
     }
   ]
 }
