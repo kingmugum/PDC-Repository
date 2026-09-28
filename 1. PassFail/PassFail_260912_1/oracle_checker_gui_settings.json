@@ -1,0 +1,33 @@
+{
+  "excel_path": "C:\\Users\\kingm\\Desktop\\Automation_Manager_260928_1\\Automation_Manager_260928_1\\1. PassFail\\PassFail_260912_1\\PassFail_Requirements_Management_rev87.xlsx",
+  "sheet_name": "사용자 시나리오",
+  "log_dir": ".",
+  "log_file": "",
+  "dbc_auto_dir": ".",
+  "can_network": {
+    "CAN1": "-",
+    "CAN2": "-",
+    "CAN3": "-"
+  },
+  "channel_model": "CANoeLogicalFixed",
+  "can_dbc": {
+    "CAN1": "",
+    "CAN2": "",
+    "CAN3": ""
+  },
+  "bus_name": "CAN",
+  "vector_product_preference": "자동",
+  "poll_interval": "0.05",
+  "measurement_wait": "8.0",
+  "default_timeout": "30",
+  "drop_first_seconds": "0.0",
+  "log_wait_timeout": "5.0",
+  "auto_log_review": true,
+  "auto_find_latest_log": true,
+  "auto_stop_measurement": true,
+  "skip_log_review_on_pass": true,
+  "multi_log_review": false,
+  "manual_log_enabled": false,
+  "manual_timing_enabled": false,
+  "collector_enabled": true
+}

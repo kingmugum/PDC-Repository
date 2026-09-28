@@ -1,0 +1,6 @@
+PassFail rev87 차량 송수신 테스트(2안) 실행/원인 분석 로그
+원 차량 송신원은 유지될 수 있음 / CRC·Alive·E2E 자동계산 없음 / 실제 write는 stimulus 모듈만 수행
+
+[LOG] AI 분석용 자동 로그: C:\Users\kingm\Desktop\Automation_Manager_260928_1\Automation_Manager_260928_1\1. PassFail\PassFail_260912_1\txrx_logs\txrx_auto_20260928_114129_rev87.log
+[TXRX][AUTO] 사용자 중단 요청 - Stimulus finally 원복 대기
+[STIMULUS] 즉시 중단/원복 요청

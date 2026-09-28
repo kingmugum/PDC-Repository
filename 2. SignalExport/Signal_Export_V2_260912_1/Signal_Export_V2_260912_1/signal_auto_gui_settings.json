@@ -1,0 +1,51 @@
+{
+  "project_dir": "C:\\Users\\kingm\\Desktop\\Automation_Manager_260928_1\\Automation_Manager_260928_1\\2. SignalExport\\Signal_Export_V2_260912_1\\Signal_Export_V2_260912_1",
+  "run_steps": {
+    "step_1": true,
+    "step_2": true,
+    "step_3": true,
+    "step_4": true,
+    "step_5": true,
+    "step_6": true,
+    "step_7": true,
+    "report": false
+  },
+  "retry_failed_only": false,
+  "category": "CONVENIENCE",
+  "global_mode_enabled": false,
+  "can": {
+    "CAN1": {
+      "enabled": true,
+      "dbc": "N/A"
+    },
+    "CAN2": {
+      "enabled": true,
+      "dbc": "N/A"
+    },
+    "CAN3": {
+      "enabled": true,
+      "dbc": "N/A"
+    },
+    "CAN4": {
+      "enabled": true,
+      "dbc": "N/A"
+    }
+  },
+  "analysis": {
+    "drop_first_seconds_enabled": true,
+    "drop_first_seconds": "8.0",
+    "asc_frame_direction": "auto",
+    "change_threshold": "100",
+    "skip_high_frequency": true,
+    "global_exclude_crc_alv": true,
+    "step_5_enable_time_folder": false
+  },
+  "ai": {
+    "provider": "gpt",
+    "gpt_model": "gpt-5.6-terra",
+    "gemini_model": "gemini-3.1-pro-preview",
+    "max_retry": "3",
+    "skip_if_output_exists": true,
+    "completed_answer_file_pass": false
+  }
+}
