@@ -1,12 +1,12 @@
-SELF TEST RESULTS - Automation_Manager_260927_1
+SELF TEST RESULTS - Automation_Manager_260928_1
 
-PASS - Git Manager Header Compact Status source added without extra description block
-PASS - status mapping: gray 사용 불가 / orange 작업 중 / green 사용 가능
-PASS - shared OperationLock listener reflects Git Manager and BoardRepo owners
-PASS - startup Git status check is silent and retries when busy
-PASS - startup BoardRepo environment check is silent and retries when busy
-PASS - manual safety Modal paths retained
-PASS - Governance v0.7 applied
-PASS - Python compile/static checks
-PASS - existing target catalog and Requirement Studio naming unchanged
-NOT RUN - live Windows GUI visual inspection / real Git and groupware operations (user environment required)
+PASS - Python compile
+PASS - Git Manager 260927_1 runtime preserved
+PASS - BoardRepo v0.32 Result Modal integrated
+PASS - Upload sample result model: 7 / 6 / 0 / 0
+PASS - Download result model smoke
+PASS - Result Modal xvfb smoke
+PASS - shared Operation Lock release occurs before modal event
+PASS - Governance v0.8 applied
+PASS - Requirements formula scan: 0 errors
+PASS - final ZIP cache/pyc violation count: 0

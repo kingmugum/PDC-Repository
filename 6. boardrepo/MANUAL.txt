@@ -1,5 +1,8 @@
-BoardRepo 260927_1 / v0.31
+BoardRepo 260928_1 / v0.32
 
-- Automation Manager 통합 실행 시 시작 직후 자동 환경 확인은 Busy Modal 없이 대기/재시도합니다.
-- 수동 업로드/다운로드/환경설치의 기존 안전 경고는 유지됩니다.
-- 그룹웨어 업로드/다운로드 기능 자체와 브라우저 자동화 엔진은 기존 동작을 유지합니다.
+주요 변경
+- 업로드/다운로드 배치 결과를 전용 Result Modal로 표시
+- 상단 4개 카드: 미선택 / 확인 필요 / 실행 완료 / 오류
+- 1~8 Target 상태 요약 + Scroll 가능한 파일명/사유 상세표
+- 기존 판정/브라우저/로그는 유지하며 Presentation 계층만 변경
+- standalone BoardRepo와 Automation Manager 통합 탭이 동일 Result Modal 사용

@@ -40,6 +40,7 @@ from environment_manager import check_environment, format_status, install_or_rep
 from ext_file_manager import ExtFileError, list_ext_files
 from folder_resolver import FolderResolutionError, app_root, resolve_target_folder
 from site_profile import load_site_profile
+from result_dialog import build_download_result_model, build_upload_result_model, show_result_dialog
 from catalog import load_catalog, boardrepo_targets_from_catalog
 
 
@@ -197,6 +198,9 @@ class BoardRepoFrame(ttk.Frame):
                 elif kind == "info":
                     title, message = payload
                     messagebox.showinfo(title, message)
+
+                elif kind == "result_dialog":
+                    show_result_dialog(self, payload)
 
                 elif kind == "env":
                     ready, short_text = payload
@@ -763,27 +767,24 @@ class BoardRepoFrame(ttk.Frame):
             # duplicate status can be trusted.
             self.log(f"공통 원격 중복검사 세션 실패: {exc}")
             self.log(traceback.format_exc())
-            self._event_queue.put((
-                "warning",
-                (
-                    "게시판 중복검사 실패",
-                    self._problem_popup_message(
-                        selected,
-                        [],
-                        [],
-                        [],
-                        local_issues,
-                        [],
-                        common_stop=True,
-                        common_detail=(
-                            "그룹웨어 중복검사 세션 자체를 시작/유지하지 못해 "
-                            "남은 항목의 안전한 중복 판정이 불가능합니다.\n"
-                            f"{exc}"
-                        ),
-                    ),
-                ),
-            ))
+            common_detail = (
+                "그룹웨어 중복검사 세션 자체를 시작/유지하지 못해 "
+                "남은 항목의 안전한 중복 판정이 불가능합니다.\n"
+                f"{exc}"
+            )
+            result_model = build_upload_result_model(
+                self.config_data["targets"],
+                selected,
+                [],
+                [],
+                [],
+                local_issues,
+                [],
+                common_stop=True,
+                common_detail=common_detail,
+            )
             self._event_queue.put(("done", "중지 - 공통 중복검사 세션 실패"))
+            self._event_queue.put(("result_dialog", result_model))
             return
 
         duplicates = [r for r in remote_results if r.status == STATUS_DUPLICATE]
@@ -935,21 +936,15 @@ class BoardRepoFrame(ttk.Frame):
             )
         )
 
-        if duplicates or attention_count or failures:
-            self._event_queue.put((
-                "warning",
-                (
-                    "업로드 결과 확인",
-                    self._problem_popup_message(
-                        selected,
-                        successes,
-                        duplicates,
-                        attention_results,
-                        local_issues,
-                        failures,
-                    ),
-                ),
-            ))
+        result_model = build_upload_result_model(
+            self.config_data["targets"],
+            selected,
+            successes,
+            duplicates,
+            attention_results,
+            local_issues,
+            failures,
+        )
 
         if failures or attention_count:
             final_status = (
@@ -963,7 +958,9 @@ class BoardRepoFrame(ttk.Frame):
                 f"중복 Skip {len(duplicates)}"
             )
 
+        # Release the shared operation lock first, then show the modal summary.
         self._event_queue.put(("done", final_status))
+        self._event_queue.put(("result_dialog", result_model))
 
     def _upload_plan_item(self, item: UploadPlanItem):
         self.log(f"대상: {item.display_name} ({item.target_key})")
@@ -1099,18 +1096,14 @@ class BoardRepoFrame(ttk.Frame):
                 )
                 for target in targets
             ]
-            self._event_queue.put((
-                "warning",
-                (
-                    "다운로드 실패",
-                    self._download_result_message(
-                        selected,
-                        common_results,
-                        local_issues,
-                    ),
-                ),
-            ))
+            result_model = build_download_result_model(
+                self.config_data["targets"],
+                selected,
+                common_results,
+                local_issues,
+            )
             self._event_queue.put(("done", "중지 - 공통 다운로드 세션 실패"))
+            self._event_queue.put(("result_dialog", result_model))
             return
 
         downloaded = [r for r in results if r.status == STATUS_DOWNLOADED]
@@ -1131,22 +1124,12 @@ class BoardRepoFrame(ttk.Frame):
         )
         self.log(f"다운로드 실패: {len(errors)}개")
 
-        message = self._download_result_message(
+        result_model = build_download_result_model(
+            self.config_data["targets"],
             selected,
             results,
             local_issues,
         )
-
-        if conflicts or errors or local_issues:
-            self._event_queue.put((
-                "warning",
-                ("다운로드 결과 확인", message),
-            ))
-        else:
-            self._event_queue.put((
-                "info",
-                ("다운로드 결과", message),
-            ))
 
         self._event_queue.put((
             "done",
@@ -1158,6 +1141,7 @@ class BoardRepoFrame(ttk.Frame):
                 f"실패 {len(errors)}"
             ),
         ))
+        self._event_queue.put(("result_dialog", result_model))
 
     def _download_target_summary(
         self,

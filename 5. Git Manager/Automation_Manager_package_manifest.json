@@ -1,8 +1,8 @@
 {
-  "package": "Automation_Manager_260927_1.zip",
-  "release": "260927_1",
-  "governance_version": "v0.7",
-  "requirements": "Automation_Manager_Requirements_260927_1.xlsx",
+  "package": "Automation_Manager_260928_1.zip",
+  "release": "260928_1",
+  "governance_version": "v0.8",
+  "requirements": "Automation_Manager_Requirements_260928_1.xlsx",
   "git_component": "GitManager_260927_1.zip",
-  "boardrepo_component": "BoardRepo_260927_1.zip"
+  "boardrepo_component": "BoardRepo_260928_1.zip"
 }

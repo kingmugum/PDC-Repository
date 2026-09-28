@@ -1,10 +1,13 @@
-SELF TEST RESULTS - BoardRepo_260927_1 / v0.31
+SELF TEST RESULTS - BoardRepo_260928_1 / v0.32
 
-PASS - startup environment check invokes silent_if_busy=True / retry_on_busy=True
-PASS - startup busy path contains no warning modal
-PASS - manual _set_running default still shows existing busy warning
-PASS - shared OperationLock release/acquire compatibility retained
-PASS - proven browser_automation.py unchanged
-PASS - Governance v0.7 C3.4 present
 PASS - Python compile
-NOT RUN - live groupware upload/download and Windows GUI startup (user environment required)
+PASS - Upload result model sample: 미선택 7 / 확인 필요 6 / 실행 완료 0 / 오류 0
+PASS - Download result model smoke
+PASS - Tk Result Modal xvfb smoke
+PASS - 8 Target rows rendered from catalog order
+PASS - Scroll detail rows supported
+PASS - done event precedes result_dialog event
+PASS - standalone/integrated both import shared result_dialog.py
+PASS - browser_automation.py unchanged from 260927_1 baseline
+PASS - Governance v0.8 C3.5/C5.4 applied
+PASS - cache/pyc excluded from final package
