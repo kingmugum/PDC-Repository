@@ -1,0 +1,18 @@
+Requirement Studio V0.58
+========================
+
+1. `Requirement Studio.pyw` 또는 launcher로 실행합니다.
+2. 입력 문서를 input 폴더에 넣습니다. QFileSystemWatcher가 변경을 자동 인식합니다.
+3. API Key 상태는 메인 UI에서 확인합니다.
+4. 등록된 Gold Source와 SHA가 일치하면 자동 Regression을 수행합니다.
+5. 추가 Gold Source는 사용자 검토·승인된 baseline만 [Gold Source 추가]로 등록합니다.
+
+V0.58 핵심:
+- Explicit Requirement ID가 없는 문서는 Explicit-ID Coverage N/A + Semantic Source Unit Coverage/Disposition으로 평가
+- Main SWE.1에는 `swe1_eligibility=Eligible`만 포함
+- Review Needed / Not-SW Source fact는 Allocation Annex에서 보존
+- Connector/납땜/전류/온도 등 high-confidence Not-SW domain을 실제 verification domain으로 분리
+- Semantic eligible unit 전체에 disposition record 제공
+- section/document Gap의 전역 fan-out 차단
+- MAX/규제값/목표값의 비교 관계가 Source에서 불명확하면 <=/=/>=로 강화하지 않음
+- Local QA는 no-ID SWE.1 Eligible item의 Semantic provenance/Atomic Behavior 불완전을 오류로 표시

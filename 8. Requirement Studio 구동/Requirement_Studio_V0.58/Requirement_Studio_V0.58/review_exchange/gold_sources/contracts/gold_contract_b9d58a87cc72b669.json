@@ -1,0 +1,800 @@
+{
+  "contract_schema_version": "1.3",
+  "contract_id": "GOLD-MLM-V046-b9d58a87cc72",
+  "label": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+  "source_original_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+  "source_sha256": "b9d58a87cc72b66919c6af7220b215b9e66e06ab426eae20e04a8642dbffb15c",
+  "reference_version": "v0.46",
+  "created_at": "2026-09-30T07:23:38",
+  "reference_run": {
+    "provider": "H-Chat / GPT",
+    "provider_id": "hchat_gpt",
+    "model": "gpt-5.6-terra",
+    "extraction_core_profile": "v0.46-native"
+  },
+  "privacy_note": "V0.56 bundled compact Gold Source regression contract. Original source document and full source excerpts are not bundled; selected compact behavior-unit evidence is retained for regression auditability.",
+  "behaviors": [
+    {
+      "behavior_id": "GOLD-BHV-001",
+      "baseline_candidate_id": "REQ-CAND-001",
+      "baseline_srs_id": "SRS_001",
+      "source_requirement_ids": [
+        "REQ01_01",
+        "REQ01_02"
+      ],
+      "source_locations": [
+        "Paragraph 79",
+        "Paragraph 81"
+      ],
+      "evidence_fingerprints": [
+        "416840060db1658435a3",
+        "e43976485fd3d8810593"
+      ],
+      "expected_behavior_summary": "슬레이브 제어 대상 Flag를 Activation/Deactivation으로 설정하여 그룹 또는 개별 제어",
+      "behavior_fingerprint": "sha256:efbdd69ed9a8b07c7871",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "슬레이브 제어 대상 Flag를 Activation/Deactivation으로 설정하여 그룹 또는 개별 제어",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:c1f5f73a093b6f2f20ed"
+    },
+    {
+      "behavior_id": "GOLD-BHV-002",
+      "baseline_candidate_id": "REQ-CAND-002",
+      "baseline_srs_id": "SRS_002",
+      "source_requirement_ids": [
+        "REQ01_03"
+      ],
+      "source_locations": [
+        "Paragraph 83"
+      ],
+      "evidence_fingerprints": [
+        "52dc3248953d1b0c5794"
+      ],
+      "expected_behavior_summary": "고전압 또는 저전압 구간에서 밝기/색상 정보를 비휘발성 메모리에 저장하지 않음",
+      "behavior_fingerprint": "sha256:52652aeeee7ea79ad423",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "고전압 또는 저전압 구간에서 밝기/색상 정보를 비휘발성 메모리에 저장하지 않음",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:60693f9e0b6c254aeafc"
+    },
+    {
+      "behavior_id": "GOLD-BHV-003",
+      "baseline_candidate_id": "REQ-CAND-003",
+      "baseline_srs_id": "SRS_003",
+      "source_requirement_ids": [
+        "REQ02_03"
+      ],
+      "source_locations": [
+        "Paragraph 93"
+      ],
+      "evidence_fingerprints": [
+        "619020791349b7246e60"
+      ],
+      "expected_behavior_summary": "USM Reset 또는 공장 초기화 시 무드램프 밝기를 Reset 단계로 초기화",
+      "behavior_fingerprint": "sha256:7ba8a4b941d540b2a5dd",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "USM Reset 또는 공장 초기화 시 무드램프 밝기를 Reset 단계로 초기화",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:1c4f77321c51b684714c"
+    },
+    {
+      "behavior_id": "GOLD-BHV-004",
+      "baseline_candidate_id": "REQ-CAND-004",
+      "baseline_srs_id": "SRS_004",
+      "source_requirement_ids": [
+        "REQ02_04"
+      ],
+      "source_locations": [
+        "Paragraph 95"
+      ],
+      "evidence_fingerprints": [
+        "e00585628873cd057537"
+      ],
+      "expected_behavior_summary": "유효 밝기 설정값 수신 시 저장하고 현재 밝기 설정값을 송신",
+      "behavior_fingerprint": "sha256:4d974b9734ebd77b7c6c",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "유효 밝기 설정값 수신 시 저장하고 현재 밝기 설정값을 송신",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:a6e1b51a79eb54e01d0b"
+    },
+    {
+      "behavior_id": "GOLD-BHV-005",
+      "baseline_candidate_id": "REQ-CAND-005",
+      "baseline_srs_id": "SRS_005",
+      "source_requirement_ids": [],
+      "source_locations": [
+        "Paragraph 95"
+      ],
+      "evidence_fingerprints": [
+        "9680cfc7a26de255c371"
+      ],
+      "expected_behavior_summary": "Invalid 밝기값 수신 시 기존 밝기를 유지하고 이벤트 송신 없이 주기 메시지로 기존값 송신",
+      "behavior_fingerprint": "sha256:3c98da2fb19e39c33ded",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "Invalid 밝기값 수신 시 기존 밝기를 유지하고 이벤트 송신 없이 주기 메시지로 기존값 송신",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:4cc18587231f594134c3"
+    },
+    {
+      "behavior_id": "GOLD-BHV-006",
+      "baseline_candidate_id": "REQ-CAND-006",
+      "baseline_srs_id": "SRS_006",
+      "source_requirement_ids": [
+        "REQ02_05"
+      ],
+      "source_locations": [
+        "Paragraph 97"
+      ],
+      "evidence_fingerprints": [
+        "c62dc4e14afa438e364e"
+      ],
+      "expected_behavior_summary": "ACC On 시 현재 밝기 정보를 주기적으로 송신",
+      "behavior_fingerprint": "sha256:222213500e5dbacfb9eb",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "ACC On 시 현재 밝기 정보를 주기적으로 송신",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:1cf88ffd71254fa91a15"
+    },
+    {
+      "behavior_id": "GOLD-BHV-007",
+      "baseline_candidate_id": "REQ-CAND-007",
+      "baseline_srs_id": "SRS_007",
+      "source_requirement_ids": [
+        "REQ02_07",
+        "REQ02_08"
+      ],
+      "source_locations": [
+        "Paragraph 107",
+        "Paragraph 108",
+        "Paragraph 109"
+      ],
+      "evidence_fingerprints": [
+        "d40c15f4de897169dbc5",
+        "9a54faaf1adbf1d09bd4",
+        "cb36c506d6dcfc9f2819"
+      ],
+      "expected_behavior_summary": "Off 신호 후 대기 시간 적용 및 대기 중 On 조건 충족 시 즉시 On 제어",
+      "behavior_fingerprint": "sha256:ff342319d09ce5336ffe",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "Off 신호 후 대기 시간 적용 및 대기 중 On 조건 충족 시 즉시 On 제어",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:dc6fca50799c6f1f6e5f"
+    },
+    {
+      "behavior_id": "GOLD-BHV-008",
+      "baseline_candidate_id": "REQ-CAND-008",
+      "baseline_srs_id": "SRS_008",
+      "source_requirement_ids": [
+        "REQ02_09",
+        "REQ02_10"
+      ],
+      "source_locations": [
+        "Paragraph 111",
+        "Paragraph 112",
+        "Paragraph 113",
+        "Paragraph 114",
+        "Paragraph 115",
+        "Paragraph 116"
+      ],
+      "evidence_fingerprints": [
+        "09f03b072c836ebd3fc4",
+        "d8e41c1760363255aedb",
+        "6eef63442b5f8ec1aa9f",
+        "9d7b8b71e00d3828af96",
+        "57d43bdfdfcb35d10749",
+        "66c13faf96a87c74e267"
+      ],
+      "expected_behavior_summary": "Lock 신호 횟수 기반 즉시 Off 및 정의된 상태 변경 시 Lock count 초기화",
+      "behavior_fingerprint": "sha256:ba0c75c71f0852e6456a",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "Lock 신호 횟수 기반 즉시 Off 및 정의된 상태 변경 시 Lock count 초기화",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:7a1785c69b6f1ffcdef9"
+    },
+    {
+      "behavior_id": "GOLD-BHV-009",
+      "baseline_candidate_id": "REQ-CAND-009",
+      "baseline_srs_id": "SRS_009",
+      "source_requirement_ids": [
+        "REQ02_20",
+        "REQ02_21"
+      ],
+      "source_locations": [
+        "Paragraph 120",
+        "Paragraph 121",
+        "Paragraph 122"
+      ],
+      "evidence_fingerprints": [
+        "e95673644b1f37fc20fc",
+        "504045940a69600671b6",
+        "b86f3b8fef4475d8f807"
+      ],
+      "expected_behavior_summary": "Door Close-to-Open 시 즉시 Off하되 Factory Mode에서는 기능 미작동",
+      "behavior_fingerprint": "sha256:f533e326b3a26c43256e",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "Door Close-to-Open 시 즉시 Off하되 Factory Mode에서는 기능 미작동",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:d4b250522e4dee7d7281",
+      "atomic_behaviors": [
+        {
+          "behavior_id": "GOLD-BHV-009-A01",
+          "source_requirement_ids": [
+            "REQ02_20"
+          ],
+          "source_locations": [
+            "Paragraph 120-121"
+          ],
+          "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+          "compact_source_evidence": [
+            {
+              "document": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+              "location": "Paragraph 120-121",
+              "text": "DoorSW 중 하나가 Close에서 Open으로 변경되면 슬레이브를 즉시 Off 제어한다.",
+              "excerpt_fingerprint": "sha256:45fb7179debd89286ffb",
+              "evidence_text_kind": "compact_source_behavior"
+            }
+          ],
+          "compact_excerpt": "DoorSW 중 하나가 Close에서 Open으로 변경되면 슬레이브를 즉시 Off 제어한다.",
+          "compact_excerpt_kind": "compact_source_behavior",
+          "excerpt_fingerprint": "sha256:45fb7179debd89286ffb",
+          "expected_behavior_summary": "DoorSW 중 하나가 Close에서 Open으로 변경되면 슬레이브를 즉시 Off 제어한다."
+        },
+        {
+          "behavior_id": "GOLD-BHV-009-A02",
+          "source_requirement_ids": [
+            "REQ02_21"
+          ],
+          "source_locations": [
+            "Paragraph 122"
+          ],
+          "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+          "compact_source_evidence": [
+            {
+              "document": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+              "location": "Paragraph 122",
+              "text": "Input_ICUPowerAutoCutMode가 FactoryMode이면 Door Open Off 기능은 동작하지 않는다.",
+              "excerpt_fingerprint": "sha256:096a656c47b81aa05664",
+              "evidence_text_kind": "compact_source_behavior"
+            }
+          ],
+          "compact_excerpt": "Input_ICUPowerAutoCutMode가 FactoryMode이면 Door Open Off 기능은 동작하지 않는다.",
+          "compact_excerpt_kind": "compact_source_behavior",
+          "excerpt_fingerprint": "sha256:096a656c47b81aa05664",
+          "expected_behavior_summary": "Input_ICUPowerAutoCutMode가 FactoryMode이면 Door Open Off 기능은 동작하지 않는다."
+        }
+      ]
+    },
+    {
+      "behavior_id": "GOLD-BHV-010",
+      "baseline_candidate_id": "REQ-CAND-010",
+      "baseline_srs_id": "SRS_010",
+      "source_requirement_ids": [
+        "REQ02_11",
+        "REQ02_12",
+        "REQ02_13",
+        "REQ02_14"
+      ],
+      "source_locations": [
+        "Paragraph 125",
+        "Paragraph 126",
+        "Paragraph 127",
+        "Paragraph 128",
+        "Paragraph 129",
+        "Paragraph 130",
+        "Paragraph 131"
+      ],
+      "evidence_fingerprints": [
+        "cceb09ceb282002f9288",
+        "85c344ed8bd06544f7eb",
+        "402dad36c161f2fdb1b1",
+        "d5f170f9070681c019da",
+        "15a99db01be31faf6bc0",
+        "8909598ab2631d7fad49",
+        "9f2d5bd52fa7ba204612"
+      ],
+      "expected_behavior_summary": "USM Off 상태에서 풋램프 Off/On/Dimout 입력에 따른 슬레이브 제어",
+      "behavior_fingerprint": "sha256:2468ea40100d6ef1ea9a",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "USM Off 상태에서 풋램프 Off/On/Dimout 입력에 따른 슬레이브 제어",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:5bea45b7f23d25ede316"
+    },
+    {
+      "behavior_id": "GOLD-BHV-011",
+      "baseline_candidate_id": "REQ-CAND-011",
+      "baseline_srs_id": "SRS_011",
+      "source_requirement_ids": [
+        "REQ02_15"
+      ],
+      "source_locations": [
+        "Paragraph 133",
+        "Paragraph 134",
+        "Paragraph 135"
+      ],
+      "evidence_fingerprints": [
+        "e6b13cb3b2856cc03bb6",
+        "50262eee41331f73a909",
+        "9ea2f7751d0f5da53576"
+      ],
+      "expected_behavior_summary": "풋램프 On 상태에서 Door Open/Close에 따른 밝기 감광/복귀 제어",
+      "behavior_fingerprint": "sha256:c7372855cab19ad9c916",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "풋램프 On 상태에서 Door Open/Close에 따른 밝기 감광/복귀 제어",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:df3708269e720dc40fa8"
+    },
+    {
+      "behavior_id": "GOLD-BHV-012",
+      "baseline_candidate_id": "REQ-CAND-012",
+      "baseline_srs_id": "SRS_012",
+      "source_requirement_ids": [
+        "REQ02_16",
+        "REQ02_17"
+      ],
+      "source_locations": [
+        "Paragraph 139",
+        "Paragraph 140",
+        "Paragraph 141"
+      ],
+      "evidence_fingerprints": [
+        "93cddc1912c299cdbb4f",
+        "010496aba38e6001d50c",
+        "7cecafc3445378867257"
+      ],
+      "expected_behavior_summary": "주행 중 감광 USM On/Off와 초기 On 및 주행 조건 충족 시 감광 제어",
+      "behavior_fingerprint": "sha256:baa2bc9bf4c86ca4269e",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "주행 중 감광 USM On/Off와 초기 On 및 주행 조건 충족 시 감광 제어",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:37e1760915267d5e2070"
+    },
+    {
+      "behavior_id": "GOLD-BHV-013",
+      "baseline_candidate_id": "REQ-CAND-013",
+      "baseline_srs_id": "SRS_013",
+      "source_requirement_ids": [
+        "REQ02_18"
+      ],
+      "source_locations": [
+        "Paragraph 143"
+      ],
+      "evidence_fingerprints": [
+        "9fdb7f56737a6ba580e9"
+      ],
+      "expected_behavior_summary": "P에서 Not-P로 이동 시 Par_NotPConfirmationTime 판단 시간 적용",
+      "behavior_fingerprint": "sha256:e7212a2e924d24433a15",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "P에서 Not-P로 이동 시 Par_NotPConfirmationTime 판단 시간 적용",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:9ba403f33be7ce02aaee"
+    },
+    {
+      "behavior_id": "GOLD-BHV-014",
+      "baseline_candidate_id": "REQ-CAND-014",
+      "baseline_srs_id": "SRS_014",
+      "source_requirement_ids": [
+        "REQ03_01",
+        "REQ03_07"
+      ],
+      "source_locations": [
+        "Paragraph 153",
+        "Paragraph 165"
+      ],
+      "evidence_fingerprints": [
+        "2e945cbf075924fdaf8c",
+        "b43a19e995469818a3cd"
+      ],
+      "expected_behavior_summary": "색상 초기화 White 설정 및 ACC On 시 현재 색상 정보 주기 송신",
+      "behavior_fingerprint": "sha256:d62c31947993bb6701c3",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "색상 초기화 White 설정 및 ACC On 시 현재 색상 정보 주기 송신",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:16f13d160a0e516d3106",
+      "atomic_behaviors": [
+        {
+          "behavior_id": "GOLD-BHV-014-A01",
+          "source_requirement_ids": [
+            "REQ03_01"
+          ],
+          "source_locations": [
+            "Paragraph 153"
+          ],
+          "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+          "compact_source_evidence": [
+            {
+              "document": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+              "location": "Paragraph 153",
+              "text": "USM Reset 또는 공장 초기화 시 무드램프 색상을 White로 설정한다.",
+              "excerpt_fingerprint": "sha256:5bb060152dd50e380f4b",
+              "evidence_text_kind": "compact_source_behavior"
+            }
+          ],
+          "compact_excerpt": "USM Reset 또는 공장 초기화 시 무드램프 색상을 White로 설정한다.",
+          "compact_excerpt_kind": "compact_source_behavior",
+          "excerpt_fingerprint": "sha256:5bb060152dd50e380f4b",
+          "expected_behavior_summary": "USM Reset 또는 공장 초기화 시 무드램프 색상을 White로 설정한다."
+        },
+        {
+          "behavior_id": "GOLD-BHV-014-A02",
+          "source_requirement_ids": [
+            "REQ03_07"
+          ],
+          "source_locations": [
+            "Paragraph 165"
+          ],
+          "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+          "compact_source_evidence": [
+            {
+              "document": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+              "location": "Paragraph 165",
+              "text": "Input_ACC가 On이면 현재 색상 정보를 주기적으로 송신하며 주기는 CAN DB를 따른다.",
+              "excerpt_fingerprint": "sha256:3936aa9bc60b53e399dd",
+              "evidence_text_kind": "compact_source_behavior"
+            }
+          ],
+          "compact_excerpt": "Input_ACC가 On이면 현재 색상 정보를 주기적으로 송신하며 주기는 CAN DB를 따른다.",
+          "compact_excerpt_kind": "compact_source_behavior",
+          "excerpt_fingerprint": "sha256:3936aa9bc60b53e399dd",
+          "expected_behavior_summary": "Input_ACC가 On이면 현재 색상 정보를 주기적으로 송신하며 주기는 CAN DB를 따른다."
+        }
+      ]
+    },
+    {
+      "behavior_id": "GOLD-BHV-015",
+      "baseline_candidate_id": "REQ-CAND-015",
+      "baseline_srs_id": "SRS_015",
+      "source_requirement_ids": [
+        "REQ03_11",
+        "REQ03_12"
+      ],
+      "source_locations": [
+        "Paragraph 175",
+        "Paragraph 176",
+        "Paragraph 177"
+      ],
+      "evidence_fingerprints": [
+        "49940cd4975b00aefc09",
+        "d37b0138f8dcef1b82f3",
+        "b043d4a8d53a2b78ccd1"
+      ],
+      "expected_behavior_summary": "H_U Type RGB 유효성 판단 후 저장/송신, Invalid 시 기존 색상 유지",
+      "behavior_fingerprint": "sha256:e958d44043e641c9f1d5",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "H_U Type RGB 유효성 판단 후 저장/송신, Invalid 시 기존 색상 유지",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:c8aaf8f41dade2652fc2"
+    },
+    {
+      "behavior_id": "GOLD-BHV-016",
+      "baseline_candidate_id": "REQ-CAND-016",
+      "baseline_srs_id": "SRS_016",
+      "source_requirement_ids": [
+        "REQ03_13",
+        "REQ03_14"
+      ],
+      "source_locations": [
+        "Paragraph 179",
+        "Paragraph 180",
+        "Paragraph 181"
+      ],
+      "evidence_fingerprints": [
+        "3dd61493fb8e7dea47ac",
+        "092b70f57fd4fc75e3c7",
+        "c9d46358619f306fb90f"
+      ],
+      "expected_behavior_summary": "CLU Type 색상 유효성 판단 후 저장/송신, Reserved/Invalid 시 기존 색상 유지",
+      "behavior_fingerprint": "sha256:6edca0ddebe6eb95837f",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "CLU Type 색상 유효성 판단 후 저장/송신, Reserved/Invalid 시 기존 색상 유지",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:cfa56838e1ebd5e0b68b"
+    },
+    {
+      "behavior_id": "GOLD-BHV-017",
+      "baseline_candidate_id": "REQ-CAND-017",
+      "baseline_srs_id": "SRS_017",
+      "source_requirement_ids": [
+        "REQ03_03",
+        "REQ03_04",
+        "REQ03_05",
+        "REQ03_06"
+      ],
+      "source_locations": [
+        "Paragraph 157",
+        "Paragraph 158",
+        "Paragraph 159",
+        "Paragraph 160",
+        "Paragraph 161",
+        "Paragraph 162",
+        "Paragraph 163"
+      ],
+      "evidence_fingerprints": [
+        "fe349b4750739110250e",
+        "556aeb95fb8b5cb4db5a",
+        "76a3eb00c1f702dec475",
+        "b873c94a05bffec33017",
+        "0c9136ea24c02a3a8ef4",
+        "a478efa15bc29e53051a",
+        "c168cf802188903a4aac"
+      ],
+      "expected_behavior_summary": "H_U/CLU 색상 유효성 및 변환 테이블 기반 색좌표를 슬레이브에 송신",
+      "behavior_fingerprint": "sha256:ee6bf92ae62ac5d4d897",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "H_U/CLU 색상 유효성 및 변환 테이블 기반 색좌표를 슬레이브에 송신",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:c86fd7e5a4e0abd2ca7f",
+      "atomic_behaviors": [
+        {
+          "behavior_id": "GOLD-BHV-017-A01",
+          "source_requirement_ids": [
+            "REQ03_03"
+          ],
+          "source_locations": [
+            "Paragraph 157-158"
+          ],
+          "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+          "compact_source_evidence": [
+            {
+              "document": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+              "location": "Paragraph 157-158",
+              "text": "H_U Type 색상 입력의 유효 조합을 합의된 테이블로 판단하고 LIN 송신 색좌표도 변환 테이블을 따른다.",
+              "excerpt_fingerprint": "sha256:737f1a3f1aa525bbfd01",
+              "evidence_text_kind": "compact_source_behavior"
+            }
+          ],
+          "compact_excerpt": "H_U Type 색상 입력의 유효 조합을 합의된 테이블로 판단하고 LIN 송신 색좌표도 변환 테이블을 따른다.",
+          "compact_excerpt_kind": "compact_source_behavior",
+          "excerpt_fingerprint": "sha256:737f1a3f1aa525bbfd01",
+          "expected_behavior_summary": "H_U Type 색상 입력의 유효 조합을 합의된 테이블로 판단하고 LIN 송신 색좌표도 변환 테이블을 따른다."
+        },
+        {
+          "behavior_id": "GOLD-BHV-017-A02",
+          "source_requirement_ids": [
+            "REQ03_04"
+          ],
+          "source_locations": [
+            "Paragraph 159"
+          ],
+          "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+          "compact_source_evidence": [
+            {
+              "document": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+              "location": "Paragraph 159",
+              "text": "차량 튜닝 완료 후 최종 변환 테이블의 색좌표(x,y)를 슬레이브에 송신한다.",
+              "excerpt_fingerprint": "sha256:f80ed63411dc800dfb9e",
+              "evidence_text_kind": "compact_source_behavior"
+            }
+          ],
+          "compact_excerpt": "차량 튜닝 완료 후 최종 변환 테이블의 색좌표(x,y)를 슬레이브에 송신한다.",
+          "compact_excerpt_kind": "compact_source_behavior",
+          "excerpt_fingerprint": "sha256:f80ed63411dc800dfb9e",
+          "expected_behavior_summary": "차량 튜닝 완료 후 최종 변환 테이블의 색좌표(x,y)를 슬레이브에 송신한다."
+        },
+        {
+          "behavior_id": "GOLD-BHV-017-A03",
+          "source_requirement_ids": [
+            "REQ03_05"
+          ],
+          "source_locations": [
+            "Paragraph 160-162"
+          ],
+          "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+          "compact_source_evidence": [
+            {
+              "document": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+              "location": "Paragraph 160-162",
+              "text": "CLU Type 색상 입력의 유효성을 합의된 테이블로 판단하고 LIN 송신 색좌표는 변환 테이블을 따른다.",
+              "excerpt_fingerprint": "sha256:cf6ea90cc468a617ab63",
+              "evidence_text_kind": "compact_source_behavior"
+            }
+          ],
+          "compact_excerpt": "CLU Type 색상 입력의 유효성을 합의된 테이블로 판단하고 LIN 송신 색좌표는 변환 테이블을 따른다.",
+          "compact_excerpt_kind": "compact_source_behavior",
+          "excerpt_fingerprint": "sha256:cf6ea90cc468a617ab63",
+          "expected_behavior_summary": "CLU Type 색상 입력의 유효성을 합의된 테이블로 판단하고 LIN 송신 색좌표는 변환 테이블을 따른다."
+        },
+        {
+          "behavior_id": "GOLD-BHV-017-A04",
+          "source_requirement_ids": [
+            "REQ03_06"
+          ],
+          "source_locations": [
+            "Paragraph 163"
+          ],
+          "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+          "compact_source_evidence": [
+            {
+              "document": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+              "location": "Paragraph 163",
+              "text": "차량 튜닝 완료 후 최종 변환 테이블의 색좌표(x,y)를 슬레이브에 송신한다.",
+              "excerpt_fingerprint": "sha256:f80ed63411dc800dfb9e",
+              "evidence_text_kind": "compact_source_behavior"
+            }
+          ],
+          "compact_excerpt": "차량 튜닝 완료 후 최종 변환 테이블의 색좌표(x,y)를 슬레이브에 송신한다.",
+          "compact_excerpt_kind": "compact_source_behavior",
+          "excerpt_fingerprint": "sha256:f80ed63411dc800dfb9e",
+          "expected_behavior_summary": "차량 튜닝 완료 후 최종 변환 테이블의 색좌표(x,y)를 슬레이브에 송신한다."
+        }
+      ]
+    },
+    {
+      "behavior_id": "GOLD-BHV-018",
+      "baseline_candidate_id": "REQ-CAND-018",
+      "baseline_srs_id": "SRS_018",
+      "source_requirement_ids": [
+        "REQ03_15"
+      ],
+      "source_locations": [
+        "Paragraph 183",
+        "Paragraph 184",
+        "Paragraph 185"
+      ],
+      "evidence_fingerprints": [
+        "2b2bf35146c3a7450737",
+        "9c88498301967d9c588b",
+        "f134d2892ce947aca9de"
+      ],
+      "expected_behavior_summary": "풋램프 On 시 Door 상태 및 USM 설정에 따른 White/USM 색상 제어",
+      "behavior_fingerprint": "sha256:36d5462a90b097870df6",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "풋램프 On 시 Door 상태 및 USM 설정에 따른 White/USM 색상 제어",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:24f6b696f51b5abd1fc2"
+    },
+    {
+      "behavior_id": "GOLD-BHV-019",
+      "baseline_candidate_id": "REQ-CAND-019",
+      "baseline_srs_id": "SRS_019",
+      "source_requirement_ids": [
+        "REQ03_16"
+      ],
+      "source_locations": [
+        "Paragraph 188",
+        "Paragraph 189"
+      ],
+      "evidence_fingerprints": [
+        "6a24f5f86cad6c470081",
+        "d65067c746c624990b8e"
+      ],
+      "expected_behavior_summary": "Drive Mode 연동 On 상태에서 DrivingModeState별 사전 약속 색좌표를 슬레이브로 송신",
+      "behavior_fingerprint": "sha256:8841586cf0f742a7971b",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "Drive Mode 연동 On 상태에서 DrivingModeState별 사전 약속 색좌표를 슬레이브로 송신",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:f4eef51f28e7fbe72575"
+    },
+    {
+      "behavior_id": "GOLD-BHV-020",
+      "baseline_candidate_id": "REQ-CAND-020",
+      "baseline_srs_id": "SRS_020",
+      "source_requirement_ids": [
+        "REQ04_01",
+        "REQ04_02"
+      ],
+      "source_locations": [
+        "Paragraph 192",
+        "Paragraph 193",
+        "Paragraph 194",
+        "Paragraph 195",
+        "Paragraph 196"
+      ],
+      "evidence_fingerprints": [
+        "ac86e1283ab28d6033aa",
+        "678b88ca93bd254c2b9f",
+        "4463bbf0290f2ea3a47a",
+        "4a18a85c847ca95b5a61",
+        "73085658930ea3b892f9"
+      ],
+      "expected_behavior_summary": "개인화 설정 저장 및 IAU→AVN→LAST Profile 우선순위 처리",
+      "behavior_fingerprint": "sha256:aca4d7fa8c02fef29656",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "개인화 설정 저장 및 IAU→AVN→LAST Profile 우선순위 처리",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:b585396f11c104758e4e"
+    },
+    {
+      "behavior_id": "GOLD-BHV-021",
+      "baseline_candidate_id": "REQ-CAND-021",
+      "baseline_srs_id": "SRS_021",
+      "source_requirement_ids": [
+        "REQ04_01",
+        "REQ04_02"
+      ],
+      "source_locations": [
+        "Paragraph 363",
+        "Paragraph 364",
+        "Paragraph 365"
+      ],
+      "evidence_fingerprints": [
+        "e13e831c58a2e8a79717",
+        "db60924e310bb51c4b6e",
+        "44034a07dc534ac2bb34"
+      ],
+      "expected_behavior_summary": "무드램프 점등/색상 변경 시 Fade In/Out 적용 및 시간 설정",
+      "behavior_fingerprint": "sha256:65b8c857ef37282cd107",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "무드램프 점등/색상 변경 시 Fade In/Out 적용 및 시간 설정",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:3da6152bd71bacd1bbcb"
+    },
+    {
+      "behavior_id": "GOLD-BHV-022",
+      "baseline_candidate_id": "REQ-CAND-022",
+      "baseline_srs_id": "SRS_022",
+      "source_requirement_ids": [
+        "REQ05_02",
+        "REQ06_02"
+      ],
+      "source_locations": [
+        "Paragraph 371",
+        "Paragraph 377"
+      ],
+      "evidence_fingerprints": [
+        "7043c582393cc71ea8f3",
+        "e8b475db06d78eefd075"
+      ],
+      "expected_behavior_summary": "Fade In/Out 시간 및 NoFadeInOutFlag를 제공하여 슬레이브가 Fade 동작 수행",
+      "behavior_fingerprint": "sha256:9bed218e0be8bd3f84fe",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "Fade In/Out 시간 및 NoFadeInOutFlag를 제공하여 슬레이브가 Fade 동작 수행",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:cb1056c3af475829f67f"
+    },
+    {
+      "behavior_id": "GOLD-BHV-023",
+      "baseline_candidate_id": "REQ-CAND-023",
+      "baseline_srs_id": "SRS_023",
+      "source_requirement_ids": [
+        "REQ07_01",
+        "REQ07_02"
+      ],
+      "source_locations": [
+        "Paragraph 400",
+        "Paragraph 401",
+        "Paragraph 402"
+      ],
+      "evidence_fingerprints": [
+        "82f9cf6934e4e4bfd2ee",
+        "eed4c3a0ac3be0d8e4e1",
+        "e953d0ac7ce98c15d10b"
+      ],
+      "expected_behavior_summary": "고·저전압 검출 및 전압 범위 이탈 출력 설정, 데이터 저장 금지",
+      "behavior_fingerprint": "sha256:464f96d3c86708655a67",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "고·저전압 검출 및 전압 범위 이탈 출력 설정, 데이터 저장 금지",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:8ca83b78f42c32a77501"
+    },
+    {
+      "behavior_id": "GOLD-BHV-024",
+      "baseline_candidate_id": "REQ-CAND-024",
+      "baseline_srs_id": "SRS_024",
+      "source_requirement_ids": [
+        "REQ07_03",
+        "REQ07_04"
+      ],
+      "source_locations": [
+        "Paragraph 404",
+        "Paragraph 405",
+        "Paragraph 406"
+      ],
+      "evidence_fingerprints": [
+        "dcce20e26bfb310fce41",
+        "afa834603eb59949d92c",
+        "fd90bb67f04efbdcd72d"
+      ],
+      "expected_behavior_summary": "Fail 발생 시 SOH NOK/슬레이브 무시, Fail 미발생 시 SOH OK/제어 허용",
+      "behavior_fingerprint": "sha256:78b1c6f858d492fd8750",
+      "source_document_name": "[통합차종사양서]MLM_Master_20190920_7차.docx",
+      "compact_excerpt": "Fail 발생 시 SOH NOK/슬레이브 무시, Fail 미발생 시 SOH OK/제어 허용",
+      "compact_excerpt_kind": "behavior_summary_fallback",
+      "excerpt_fingerprint": "sha256:808e414a106a8d242771"
+    }
+  ],
+  "baseline_type": "compact_gold_regression_contract",
+  "baseline_origin_version": "v0.46",
+  "is_full_review_package": false,
+  "behavior_scope": "source-backed compact behavior contract",
+  "evidence_policy": "Bounded source excerpt when available; bundled legacy V0.46 contract uses explicitly labelled behavior-summary fallback where original excerpt was not retained."
+}

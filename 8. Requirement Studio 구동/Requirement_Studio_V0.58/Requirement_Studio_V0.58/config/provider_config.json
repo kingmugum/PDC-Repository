@@ -1,0 +1,75 @@
+{
+  "selected_provider": "hchat_gpt",
+  "alira": {
+    "model": "hosted_vllm/Qwen/Qwen3.6-27B",
+    "model_options": [
+      "hosted_vllm/Qwen/Qwen3.6-27B"
+    ],
+    "api_base": "http://10.10.10.200:19640/v1",
+    "timeout_seconds": 600,
+    "supports_images": true,
+    "license_path": "alira_license/license.lic",
+    "vision_transport": "cli_image_tool"
+  },
+  "custom": {
+    "profile": "openai_compatible",
+    "profile_flags": {
+      "openai_compatible": true,
+      "openai_responses": true,
+      "anthropic_messages": true,
+      "gemini_generate_content": true
+    },
+    "base_url": "",
+    "model": "",
+    "model_options": [],
+    "timeout_seconds": 120,
+    "max_tokens": 4096,
+    "api_key_required": true,
+    "auth_mode": "auto",
+    "api_key_name": "Authorization",
+    "version_header_name": "",
+    "version_header_value": "",
+    "supports_images": false
+  },
+  "hchat": {
+    "backend": "gpt",
+    "base_url": "https://internal-apigw-kr.hmg-corp.io/hchat-in/api/v3",
+    "project_id": "",
+    "api_version": "2025-04-01-preview",
+    "gpt_model": "gpt-5.6-terra",
+    "gpt_model_options": [
+      "gpt-5.6-terra"
+    ],
+    "gpt_supports_images": true,
+    "gemini_model": "gemini-3.7-flash",
+    "gemini_model_options": [
+      "gemini-3.7-flash"
+    ],
+    "gemini_stream_option": "generateContent",
+    "gemini_supports_images": true,
+    "claude_protocol": "hchat_messages_v3",
+    "claude_base_url": "",
+    "claude_endpoint": "claude/messages",
+    "claude_model": "claude-sonnet-5",
+    "claude_model_options": [
+      "claude-sonnet-5"
+    ],
+    "claude_supports_images": true,
+    "timeout_seconds": 120,
+    "max_retry": 3,
+    "retry_wait_seconds": 2.0,
+    "claude_max_tokens": 4096,
+    "claude_thinking_mode": "disabled"
+  },
+  "vision": {
+    "enabled": true,
+    "mode": "selected_provider_native",
+    "fallback_enabled": true,
+    "fallback_provider_id": "hchat_gpt",
+    "provider_id": "hchat_gpt",
+    "model": "gpt-5.6-terra",
+    "max_images_per_document": 12,
+    "max_image_bytes": 5242880,
+    "note": "V0.40: ALIRA Vision Verifier V0.3에서 CLI/general_agent + Image Tool 경로가 randomized fixture 6/6 PASS로 확인되어 ALIRA native Vision을 활성화. ALIRA 선택 시 H-Chat fallback 대신 verified cli_image_tool을 사용하며, supports_images=false로 즉시 rollback 가능."
+  }
+}
