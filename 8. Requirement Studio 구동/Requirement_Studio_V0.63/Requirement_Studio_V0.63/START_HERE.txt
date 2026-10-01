@@ -1,0 +1,31 @@
+Requirement Studio V0.63
+========================
+
+실행:
+- Requirement Studio.pyw
+
+핵심 원칙:
+- Source가 사실의 기준입니다.
+- Source에 없는 값/신호/시간/DB/시험결과를 생성하지 않습니다.
+- Source에 이미 존재하는 Signal/Parameter/Enum/Timing/Range는 구조화해 추적합니다.
+- SWE.1 / SWE.6 평가 산출물을 Review Exchange에서 선택할 수 있습니다.
+
+V0.63 핵심:
+1) Parent Pending → Fact Pending 기본 상속, explicit SW evidence만 Override 허용
+2) Cross-domain Verification Domain과 External Dependency 축 분리
+3) Structured Source Fact + Source Table Fact Index / Conservative Join
+4) 반복 동등 Explicit-ID Missing Declaration의 deterministic recovery
+5) Child Intent: REPRESENTED / INDEPENDENTLY_COVERED / DEFERRED / REVIEW_REQUIRED 분리
+6) SWE.6 Audit: PASS / PASS_WITH_REVIEW_ITEMS / FAIL + severity 분리
+7) Semantic Table/Appendix/Variant Governance context 정리
+8) SWE.6 Excel에 5_Source_Fact_Audit Sheet 추가
+
+Contract:
+- Canonical: REQ-STUDIO-CANONICAL-REQ-2.0
+- Review Package: 2.4
+- Mapping: 2.1
+
+주의:
+- TC 개수를 늘리는 것이 목표가 아닙니다.
+- Source-backed Fact → Intent → TC 또는 Deferred의 single-truth trace가 목표입니다.
+- Official Release는 Gold A actual regression 및 추가 Gold/Silver 검증 후 판단합니다.

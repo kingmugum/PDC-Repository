@@ -1,0 +1,715 @@
+{
+  "package": "Requirement_Studio_V0.63.zip",
+  "package_version": "V0.63",
+  "requirements_revision": "rev54 (carried forward unchanged from V0.62)",
+  "requirements": "Requirement_Studio_Requirements_Management_rev54.xlsx",
+  "manual": "docs/Requirement_Studio_User_Manual_v0.30_V0.45.docx",
+  "governance_profile": "v0.63",
+  "baseline": "Protected V0.46-compatible Requirement Extraction core + V0.59 no-ID provenance + V0.60 dual SWE.1/SWE.6 Review Exchange + V0.61 deferred/fact-level governance + V0.62 Source Fact allocation hardening + V0.63 evidence/value-role/fact-fragment hardening.",
+  "no_exe": true,
+  "model_catalog": {
+    "gpt": [
+      "gpt-5.6-terra"
+    ],
+    "gemini": [
+      "gemini-3.7-flash"
+    ],
+    "claude": [
+      "claude-sonnet-5"
+    ],
+    "dropdown_structure_retained": true,
+    "legacy_models_removed_from_migration_and_ui": true
+  },
+  "gold_source_registry": {
+    "bundled_count": 1,
+    "bundled_mlm_source_sha256": "b9d58a87cc72b66919c6af7220b215b9e66e06ab426eae20e04a8642dbffb15c",
+    "bundled_reference_version": "v0.46",
+    "baseline_type": "compact_gold_regression_contract",
+    "contract_schema_version": "1.3",
+    "is_full_review_package": false,
+    "behavior_scope": "source-backed compact behavior contract with atomic behavior units",
+    "selection_key": "source_sha256",
+    "additional_registration": "Quality Review -> Gold Source 추가",
+    "shared_store": "../Requirement_Studio_Gold_Sources",
+    "future_version_reuse": true,
+    "original_source_bundled": false
+  },
+  "traceability": {
+    "canonical_schema_version": "REQ-STUDIO-CANONICAL-REQ-2.0",
+    "protected_extraction_schema": "REQ-STUDIO-CANONICAL-REQ-1.1",
+    "deterministic_binding_fields": [
+      "source_requirement_ids",
+      "source_requirement_occurrence_ids",
+      "source_chunk_ids"
+    ],
+    "source_backed_atomic_behaviors": true,
+    "source_id_only_preservation_is_not_sufficient": true,
+    "coverage_final_matrix_is_single_truth": true,
+    "accepted_link_audit_final_sync": true,
+    "missing_behavior_disposition_sidecar": true,
+    "actual_missing_remains_release_blocking": true,
+    "dependency_linkage_partial_coverage": true,
+    "global_empty_binding_status": "INVALID / TRACEABILITY_BINDING_EMPTY",
+    "behavior_coverage": "Explicit-ID declaration coverage remains primary when available; conservative Semantic Source Unit coverage is a separate no-ID mode.",
+    "semantic_source_units": true,
+    "semantic_source_unit_fields": [
+      "source_semantic_unit_id",
+      "source_chunk_id",
+      "source_location",
+      "source_kind",
+      "source_excerpt_fingerprint",
+      "source_unit_type",
+      "coverage_eligibility"
+    ],
+    "coverage_modes": [
+      "EXPLICIT_ID_COVERAGE_AVAILABLE",
+      "EXPLICIT_ID_COVERAGE_NOT_APPLICABLE",
+      "SEMANTIC_SOURCE_UNIT_COVERAGE_AVAILABLE",
+      "SEMANTIC_SOURCE_UNIT_COVERAGE_PENDING"
+    ],
+    "no_id_explicit_coverage_semantics": "N/A; numeric coverage/missing counts are null and evaluation state is separate",
+    "word_json_provenance_consistency": "Canonical/Review JSON is the provenance truth; Main SWE.1 contains only Eligible items, while pending/cross-domain facts are physically separated into annexes.",
+    "semantic_disposition_matrix": true,
+    "semantic_provenance_audit": true,
+    "semantic_source_classifier_ground_truth_metrics": "not claimed without human-labelled Gold units",
+    "no_id_provenance_completion": "Eligible no-ID items require Semantic Source Unit + exact Source-backed Atomic Behavior; pending items retain behavior or Source Fact.",
+    "context_linked_gap_is_complete": true,
+    "semantic_classifier_context_exclusions": [
+      "change/revision history",
+      "standard-code/title reference rows",
+      "heading/table/figure titles"
+    ],
+    "clause_level_value_relation": true,
+    "fact_level_allocation": true,
+    "cross_domain_bundle_review": true,
+    "source_table_fact_index": true,
+    "source_table_fact_join_policy": "linked semantic unit or exact identifier overlap; numeric coincidence alone is insufficient",
+    "repeated_explicit_missing_recovery": true,
+    "parent_fact_allocation_inheritance": true,
+    "source_fact_fragments": true,
+    "source_fact_multi_srs_allocation_conflict_audit": true
+  },
+  "regression": {
+    "gold_contract_atomic_behavior_units": true,
+    "grouped_baseline_behavior_split_supported": true,
+    "source_id_or_location_anchor_required_for_semantic_fallback": true,
+    "critical_absence_separated_from_linkage_uncertainty": true
+  },
+  "conflict_detection": {
+    "multiline_table_mapping": true,
+    "value_encoding_contradiction": true,
+    "parameter_direction_contradiction": true,
+    "naming_issue_register_separate": true,
+    "authoritative_value_inference": false
+  },
+  "testability": {
+    "fields": [
+      "normal_test_available",
+      "test_design_feasible",
+      "concrete_tc_complete",
+      "intent_complete_status",
+      "swe6_eligibility",
+      "verification_domain"
+    ],
+    "invariant": "Automatic SWE.6 TC generation requires SWE.1/SWE.6 eligibility plus complete source provenance; source-backed child verification intents remain auditable without inventing concrete values.",
+    "allocation_aware": true,
+    "main_swe1_eligible_only": true,
+    "allocation_annex_physical_separation": true,
+    "no_id_provenance_tc_gate": true,
+    "source_backed_child_intents": true,
+    "deferred_reason_codes": [
+      "SOURCE_INSUFFICIENT",
+      "EXTERNAL_SPEC_REQUIRED",
+      "ALLOCATION_PENDING",
+      "EXPORTER_CAPABILITY_PENDING",
+      "HUMAN_REVIEW_REQUIRED"
+    ],
+    "interface_fact_allocation_gate": true,
+    "swe6_export_preservation_audit": true,
+    "intent_coverage_policy": "Executable Eligible-intent coverage and Deferred/Allocation governance are separate. Coverage must never be raised by inventing test data.",
+    "allocation_pending_nonempty_deferred_intent": true,
+    "allocation_pending_reason_code": "ALLOCATION_PENDING",
+    "child_intent_disposition_values": [
+      "REPRESENTED_IN_GENERIC_TC",
+      "INDEPENDENTLY_COVERED",
+      "DEFERRED",
+      "REVIEW_REQUIRED"
+    ],
+    "derived_verification_method_marking": true,
+    "source_fact_provenance_audit": true,
+    "cross_domain_fact_level_allocation": true,
+    "swe6_source_intent_audit_sheet": "4_Source_Intent_Audit",
+    "source_table_fact_join": true,
+    "swe6_source_fact_audit_sheet": "5_Source_Fact_Audit",
+    "swe6_audit_status_values": [
+      "PASS",
+      "PASS_WITH_REVIEW_ITEMS",
+      "FAIL"
+    ],
+    "source_table_fact_value_roles": [
+      "SINGLE_REQUIRED_VALUE",
+      "TIMING_CRITERION",
+      "ENUM_MAPPING",
+      "RANGE_CONSTRAINT",
+      "INVALID_MARKER",
+      "ENCODING_RULE",
+      "SOURCE_LITERAL_ONLY"
+    ],
+    "table_fact_auto_use_policy": "Only HIGH-confidence SINGLE_REQUIRED_VALUE or TIMING_CRITERION may populate TC Variable/Compare/Value; enum/range/encoding/invalid rows remain audit evidence.",
+    "child_intent_independent_coverage": "Requires a structured criterion relevant to the specific child intent; unrelated parent TC fields do not establish coverage."
+  },
+  "ui": {
+    "api_key_status_button": {
+      "missing": "orange",
+      "confirmed": "light green"
+    },
+    "folder_auto_refresh": "QFileSystemWatcher (input + api_keys)",
+    "manual_refresh_retained": true
+  },
+  "review_exchange": {
+    "package_schema_version": "2.4",
+    "evaluator_core_files": 3,
+    "file_1": "01_SOURCE_<source>.<ext>",
+    "file_2": "02_REQUIREMENT_STUDIO_REVIEW_PACKAGE.json",
+    "file_3_selectable": true,
+    "file_3_modes": {
+      "swe1": {
+        "artifact_type": "SWE1_REQUIREMENTS_DOCX",
+        "artifact": "03_<actual SWE.1 Word>.docx",
+        "evaluation_focus": [
+          "source fidelity",
+          "allocation correctness",
+          "atomicity",
+          "traceability",
+          "SWE.1 export preservation"
+        ]
+      },
+      "swe6": {
+        "artifact_type": "SWE6_QUALIFICATION_XLSX",
+        "artifact": "03_<actual SWE.6 Qualification Excel>.xlsx",
+        "evaluation_focus": [
+          "eligibility correctness",
+          "test intent preservation",
+          "concrete testability",
+          "deferred intent governance",
+          "TC traceability",
+          "SWE.6 export preservation"
+        ]
+      }
+    },
+    "same_run_invariant": "Source and Review Package must come from the same run; only File 3 changes with evaluation focus.",
+    "companion_file_4": "04_CHANGE_DECISION_V0.61_to_V0.62.txt",
+    "companion_file_5": "05_REQUIREMENT_STUDIO_REVIEW_SUMMARY.txt",
+    "allocation_annex_in_swe1_word": true,
+    "swe6_deferred_intent_sheet": "3_Deferred Intent",
+    "automatic_external_transmission": false,
+    "main_swe1_eligible_only": true,
+    "swe6_source_intent_audit_sheet": "4_Source_Intent_Audit",
+    "swe6_source_fact_audit_sheet": "5_Source_Fact_Audit"
+  },
+  "provider_runtime_metadata": [
+    "model",
+    "endpoint_family",
+    "auth_mode",
+    "project_header_enabled",
+    "response_parsing_mode"
+  ],
+  "verification": {
+    "syntax_compile": "PASS (46 Python/PYW files)",
+    "unit_tests": "PASS (68 tests)",
+    "v062_new_regressions": "PASS (parent allocation inheritance, cross-domain/external-axis separation, governance/header classifier cleanup, Source Table Fact Join, repeated explicit missing recovery, child-intent representation semantics, three-level SWE.6 audit status)",
+    "legacy_v054_v061_regression_suite": "PASS",
+    "windows_gui_runtime": "NOT VERIFIED in build environment",
+    "hchat_live_connection": "NOT VERIFIED (corporate endpoint/API key unavailable)",
+    "real_reference_source_v062_rerun": "NOT PERFORMED here; validate locally",
+    "pytest": "76/76 PASS",
+    "python_compile": "47 Python/PYW files PASS"
+  },
+  "known_limits": [
+    "The bundled MLM Gold Contract is a compact behavior contract, not the full V0.46 Review Package.",
+    "The bundled confidential MLM Source is not included; Source SHA selects the compact contract.",
+    "Semantic Source Unit coverage is conservative; every eligible unit gets a disposition, but classifier precision/recall is not claimed without a human-labelled Gold unit set.",
+    "Allocation is a conservative review aid, not automatic ASPICE responsibility approval; ambiguous system behavior remains Review Needed.",
+    "A Cross-Document source is not automatically registered as Gold until a human-approved baseline is created.",
+    "Actual Missing behaviors remain release-blocking when explicit-ID coverage is applicable and a missing behavior is confirmed.",
+    "Numeric source literals with ambiguous relation are preserved rather than normalized into an invented comparator; human clarification may still be required.",
+    "Dedicated Timing/State/Variant TCs are not invented solely to raise intent coverage when source test evidence is insufficient.",
+    "GUI appearance/QFileSystemWatcher behavior requires Windows runtime confirmation.",
+    "Claude Sonnet 5 and Gemini 3.7 Flash live H-Chat runs remain environment-dependent release verification items.",
+    "Automatic unsupported-generation precheck is bounded and does not prove zero hallucination.",
+    "No-ID concrete SWE.6 generation is intentionally deferred when Semantic Source Unit / Atomic Behavior provenance is incomplete.",
+    "SWE.6 intent coverage is informative; deferred intents require reason codes and must not be converted to concrete tests by inventing missing source data.",
+    "Source-backed child intents improve auditability but do not mechanically force one concrete TC per atomic behavior.",
+    "Interface configuration facts remain pending allocation unless source-backed software responsibility is explicit.",
+    "SWE.6-specific export audit checks structural preservation and the actual Excel handoff, but does not prove physical bench executability without project-specific test environment evidence.",
+    "Cross-domain fact-level allocation preserves the parent bundle and does not automatically split SRS; human review may still choose later separation.",
+    "Child-intent status is an audit disposition, not proof of physical bench observability without project-specific instrumentation/test-environment evidence.",
+    "DERIVED verification-method candidates are engineering suggestions and must not be interpreted as Source requirements.",
+    "Allocation-pending deferred intent governance is auditable, but software responsibility remains a human/architecture allocation decision.",
+    "Source Table Fact auto-use requires HIGH-confidence semantic-unit or exact-identifier linkage; ambiguous multi-value rows remain Review/N/A/Deferred.",
+    "Repeated Explicit-ID Missing recovery requires at least two repeat-equivalent Missing declarations; single-occurrence Missing remains human-review blocking.",
+    "REPRESENTED_IN_GENERIC_TC does not imply independent observability or independent test coverage."
+  ],
+  "files": {
+    ".alira/agents/document_analyzer.md": {
+      "sha256": "19944c201c58481b3f127e762317b7d5b2aa246f543d4e6d702bde88f51025f9",
+      "size_bytes": 809
+    },
+    ".alira/agents/requirement_extractor.md": {
+      "sha256": "4bcb216a73f2ce2ae6ca7a7f67e63a10ffe05bac60e381ce2d484d730106c1d4",
+      "size_bytes": 2426
+    },
+    "00_AI_DEVELOPMENT_GOVERNANCE.md": {
+      "sha256": "54a27c8ba81e0a38e8958f09ca1f81b619dc334d1e3658bd4e7f8da5e47c50ad",
+      "size_bytes": 86018
+    },
+    "04_CHANGE_DECISION_V0.62_to_V0.63.txt": {
+      "sha256": "1cc55aec097a3ce9917df24eaeb1263284a1fe58a710b25cfe07c0341e79cf8a",
+      "size_bytes": 3470
+    },
+    "ARCHITECTURE.md": {
+      "sha256": "4aa0139538a0a537c3f1d3dbd9753fc998f8c8544ec4cd7ed873f1632d87e3af",
+      "size_bytes": 46639
+    },
+    "HCHAT_API_KEY_GUIDE.md": {
+      "sha256": "0cf92c05d6cd06179f902269162a2d8e3bfb71b2f3abfcec0ae3ef7dfaa9ce19",
+      "size_bytes": 1493
+    },
+    "README.md": {
+      "sha256": "1d3d4ab28055e79dde6725729a9ee686da6cca44d81971871eb46a02d81f11f1",
+      "size_bytes": 2289
+    },
+    "Requirement Studio.pyw": {
+      "sha256": "9aa4a18754aa78065c37bc5eba5aa0b3cfb1e6dfefc6ab8d9d65119e77f20257",
+      "size_bytes": 216
+    },
+    "Requirement_Studio_Requirements_Management_rev54.xlsx": {
+      "sha256": "d4132b4ee32a70f94da1f4022e12b22eb85ef47770c57454d40efd786de4a7b8",
+      "size_bytes": 239233
+    },
+    "START_HERE.txt": {
+      "sha256": "a8a319dade5fd19f37703690625fb03a4f5a52f4a56a708feb9197ff3a44d1c0",
+      "size_bytes": 1352
+    },
+    "alira_license/README_라이선스_사용법.txt": {
+      "sha256": "07112c87141ca78314228b3565fd6e04ab0628b77ad87c5f81469c43775c2fe5",
+      "size_bytes": 770
+    },
+    "api_keys/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "api_keys/README_API_KEY_사용법.txt": {
+      "sha256": "dd8653080cea68913acddf2b2c6806aae4eca25679ab8ad93a9d3460af0db4cc",
+      "size_bytes": 670
+    },
+    "app/ALIRA.pyw": {
+      "sha256": "5450ec36e3781924b791e0153a7bc0078b90d174bd6882a8d87b8822506fea84",
+      "size_bytes": 9587
+    },
+    "assets/RequirementStudio.ico": {
+      "sha256": "f1e1e009440c3329ed03d72d058e7ed7f51fe10d28b0d9ff5753ce41eff8b10c",
+      "size_bytes": 29401
+    },
+    "assets/RequirementStudio.png": {
+      "sha256": "932c95f7c4b1d703a7b465216c3967c13452d40e17317999867122c4926673c7",
+      "size_bytes": 5271
+    },
+    "assets/action_copy.png": {
+      "sha256": "fb1266e732e49b6a618c0658ca807652d8889cc78808cee7ec7b17f8187b5bff",
+      "size_bytes": 391
+    },
+    "assets/action_folder.png": {
+      "sha256": "dd84d4e8d9944f0b5b878f7e1bf0f70539ae0b9e07eed2bbb1c4136c33a59b3b",
+      "size_bytes": 364
+    },
+    "assets/action_trash.png": {
+      "sha256": "24cb8f681190c758816317833032d9da37feba297c721c0466604048fa5011a2",
+      "size_bytes": 349
+    },
+    "assets/dropdown_arrow.png": {
+      "sha256": "e307daf2cde33d88d3526f67f26a75e9274a8a048dead1a36c0d61218f3e8cda",
+      "size_bytes": 127
+    },
+    "assets/result_analysis.png": {
+      "sha256": "6535580ee71b8af5ac371c0837a8eed984623270ef3150b273fc4056c88f463e",
+      "size_bytes": 406
+    },
+    "assets/result_log.png": {
+      "sha256": "25d34eb8e41a0647b606361376029b81a3987d3ec7c6d1d68b0070a63d4156a8",
+      "size_bytes": 434
+    },
+    "assets/result_requirements.png": {
+      "sha256": "f3e97f737acc82abb654d8df8041e2326fb7f684e7f4b496e1cad392f8c6db4e",
+      "size_bytes": 317
+    },
+    "assets/sample/sample_visual_vcu_low_power_diagram.png": {
+      "sha256": "8989fd3579f2540a50c0c213ad6b6f5aa726b5ea0bbff77ab54daa8e606b4501",
+      "size_bytes": 63488
+    },
+    "assets/section_check.png": {
+      "sha256": "f7188d05f0dd70479b67799cbf7dfbb998ca00c640ca6c10cc4d4a5a56ff2f03",
+      "size_bytes": 216
+    },
+    "assets/section_folder.png": {
+      "sha256": "ef36c79ad4462eddda8a77ec929073b01a495988799ebadf4849e798275d3fdf",
+      "size_bytes": 175
+    },
+    "assets/section_gear.png": {
+      "sha256": "5d67d0094c2a9ade467e777fc94eb6df3639b97370b4afc09887b8761ac2d3be",
+      "size_bytes": 211
+    },
+    "assets/section_list.png": {
+      "sha256": "4732484bcd41af0a31aba3829e2f1aba9caf143d9853011d49cb1505765356be",
+      "size_bytes": 146
+    },
+    "config/provider_config.json": {
+      "sha256": "9d11bad88b83cb32003f5232ff54c71837ad6ba680ebc4183d102c418aba8cb8",
+      "size_bytes": 2348
+    },
+    "contracts/canonical_requirement_schema.json": {
+      "sha256": "17de4050baa46552d2112540fc649734cc9f5b513504aad76caee65ab5f86a1b",
+      "size_bytes": 5562
+    },
+    "contracts/extraction_requirement_schema_v1_1.json": {
+      "sha256": "75cc19430a728334e059e84b9403bcdc3d85fe586ff17bf7dcb65830fa1836f3",
+      "size_bytes": 2163
+    },
+    "contracts/swe1_swe6_mapping.json": {
+      "sha256": "ba130e25841341335331025d704f24031d6881039e2527d56b1e4c376c74e093",
+      "size_bytes": 8849
+    },
+    "core/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "core/ai_job_runner.py": {
+      "sha256": "958dc0d29d78737e645f9e414a9c44987356705f3a0a6a6129869bdef65b89c2",
+      "size_bytes": 23529
+    },
+    "core/alira_client.py": {
+      "sha256": "bccfd44d6fe53a2bfbc13d32fe406d150b178d2f199f44511192a6b3df59bee3",
+      "size_bytes": 16965
+    },
+    "core/alira_setup.py": {
+      "sha256": "e0a006393fd7f4887429b918b5001603d603caa7bfa1f5e546098272dfa9e622",
+      "size_bytes": 5325
+    },
+    "core/cross_document_semantics.py": {
+      "sha256": "ad1e26e80c00d2f78c0f756864a0dcd6eb19e6f4a78af6fa66c049eb07aeec93",
+      "size_bytes": 74386
+    },
+    "core/document_manager.py": {
+      "sha256": "95a2aad1f6095f54dde463acec9786a2ed7467fbc33eddcede2090c033598766",
+      "size_bytes": 2052
+    },
+    "core/document_normalizer.py": {
+      "sha256": "599f325930c2fe66cb737799de7eb148ac9784a629b07bb6961123c062d05338",
+      "size_bytes": 14640
+    },
+    "core/gold_source_registry.py": {
+      "sha256": "3f783534cabcd2ddd27ed7c4ca35f79b01a648c925aa251d56723c78d5f081b1",
+      "size_bytes": 18968
+    },
+    "core/output_naming.py": {
+      "sha256": "4ad72e282f73cc306e7f6509c3959cad20c09059d8c5ef7987044f09f9c6ef53",
+      "size_bytes": 478
+    },
+    "core/prompt_builder.py": {
+      "sha256": "83aa1e7e2e1d7c9d3f865c5fc27cb939d80a6a57763c3cbc641e6a6311dbd359",
+      "size_bytes": 11738
+    },
+    "core/quality_audit.py": {
+      "sha256": "645d90f8eb9af0bedc8ca982f07760b45a4e0666a1dc7f7f7e352f423b94f92d",
+      "size_bytes": 179662
+    },
+    "core/regression_engine.py": {
+      "sha256": "fae71bd96a125eb887a9ba334c0b01fa0175c6284ed13450d964f6eaca26feb9",
+      "size_bytes": 37362
+    },
+    "core/requirement_engine.py": {
+      "sha256": "e3dc1ca0c28a70798eb08b5fa5f9b5a0f619c39f277cfed4a364d87761993482",
+      "size_bytes": 23693
+    },
+    "core/result_exporter.py": {
+      "sha256": "f716e1f24cc4bedfc1f869cf6460638e32337541632b15bff1c2ee53bffacb1c",
+      "size_bytes": 2869
+    },
+    "core/review_exchange.py": {
+      "sha256": "70d4baaa6cd5c6ef2509163b60f0d4545f51c0b0a829d957e6e73e15cf76e73e",
+      "size_bytes": 65201
+    },
+    "core/swe1_exporter.py": {
+      "sha256": "7d851598e96f196d7e2ee9ee921c656ecdc7c367dcb0b4a0c54d9dbd7ed8833a",
+      "size_bytes": 35272
+    },
+    "core/swe6_exporter.py": {
+      "sha256": "6769ad32a295c884bc3946bd7c3cfa79de9a7ee947dd28121889f174571fdafd",
+      "size_bytes": 42303
+    },
+    "core/visual_evidence.py": {
+      "sha256": "9518bdc309ac6e78e7f98826ef405c6ac1128aa3f3c7220d33b17d98bfbbaf96",
+      "size_bytes": 4225
+    },
+    "core/worker.py": {
+      "sha256": "1a4757c400959ebafdfdd7134feb703df5a09fc79533c7e45bf0a5f82bd464c2",
+      "size_bytes": 2477
+    },
+    "diagnostics/ALIRA_Vision_Probe/ALIRA Vision Probe.pyw": {
+      "sha256": "6b8a8a628d6dc8944153f04cdada5b641416251a66ee7bcb198563b44641e1a5",
+      "size_bytes": 193
+    },
+    "diagnostics/ALIRA_Vision_Probe/README.md": {
+      "sha256": "d912aca4b46c174c44cc7f88ed611b3b431bc93197f5057e7928aeaca4daad1e",
+      "size_bytes": 3221
+    },
+    "diagnostics/ALIRA_Vision_Probe/RUN_ALIRA_VISION_PROBE.cmd": {
+      "sha256": "aa8913337aa07b0c70d0cf01782377a1f80c014a326030c19b5998a6b5e1aa7c",
+      "size_bytes": 1050
+    },
+    "diagnostics/ALIRA_Vision_Probe/alira_vision_probe.py": {
+      "sha256": "e55cf7836c3bef14da298b0400123e4bb41d11f1f99c9a5aa58cfcd241c20333",
+      "size_bytes": 9541
+    },
+    "docs/Requirement_Studio_User_Manual_v0.30_V0.45.docx": {
+      "sha256": "9d91e00799f3c08246e8207c4448f48050631691bdaf3aa13bafffecb916b175",
+      "size_bytes": 59193
+    },
+    "evaluation/EVALUATION_GUIDE.md": {
+      "sha256": "cab206e04e262352623bfaf438e7f5591a14f5773cebd1e4f342455db17de934",
+      "size_bytes": 1090
+    },
+    "evaluation/REFERENCE_CONTRACT_EVALUATION.md": {
+      "sha256": "8b0f016809af2e6495a8a05b4ad3e33dd3a219ab3e007ac4022360229626fb30",
+      "size_bytes": 2858
+    },
+    "input/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "input/README_input_사용법.txt": {
+      "sha256": "cd9fedd7e5efc653e0fafd2ca6a8fb974c3c369b53a717c2a93b5e1e989d2aa8",
+      "size_bytes": 688
+    },
+    "main.py": {
+      "sha256": "34d336b736f370ba537a26f015064adb7ef79329aff1001e4e293bac9685005a",
+      "size_bytes": 168113
+    },
+    "output/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "output/logs/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "policy/protected_invariants.json": {
+      "sha256": "e7b0377c00bbc2eeb77180a886a70b4fbab9ab2dcaeba3727fc9f13c33b72fa8",
+      "size_bytes": 3323
+    },
+    "policy/requirement_judgment_policy.json": {
+      "sha256": "fff2da824af387b021972370b8930efb23e53cffbffa247a26d1a5da27117fec",
+      "size_bytes": 2060
+    },
+    "providers/__init__.py": {
+      "sha256": "6868e7f5102a139a8e4c93c1697b53b631d89b0bc31ea35be2aebcb31536f553",
+      "size_bytes": 167
+    },
+    "providers/alira_provider.py": {
+      "sha256": "55d5226b11f2a654672f2f9b32c01085a0d5574243c3df9a7dc53da2e2f44155",
+      "size_bytes": 3644
+    },
+    "providers/base.py": {
+      "sha256": "58844d73c3809e1d35d38560618207ef994c8023587eb04631f02a09fc6798fc",
+      "size_bytes": 1374
+    },
+    "providers/config_store.py": {
+      "sha256": "6fa135d010e8ffeffd18ef1f7c7f6e7c670059f8578a275268eea26233196b8f",
+      "size_bytes": 8535
+    },
+    "providers/custom_api_provider.py": {
+      "sha256": "3e1ae2d3b43c8eed07cd0c499fa9dc5ad25e514f8fa03693deeaedd3a009da41",
+      "size_bytes": 15884
+    },
+    "providers/factory.py": {
+      "sha256": "afe2f6622ce408fe1ac5ed033933ed4e8d0db345c8117e40a4f9d82cf89ed939",
+      "size_bytes": 993
+    },
+    "providers/hchat_credentials.py": {
+      "sha256": "d7fb19d12950eb25aa228684d47096fd04d558fd10cb4c6d36d028cd1ff65168",
+      "size_bytes": 4397
+    },
+    "providers/hchat_provider.py": {
+      "sha256": "6109876de5d98221986c8eda9e2e8322d9cdc96f1055a246c3d3c00d74fe7a4d",
+      "size_bytes": 22844
+    },
+    "reference/ALIRA_CONNECTION_SETUP.md": {
+      "sha256": "f56b9118bc5845d240360a8cb431ddfc377a3e2eac2be34273ed1de0ee0ef059",
+      "size_bytes": 2364
+    },
+    "reference/ALIRA_VISION_VALIDATION.md": {
+      "sha256": "14334b2c677571ae175f97d350d1305df2c4c0571aeb837232cdb182ab227776",
+      "size_bytes": 2859
+    },
+    "reference/OUTPUT_AUTHORING_GUIDE.md": {
+      "sha256": "5ba3c59d6e5b9b00e08ee9eaf3a5d42a8657156a9703b4f4929acce2cf84f7db",
+      "size_bytes": 5862
+    },
+    "reference/SWE6_AUTHORING_GUIDE.md": {
+      "sha256": "d0d94e2e82a2ca7e14d2b3dee6e402ce5c52d6bf6783708fb672604105bc2c27",
+      "size_bytes": 14488
+    },
+    "reference_architecture/SIGNAL_EXPORT_HCHAT_API_REFERENCE.md": {
+      "sha256": "6a13ea680e66fc009c48550fa3cde642bf4fc29b572e058b56f153c4fc697429",
+      "size_bytes": 1931
+    },
+    "reference_library/raw/PassFail_Requirements_Management_rev87.xlsx": {
+      "sha256": "af7daaf52e77ddc3edfa74bae2db4414d58fa0e937abbdf384470fa55f5f5267",
+      "size_bytes": 259583
+    },
+    "reference_library/raw/SignalAuto_Requirements_Management_rev60_V2.xlsx": {
+      "sha256": "fc803690594213300f5699d475751dcf5ca4ef4896bccb3f46d29d938a97eac7",
+      "size_bytes": 205787
+    },
+    "reference_library/reference_examples.json": {
+      "sha256": "28200fe8b4c1b0747cd3f2b57a92b7909fcb679be2e82df31b71a03cec781616",
+      "size_bytes": 19152
+    },
+    "requirements.txt": {
+      "sha256": "136cc0df8cf29fddfde8382b3d18a9956886a9a48803ddf9d13f8949d5641b4b",
+      "size_bytes": 99
+    },
+    "review_exchange/README_REVIEW_HANDOFF.txt": {
+      "sha256": "eda2b5762699f643bbf54c9e1a9710fdd287d4049c02c13b6049323f882d492c",
+      "size_bytes": 1454
+    },
+    "review_exchange/baseline/README_BASELINE.txt": {
+      "sha256": "c728c93f9c8e407b34d8e5ba3e1b4b428ab72322eec0a58829f8466fff65be4a",
+      "size_bytes": 232
+    },
+    "review_exchange/gold_sources/README_GOLD_SOURCES.txt": {
+      "sha256": "48d754f768e64d655bc5227061ee14d07da875ac0456a65b476df1a337ecff7e",
+      "size_bytes": 486
+    },
+    "review_exchange/gold_sources/contracts/gold_contract_b9d58a87cc72b669.json": {
+      "sha256": "95b98c803b31432278a71d182f5b49ff70115675192fd4ca64f7f31531d276de",
+      "size_bytes": 33648
+    },
+    "review_exchange/gold_sources/registry.json": {
+      "sha256": "c10ff87546ef4de920480edad636d8f37147ce6da93aa9cfb003a55df318d23a",
+      "size_bytes": 502
+    },
+    "sample_inputs/README_샘플_사용법.md": {
+      "sha256": "2cbb69b848da80ed604fdadeff4f42595cd379f1b80262a51c28a0dfe5122c62",
+      "size_bytes": 1033
+    },
+    "sample_inputs/sample_vcu_lite_implicit_behavior.docx": {
+      "sha256": "5bdf60386b3cd1bd0b2c494dc7e826080e1f7439b362e14429c3a2a297383d97",
+      "size_bytes": 38514
+    },
+    "sample_inputs/sample_vcu_lite_implicit_behavior.pdf": {
+      "sha256": "da8d16fd6c5f30719bcb0e9f9ddb2ae5bd69f93fe4651f4a1c32e50f4d246e37",
+      "size_bytes": 96380
+    },
+    "sample_inputs/sample_vcu_lite_implicit_behavior.pptx": {
+      "sha256": "9d730ca53852bb8a7032c0c9cd40f46a3b0dc919516f2ab65172b37f63ac7610",
+      "size_bytes": 32320
+    },
+    "sample_inputs/sample_vcu_lite_implicit_behavior.xlsx": {
+      "sha256": "28f95209fcd6891cb3bc521d14081476833e907e21223c8a98a096d040d76409",
+      "size_bytes": 5556
+    },
+    "sample_inputs/sample_vcu_lite_visual_diagram.docx": {
+      "sha256": "13466a46bddb3ba21a2f070f16df6dfdee3492b7abf59ed5a900a0ed754be7ad",
+      "size_bytes": 97931
+    },
+    "sample_inputs/sample_vcu_lite_visual_diagram.pdf": {
+      "sha256": "fa47d3702a75996255c9046e5e11a17bd04bc0aea42fc387e07d51d24b2ff22d",
+      "size_bytes": 113421
+    },
+    "sample_inputs/sample_vcu_lite_visual_diagram.pptx": {
+      "sha256": "b76f3e6e4313670362bf3baee442e699c5939bcf2e24d25116fc2628fd223037",
+      "size_bytes": 88926
+    },
+    "tests/test_hchat_models_v052.py": {
+      "sha256": "080942e00aff06b497f753f2d7d361e2b0cd6b441dda9fc4839142e368daba6d",
+      "size_bytes": 7677
+    },
+    "tests/test_quality_sidecar_v051.py": {
+      "sha256": "af5d7c05b0627f3c001872207fa9da1ed9346bed063f56d2ea3803c7c1ce0125",
+      "size_bytes": 3752
+    },
+    "tests/test_regression_engine.py": {
+      "sha256": "957c291eac2f67943236b7ea682eb679b81e9969ce10e831fd662ce66320838e",
+      "size_bytes": 4873
+    },
+    "tests/test_v054_gold_traceability.py": {
+      "sha256": "1211c26bad8630f105f5529dd4a4847d50b3e38538f779fd956014e635807777",
+      "size_bytes": 6622
+    },
+    "tests/test_v054_traceability_refinement.py": {
+      "sha256": "b339744c5e43f2250b707a7f4c2e401b9633c5debdcb131d20e2dc758ab5f36e",
+      "size_bytes": 7334
+    },
+    "tests/test_v055_hardening.py": {
+      "sha256": "c20ea01db4fe159f1285d34cc7fa263f72fd27f59ddfd9c2d4e933146f8b8742",
+      "size_bytes": 8778
+    },
+    "tests/test_v056_single_truth.py": {
+      "sha256": "9cb5915063798c8ea0d592923e39ac057b6136292cb227d4e0e8ace44cdfc373",
+      "size_bytes": 7091
+    },
+    "tests/test_v057_cross_document.py": {
+      "sha256": "c1c5a61e2f463eabaf70161d4da9625d643e9f19457f41adc7bef9d38b2f39bb",
+      "size_bytes": 4809
+    },
+    "tests/test_v058_cross_document_hardening.py": {
+      "sha256": "a1debfdd2994574136e1a58c3462ef3b9e77bab170c1e944086feb44eb6e535e",
+      "size_bytes": 9048
+    },
+    "tests/test_v059_release_blockers.py": {
+      "sha256": "6e3a48affe453841b075f98267c46fa8a20a349c57175c51ee11857a76f53a0d",
+      "size_bytes": 9800
+    },
+    "tests/test_v060_swe6_review_mode.py": {
+      "sha256": "40a8bf51c9e4aad4b3d11c590381f0f0645707629102c69c98b6cfc526555c5d",
+      "size_bytes": 8670
+    },
+    "tests/test_v061_swe6_governance.py": {
+      "sha256": "117260744d040063656af13af3ce0a52768268b4c5cf602c58e59d9053eb79c0",
+      "size_bytes": 9763
+    },
+    "tests/test_v062_single_truth_swe6.py": {
+      "sha256": "67726cb967d3bde63596577dffa0900c051358b35f8e669306d5739d7d8f6808",
+      "size_bytes": 7580
+    },
+    "tests/test_v063_swe6_evidence_hardening.py": {
+      "sha256": "a2fa9f468e61d3af43f2a9ac6da668c1be406a2a055426a9718042cb2113cd1c",
+      "size_bytes": 9498
+    },
+    "tools/RequirementStudio_launcher_diagnostic.py": {
+      "sha256": "35bd96ca26bdfa5ec29c657c9602d027f2865035e4a3c5fe6cdc73d14645fdad",
+      "size_bytes": 975
+    },
+    "work/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "work/ai_requests/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "work/ai_responses/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "work/normalized/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "work/recovery_failures/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    }
+  }
+}

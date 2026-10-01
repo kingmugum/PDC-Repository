@@ -1,0 +1,59 @@
+Requirement Studio V0.62 -> V0.63 변경 판단서
+================================================
+
+1. 목적
+- V0.62의 두 SWE.6 Reference Run에서 공통/구조적으로 확인된 Evidence/Audit 잔여 문제를 일반 규칙으로 수정한다.
+- 특정 문서명, SRS/REQ ID, Signal/Parameter 이름을 Production Logic에 하드코딩하지 않는다.
+- TC 수나 Intent Coverage 숫자를 올리기 위해 Source에 없는 값을 생성하지 않는다.
+
+2. 반영한 P0/P1
+A. Execution Result Blank Policy
+- Output Value / PASS·FAIL / Comment / Capture는 생성 시 항상 Blank.
+- PASS/FAIL dropdown에서 N/A 제거. N/A는 design-side Variable/Compare/Value에만 허용.
+
+B. Source Table Value Role + TC Injection Gate
+- SINGLE_REQUIRED_VALUE / TIMING_CRITERION / ENUM_MAPPING / RANGE_CONSTRAINT / INVALID_MARKER / ENCODING_RULE / SOURCE_LITERAL_ONLY.
+- HIGH-confidence join이어도 Enum/Range/Encoding/Invalid marker를 임의 단일값으로 자동 주입하지 않는다.
+- 자동 TC 값 사용은 SINGLE_REQUIRED_VALUE 또는 TIMING_CRITERION만 허용한다.
+
+C. Source Fact Fragment Ownership
+- 복합 Semantic Source Unit을 문장/줄/불릿 경계에서 stable fragment로 나눈다.
+- Requirement는 실제로 관련된 fragment만 소유한다.
+- 동일 fragment가 여러 SRS에서 상충 Allocation을 받으면 SOURCE_FACT_MULTI_SRS_ALLOCATION_CONFLICT Release Review issue.
+
+D. Structured Provenance Collector
+- identifiers / numeric_values / timing_values / range_values / explicit_relations / enum_mappings / source_literal을 provenance 비교에 직접 포함.
+- Source에 이미 structured fact로 보존된 100ms 등이 false provenance gap으로 잡히는 문제를 방지.
+
+E. Unsupported Generation Audit Scope
+- Requirement/Trigger/Precondition/Action/Output/Acceptance 및 external dependency identifier의 factual token만 검사.
+- baseline_versions, knowledge_state, required_for, source_evidence 같은 JSON metadata key는 assertion audit 대상에서 제외.
+
+F. Semantic Classifier / Recovery
+- trailing page number가 붙은 numbered heading을 review_context로 정리.
+- terse CAN/LIN bitrate/NM support는 interface_fact / allocation_review_context로 관리.
+- unlinked explicit Software structural constraint는 exact Source clause 기반 Review Candidate로 제한적 recovery.
+
+G. Child Intent Coverage Semantics
+- INDEPENDENTLY_COVERED는 해당 child behavior와 관련된 structured input/observation criterion이 있을 때만 인정.
+- unrelated Variable/Value가 다른 child까지 독립 커버한 것으로 계산되지 않는다.
+
+H. SWE.6 Audit Release Semantics
+- 기존 passed(구조적 blocker 없음)는 호환 유지.
+- release_gate_passed를 별도 제공하여 Release Review issue가 있으면 false.
+
+3. 보류한 제안
+- Review Package 대용량 JSON의 다중 파일 분할은 유효한 후속 최적화이나 V0.63 품질 P0와 분리한다.
+- 현재 01/02/03 Review Exchange contract를 변경하지 않아 비교 실험의 변수를 최소화한다.
+- Gold/Source actual regression은 사용자 Runtime에서 수행해야 하며 코드 합성 테스트로 대체하지 않는다.
+
+4. Contract
+- Canonical Schema: REQ-STUDIO-CANONICAL-REQ-2.0
+- Review Package Schema: 2.4
+- SWE.1/SWE.6 Mapping Contract: 2.1
+- Protected Invariants: 1.3
+
+5. 검증 기준
+- 신규 V0.63 회귀 포함 전체 테스트 PASS
+- Python/PYW compile PASS
+- 배포 ZIP 재해제 후 package manifest SHA-256 PASS
