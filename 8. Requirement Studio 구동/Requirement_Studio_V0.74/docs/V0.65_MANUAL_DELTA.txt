@@ -1,0 +1,39 @@
+Requirement Studio V0.65 - User Manual Delta
+============================================
+
+This file supplements the bundled v0.32 / Runtime V0.63 user manual until the next full manual revision.
+
+1. SWE.6 Positive Software Allocation Gate
+- A system/controller behavior is no longer promoted to SWE.6 merely because no high-confidence non-software evidence was found.
+- SWE.6 Eligible requires positive software allocation evidence such as explicit SW/S/W/software wording, Task/ISR/Runnable/SWC/RTE/BSW/ASW context, or an approved software allocation mapping.
+- Otherwise the item remains SYSTEM_REQUIREMENT_PENDING_SW_ALLOCATION and is Deferred pending SW allocation.
+
+2. Source Fact Fragment Hardening
+- Composite prose may be decomposed into behavior-level Source Fact Fragments.
+- Fragment ownership is matched against Canonical behavior content rather than broad whole-paragraph evidence.
+- Numbered-list parsing is context-aware and is not applied to table cells by default.
+- Decimal values, revisions, dates, headings, and specification identifiers must not be treated as list markers.
+
+3. Gold Regression Governance
+- Ordinary previous Review Exchange runs are not automatically used as regression baselines.
+- Regression PASS requires an explicitly registered/approved Gold contract or protected reference baseline.
+- no-ID sources may use a stable source key derived from source location + normalized fact text for record-level matching.
+
+4. Gate Separation
+- Tool Quality Gate: evaluates Requirement Studio correctness/invariants.
+- Artifact Readiness Gate: evaluates whether the generated SWE.6 artifact has enough source evidence to be execution/release ready.
+- External-spec dependencies may keep Artifact Readiness in REVIEW/HOLD without automatically being classified as a Tool Quality defect.
+
+5. TC Readiness Columns
+The SWE.6 test-case sheet adds:
+- TC Maturity: INTENT_DRAFT / PARTIALLY_TESTABLE / EXECUTION_READY
+- Independent Coverage: ESTABLISHED / NOT_ESTABLISHED
+- Execution Readiness: READY / REVIEW_REQUIRED
+
+6. Structured Fact Typing
+- Specification/reference identifiers are generalized beyond ES to identifiers such as MS/ISO/IEC/SAE and similar reference patterns.
+
+7. Compatibility Note
+- Existing execution-result columns remain physically blank before execution.
+- Existing R:U result-field boundary is preserved.
+- Existing V0.51~V0.64 regression suite remains part of the validation set.

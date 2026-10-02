@@ -1,0 +1,26 @@
+Requirement Studio V0.70 -> V0.71 Change Decision
+==================================================
+
+Decision: IMPLEMENT / HARDENING BUILD
+
+Purpose
+-------
+Remove the historical manual H-Chat three-file evaluation constraint from the automatic quality-review architecture and make Unified End-to-End evaluation the default.
+
+Implemented
+-----------
+1. Default evaluation scope = Unified End-to-End.
+   Source -> Semantic Unit -> Fact Fragment -> Canonical/SRS -> SWE.1 Word/Excel -> Allocation/Eligibility -> Child Intent -> SWE.6 Excel -> Actual Artifact/QA/Regression.
+2. SWE.1-only and SWE.6-only modes are retained as debugging scopes.
+3. Review Exchange unified mode copies all available SWE.1 Word, SWE.1 Excel and SWE.6 Excel artifacts into one run; no three-file limit is imposed.
+4. Evaluation Evidence Schema 2.0 adds a compact Trace Graph, all actual artifact snapshots and Evidence Package SHA-256.
+5. DOCX evaluation snapshots include tables in addition to paragraphs.
+6. Missing artifacts not selected/generated are explicitly not defects.
+7. Reviewer prompt adds cross-output consistency review and CROSS_OUTPUT categorization guidance.
+8. Final Result Completeness Audit records provider finding counts, mapped occurrences and unmapped occurrences; completeness passes only when unmapped=0.
+9. final_result TXT chunk size = maximum 110 lines.
+10. Existing 3-AI independence, conservative HOLD policy, deterministic audits, Gold governance and post-write artifact verification remain protected.
+
+Requirements baseline
+---------------------
+Requirement_Studio_Requirements_Management_rev55.xlsx is NOT modified by V0.71. This change is an implementation/evaluation-architecture refinement within the existing approved automatic-evaluation requirements. No requirement baseline edit is authorized in this release.

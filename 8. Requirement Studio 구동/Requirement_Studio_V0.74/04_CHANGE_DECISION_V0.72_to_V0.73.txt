@@ -1,0 +1,32 @@
+Requirement Studio V0.72 -> V0.73 Change Decision
+==================================================
+
+Decision: IMPLEMENT / TRACEABILITY PRECISION HARDENING
+
+Source of change
+----------------
+V0.72 Unified FINAL_RESULT identified two distinct ownership cases:
+1. real exact-fragment gaps where Canonical critical facts exist in cited Source but selected fragments do not own them;
+2. false-positive risk when one SRS legitimately owns an identifier and timing/retry facts across multiple exact fragments.
+
+Implemented scope
+-----------------
+1. Critical-fact-aware Fragment Completion
+   - Within already-matched Semantic Units / explicitly cited Source locations only.
+   - Recover the minimum Source Fact Fragments that literally carry missing signal/timing/retry/enum facts.
+   - Require strong identifier/timing/retry overlap or multiple critical-token overlap.
+   - Never create Source facts, requirements, values, allocation, or ownership outside the matched Source range.
+2. Multi-fragment exact ownership union
+   - Exact ownership is evaluated over the union of all exact Source Fact Fragments linked to one SRS.
+   - Audit exports token -> Source Fact Fragment ID evidence.
+   - Broad structured roll-up cannot claim exact ownership for a value absent from the exact fragment literal.
+3. Reviewer evidence precision
+   - Unified 3-AI review is instructed not to re-flag an ownership gap when deterministic token->fragment evidence proves split-fragment ownership.
+4. Existing OPEN Semantic Unit, SW Allocation Pending, Source Conflict, and Gold NOT_EVALUATED governance remains unchanged.
+
+Requirements baseline
+---------------------
+Requirement_Studio_Requirements_Management_rev57.xlsx
+- rev56 existing approved requirement/rule/test/conflict rows are preserved.
+- V0.73 changes are appended as ALR-SC-100 / OP-158 / FR-387~389 and associated criteria/failures/tests/code/rules/conflict records.
+- No existing approved requirement text was rewritten or deleted.

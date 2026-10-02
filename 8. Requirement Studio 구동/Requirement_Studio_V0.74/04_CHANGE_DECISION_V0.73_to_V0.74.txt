@@ -1,0 +1,23 @@
+Requirement Studio V0.73 -> V0.74 Change Decision
+================================================
+
+Trigger
+-------
+V0.73 Unified FINAL_RESULT identified four implementation-level precision issues:
+1. SRS_006 5-second buzzer timeout exists in Source/Canonical but was unreachable by exact fragment completion because the literal clause lives in a neighboring Semantic Unit on the same cited Source page.
+2. The same exact fragment can leak into a weaker parent SRS even when another parent has materially stronger semantic containment.
+3. Requirements already admitting diagram/image dependency do not receive a filterable UNANALYZED_VISUAL_ASSET Gap when Vision evidence is unavailable.
+4. Correctly surfaced OPEN/REVIEW_NEEDED Semantic Units can be misclassified by a reviewer as Tool Quality failure.
+
+Decision
+--------
+- Extend critical-fragment completion only to exact Source locations explicitly cited by the requirement; literal critical-token overlap remains mandatory.
+- Preserve V0.73 matched-unit completion policy and distinguish V0.74 source-location recovery in ownership_policy.
+- For a fragment claimed by multiple SRS, automatically remove weaker-parent ownership only when one parent has clear semantic dominance; ambiguous sharing remains review-required.
+- Generate UNANALYZED_VISUAL_ASSET Gap/TBD records only when an existing requirement clarification already references a visual/figure/layout and normalized Source explicitly reports no Vision result. No diagram semantics are invented.
+- Tell 3-AI reviewers that explicit OPEN/non-terminal REVIEW_NEEDED is Artifact Readiness/Release Governance, not Tool Quality defect by itself.
+- Pending SW allocation, unresolved Source conflict, open Semantic Unit disposition, and missing approved Gold baseline remain human/governance items.
+
+Requirements
+------------
+Requirements baseline advances rev57 -> rev58 by append-only synchronization. Existing approved rows are not rewritten.

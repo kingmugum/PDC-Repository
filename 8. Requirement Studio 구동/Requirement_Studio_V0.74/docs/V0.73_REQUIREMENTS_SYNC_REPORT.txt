@@ -1,0 +1,29 @@
+Requirement Studio Requirements Sync Report
+================================================
+Date: 2026-10-02
+Source workbook: Requirement_Studio_Requirements_Management_rev56.xlsx
+Output workbook: Requirement_Studio_Requirements_Management_rev57.xlsx
+
+Governance
+----------
+- Existing approved rows were not modified or deleted.
+- Only revision metadata cells 사용자 시나리오!A1/C2 were updated.
+- V0.73 approved behavior is appended as ALR-SC-100, OP-158, FR-387~389,
+  acceptance criteria, FAIL-254~256, RT-369~371, CODE-305~307,
+  AI-RULE-243~245, and CR-233~234.
+
+Conflict review
+---------------
+1. FR-382 vs FR-388: no contradiction. FR-388 refines exact ownership to the union of
+   all exact fragments linked to one SRS; broad Source evidence still cannot close ownership.
+2. FR-387 vs Source authority/hallucination locks: compatible only because critical-fragment
+   completion is restricted to already-matched Source locations containing the literal critical fact.
+3. OPEN semantic units, pending SW allocation, unresolved Source conflicts, and missing approved
+   Gold baseline remain human/release-governance items and are not auto-closed in V0.73.
+
+Verification
+------------
+Append-only existing-content check: PASS
+Formula error scan: {"kind":"notice","message":"Cell search matched 0 entries."}
+rev56 SHA-256: c8bf3b907311facac33ee29d02b229a38376102046f87a83e2ea5c61d1d2eb94
+rev57 SHA-256: a74add7599a9e76b41d924f4c1bbe22c5c52dcbdfbc90c47c96f763887d583e6

@@ -1,0 +1,21 @@
+Requirement Studio V0.73 - Requirements Conflict Check
+========================================================
+Requirements baseline: Requirement_Studio_Requirements_Management_rev57.xlsx
+Governance: append-only update from rev56; existing approved rows unchanged.
+
+Conflict review
+---------------
+1. FR-382 vs FR-388
+   - No contradiction. FR-382 requires exact Source Fact ownership.
+   - FR-388 clarifies that exact ownership may be distributed across multiple exact fragments linked to one SRS.
+   - Broad Source evidence still cannot close exact ownership.
+2. FR-387 vs Source-authority / hallucination locks
+   - Compatible only under strict bounds: fragment completion is limited to already-matched Source locations and literal critical-token evidence.
+   - No new signal/value/allocation/Requirement may be invented.
+3. V0.72 OPEN Semantic disposition governance remains unchanged.
+4. Positive SW allocation is still required before SWE.6 concrete TC generation.
+5. Approved same-source Gold remains required for regression PASS.
+
+Conclusion
+----------
+V0.73 is a precision refinement of rev56 traceability rules. No pre-existing approved requirement text was modified.

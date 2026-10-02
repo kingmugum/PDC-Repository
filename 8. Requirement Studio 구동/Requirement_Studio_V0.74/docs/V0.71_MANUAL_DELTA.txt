@@ -1,0 +1,10 @@
+Requirement Studio V0.71 - User Manual Delta
+=============================================
+
+- Result Quality Review default: Unified End-to-End evaluation (SWE.1 + SWE.6).
+- The automatic evaluator is no longer limited by the former manual H-Chat three-file hand-off.
+- When unified review is selected, Requirement Studio prepares all available SWE.1 Word/Excel and SWE.6 Excel evidence automatically.
+- SWE.1-only and SWE.6-only review modes remain available for debugging.
+- The user normally needs to share only final_result/FINAL_RESULT_###.txt after evaluation.
+- FINAL_RESULT files are split at maximum 110 lines.
+- Final Result now contains a Completeness Audit; Unmapped Finding Occurrences must be 0.

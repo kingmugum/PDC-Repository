@@ -1,0 +1,129 @@
+{
+  "version": "1.8",
+  "rules": [
+    {
+      "id": "INV-001",
+      "rule": "Never invent numeric thresholds, states, signals, timing, limits, IDs, interfaces, or facts absent from the current source."
+    },
+    {
+      "id": "INV-002",
+      "rule": "Every extracted requirement must have at least one source evidence item with source document, source location, and source text."
+    },
+    {
+      "id": "INV-003",
+      "rule": "Reference examples are style/structure guidance only. The current source document is the factual Source of Truth."
+    },
+    {
+      "id": "INV-004",
+      "rule": "If information required for a testable requirement is missing, record a gap/TBD instead of completing it by inference."
+    },
+    {
+      "id": "INV-005",
+      "rule": "Pre-execution SWE.6 generation must not fabricate Output Value, PASS/FAIL, or Capture results."
+    },
+    {
+      "id": "INV-006",
+      "rule": "A SWE.6 test intent that cannot be concretized must remain explicitly deferred with a causal reason code; do not create missing test data merely to increase intent coverage."
+    },
+    {
+      "id": "INV-007",
+      "rule": "Terse interface configuration facts do not prove software implementation allocation. Defer SWE.1/SWE.6 eligibility until software responsibility is supported by source/allocation evidence."
+    },
+    {
+      "id": "INV-008",
+      "rule": "Review Exchange file 03 may be SWE.1 or SWE.6, but Source and Review Package must come from the same run so artifact-only comparison remains valid."
+    },
+    {
+      "id": "INV-009",
+      "rule": "An allocation-pending SWE.6 item must retain at least one explicit deferred test intent with causal ALLOCATION_PENDING governance; an empty list is not a completed review state."
+    },
+    {
+      "id": "INV-010",
+      "rule": "Cross-domain source facts must preserve fact-level allocation and verification domains. Do not auto-split the parent requirement solely to improve metrics."
+    },
+    {
+      "id": "INV-011",
+      "rule": "Verification methods inferred from requirement characteristics may be proposed only as DERIVED candidates and must never be represented as Source facts."
+    },
+    {
+      "id": "INV-012",
+      "rule": "A source-backed child intent is not automatically complete because its parent has a generic TC; child coverage/deferred/review disposition must remain auditable."
+    },
+    {
+      "id": "INV-013",
+      "rule": "Pre-execution SWE.6 Output Value, PASS/FAIL, Comment, and Capture fields are always blank. N/A is limited to design-side Variable/Compare/Value when Source cannot concretize them."
+    },
+    {
+      "id": "INV-014",
+      "rule": "A Source Table enum, range, encoding rule, invalid marker, or source-literal-only row must not be collapsed into an arbitrary single TC value. Only HIGH-confidence single required values or explicit timing criteria may be auto-used."
+    },
+    {
+      "id": "INV-015",
+      "rule": "Compound Semantic Source Units retain stable clause-level Source Fact Fragment ownership. The same exact fragment must not silently receive conflicting primary allocations across SRS."
+    },
+    {
+      "id": "INV-016",
+      "rule": "Unsupported-generation audit must inspect generated factual assertion values, not schema/provenance metadata keys."
+    },
+    {
+      "id": "INV-017",
+      "rule": "The actual serialized SWE.6 XLSX handed to reviewers must be re-opened and verified. Any pre-execution Output Value, PASS/FAIL, Comment, or Capture value is release-blocking, and the verifier must bind its result to the verified artifact SHA-256."
+    },
+    {
+      "id": "INV-018",
+      "rule": "A missing same-source approved regression baseline is NOT_EVALUATED, never PASS. The current unreviewed run must not auto-promote itself to a Gold Source."
+    },
+    {
+      "id": "INV-019",
+      "rule": "SWE.6 eligibility requires positive Source-backed software allocation or software-structural evidence. Absence of high-confidence non-software evidence is never sufficient to classify a System/controller behavior as software."
+    },
+    {
+      "id": "INV-020",
+      "rule": "Ordered-list parsing must preserve engineering literals. Decimal values, revisions, dates, headings, ranges, and specification identifiers are never list markers merely because they contain a dot or hyphen; table cells use table-aware literal preservation."
+    },
+    {
+      "id": "INV-021",
+      "rule": "Regression PASS may use only an explicitly approved same-source Gold Source contract or protected legacy reference. Ordinary prior/current local runs are evidence history, not automatic baselines."
+    },
+    {
+      "id": "INV-022",
+      "rule": "Tool Quality and Artifact Readiness are separate gates. Correctly deferred external dependencies or non-independent generic test intents may pass Tool Quality while the engineer-facing artifact remains REVIEW_REQUIRED."
+    },
+    {
+      "id": "INV-023",
+      "rule": "When a source-backed Child Intent has Source Fact Fragment ownership, its source_fact_fragment_id must be preserved through Atomic Behavior into the Child Intent. A broad Semantic Unit link is not a substitute."
+    },
+    {
+      "id": "INV-024",
+      "rule": "Source Fact Fragment ownership must be the minimum material set needed by the Canonical behavior. Neighbor clauses from the same composite paragraph are not owned merely because the parent Semantic Unit matched."
+    },
+    {
+      "id": "INV-025",
+      "rule": "If one parent requirement contains both SWE.6-eligible and non-SWE.6 facts, a generated SWE.6 TC may assert only the SWE.6-eligible fact scope. SYS.5 or external-dependency facts remain excluded/deferred review evidence."
+    },
+    {
+      "id": "INV-026",
+      "rule": "The serialized SWE.6 Capture CANoe column is part of the export schema even though user entry is optional. Its header must exist and its pre-execution cells must be blank."
+    },
+    {
+      "id": "INV-027",
+      "rule": "Automated GPT/Gemini/Claude reviewers must receive the same evidence independently and must not see each other outputs before consensus. Partial reviewer completion can provide findings but cannot independently produce Official Release PASS."
+    },
+    {
+      "id": "INV-028",
+      "rule": "Automated evaluation first persists machine-readable reviewer JSON and then renders human TXT/consensus. The consolidated final_result is split deterministically into files of at most 110 lines; every part repeats self-identifying handoff metadata without changing finding content."
+    },
+    {
+      "id": "INV-029",
+      "rule": "Automated evaluation has one active reviewer contract. Legacy standard/duplicate/precise reviewer selectors must not coexist with the GPT/Gemini/Claude orchestrator. Auto mode may transmit evidence, manual mode is local hand-off only, and none mode creates no Review Exchange or external evaluation."
+    },
+    {
+      "id": "INV-030",
+      "rule": "Canonical provenance completeness and exact Fact Fragment ownership are separate checks. Structured identifiers, numeric/timing/range/enum/relation values use one Source-backed token stream; broad provenance must not hide a critical fact missing from the owned fragment/Child Intent chain."
+    },
+    {
+      "id": "INV-031",
+      "rule": "An eligible Semantic Source Unit in REVIEW_NEEDED is an OPEN, non-terminal disposition. It remains unresolved until linked to Canonical/SRS, Gap/Conflict/External Dependency, or explicitly excluded with a documented rationale; the tool must not invent a resolution owner or requirement."
+    }
+  ]
+}

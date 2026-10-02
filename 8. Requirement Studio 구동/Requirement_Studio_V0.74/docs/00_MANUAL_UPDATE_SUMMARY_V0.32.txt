@@ -1,0 +1,46 @@
+Requirement Studio 사용자 매뉴얼 v0.32 · Runtime V0.63 업데이트 요약
+=================================================================
+
+기준 문서
+- Requirement_Studio_User_Manual_v0.31_V0.58(1).docx
+
+주요 개선
+1. Runtime / Contract 최신화
+   - Runtime V0.63
+   - Canonical 2.0
+   - Review Package 2.4
+   - SWE.1/SWE.6 Mapping 2.1
+   - Protected Invariants 1.3
+
+2. 사용자 운용
+   - 여러 문서 독립 순차 Batch 처리
+   - SWE.1 / SWE.6 평가 산출물 선택
+   - Review Exchange artifact focus 설명
+
+3. Traceability / Allocation
+   - Source Fact Fragment
+   - Source Table Fact Index
+   - Structured Provenance
+   - Parent / Fact-level Allocation inheritance
+   - Cross-domain / External Dependency 축 분리
+
+4. SWE.6 Governance
+   - Deferred Intent Reason Code
+   - Child Intent 상태: REPRESENTED / INDEPENDENTLY_COVERED / DEFERRED / REVIEW_REQUIRED
+   - 3_Deferred Intent / 4_Source_Intent_Audit / 5_Source_Fact_Audit
+   - Source Table Value Role 및 보수적 TC 자동 사용
+   - 시험 결과 Output/PASS-FAIL/Comment/Capture Blank 정책
+
+5. QA / Release
+   - PASS / PASS_WITH_REVIEW_ITEMS / FAIL
+   - release_gate_passed 분리
+   - Source Fact provenance 및 Unsupported Audit scope 설명
+
+6. 검증 / 이력
+   - V0.63 package 기준 76/76 tests PASS, 47 Python/PYW compile, Manifest 115 files SHA-256 PASS
+   - V0.59~V0.63 주요 발전 이력 추가
+   - V0.63 체크리스트 및 장애 점검 항목 최신화
+
+문서 자체 개정
+- v0.31 -> v0.32
+- Runtime V0.58 -> V0.63

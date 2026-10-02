@@ -1,0 +1,21 @@
+Requirement Studio V0.69 - User Manual Delta
+==============================================
+
+1. Result Quality Review tab
+- New full-width `자동 평가 진행상황` card.
+- Shows stage-based progress from automatic evaluation start through on-disk output verification.
+- Shows GPT/Gemini/Claude individual states.
+- Shows Tool Quality / Artifact Readiness / Official Release gates when available.
+- Enables `final_result 열기` when FINAL_RESULT_###.txt exists.
+
+2. Main STEP behavior
+- Main STEP 1~7 remains unchanged.
+- 3-AI evaluation is intentionally not represented as STEP 8 because it is an optional post-generation quality-review workflow.
+
+3. final_result handoff
+- If total final result is <=150 lines, only FINAL_RESULT_001.txt is generated.
+- If longer, FINAL_RESULT_002.txt, 003... are generated automatically.
+- For normal next-version review, upload all FINAL_RESULT_###.txt parts only. Raw provider evaluation files are optional diagnostic evidence.
+
+4. Requirements
+- rev55 remains locked and unchanged.

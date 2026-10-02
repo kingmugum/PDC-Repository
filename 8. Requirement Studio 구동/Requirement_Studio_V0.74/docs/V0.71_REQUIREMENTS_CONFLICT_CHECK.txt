@@ -1,0 +1,20 @@
+Requirement Studio V0.71 - Requirements Conflict Check
+========================================================
+Requirements Baseline: Requirement_Studio_Requirements_Management_rev55.xlsx
+Baseline SHA-256: c3a6a07868dd9673cef21547e9f904c9ade19711b929ddd5b903ffbae527c237
+Modification in V0.71: NONE
+
+Checked implementation boundaries:
+1) Main STEP 1~7 analysis/generation flow remains unchanged. Unified evaluation is still a post-generation quality-review workflow.
+2) Existing Auto / Manual / None evaluation control remains intact. Only Auto transmits evidence to configured H-Chat/API reviewers.
+3) GPT/Gemini/Claude remain independent reviewers receiving the same evidence snapshot; no reviewer sees another reviewer result before consensus.
+4) V0.71 changes the default evaluation scope from SWE.1-or-SWE.6 single-artifact focus to Unified End-to-End. Focused SWE.1 and SWE.6 modes remain available for debugging.
+5) The old H-Chat manual three-file hand-off limit is treated as a transport/UI legacy constraint, not a requirements invariant. Unified mode may include all available SWE.1 Word/Excel and SWE.6 Excel artifacts in one run.
+6) Evidence is compacted into Source + Trace Graph + artifact snapshots + QA/regression rather than blindly duplicating raw files; this preserves existing source-fidelity and no-invention policies.
+7) Missing outputs that were not selected/generated are explicitly not defects. This prevents cross-artifact false findings and is consistent with Artifact Readiness semantics.
+8) Final Result Completeness Audit is additive governance: every provider finding occurrence must map into consensus; unmapped findings must be zero.
+9) final_result is now capped at 110 lines per TXT, which is stricter than the existing max-150-line requirement and therefore does not require a requirements edit.
+10) Gold registration/regression behavior, protected extraction invariants, allocation gates, and deterministic artifact verification remain unchanged.
+
+Conclusion:
+No V0.71 implementation change requires a requirements-baseline edit. rev55 remains locked and byte-identical.

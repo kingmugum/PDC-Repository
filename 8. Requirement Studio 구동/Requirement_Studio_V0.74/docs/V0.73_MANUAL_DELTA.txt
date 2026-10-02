@@ -1,0 +1,8 @@
+Requirement Studio V0.73 - User Manual Delta
+==============================================
+- Unified End-to-End 평가와 FINAL_RESULT-only handoff 방식은 그대로 유지됩니다.
+- 한 SRS의 critical fact가 여러 exact Source Fact Fragment에 나뉘어 있으면 Fragment 전체 합집합으로 ownership을 판단합니다.
+- Result/Evidence에는 critical token별 실제 Source Fact Fragment ID 근거가 포함됩니다.
+- Canonical에 보존된 critical fact가 이미 매칭된 Source 위치의 다른 Fragment에 실제 존재하는 경우에만 최소 Fragment를 보강 연결합니다.
+- structured roll-up에만 있고 exact Source Fragment literal에는 없는 값은 ownership 근거로 인정하지 않습니다.
+- OPEN REVIEW_NEEDED Semantic Unit, SW Allocation Pending, Source conflict, Gold baseline 부재는 자동으로 해결하지 않습니다.
