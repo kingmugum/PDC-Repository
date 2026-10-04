@@ -1,12 +1,11 @@
-SELF TEST RESULTS - Automation_Manager_260928_1
+SELF TEST RESULTS - Automation_Manager_261004_2
 
-PASS - Python compile
-PASS - Git Manager 260927_1 runtime preserved
-PASS - BoardRepo v0.32 Result Modal integrated
-PASS - Upload sample result model: 7 / 6 / 0 / 0
-PASS - Download result model smoke
-PASS - Result Modal xvfb smoke
-PASS - shared Operation Lock release occurs before modal event
-PASS - Governance v0.8 applied
-PASS - Requirements formula scan: 0 errors
-PASS - final ZIP cache/pyc violation count: 0
+PASS - Target 1~9 catalog loaded
+PASS - Target 9 Learning board = AI 스냅샷_학습 / board/400
+PASS - Learning configuration_status READY
+PASS - Git recursive + BoardRepo file_hash direct-only roles preserved
+PASS - Result Modal remains catalog-dynamic 9 targets
+PASS - Governance v0.10 / LRN Profile v0.2 applied
+PASS - Python source syntax check
+PASS - Distribution cache/pyc violation count = 0 after final clean
+NOT RUN - Live groupware board/400 upload/download (requires user environment/session)

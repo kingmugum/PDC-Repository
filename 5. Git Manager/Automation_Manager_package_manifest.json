@@ -1,8 +1,10 @@
 {
-  "package": "Automation_Manager_260928_1.zip",
-  "release": "260928_1",
-  "governance_version": "v0.8",
-  "requirements": "Automation_Manager_Requirements_260928_1.xlsx",
-  "git_component": "GitManager_260927_1.zip",
-  "boardrepo_component": "BoardRepo_260928_1.zip"
+  "package": "Automation_Manager_261004_2.zip",
+  "release": "261004_2",
+  "governance_version": "v0.10",
+  "requirements": "Automation_Manager_Requirements_261004_2.xlsx",
+  "git_component": "GitManager_261004_2.zip",
+  "boardrepo_component": "BoardRepo_261004_2.zip",
+  "learning_board_name": "AI 스냅샷_학습",
+  "learning_board_url": "https://gw.suresofttech.com/app/community/130/board/400"
 }

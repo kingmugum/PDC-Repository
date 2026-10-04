@@ -1,13 +1,13 @@
-SELF TEST RESULTS - BoardRepo_260928_1 / v0.32
+SELF TEST RESULTS - BoardRepo_261004_2 / v0.34
 
-PASS - Python compile
-PASS - Upload result model sample: 미선택 7 / 확인 필요 6 / 실행 완료 0 / 오류 0
-PASS - Download result model smoke
-PASS - Tk Result Modal xvfb smoke
-PASS - 8 Target rows rendered from catalog order
-PASS - Scroll detail rows supported
-PASS - done event precedes result_dialog event
-PASS - standalone/integrated both import shared result_dialog.py
-PASS - browser_automation.py unchanged from 260927_1 baseline
-PASS - Governance v0.8 C3.5/C5.4 applied
-PASS - cache/pyc excluded from final package
+PASS - Target 1~9 catalog loaded
+PASS - Target 9 Learning mode=file_hash
+PASS - Learning board name = AI 스냅샷_학습
+PASS - Learning board URL = https://gw.suresofttech.com/app/community/130/board/400
+PASS - Learning configuration_status = READY
+PASS - Learning direct-only scan excludes 01. old
+PASS - Result Modal remains catalog-dynamic 9 targets
+PASS - Governance v0.10 / LRN Profile v0.2 applied
+PASS - Python source syntax check
+PASS - Distribution cache/pyc violation count = 0 after final clean
+NOT RUN - Live groupware board/400 upload/download (requires user environment/session)

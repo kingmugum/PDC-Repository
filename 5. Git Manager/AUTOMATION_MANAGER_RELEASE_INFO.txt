@@ -1,6 +1,8 @@
-Automation Manager : Automation_Manager_260928_1.zip
-Release            : 260928_1
-Governance         : v0.8
-Git Component      : GitManager_260927_1.zip (runtime unchanged)
-BoardRepo Component: BoardRepo_260928_1.zip
-AM Requirements    : Automation_Manager_Requirements_260928_1.xlsx
+Automation Manager Release : 261004_2
+Created                    : 2026-10-04
+Managed Targets            : 9
+Target 9                    : 9. 학습 (Learning / file_hash)
+BoardRepo Board Name        : AI 스냅샷_학습
+BoardRepo Board URL         : https://gw.suresofttech.com/app/community/130/board/400
+Governance                  : v0.10
+Requirements                : Automation_Manager_Requirements_261004_2.xlsx

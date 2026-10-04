@@ -1,10 +1,10 @@
 # 00_AI_DEVELOPMENT_GOVERNANCE.md
 
-> **Document Version:** v0.7  
+> **Document Version:** v0.10  
 > **Status:** Draft / Living Document  
-> **Effective Date:** 2026-09-27  
+> **Effective Date:** 2026-10-04  
 > **Purpose:** 모든 AI 보조 개발 프로젝트에 적용할 공통 개발헌법과 Project ID별 고유 운영 규칙을 하나의 문서에서 관리한다.  
-> **Registered Projects:** `PF` PassFail, `SE` Signal Export V2, `AM` Automation Manager, `GM` Git Manager, `BR` BoardRepo, `ALM` Requirement Studio Manual, `ALR` Requirement Studio Runtime / Tools  
+> **Registered Projects:** `PF` PassFail, `SE` Signal Export V2, `AM` Automation Manager, `GM` Git Manager, `BR` BoardRepo, `ALM` Requirement Studio Manual, `ALR` Requirement Studio Runtime / Tools, `LRN` 학습 / Knowledge Notes  
 > **Supersedes:** `00_AI_DEVELOPMENT_CONSTITUTION.md` + 프로젝트별 `01_PROJECT_RULES.md`
 
 ---
@@ -703,7 +703,7 @@ Replacement 모듈을 기본 기능의 필수 Dependency로 만들지 않는다.
 | Project ID | `SE` |
 | Project Name | Signal Export V2 |
 | Status | `ACTIVE` |
-| Profile Version | v1.1 |
+| Profile Version | v1.2 |
 | Requirements Mode | `DUAL_LAYER_XLSX_V1` |
 | Requirements Pattern | `SignalAuto_Requirements_Management_revXX_V2.xlsx` |
 | Package Pattern | `Signal_Export_V2_YYMMDD_N.zip` |
@@ -880,7 +880,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | Project ID | `AM` |
 | Project Name | Automation Manager |
 | Status | `ACTIVE` |
-| Profile Version | v1.1 |
+| Profile Version | v1.4 |
 | Requirements Mode | `CUSTOM` |
 | Requirements Pattern | `Automation_Manager_Requirements_YYMMDD_N.xlsx` |
 | Package Pattern | `Automation_Manager_YYMMDD_N.zip` |
@@ -904,11 +904,13 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 6. BoardRepo
 7. Requirement Studio Manual
 8. Requirement Studio Runtime / Tools
+9. 학습
 
 7·8의 그룹웨어 Board URL은 사용자 확인으로 확정되었다.
 
 - Target 7 Requirement Studio Manual: `https://gw.suresofttech.com/app/community/130/board/394`
 - Target 8 Requirement Studio Runtime / Tools: `https://gw.suresofttech.com/app/community/130/board/395`
+- Target 9 학습: `AI 스냅샷_학습` / `https://gw.suresofttech.com/app/community/130/board/400`으로 사용자 확인 완료되어 ACTIVE 라우팅으로 사용한다.
 
 ### C3.4 통합 GUI 상태 표시 및 시작 동작
 
@@ -920,6 +922,21 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 - 상태 표시는 요약 문구만 제공하며 별도 설명 영역을 추가하지 않는다. 상세 원인은 기존 로그와 Repository 정보에서 확인한다.
 - 사용자가 직접 실행한 작업에서 필요한 확인/경고/오류 Modal은 기존 안전 정책을 유지한다. 본 규칙은 프로그램 시작 시 자동 점검에 의한 불필요한 Modal 억제에 한정한다.
 
+### C3.5 BoardRepo 작업 결과 Modal
+
+- Automation Manager에 통합된 BoardRepo의 업로드/다운로드 완료 결과는 긴 일반 `messagebox` 문자열 대신 한눈에 판독 가능한 전용 결과 Modal을 사용한다.
+- 결과 Modal 상단에는 다음 4개 요약 카드만 고정 배치한다.
+  - `미선택`: 현재 작업에서 체크되지 않은 Target 수
+  - `확인 필요`: 자동 처리가 완료되지 않아 사용자 확인이 필요한 파일/항목 수
+  - `실행 완료`: 실제 업로드/다운로드 또는 정상 최신 판정 등 완료 건수
+  - `오류`: 작업 실패 건수
+- Target 요약 목록은 `program_catalog.json`의 현재 관리 순서를 그대로 사용하며 현재 기준 1~9 Target을 표시한다.
+- 확인 필요/오류가 존재하면 파일명과 사유를 표 형태의 상세 영역에 표시한다. 긴 사유는 줄바꿈 가능한 형태로 표시하고 상세 로그 자체는 기존 BoardRepo 로그에 계속 남긴다.
+- 기존 원격 중복검사·SHA 판정·다운로드 상태 코드의 의미를 UI 편의를 위해 변경하지 않는다. 결과 Modal은 기존 판정 결과를 표현하는 Presentation 계층이다.
+- 정상 완료, 중복 Skip, 확인 필요, 실패 등 모든 일반 배치 종료 시 동일한 Result Modal 계열을 사용한다. 공통 세션 실패도 가능한 범위에서 동일 Modal로 요약한다.
+- 작업 완료 후 공용 Operation Lock을 먼저 해제한 다음 결과 Modal을 표시하여 Modal을 보고 있는 동안 다른 엔진의 사용 가능 상태가 불필요하게 `작업 중`으로 남지 않게 한다.
+- 사용자가 직접 실행한 작업의 사전 안전 확인/설정/환경 오류 Modal은 본 Result Modal 정책의 적용 대상이 아니며 기존 안전 정책을 유지한다.
+
 ## C4. `[GM]` Git Manager
 
 ### C4.1 프로필 정보
@@ -929,7 +946,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | Project ID | `GM` |
 | Project Name | Git Manager |
 | Status | `ACTIVE` |
-| Profile Version | v1.0 |
+| Profile Version | v1.1 |
 | Requirements Mode | `CUSTOM` |
 | Requirements Pattern | `GitManager_Requirements_YYMMDD_N.xlsx` |
 | Package Pattern | `GitManager_YYMMDD_N.zip` |
@@ -952,7 +969,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | Project ID | `BR` |
 | Project Name | BoardRepo |
 | Status | `ACTIVE` |
-| Profile Version | v1.0 |
+| Profile Version | v1.3 |
 | Requirements Mode | `CUSTOM` |
 | Requirements Pattern | `BoardRepo_Requirements_v*.xlsx` |
 | Package Pattern | `BoardRepo_YYMMDD_N.zip` |
@@ -967,12 +984,22 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 - Ext는 파일명+SHA-256 정책을 유지한다.
 - 하위 `01. old` 등은 versioned target의 최신 Release 탐색 대상에 포함하지 않는다.
 - BoardRepo는 Git 복구 엔진을 직접 실행하지 않는다.
+- Target 9 `학습`은 Ext와 동일한 `file_hash` 계열 일반파일 Inbox로 취급한다. BoardRepo는 `9. 학습` 바로 아래의 현재 자료만 자동 게시 후보로 보고 `01. old` 등 하위 폴더는 재귀 업로드하지 않는다.
+- Target 9의 실제 그룹웨어 Board URL이 확정되기 전에는 해당 Target만 `게시판 URL 설정 필요`로 안전하게 처리하고 다른 Target의 동작을 방해하지 않는다.
 
 ### C5.3 Governance Carry-Forward
 
 - BoardRepo 및 Automation Manager Release에는 `00_AI_DEVELOPMENT_GOVERNANCE.md`를 포함한다.
 - 다음 수정은 동봉된 Governance와 최신 승인 BoardRepo Requirements를 먼저 읽고 영향·충돌·회귀를 검토한다.
 - Governance가 패키지에 있으므로 사용자가 동일 MD를 매 Release마다 별도로 다시 첨부하도록 요구하지 않는다.
+
+### C5.4 결과 표시 규칙
+
+- 업로드/다운로드 배치 결과는 공통 `result_dialog.py` Presentation 계층을 통해 표시한다.
+- 기존 `boardrepo.py`와 통합 `boardrepo_tab.py`가 동일한 결과 모델/Modal을 사용하여 standalone과 Automation Manager 간 결과 표현이 달라지지 않게 한다.
+- 결과 Modal은 판정 로직을 재계산하지 않고 이미 생성된 success/duplicate/conflict/error/download 상태를 집계하여 보여준다.
+- 상세 파일이 많아도 화면 높이를 무한히 늘리지 않고 Scroll 가능한 상세 영역을 사용한다.
+- Raw 문자열 요약의 literal `\n`을 사용자 결과 UI에 직접 노출하지 않는다.
 
 ## C6. `[ALM]` Requirement Studio Manual
 
@@ -1039,6 +1066,48 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 - Project ID `ALM`/`ALR`과 catalog key `ALIRAManual`/`ALIRARuntime`은 기존 Git/Requirements/원격 게시글 호환을 위해 변경하지 않는다.
 - 폴더, GUI, 그룹웨어 Board Name, 신규 BoardRepo 제목과 신규 권장 Package Prefix는 `Requirement Studio`를 사용한다.
 - Legacy `ALIRA` 폴더명·게시글 제목·Package Prefix는 읽기/복구/중복검사 호환 목적으로만 유지하며 신규 생성의 기본값으로 사용하지 않는다.
+
+## C8. `[LRN]` 학습 / Knowledge Notes
+
+### C8.1 프로필 정보
+
+| 항목 | 값 |
+|---|---|
+| Project ID | `LRN` |
+| Project Name | 학습 / Knowledge Notes |
+| Status | `ACTIVE` |
+| Profile Version | v0.2 |
+| Requirements Mode | `NOTE_GOVERNANCE` |
+| Requirements Pattern | 고정 Requirements 없음 — `노트_정리_헌법_v*.md` 기준 |
+| Package Pattern | 고정 패키지 없음 — 일반 파일 Inbox (`file_hash`) |
+| Primary Environment | Markdown/DOCX/PDF/XLSX/PPTX 등 학습 문서, Git, BoardRepo |
+
+### C8.2 현재 승인 범위
+
+- Automation Manager Target 9의 사용자 표시명과 canonical 폴더명은 `9. 학습`이다.
+- Target 9의 목적은 AI / LLM, SW Engineering, ISTQB, SDV, 책·영상 등 학습 자산을 하나의 상위 Target에서 관리하는 것이다. 자료가 늘어나더라도 분야마다 Automation Manager Target/그룹웨어 게시판을 즉시 추가하지 않는다.
+- Git은 `9. 학습` 전체를 이력 관리하며 하위 폴더를 포함할 수 있다.
+- BoardRepo는 `9. 학습` 바로 아래의 현재 자료만 일반파일 + SHA-256 방식으로 관리한다. `01. old` 및 기타 하위 폴더는 자동 게시 대상에서 제외한다.
+- 현재 학습 자료 목록과 기준 버전은 `00_KNOWLEDGE_INDEX.md`에서 확인한다.
+- 현재 학습 노트의 작성·검증·편입 방법은 `노트_정리_헌법_v*.md`의 최신 승인본을 우선 적용한다. 본 AI Development Governance는 해당 노트의 내용·표현을 임의로 수정하는 권한을 갖지 않는다.
+- 신규 일반파일 게시글 제목은 `[BoardRepo][학습] <filename>`을 사용하고 파일명 + SHA-256으로 중복 여부를 판정한다.
+- 그룹웨어 게시판은 `AI 스냅샷_학습`이며 실제 URL은 `https://gw.suresofttech.com/app/community/130/board/400`으로 사용자 확인 완료되었다. BoardRepo 원격 업로드·다운로드·중복검사는 이 exact URL을 사용하고 다른 번호로 추정·대체하지 않는다.
+
+### C8.3 자료 배치 원칙
+
+```text
+9. 학습
+├─ 00_KNOWLEDGE_INDEX.md
+├─ 노트_정리_헌법_vX.Y.md
+├─ 현재 학습 문서들
+└─ 01. old/
+   └─ 과거 버전 및 보관 자료
+```
+
+- BoardRepo에 자동 게시할 현재본은 Root에 둔다.
+- 과거 버전은 필요 시 `01. old`로 이동한다.
+- Git 내 세부 분류가 필요해 하위 폴더를 추가하더라도 BoardRepo 자동 게시가 필요한 현재본은 Root에 유지한다.
+- 특정 학습 분야가 독립 프로젝트 수준으로 커지고 별도 Board/Release/Requirements가 필요해질 때에만 신규 Target 분리를 검토한다.
 
 # Part D. 신규 프로젝트 프로필 양식
 
@@ -1118,6 +1187,10 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | v0.5 | 2026-09-13 | ALR Profile v0.3: `ALIRA_Vmajor.minor[.patch].zip` Semantic Version 관리, BoardRepo 제목/첨부 교차검증, Git ignore에 숨은 승인 ALIRA Release의 제한적 추적 예외 규칙 추가 | 모든 프로젝트 Git Hygiene, ALR |
 | v0.6 | 2026-09-19 | Target 7·8 사용자 표시명을 ALIRA에서 Requirement Studio로 변경. board/394·395 URL은 유지하고 게시판 명칭, 폴더/GUI, 신규 게시글 제목/권장 Package Prefix를 Requirement Studio로 전환. ALM/ALR Project ID와 ALIRA Legacy Alias는 호환을 위해 유지 | AM, GM, BR, ALM, ALR |
 | v0.7 | 2026-09-27 | Automation Manager 시작 시 자동 초기 점검의 Busy/Error Modal을 억제하고 Git Manager Header에 공용 Operation 상태를 Compact Status로 표시하는 규칙 추가. AM Profile v1.1 | AM, GM, BR |
+| v0.8 | 2026-09-28 | BoardRepo 업로드/다운로드 결과를 요약 카드 + 1~8 Target 상태 + Scroll 가능한 파일/사유 상세표의 전용 Result Modal로 표준화. 기존 판정/로그는 유지하고 Presentation 계층만 개선. AM Profile v1.2, BR Profile v1.1 | AM, BR |
+| v0.9 | 2026-10-04 | Automation Manager Target 9 `학습` 추가. `9. 학습`을 Git recursive + BoardRepo file_hash direct-only 지식/학습 자료 Target으로 정의하고 `00_KNOWLEDGE_INDEX.md`, 최신 노트 정리 헌법, AI/LLM 학습 노트 기준을 등록. 권장 Board 이름은 `AI 스냅샷_학습`, 실제 URL은 미확정/TBD로 유지. AM Profile v1.3, GM v1.1, BR v1.2, 신규 LRN Profile v0.1 | AM, GM, BR, LRN |
+
+| v0.10 | 2026-10-04 | Target 9 `학습`의 실제 그룹웨어 게시판 `AI 스냅샷_학습` / board/400 확정. BoardRepo 원격 업로드·다운로드·중복검사를 활성화하고 LRN Profile v0.2, AM Profile v1.4, BR Profile v1.3으로 갱신. Git은 Board URL 비의존 유지 | AM, GM, BR, LRN |
 
 ---
 

@@ -1,6 +1,6 @@
 {
   "app_name": "BoardRepo",
-  "version": "0.32",
+  "version": "0.34",
   "community_base": "https://gw.suresofttech.com/app/community/130",
   "targets": {
     "PassFail": {
@@ -237,6 +237,31 @@
       "legacy_display_names": [
         "ALIRA_Runtime"
       ]
+    },
+    "Learning": {
+      "display_name": "학습",
+      "ui_label": "9. 학습",
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/400",
+      "board_name": "AI 스냅샷_학습",
+      "configuration_status": "READY",
+      "folder_aliases": [
+        "9. 학습",
+        "학습",
+        "Learning",
+        "Knowledge Base",
+        "KnowledgeBase",
+        "9. Knowledge Base"
+      ],
+      "package_aliases": [
+        "9. 학습",
+        "학습",
+        "Learning",
+        "Knowledge Base",
+        "KnowledgeBase",
+        "9. Knowledge Base"
+      ],
+      "mode": "file_hash",
+      "post_display_name": "학습"
     }
   },
   "browser": {
@@ -418,7 +443,7 @@
   },
   "integration": {
     "catalog_path": "../../program_catalog.json",
-    "target_count": 8,
+    "target_count": 9,
     "automation_manager_is_managed_target": false,
     "target_order": [
       "PassFail",
@@ -428,7 +453,8 @@
       "GitManager",
       "BoardRepo",
       "ALIRAManual",
-      "ALIRARuntime"
+      "ALIRARuntime",
+      "Learning"
     ]
   },
   "environment": {
@@ -451,7 +477,7 @@
   "governance": {
     "required": true,
     "path_from_automation_root": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "minimum_document_version": "v0.8",
+    "minimum_document_version": "v0.10",
     "carry_forward_on_release": true
   },
   "file_hash_upload": {

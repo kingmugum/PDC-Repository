@@ -1,12 +1,11 @@
-Package            : GitManager_260927_1.zip
-Created            : 2026-09-27
-Requirements       : GitManager_Requirements_260927_1.xlsx
-Automation Manager : Automation_Manager_260927_1.zip
-Governance         : v0.7
+Package            : GitManager_261004_2.zip
+Created            : 2026-10-04
+Requirements       : GitManager_Requirements_261004_2.xlsx
+Automation Manager : Automation_Manager_261004_2.zip
+Governance         : v0.10
+Managed Targets    : 9
 
-Change Scope
-- Git Manager Header에 Compact Status 추가.
-- 상태: 주황 작업 중 / 초록 사용 가능 / 회색 사용 불가.
-- 공용 OperationLock listener로 Git Manager와 BoardRepo 작업 상태를 함께 표시.
-- 시작 시 자동 Git 상태 확인의 Busy/Error Modal을 억제하고 Busy 시 자동 재시도.
-- 사용자가 직접 실행한 Git 작업의 안전 Modal은 유지.
+Change
+- Target 9 Learning board metadata updated to AI 스냅샷_학습 / board/400
+- Git runtime remains Board URL independent
+- Runtime Git behavior otherwise unchanged from 261004_1

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "260928_1",
+  "release": "261004_2",
   "targets": [
     {
       "id": 1,
@@ -233,12 +233,37 @@
       "legacy_display_names": [
         "ALIRA_Runtime"
       ]
+    },
+    {
+      "id": 9,
+      "key": "Learning",
+      "display_name": "학습",
+      "ui_label": "9. 학습",
+      "folder": "9. 학습",
+      "aliases": [
+        "9. 학습",
+        "학습",
+        "Learning",
+        "Knowledge Base",
+        "KnowledgeBase",
+        "9. Knowledge Base"
+      ],
+      "board_url": "https://gw.suresofttech.com/app/community/130/board/400",
+      "board_name": "AI 스냅샷_학습",
+      "mode": "file_hash",
+      "package_prefixes": [],
+      "configuration_status": "READY",
+      "file_policy": "filename_sha256",
+      "accepted_file_types": "all_regular_files",
+      "recursive": false,
+      "post_display_name": "학습",
+      "legacy_display_names": []
     }
   ],
   "automation_manager": {
     "managed_target": false,
     "owner_target": "GitManager",
-    "reason": "Automation Manager는 통합 실행기/Core이며 1~8 관리대상을 표시한다. 자체는 별도 9번째 관리 대상으로 중복 등록하지 않는다."
+    "reason": "Automation Manager는 통합 실행기/Core이며 1~9 관리대상을 표시한다. 자체는 별도 10번째 관리 대상으로 중복 등록하지 않는다."
   },
   "git_repository": {
     "url": "https://github.com/kingmugum/PDC-Repository.git",
@@ -256,7 +281,8 @@
         "GitManager": "root_only",
         "BoardRepo": "root_only",
         "ALIRAManual": "recursive",
-        "ALIRARuntime": "root_only"
+        "ALIRARuntime": "root_only",
+        "Learning": "recursive"
       },
       "local_files_take_precedence": true,
       "automatic_push": false,
@@ -270,7 +296,7 @@
   "governance": {
     "required": true,
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "minimum_document_version": "v0.8",
+    "minimum_document_version": "v0.10",
     "carry_forward_on_release": true,
     "manifest_sha256_required": true,
     "development_baseline": true,

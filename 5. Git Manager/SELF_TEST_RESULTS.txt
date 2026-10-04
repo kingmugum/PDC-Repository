@@ -1,10 +1,10 @@
-SELF TEST RESULTS - GitManager_260927_1
+SELF TEST RESULTS - GitManager_261004_2
 
-PASS - Compact Status source includes gray/orange/green state mapping
-PASS - OperationLock owner listener notifies acquire/release
-PASS - startup refresh uses silent mode and retry-on-busy
-PASS - startup silent error path does not show error modal
-PASS - manual Git safety modal paths remain present
-PASS - Governance v0.7 C3.4 present
-PASS - Python compile
-NOT RUN - Windows live GUI visual inspection / real remote fetch (user environment required)
+PASS - Target 1~9 catalog loaded
+PASS - Target 9 Learning file_hash status summary supported
+PASS - Target 9 recursive preserve remains enabled
+PASS - Learning board metadata = AI 스냅샷_학습 / board/400
+PASS - Git behavior remains Board URL independent
+PASS - Governance v0.10 / LRN Profile v0.2 metadata applied
+PASS - Python source syntax check
+PASS - Distribution cache/pyc violation count = 0 after final clean

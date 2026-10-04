@@ -1,7 +1,7 @@
 {
-  "package": "Automation_Manager_260928_1.zip",
-  "release": "260928_1",
-  "created": "2026-09-28",
+  "package": "Automation_Manager_261004_2.zip",
+  "release": "261004_2",
+  "created": "2026-10-04",
   "managed_targets": [
     "PassFail",
     "SignalExport",
@@ -10,9 +10,10 @@
     "GitManager",
     "BoardRepo",
     "ALIRAManual",
-    "ALIRARuntime"
+    "ALIRARuntime",
+    "Learning"
   ],
-  "target_count": 8,
+  "target_count": 9,
   "automation_manager_is_target": false,
   "target_order": [
     "1. PassFail",
@@ -22,38 +23,45 @@
     "5. Git Manager",
     "6. BoardRepo",
     "7. Requirement Studio 매뉴얼",
-    "8. Requirement Studio 구동"
+    "8. Requirement Studio 구동",
+    "9. 학습"
   ],
   "governance": {
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "document_version": "v0.8",
-    "profile_am_version": "v1.2",
-    "profile_br_version": "v1.1",
-    "sha256": "1233a6f8597a7bc033ef0c456a529beab7631c923a2a383a0c70519475607876",
+    "document_version": "v0.10",
+    "profile_am_version": "v1.4",
+    "profile_gm_version": "v1.1",
+    "profile_br_version": "v1.3",
+    "profile_lrn_version": "v0.2",
+    "sha256": "d03ce0a4e73a2b5d6826e8e726e1cecdedbb9336c28a08ee199b5ec7a993bbe3",
     "changed_in_this_release": true
   },
   "components": {
-    "GitManager": "GitManager_260927_1.zip",
-    "BoardRepo": "BoardRepo_260928_1.zip"
+    "GitManager": "GitManager_261004_2.zip",
+    "BoardRepo": "BoardRepo_261004_2.zip"
   },
   "requirements": {
-    "AutomationManager": "Automation_Manager_Requirements_260928_1.xlsx",
-    "GitManager": "GitManager_Requirements_260927_1.xlsx",
-    "BoardRepo": "BoardRepo_Requirements_v0_32.xlsx"
+    "AutomationManager": "Automation_Manager_Requirements_261004_2.xlsx",
+    "GitManager": "GitManager_Requirements_261004_2.xlsx",
+    "BoardRepo": "BoardRepo_Requirements_v0_34.xlsx"
   },
-  "ui_result_modal": {
-    "scope": "BoardRepo upload/download batch results",
-    "summary_cards": [
-      "미선택",
-      "확인 필요",
-      "실행 완료",
-      "오류"
-    ],
-    "target_rows": "program_catalog order (8 targets)",
-    "detail_table": "scrollable filename + reason",
-    "all_normal_batch_results_use_modal": true,
-    "operation_lock_released_before_modal": true,
-    "legacy_safety_modals_retained": true
+  "learning_target": {
+    "id": 9,
+    "key": "Learning",
+    "display_name": "학습",
+    "folder": "9. 학습",
+    "mode": "file_hash",
+    "git_preserve": "recursive",
+    "board_name": "AI 스냅샷_학습",
+    "board_url": "https://gw.suresofttech.com/app/community/130/board/400",
+    "configuration_status": "READY",
+    "boardrepo_scope": "root direct files only",
+    "git_scope": "recursive including 01. old",
+    "index": "9. 학습/00_KNOWLEDGE_INDEX.md",
+    "current_files": [
+      "노트_정리_헌법_v0.5.md",
+      "AI_GPT_기초정리_토큰_어휘_언어모델_v0.4.docx"
+    ]
   },
   "distribution_hygiene": {
     "governance_rule": "A18",
@@ -72,10 +80,11 @@
     "zip_root_matches_filename": true
   },
   "change_scope": {
-    "project": "BoardRepo Result Modal presentation",
-    "boardrepo_technical_version": "0.32",
-    "governance_version": "v0.8",
-    "gitmanager_runtime_release": "260927_1 (unchanged)"
+    "target_9_learning": true,
+    "learning_board_activation": "board/400 READY",
+    "boardrepo_technical_version": "0.34",
+    "governance_version": "v0.10",
+    "git_runtime_behavior": "unchanged / board-independent"
   },
   "files": [
     {
@@ -85,8 +94,8 @@
     },
     {
       "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 51674,
-      "sha256": "1233a6f8597a7bc033ef0c456a529beab7631c923a2a383a0c70519475607876"
+      "size": 55723,
+      "sha256": "d03ce0a4e73a2b5d6826e8e726e1cecdedbb9336c28a08ee199b5ec7a993bbe3"
     },
     {
       "path": "3. WeeklyReport/.gitkeep",
@@ -95,103 +104,103 @@
     },
     {
       "path": "5. Git Manager/00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 48864,
-      "sha256": "e6ab35ceda0aa342484ed26438c477b5a6fff13ff3c75db4d08b7bfa75c77118"
+      "size": 55723,
+      "sha256": "d03ce0a4e73a2b5d6826e8e726e1cecdedbb9336c28a08ee199b5ec7a993bbe3"
     },
     {
       "path": "5. Git Manager/AUTOMATION_MANAGER_RELEASE_INFO.txt",
-      "size": 285,
-      "sha256": "07e1aa1f23155662cf3c01e14f052e56bd3d23092d0ef03b9168420ca5b7651a"
+      "size": 420,
+      "sha256": "f403efdf90ed24168989d186c935f94da7faa46ddfbf632f1b5dc8c0051b61c8"
     },
     {
-      "path": "5. Git Manager/Automation_Manager_Requirements_260928_1.xlsx",
-      "size": 54283,
-      "sha256": "48efa64c2321ffbe2af806365567340c7d3e1c1a90ffe8a77fd86f8d5c9b62c9"
+      "path": "5. Git Manager/Automation_Manager_Requirements_261004_2.xlsx",
+      "size": 58216,
+      "sha256": "0ec27341b991ef4bd1838bda8afbb0287b9d0b3e06f73b2952b7f58132a4a339"
     },
     {
       "path": "5. Git Manager/Automation_Manager_package_manifest.json",
-      "size": 271,
-      "sha256": "550ab17f0cb656223a1c6b0c028ee94b3313d2f7dfa1ef912bb22c1833ea5694"
+      "size": 404,
+      "sha256": "4afc81b607e1bdeb0686af1e05ec650b8d4740abac1e1d718a4d0bb59c0b1d3f"
     },
     {
-      "path": "5. Git Manager/GitManager_260927_1.zip",
-      "size": 165059,
-      "sha256": "7d44b2a8afc15790cb04749f2d5b3b1e47360a993a4c925708c8efb0dd5e79bf"
+      "path": "5. Git Manager/GitManager_261004_2.zip",
+      "size": 177951,
+      "sha256": "2817f51e49daf72b1b43864956afca249e1f72214b8578bc2870fe6505cb14f2"
     },
     {
-      "path": "5. Git Manager/GitManager_Requirements_260927_1.xlsx",
-      "size": 56375,
-      "sha256": "1019d54feee5f0b74b005da14add006c2cbf399cabf8b7777efc26974c626198"
+      "path": "5. Git Manager/GitManager_Requirements_261004_2.xlsx",
+      "size": 58939,
+      "sha256": "dde9915545a0e8b018f97f47f4e9f847e8d525dcf4862f9b2e59c370abe0dbb8"
     },
     {
       "path": "5. Git Manager/MANUAL.txt",
-      "size": 403,
-      "sha256": "af917a6938c2ee043eb91e3cadfdc70d29483c4beffa2d69499791e56f8d4b03"
+      "size": 361,
+      "sha256": "000acde3d6cb02a1030fb5b111f09e8b4d70cf0449395ae28ab04e5b20e1d6de"
     },
     {
       "path": "5. Git Manager/PACKAGE_INFO.txt",
-      "size": 614,
-      "sha256": "b94bf1d5f95a6e6cf171fb1e7069872433e20646ef15f838be4ce9f33e618012"
+      "size": 426,
+      "sha256": "acfccd2b49d37ed0c6acb7fe3d6ec6dfce05506e09e689a8abd6e8ded4c97f2d"
     },
     {
       "path": "5. Git Manager/SELF_TEST_RESULTS.txt",
-      "size": 492,
-      "sha256": "a3c69702a8fc401c7b9322d15a711c286f0fa051c6d438b73514b531c43257d8"
+      "size": 462,
+      "sha256": "ef95bb1820e7c434697abb710e72c8b7d2e47165eadcd1c931432b3a764e7180"
     },
     {
       "path": "5. Git Manager/current/Git_Manager.pyw",
-      "size": 904,
-      "sha256": "a1c92ba460e5167ddc12c66ce70af78ab04223f4956c937a067bb0f1a0412660"
+      "size": 985,
+      "sha256": "e5635fcace83df9b58fc71f940a555e7ed0de30faa8f465e39dca0ed59dad255"
     },
     {
       "path": "5. Git Manager/current/git_manager.py",
       "size": 54472,
-      "sha256": "4e6a08f42d67c8af7882eb7f994f39ba8e81221c66d77ea62d4fc378d78c05d5"
+      "sha256": "d539284fd264510f33ad5fb27c951127f9116860eebe6f0d20bd025c2eaad711"
     },
     {
       "path": "5. Git Manager/package_manifest.json",
-      "size": 3933,
-      "sha256": "c9841d68bafa0b9472c679e5db5ca3e7bf6234ee5a132db845d0c397765af569"
+      "size": 3844,
+      "sha256": "487b3db781dcd10cfa3418ed7689c358b829446752a1c69e7bb1ed9550288077"
     },
     {
       "path": "6. BoardRepo/00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 51674,
-      "sha256": "1233a6f8597a7bc033ef0c456a529beab7631c923a2a383a0c70519475607876"
+      "size": 55723,
+      "sha256": "d03ce0a4e73a2b5d6826e8e726e1cecdedbb9336c28a08ee199b5ec7a993bbe3"
     },
     {
-      "path": "6. BoardRepo/BoardRepo_260928_1.zip",
-      "size": 276705,
-      "sha256": "70162145504846125552c947481d0ecf2764220ed6cdd6b5bfe68f1a4ef8c92c"
+      "path": "6. BoardRepo/BoardRepo_261004_2.zip",
+      "size": 289753,
+      "sha256": "c54e1b0eba01f9fd92152a3c86fd4cf0a5c262b5af20a74c5e65e77e6daf2c53"
     },
     {
-      "path": "6. BoardRepo/BoardRepo_Requirements_v0_32.xlsx",
-      "size": 145862,
-      "sha256": "97290006010a557381f8ba4589fd6d9d5cec6f7d55c09101ea2a079557d494b8"
+      "path": "6. BoardRepo/BoardRepo_Requirements_v0_34.xlsx",
+      "size": 150131,
+      "sha256": "1069bc0b7d43e8338a5f1d462c16d8be1fe1d055fbd51275ddf8eef4b34bbafb"
     },
     {
       "path": "6. BoardRepo/MANUAL.txt",
-      "size": 428,
-      "sha256": "6a6224199f9714598e399067b2cfe38bb8c8226e49d4de92a3e5352dbb648205"
+      "size": 434,
+      "sha256": "1da2c88c2f428950ed94c341c102e908a348ec8c29b9bb4694c4abbda95ce4ec"
     },
     {
       "path": "6. BoardRepo/PACKAGE_INFO.txt",
-      "size": 284,
-      "sha256": "12f6ff703890f1ef39824d12048289d7ce99ba03a544ff9cbb08175ed901706d"
+      "size": 389,
+      "sha256": "7bc64bdb2e55d28e721dd2bece233c6f13fb68939fa908b3145da46238ce3131"
     },
     {
       "path": "6. BoardRepo/SELF_TEST_RESULTS.txt",
-      "size": 578,
-      "sha256": "738a40349aaaf302e4a52c63e91f2f2efd44f60628e0ba5b1387d16d4351e51e"
+      "size": 643,
+      "sha256": "3eef6ef7a771c8b6322b15166b3af9137c8b4b47350cc90ab703cc929c92814b"
     },
     {
       "path": "6. BoardRepo/current/BoardRepo.pyw",
-      "size": 935,
-      "sha256": "2d55440b46d5de84134cef2b4181f64199ca72da8a39e0e0780a3b6bab149f7d"
+      "size": 1016,
+      "sha256": "9965a64b234e1930cee1ec49b317bcc88dbc64c24e388582c6046642626cb082"
     },
     {
       "path": "6. BoardRepo/current/config.json",
-      "size": 15013,
-      "sha256": "dc46fa1dfb8f0c11561e784f396e7929d38e2a646d086bb33462d273ce3d4daa"
+      "size": 15691,
+      "sha256": "4f3963652173a9c39a118c61207fcade8e1523c7c14b7502890c93b4a61ba662"
     },
     {
       "path": "6. BoardRepo/current/function/archive_selector.py",
@@ -300,8 +309,8 @@
     },
     {
       "path": "6. BoardRepo/package_manifest.json",
-      "size": 6199,
-      "sha256": "630f8a1a969b035eacc26d03f6eec1ff550581c0f12dbadcfde41dbcdfaa8875"
+      "size": 6985,
+      "sha256": "0cae765cd51012d71b4e2203f8af0c6643c3ea1be3beb27fda0d539fcdbe6298"
     },
     {
       "path": "7. Requirement Studio 매뉴얼/.gitkeep",
@@ -314,19 +323,39 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "Automation_Manager.pyw",
-      "size": 4323,
-      "sha256": "c17cca76f6911c1f37a893cb236d40a0d273e95ca4f59fd1eca7ca3cdae93f51"
+      "path": "9. 학습/00_KNOWLEDGE_INDEX.md",
+      "size": 2102,
+      "sha256": "1ed9ffcdd3c3cfb51b3c7d1faa4cd867a8bcc87d13dd281bb85298f6aa6f862f"
     },
     {
-      "path": "Automation_Manager_Requirements_260928_1.xlsx",
-      "size": 54283,
-      "sha256": "48efa64c2321ffbe2af806365567340c7d3e1c1a90ffe8a77fd86f8d5c9b62c9"
+      "path": "9. 학습/01. old/.gitkeep",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "9. 학습/AI_GPT_기초정리_토큰_어휘_언어모델_v0.4.docx",
+      "size": 32119,
+      "sha256": "129279df41410e54222ce934e2a6cc1bd7667b32145723b575f5841ff2457b7f"
+    },
+    {
+      "path": "9. 학습/노트_정리_헌법_v0.5.md",
+      "size": 23056,
+      "sha256": "6bc4243794976ebb9363157da7dfe5c8b9488de5f9f47d122feadc86eee92c19"
+    },
+    {
+      "path": "Automation_Manager.pyw",
+      "size": 4367,
+      "sha256": "3f326d830ba9341483251f32a218340a3e308f60f3a0952c0a84f763543ad663"
+    },
+    {
+      "path": "Automation_Manager_Requirements_261004_2.xlsx",
+      "size": 58216,
+      "sha256": "0ec27341b991ef4bd1838bda8afbb0287b9d0b3e06f73b2952b7f58132a4a339"
     },
     {
       "path": "SELF_TEST_RESULTS.txt",
-      "size": 462,
-      "sha256": "43aada5e233751439ba8630f721c20d31b9287dbe1ce5707475076ad5604ddcc"
+      "size": 555,
+      "sha256": "dc5173325c1bf5a5fbf187cb3c5d982550e4dfce7f4dc1647b43029bd1be45f3"
     },
     {
       "path": "function/common/catalog.py",
@@ -350,8 +379,8 @@
     },
     {
       "path": "program_catalog.json",
-      "size": 8601,
-      "sha256": "edfe8d966996393e2ecfad31538b4116ec862df3218d418f5aa6d27ce09466ac"
+      "size": 9351,
+      "sha256": "a5ffeb7591e4a95f1452ddb576fa9b7cca59c97b939d9a467db69603a70fb385"
     }
   ]
 }

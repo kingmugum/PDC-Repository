@@ -21,7 +21,9 @@ if __name__ == "__main__":
     vars_ = {t["key"]: tk.BooleanVar(value=True) for t in catalog["targets"]}
     select = ttk.Frame(app, padding=8)
     select.pack(fill="x")
-    for t in catalog["targets"]:
-        ttk.Checkbutton(select, text=t["ui_label"], variable=vars_[t["key"]]).pack(side="left", padx=5)
+    for index, t in enumerate(catalog["targets"]):
+        ttk.Checkbutton(
+            select, text=t["ui_label"], variable=vars_[t["key"]]
+        ).grid(row=index // 4, column=index % 4, sticky="w", padx=5, pady=2)
     GitManagerFrame(app, ROOT, vars_, OperationLock()).pack(fill="both", expand=True)
     app.mainloop()

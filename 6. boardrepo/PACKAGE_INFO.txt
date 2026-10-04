@@ -1,7 +1,11 @@
-Package           : BoardRepo_260928_1.zip
-Technical Version : v0.32
-Created           : 2026-09-28
-Requirements      : BoardRepo_Requirements_v0_32.xlsx
-Governance        : v0.8
-Change            : Upload/Download Result Modal
-Core Browser      : 기존 browser_automation.py 유지
+Package           : BoardRepo_261004_2.zip
+Technical Version : v0.34
+Requirements      : BoardRepo_Requirements_v0_34.xlsx
+Created           : 2026-10-04
+Governance        : v0.10
+Learning Board    : AI 스냅샷_학습 / board/400
+
+Change
+- Target 9 학습 실제 Board URL board/400 활성화
+- configuration_status READY
+- file_hash 원격 업로드/다운로드/중복검사 활성화
