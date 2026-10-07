@@ -1,0 +1,6 @@
+Requirement Studio V0.75 - Requirements Conflict Check
+======================================================
+1. FR-395 refines FR-381/382/390 token extraction without widening Source authority. Only literals physically present in Source are tokenized; the change replaces Unicode word-boundary behavior with ASCII engineering boundaries.
+2. FR-396 refines FR-392 dominant-parent containment. Clear non-critical leakage is still removed, but a critical fact explicitly asserted by a claimant Canonical behavior cannot be orphaned by cleanup.
+3. FR-396 remains consistent with FR-382/388 because ownership still requires exact Source Fact Fragment identity; critical-token overlap is a retention guard, not new Source evidence.
+4. SW allocation, Gold approval, OPEN Semantic Unit disposition, Visual evidence, and Source conflict governance are unchanged.

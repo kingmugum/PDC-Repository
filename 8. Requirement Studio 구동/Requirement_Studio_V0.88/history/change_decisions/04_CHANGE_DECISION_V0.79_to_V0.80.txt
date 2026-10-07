@@ -1,0 +1,39 @@
+Requirement Studio Change Decision — V0.79 -> V0.80
+=====================================================
+Decision: APPROVED FOR IMPLEMENTATION
+Theme: Engineering E2E SYS/SWE Expansion
+
+1. Why this change
+------------------
+V0.79 confirmed that Human Policy Registry reuse works and that REVIEW_REQUIRED/HOLD can remain visible without being treated as approved release evidence. The next limitation was structural: a Source fact that is not SWE.1/SWE.6 was still treated mainly as an allocation exception instead of as a first-class Engineering Requirement / Verification candidate.
+
+2. Governing principles
+-----------------------
+- Not SWE.1 != Not Requirement.
+- Not SWE.6 != Not Verifiable.
+- Source-backed normative engineering facts are preserved first as Canonical Engineering Requirements, then allocated/projected to System / Software / Hardware / Electrical / Environmental / Manufacturing / External Dependency views.
+- REVIEW_REQUIRED/HOLD remains visible in Engineering Main and Review views.
+- Visibility never equals Official Release approval.
+- Missing values, timing, signal definitions, test inputs, pass criteria, or execution results are never invented.
+
+3. V0.80 implementation
+-----------------------
+- Canonical Engineering Requirement becomes the single truth for requirement views.
+- Adds SYS.1 projection fields and dedicated SYS.1 System Requirement View.
+- Keeps SWE.1 as a Software projection/compatibility view.
+- Adds SYS.5 Candidate Verification View and integrated SYS.5/SWE.6 trace view.
+- Adds plural Engineering/Verification domain projection metadata.
+- Adds PROPOSED_CHANGE_PENDING canonical state for unresolved source change/interface proposals.
+- Preserves native non-SW engineering requirements in Engineering Main.
+- Human Policy Registry gains HP-E2E-001 and HP-SYSVER-001.
+
+4. V0.79 defect repairs carried with V0.80
+------------------------------------------
+- Recover exact Source-backed native-domain facts that were audit-linked but missing from Canonical/Main (e.g. rated DC 13.5 V).
+- Complete exact cited non-SW provenance such as automatic-soldering requirement linkage.
+- Prevent SYS.5/allocation-pending facts from leaking into qualifying SWE.6 Execution/Expected assertions.
+- Keep proposed ICMU_CaptureModeCMD-type interface changes explicitly change-pending/review-required rather than silently approved.
+
+5. Compatibility
+----------------
+Legacy output filenames containing SWE.1/SWE.6 are retained temporarily so existing workflows do not break. The internal titles/sheets clearly identify Engineering E2E integrated review. This is a pragmatic view model, not a claim of strict ASPICE process conformance.

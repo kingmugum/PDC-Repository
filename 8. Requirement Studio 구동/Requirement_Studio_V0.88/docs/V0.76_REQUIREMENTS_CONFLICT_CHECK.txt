@@ -1,0 +1,19 @@
+Requirement Studio V0.76 - Requirements Conflict Check
+======================================================
+Baseline checked: Requirement_Studio_Requirements_Management_rev60.xlsx
+
+1. Package cleanup vs append-only history
+- Decision: preserve old baselines and Change Decisions under history; do not delete.
+- Status: compatible with FR-386 / LOCK-008.
+
+2. Change Decision path move vs Review Exchange companion contract
+- Decision: project storage path moves to history/change_decisions; Run folder still receives the current basename as file 04.
+- Status: compatible.
+
+3. check_situation vs FINAL_RESULT
+- Decision: check_situation is deterministic policy-impact diagnosis; FINAL_RESULT remains independent 3-AI quality review.
+- Status: roles separated.
+
+4. Productivity policy review vs no-hallucination safeguards
+- Decision: V0.76 performs diagnosis only; no allocation eligibility or Source-fidelity rule is relaxed.
+- Status: compatible; future policy change requires a new approved Requirement revision.

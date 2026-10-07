@@ -1,0 +1,16 @@
+Requirement Studio V0.72 - Requirements Conflict Check
+========================================================
+Requirements baseline: Requirement_Studio_Requirements_Management_rev55.xlsx
+Modification in V0.72: NONE
+Expected SHA-256: c3a6a07868dd9673cef21547e9f904c9ade19711b929ddd5b903ffbae527c237
+
+Conflict review
+---------------
+1. FINAL_RESULT identity metadata and repeated split-part headers are additive handoff/audit metadata; no approved requirement behavior is weakened.
+2. 110-line split remains stricter than the existing maximum-line handoff requirement.
+3. Provenance token collector unification only changes deterministic audit evidence collection; Source facts are not generated or altered.
+4. Critical Fact Fragment ownership gate strengthens existing single-truth/traceability invariants.
+5. REVIEW_NEEDED non-terminal governance strengthens explicit disposition and does not auto-promote Source content into SWE.1/SWE.6.
+6. Positive SW allocation, correct deferral, Tool Quality vs Artifact Readiness, and approved-Gold regression policies remain unchanged.
+
+Conclusion: no requirement-baseline edit is required; rev55 remains locked.

@@ -1,0 +1,24 @@
+V0.83 Requirements Conflict Check
+=================================
+
+1. Existing Unified evaluation vs new option
+- Finding: V0.82 already included integrated workbooks in Unified Review Exchange/Evaluation.
+- Decision: Do not add a redundant fourth evaluation mode. Rename/clarify the existing recommended Unified option and enforce its 5-artifact contract.
+- Status: RESOLVED.
+
+2. Missing artifact rule vs unselected-artifact non-defect rule
+- Finding: General policy says an intentionally unselected/not-generated artifact is not automatically a defect.
+- Decision: In recommended Unified mode, the five contracted artifacts are no longer optional. Missing one is a deterministic contract failure. SWE.1-only/SWE.6-only debug modes retain the old optional-artifact rule.
+- Status: RESOLVED BY SCOPE.
+
+3. H-Chat context usefulness vs file size
+- Finding: Full source dump may exceed practical paste/upload limits and reduce reviewer signal.
+- Decision: AST-based curated symbol excerpts, 3,200-line default cap, hashes and symbol index. Full source absence must not be interpreted as code absence.
+- Status: RESOLVED.
+
+4. H-Chat context vs secret leakage
+- Finding: Program package may contain provider/config material unrelated to review.
+- Decision: Context builder only reads hard-coded curated Python source files and manual delta. API key/config credential files are excluded.
+- Status: RESOLVED.
+
+No conflict requires rollback of V0.82 integrated requirements/tests or legacy SWE outputs.

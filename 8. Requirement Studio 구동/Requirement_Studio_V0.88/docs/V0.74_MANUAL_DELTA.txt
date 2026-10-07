@@ -1,0 +1,8 @@
+Requirement Studio V0.74 - User Manual Delta
+============================================
+- Unified End-to-End evaluation remains the default.
+- Exact critical-fact completion can recover a literal fragment from another Semantic Unit only when it is on an explicitly cited Source location and contains the missing critical token.
+- Clear shared-fragment parent leakage is resolved to the dominant parent; ambiguous sharing remains review-required.
+- Diagram/image-dependent clarifications are also surfaced as UNANALYZED_VISUAL_ASSET Gap/TBD when Vision evidence is unavailable.
+- OPEN REVIEW_NEEDED remains visible but is not, by itself, Tool Quality failure.
+- FINAL_RESULT handoff remains self-identifying and split at 110 lines.

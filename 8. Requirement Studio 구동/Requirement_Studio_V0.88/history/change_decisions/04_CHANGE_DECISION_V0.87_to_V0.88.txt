@@ -1,0 +1,19 @@
+Requirement Studio Change Decision V0.87 -> V0.88
+=================================================
+
+Decision: ACCEPT
+Change class: GUI / responsiveness / governance boundary restoration
+
+Accepted changes
+----------------
+- Split AI Engine provider selector into two rows.
+- Reduce fixed width pressure in Model/API Key/action controls.
+- Rebalance top File/AI/Run card stretch to 3:6:3.
+- Reduce default window/logical canvas widths so the dashboard can shrink naturally before scrolling.
+- Preserve analysis-progress/required-item panels and all V0.87 E2E/automatic-evaluation behavior.
+- Close the temporary GUI requirement-edit exception and restore LOCK-008 as the standard rule.
+
+Rejected changes
+----------------
+- None.
+- No E2E extraction/allocation/verification semantics were modified.

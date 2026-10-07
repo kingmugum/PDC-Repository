@@ -1,0 +1,25 @@
+Requirement Studio V0.86 Manual Delta
+=====================================
+
+1. New primary E2E artifacts
+- E2E 요구사항 명세서 Word: SYS.1 + SWE.1 + native/review; narrow-left/wide-right table style.
+- E2E 요구사항 명세서 Excel: 6-sheet compact equivalent.
+- E2E 평가 명세서 Excel: 6 sheets; 2_E2E_평가케이스 is the main SWE.6-style execution/review sheet.
+
+2. E2E Evaluation main sheet
+Contains SYS5_CANDIDATE, SWE6_TC, Deferred/Allocation Pending/External, native-domain verification and review objects through Evaluation Objectives.  Raw objects remain auditable but repeated AP/Deferred records are grouped when they represent the same objective.
+
+3. State-transition logic
+Source-backed ALL_OF/ANY_OF/SEQUENCE and target state are carried into E2E rows. No missing combinations/test values are invented.
+
+4. SYS.5 parent fallback
+No real SYS.5 fact => E2E type SYS5_PARENT_SCOPE_REVIEW, not executable SYS5 coverage.
+
+5. Quality gates
+Structural Single Truth Gate and Semantic Verification Quality Gate are displayed independently.
+
+6. Unified AI evaluation
+Requires legacy SWE.1/SWE.6 artifacts plus E2E Requirements Word/Excel and E2E Evaluation Excel. E2E workbook snapshots are full-sheet/full-row.
+
+7. Requirements lifecycle
+rev70 adds AI_11_현재유효요구사항. Historical AI_02 is preserved; explicit superseded requirements are removed only from the Effective projection.

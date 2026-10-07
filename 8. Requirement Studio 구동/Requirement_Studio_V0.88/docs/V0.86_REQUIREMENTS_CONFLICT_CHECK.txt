@@ -1,0 +1,24 @@
+Requirement Studio V0.86 Requirements Conflict Check
+====================================================
+
+Scope
+- Full accumulated requirements baseline rev70, not only newly added FR-458~468.
+
+Resolved high-confidence historical conflicts
+1. FR-011/012 single-document Gate -> FR-128/129 multi-document Batch.
+2. FR-050 startup auto connection -> FR-098/099 manual/user-controlled connection.
+3. FR-045~049 and FR-101 custom EXE launcher -> FR-170 No-EXE / Requirement Studio.pyw.
+4. FR-091 ALIRA-CANONICAL contract -> FR-115 REQ-STUDIO-CANONICAL.
+5. FR-051/054 old +/- Connection card -> FR-102/107 Dashboard/Popup structure.
+6. FR-060 manual Analysis DOCX button -> FR-123 automatic save.
+7. FR-103/120 exact primary-button wording -> FR-188 current wording.
+8. FR-027/028/034 ALIRA-branded launcher paths -> FR-096/097/170 Requirement Studio branding/distribution.
+9. LOCK-006 / AI-RULE-009 package naming updated by explicit user approval to Requirement_Studio_V<Major>.<Minor>.zip.
+
+Lifecycle policy
+- Historical rows are not deleted.
+- Superseded rows are marked 대체됨 + SUPERSEDED BY rationale.
+- AI_11_현재유효요구사항 is the current implementation contract projection.
+- Future conflict reviews must distinguish Historical Truth from Current Effective requirements.
+
+V0.86 E2E requirements do not introduce a new unresolved contradiction: E2E outputs are additive to legacy SWE.1/SWE.6 and do not auto-change allocation or human policy decisions.

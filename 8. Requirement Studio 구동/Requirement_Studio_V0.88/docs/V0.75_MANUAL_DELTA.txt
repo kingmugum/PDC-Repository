@@ -1,0 +1,27 @@
+Requirement Studio V0.75 - User Manual Delta
+============================================
+Base manual: Requirement_Studio_User_Manual_v0.33_V0.74.docx
+
+V0.75 is a focused Tool Quality hardening update. Existing V0.74 operating workflow remains unchanged.
+
+1. Engineering fact token boundaries
+- Source identifiers remain detectable even when Korean particles immediately follow the token: `SVM_Typ2의`, `ICMU_RealTimeMonStat를`.
+- Timing/retry literals remain detectable when Korean prose immediately follows the unit: `5초동안`, `1회재시도`.
+- The change is boundary handling only; it must not invent identifiers or values absent from Source.
+
+2. Shared critical Fact Fragment ownership
+- V0.74 dominant-parent containment remains active for clear non-critical leakage.
+- If a shared Fragment carries a critical signal/timing/hex/retry token explicitly asserted by more than one claimant Canonical behavior, that critical ownership is preserved rather than auto-deleted from the weaker claimant.
+- The containment review record exposes preserved critical claimants/tokens for audit.
+
+3. Unchanged governance
+- OPEN REVIEW_NEEDED remains OPEN until human terminal disposition.
+- Positive SW allocation is still required before Main SWE.1/SWE.6 promotion.
+- Missing approved Gold baseline remains NOT_EVALUATED.
+- Vision absence does not authorize diagram inference.
+- Source conflicts remain human/source issues.
+
+4. Baseline
+- Runtime: V0.75
+- Requirements: rev59
+- Full operating manual remains v0.33 / V0.74 plus this V0.75 delta.

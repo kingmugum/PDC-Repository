@@ -1,0 +1,9 @@
+Requirement Studio V0.78 Conflict / Policy Review
+==================================================
+
+- GUIDE_PERSON is intentionally question-generation only. It does not conflict with append-only Requirements governance because no human answer mutates policy in V0.78.
+- Deterministic defects remain Tool responsibility; GUIDE_PERSON is limited to Engineering Policy/Governance choices.
+- Shared Source fragment context aliases refine INV-015: physical Source identity remains stable while claim-context identity is explicit when parent verification domains diverge.
+- Mixed-domain all-field isolation changes only the engineer-facing Main SWE.1 view. Canonical/Review Package full Source truth is preserved.
+- Exact-cited non-SW provenance completion requires three gates: exact cited location, high-confidence non-SW classification, and material overlap. It cannot create allocation or requirement facts.
+- Source-fidelity/no-hallucination invariants remain unchanged.

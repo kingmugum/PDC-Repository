@@ -1,0 +1,6 @@
+Requirement Studio V0.84 Requirements Sync Report
+==================================================
+Baseline: rev68
+Added: FR-448~FR-451 with matching failure, regression, code-evidence, AI-rule, and conflict-review rows.
+Scope: integrated Excel scalar serialization, Unified preflight reviewer suppression, STEP7 export status truthfulness, duplicate artifact failure suppression.
+V0.82 execution-result engineering changes are not synchronized in this release and are reserved for V0.85.

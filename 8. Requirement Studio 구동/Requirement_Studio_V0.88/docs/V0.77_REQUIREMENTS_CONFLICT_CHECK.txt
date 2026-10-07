@@ -1,0 +1,27 @@
+Requirement Studio V0.77 Conflict / Policy Review
+=================================================
+
+Result: ACCEPTED WITH CONSERVATIVE BOUNDARIES
+
+The V0.77 change intentionally modifies the V0.65+ positive-SW-only promotion policy, but it does not remove Source-fidelity safeguards.
+
+Key conflict resolutions
+------------------------
+- Inferred Controller SW vs prior positive-SW gate:
+  Allowed only for explicit controller/ECU actor + literal executable behavior; explicit allocation evidence remains separate; review required remains visible.
+
+- Candidate SWE.6 increase vs hallucination:
+  Existing Source-backed testability/value-role/provenance/conflict gates remain active. Missing values remain N/A/Deferred/Review rather than being invented.
+
+- Behavior completion vs over-linking:
+  Completion remains Source-bounded and minimal. Adjacent Paragraph recovery is ±1 only and uses stricter evidence.
+
+- Mixed-domain parent vs Main SWE.1 clarity:
+  Canonical keeps the complete parent truth; Main SWE.1 is a scoped view containing only SWE.1-eligible facts, with excluded facts preserved in review context.
+
+- Lexical TC overlap vs Child Intent state:
+  Authoritative Child Intent disposition wins; DEFERRED/REVIEW_REQUIRED cannot become represented merely because similar words occur in a parent TC.
+
+Known deferred item
+-------------------
+ESTRACK V0.74 Canonical 18 vs V0.76 Canonical 15 is not resolved in this release. Historical record-level comparison remains deferred.

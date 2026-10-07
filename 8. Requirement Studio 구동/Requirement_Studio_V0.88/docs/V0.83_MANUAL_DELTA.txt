@@ -1,0 +1,103 @@
+Requirement Studio V0.83 Manual Delta
+======================================
+
+1. V0.83 범위
+-------------
+V0.83은 V0.82의 통합_요구사항 명세서 / 통합_테스트 명세서 및 Engineering E2E Single Truth를 유지한다.
+이번 버전의 목적은 V0.82 실제 Run 결과를 변경하는 것이 아니라 다음 두 운영 인프라를 강화하는 것이다.
+
+A) 추천 통합 End-to-End AI 품질평가의 Artifact 범위를 명시·강제
+B) 내부 H-Chat에서 3파일 제한으로 별도 질의할 수 있는 for_h_chat Context Pack 제공
+
+V0.82 MLM/ESTRACK 실제 실행 결과에 대한 내용적 개선은 V0.84 후보로 분리한다.
+
+2. 통합본 AI 평가 포함 상태 확인 결과
+----------------------------------
+V0.82 코드 확인 결과, 추천 `통합 End-to-End 평가`에서는 이미 다음 실제 Artifact가 Review Exchange와 자동 평가 Evidence에 포함되어 있었다.
+
+- SWE.1 Word
+- SWE.1 Excel
+- SWE.6 Excel
+- 통합_요구사항 명세서 Excel
+- 통합_테스트 명세서 Excel
+
+Evaluation Orchestrator는 통합 요구사항/테스트 XLSX의 주요 시트를 별도 compact snapshot으로 읽어 GPT/Gemini/Claude의 동일 Evidence에 전달한다.
+따라서 V0.83에서는 새 평가 모드를 중복 추가하지 않고 기존 추천 Unified 모드를 정식 전체평가 계약으로 명확히 강화한다.
+
+3. V0.83 Unified Artifact Contract
+---------------------------------
+추천 `통합 End-to-End 평가`의 필수 실제 Artifact는 다음 5개다.
+
+1) SWE.1 Word
+2) SWE.1 Excel
+3) SWE.6 Excel
+4) 통합_요구사항 명세서 Excel
+5) 통합_테스트 명세서 Excel
+
+Unified 모드에서는 위 5개 중 하나라도 Review Exchange에 복사되지 않으면 `REQ-STUDIO-UNIFIED-ARTIFACT-CONTRACT-0.83` FAIL이다.
+누락을 단순 '미선택 산출물'로 취급하지 않고 deterministic TOOL_QUALITY / RELEASE_BLOCKING finding으로 승격한다.
+AI Reviewer가 놓쳐도 최종 Consensus에 `UNIFIED_ARTIFACT_CONTRACT` finding이 삽입되고 Tool Quality Gate=FAIL, Official Release=HOLD가 유지된다.
+
+개별 SWE.1/SWE.6 중심 평가는 디버깅용이며 이 5-artifact 필수 계약은 추천 Unified 모드에만 적용한다.
+
+4. AI 품질평가 UI 명확화
+----------------------
+기존 UI의 `통합 End-to-End 평가 (SWE.1 + SWE.6, 추천)` 문구는 통합본이 평가에서 빠지는 것처럼 오해될 수 있었다.
+V0.83에서는 다음 의미가 명시된다.
+
+`통합 End-to-End 평가 (SWE.1/SWE.6 + 통합 요구사항/통합 테스트, 추천)`
+
+Tooltip/안내문에도 Source→Canonical→SYS.1/SWE.1→SYS.5/SWE.6/Deferred→기존·통합 Actual Artifact를 하나의 Evidence Graph로 평가한다고 표시한다.
+
+5. for_h_chat 지원 폴더
+----------------------
+V0.83 배포 ZIP Root에 `for_h_chat/` 폴더를 추가한다.
+
+포함 파일:
+- `README_FOR_H_CHAT.txt`
+- `00_RECENT_CHANGES_V0.83.txt`
+- `Requirement_Studio_HChat_Context_V0.83.txt`
+
+목적은 내부 H-Chat의 최대 3파일 업로드 제한에서 다음 조합을 사용할 수 있게 하는 것이다.
+
+1) 입력 Source 문서
+2) 검토할 Output/결과 문서 1개
+3) Requirement Studio H-Chat Context Pack
+
+Context Pack은 전체 소스 덤프가 아니다. H-Chat이 Requirement Studio의 핵심 판단 로직을 이해하기 위한 다음 정보를 크기 제한 내에서 집약한다.
+
+- Product / E2E 목적
+- No-hallucination / Review-first 불변 규칙
+- 현재 버전 최근 변경사항
+- requirement/allocation/single-truth/integrated exporter/review exchange/evaluation/human-policy 핵심 함수 코드
+- 포함 파일 SHA-256
+- Symbol/line index
+
+API Key, Credential, private endpoint 값은 포함하지 않는다.
+
+6. Context Pack 생성 방식
+------------------------
+`tools/build_hchat_context.py`를 추가한다.
+이 스크립트는 `main.py`의 APP_VERSION을 읽고 현재 버전에 맞는 for_h_chat 파일을 생성한다.
+AST를 사용하여 미리 선정한 핵심 함수/메서드만 추출하므로 전체 Python 파일을 무차별 연결하지 않는다.
+Context line budget은 기본 3,200줄 이하이며 초과 시 안전하게 후속 Source excerpt를 생략한다.
+
+7. 기존 V0.82 기능 보존
+---------------------
+다음은 변경하지 않는다.
+
+- 기존 SWE.1 Word/Excel
+- 기존 SWE.6 Excel
+- 통합_요구사항 명세서
+- 통합_테스트 명세서
+- SYS.5/SWE.6/Deferred/native Single Truth
+- Human Policy Registry
+- OPEN Semantic Unit의 비자동종결 정책
+- Trigger != SW ownership boundary
+- Mode transition allocation difference의 review-only 정책
+- Gold Source 미승인 Run 자동 승격 금지
+
+8. 다음 버전 경계
+----------------
+V0.82 실제 MLM/ESTRACK 결과에서 발견되는 Requirement/TC/Allocation/OPEN 품질 개선은 V0.83의 범위가 아니다.
+V0.82 실제 Run 결과와 사람 판단은 V0.84 설계 입력으로 사용한다.

@@ -1,0 +1,15 @@
+V0.79 Requirements Conflict Check
+=================================
+
+Result: ACCEPTED WITH STAGED ARCHITECTURE CHANGE
+
+Key conflicts reviewed:
+- Persistent local registry vs portable zip package -> dual persistence: local authoritative registry + package seed.
+- Package seed vs user decision -> local decision wins; seed only adds missing IDs.
+- Editable GUIDE_PERSON vs registry trust -> import only an explicit single human checkbox selection; AI suggestion/blank/multiple selections are never approval, and source SHA/change-log evidence is retained.
+- Review/Hold visibility vs SWE.1 strict semantics -> V0.79 transitional compatibility view; status is explicit, V0.80 handles full SYS/SWE view separation.
+- Main visibility vs approval -> visible REVIEW_REQUIRED/HOLD is not Official Release approval.
+- Semantic provenance completion vs over-linking -> exact cited location + material overlap + numeric compatibility, trace-only.
+- Child deferred reason vs parent TBD -> fact-level allocation/domain is causally more specific and takes precedence for that child.
+
+No Source-fidelity/no-hallucination safeguard was removed.

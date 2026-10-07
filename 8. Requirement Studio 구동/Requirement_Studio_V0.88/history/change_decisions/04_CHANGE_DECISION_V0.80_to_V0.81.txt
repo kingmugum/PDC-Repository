@@ -1,0 +1,35 @@
+Requirement Studio Change Decision — V0.80 → V0.81
+===================================================
+
+Trigger
+-------
+Actual V0.80 MLM and ESTRACK runs exposed two deterministic Tool Quality defects and one evaluation aggregation defect:
+1) unrelated automatic-soldering Source ownership leaked into a brightness SRS and contaminated domain/allocation output;
+2) an inferred SWE.6 Eligible SRS with a Source-backed `송출` behavior had zero generated TC because parent/fact allocation diverged;
+3) GPT/Gemini/Claude equivalent zero-TC findings were split because Category labels differed.
+
+Decision
+--------
+Create V0.81 as a narrow hardening release. Preserve V0.80 Engineering E2E, Human Policy Registry, OPEN governance, no-hallucination, and Review-First rules.
+
+Approved Generic Changes
+------------------------
+- add shared Semantic Unit dominant-ownership validation above fragment-level containment;
+- remove all derived trace/allocation structures of a proven unrelated claim;
+- recompute allocation and E2E projection after ownership cleanup;
+- recognize Korean `송출` as executable software-like Source behavior;
+- forbid Parent SWE.6 Eligible + fact allocations + zero Eligible fact scope; explicitly defer instead;
+- cluster cross-category reviewer findings only when concrete affected IDs and specific failure concepts match.
+
+Rejected Approaches
+-------------------
+- no SRS_002/SRS_022/Paragraph 208 hardcoding;
+- no C_PreCrankReq-specific exception;
+- no forced SW allocation solely to increase TC count;
+- no automatic closure of OPEN Semantic Units;
+- no Gold registration before V0.81 actual-run verification and human review.
+
+Verification
+------------
+- new V0.81 regression tests: 6 PASS
+- total regression suite: 164/164 PASS

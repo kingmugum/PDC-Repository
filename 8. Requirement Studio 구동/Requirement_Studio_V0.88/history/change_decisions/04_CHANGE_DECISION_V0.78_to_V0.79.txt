@@ -1,0 +1,62 @@
+Requirement Studio Change Decision — V0.78 -> V0.79
+======================================================
+
+Decision Summary
+----------------
+V0.79 introduces a persistent Human Policy Registry and the Review-First preservation rule requested after V0.78 GUIDE_PERSON validation.
+The broader SYS/SWE E2E schema expansion is intentionally deferred to V0.80 so policy persistence / preservation / deterministic defect fixes can be verified separately.
+
+Approved Human Policy Seed
+--------------------------
+- GP-ALLOC-001: YES
+- GP-TC-001: YES
+- GP-MIX-001: YES
+- GP-OPEN-001: CONDITIONAL
+  * OPEN Semantic Units are never auto-closed.
+  * Human review must choose Canonical/SRS linkage, new/expanded SRS, Gap/Conflict, External Dependency, or justified Intentional Exclusion.
+  * Unique normative behavior, condition logic, timing/numeric thresholds, prohibitions, error recovery, state transitions, or external-spec obligations must not be intentionally excluded.
+- GP-SHARED-001: YES
+- HP-PRESERVE-001: YES
+  * REVIEW_REQUIRED/HOLD items are not deleted and remain visible in the Main Requirement Specification and Review View.
+
+Implementation Decisions
+------------------------
+1) Persistent Human Policy Registry
+   - External user store: %LOCALAPPDATA%\RequirementStudio\human_policy on Windows.
+   - Fallback: REQUIREMENT_STUDIO_POLICY_HOME override, XDG_CONFIG_HOME, or ~/.requirement_studio/human_policy.
+   - Files: human_policy_registry.json, human_policy_registry.txt, policy_change_log.jsonl.
+
+2) Package Seed / Upgrade Safety
+   - policy/human_policy_seed.json + .txt are included in the package.
+   - Seed merges only missing Policy IDs.
+   - Existing local human decisions and notes are never overwritten by a downloaded package.
+
+3) GUIDE_PERSON Reuse
+   - Candidate policy families are built as before.
+   - YES/NO/CONDITIONAL decisions already present in the Registry are reused and removed from the new-question list.
+   - DEFER remains an unresolved question.
+   - Each Run writes guide_person/applied_policy_snapshot.json and .txt.
+
+3-A) GUIDE_PERSON Human Decision Import
+   - After a Run, an engineer may mark exactly one YES/NO/CONDITIONAL/DEFER checkbox in generated guide_person_###.txt.
+   - The next Run imports explicit single-choice decisions into the external Registry before question resolution.
+   - AI Suggested Position, blank selections and multi-selected answers are never treated as human approval.
+   - Imported handoff SHA-256 and decision changes are recorded in the Registry ledger / append-only change log.
+
+4) Review-First Main Requirement Preservation
+   - V0.79 keeps the existing SWE.1 compatibility filename/view.
+   - Main Requirement export now includes Eligible + Review Needed requirements.
+   - Inferred/Pending requirements show `사람의 판단 필요 (REVIEW_REQUIRED[/HOLD])`.
+   - Allocation/Review annexes remain; visibility in Main does not mean Official Release approval.
+   - Full SYS/SWE naming/schema/view expansion is reserved for V0.80.
+
+5) Deterministic defect fixes from V0.78
+   - CHECK_SITUATION Deferred Intent snapshot counting excludes title/header/placeholder rows.
+   - Exact-cited Semantic Unit/Fact Fragment provenance completion repairs Source-cited Eligible requirements without widening Source scope.
+   - Fact-level allocation/domain deferral takes precedence over parent-wide SOURCE_INSUFFICIENT for Source-backed child facts such as JPEG-format clauses.
+
+Safety Boundary
+---------------
+- Human policy is cross-document process guidance, not automatic per-SRS official allocation approval.
+- Source-fidelity, unsupported-generation, exact-trace, conflict, visual-unknown, and arbitrary test-value safeguards remain active.
+- Official Release remains independently gated.

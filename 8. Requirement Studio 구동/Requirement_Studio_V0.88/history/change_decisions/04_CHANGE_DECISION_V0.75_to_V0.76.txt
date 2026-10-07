@@ -1,0 +1,69 @@
+Requirement Studio Change Decision — V0.75 -> V0.76
+=====================================================
+Runtime: V0.76
+Requirements baseline: Requirement_Studio_Requirements_Management_rev60.xlsx
+Change type: Package hygiene + diagnostic policy-impact handoff
+
+1. Why this version exists
+--------------------------
+Two user observations require separation before changing core requirement policy:
+
+A) The release package root has accumulated historical CHANGE_DECISION files, multiple old Requirements workbooks, and Markdown documents.
+B) Main SWE.1 / SWE.6 output can be unexpectedly small (for example 2 Main SWE.1 items or 0 SWE.6 TCs) even though many Source-backed Canonical requirements exist in Allocation Review Annex.
+
+V0.76 therefore does NOT relax the positive-SW allocation gate yet. It first makes the package easier to operate and creates a deterministic `check_situation` handoff so the next policy decision is based on observed Run evidence.
+
+2. Package layout decision
+--------------------------
+- Move historical `04_CHANGE_DECISION_*.txt` to `history/change_decisions/`.
+- Move old Requirements baselines to `history/requirements/`.
+- Keep only the newest Requirements baseline in the package root.
+- Move root Markdown operating documents to `md/`.
+- Preserve history instead of deleting it because Requirements governance is append-only and old baselines/change decisions are audit evidence.
+- Update Review Exchange current Change Decision lookup to the new history path while keeping the Run-level file-4 basename contract.
+
+3. New Situation Check
+----------------------
+During 3-AI automatic evaluation, immediately after Evidence Package creation:
+
+`automatic_evaluation/check_situation/`
+  - `check_situation_001.txt`
+  - `check_situation_002.txt` ... when needed
+  - `manifest.json`
+
+Each Part repeats Version / Mode / Source / Source SHA / Run ID / Evidence SHA / Part x/y and is capped at 110 total lines like FINAL_RESULT.
+
+The deterministic report compares:
+- Canonical SRS count
+- Main SWE.1 Eligible count
+- Allocation Review Annex / Review Needed count
+- SWE.1 Not Applicable count
+- SWE.6 Eligible / Deferred SRS count
+- generated TC count / Deferred Intent count
+- positive Source-backed SW evidence count
+- allocation-status distribution
+- Semantic Source Unit coverage / OPEN review / Potential Extraction Loss
+
+It returns one of:
+- SUPPORTED
+- PARTIALLY_SUPPORTED
+- NOT_SUPPORTED
+
+for the hypothesis that low Main SWE.1 / SWE.6 output is primarily caused by the positive-SW allocation policy gate.
+
+4. Important policy boundary
+----------------------------
+V0.76 is diagnostic only.
+
+It does NOT:
+- auto-promote Pending System/Controller behavior to SWE.1
+- auto-create SWE.6 TCs from allocation-pending items
+- remove Source-fidelity / unsupported-generation / exact-trace safeguards
+- change INV-019 or the V0.65+ positive software allocation rule
+
+The next strategy decision must use actual `check_situation_###.txt` results and separately discuss allocation eligibility vs hallucination prevention.
+
+5. Requirements governance
+--------------------------
+rev59 approved rows are preserved unchanged.
+V0.76 appends ALR-SC-103 / OP-161 / FR-397~400 and related criteria, failure cases, regression tests, code evidence, AI rules, and conflict-review records.

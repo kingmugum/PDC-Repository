@@ -1,0 +1,16 @@
+Requirement Studio Change Decision V0.86 -> V0.87
+=================================================
+Decision: ACCEPT
+
+Reason:
+- Preserve the V0.86 E2E engineering model and automatic 3-AI reviewer workflow.
+- Simplify only the human-facing Run Card and Result Quality Review tab.
+- Clarify that recommended Unified evaluation covers both E2E Requirements and E2E Evaluation artifacts.
+
+Accepted changes:
+1) Four bundled Run Card choices.
+2) Compact quality review controls.
+3) Unified naming: '통합 E2E 평가 (요구사항 + 평가 명세서)'.
+4) Automatic triad backend preserved.
+5) Result button renamed to '평가 진행 결과 열기'.
+6) Analysis Progress / Required Items layout preserved.

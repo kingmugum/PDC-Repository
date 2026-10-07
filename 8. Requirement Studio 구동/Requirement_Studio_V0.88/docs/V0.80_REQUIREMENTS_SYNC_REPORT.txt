@@ -1,0 +1,17 @@
+V0.80 Requirements Sync Report
+==============================
+Target baseline: Requirement_Studio_Requirements_Management_rev64.xlsx
+Source baseline: rev63
+Method: Append-only requirement governance.
+
+Planned synchronized areas:
+- Engineering E2E Canonical preservation
+- SYS.1/SWE.1 integrated requirement projections
+- SYS.5/SWE.6 integrated verification projections
+- REVIEW_REQUIRED/HOLD preservation
+- Native non-SW Canonical recovery
+- Mixed-domain SWE.6 scope-consistency gate
+- PROPOSED_CHANGE_PENDING source-change modeling
+- HP-E2E-001 / HP-SYSVER-001 policy persistence
+
+No previously approved requirement row is intentionally deleted or rewritten by this revision. V0.80 changes are appended as new requirements, criteria, failures, regressions, code evidence, AI rules and conflict decisions.

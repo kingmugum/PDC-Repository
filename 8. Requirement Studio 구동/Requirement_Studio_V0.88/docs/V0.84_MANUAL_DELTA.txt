@@ -1,0 +1,33 @@
+Requirement Studio V0.84 — Manual Delta
+===========================================
+
+Scope
+-----
+V0.84 is an infrastructure/hardening release based on the V0.83 code line.
+The engineering interpretation of the still-running V0.82 MLM/ESTRACK results is intentionally deferred to V0.85.
+
+Changes
+-------
+1. Integrated XLSX scalar serialization hardening
+   - Every value written by core/integrated_exporter.py is converted to an Excel-safe scalar.
+   - list/dict/list[dict] Source Evidence is rendered as readable multiline text.
+   - Fixes `Cannot convert [...] to Excel` when an Open Issue/Gap contains structured Source Evidence.
+
+2. Unified Artifact preflight before external 3-AI calls
+   - Recommended Unified mode still requires SWE.1 Word/Excel, SWE.6 Excel, Integrated Requirements Excel, Integrated Tests Excel.
+   - When any required artifact is missing, GPT/Gemini/Claude external calls are skipped.
+   - Deterministic UNIFIED_ARTIFACT_CONTRACT Tool Quality FAIL / Release HOLD output is still generated.
+
+3. STEP 7 result-save truthfulness
+   - Internal Canonical JSON persistence is logged separately from engineer-facing XLSX/DOCX/Review Package export.
+   - STEP 7B reports the actual selected/review artifact export result.
+   - A failed selected artifact is not blindly retried as the same review artifact in the same run, avoiding duplicate failure counts.
+
+4. H-Chat reviewer support
+   - for_h_chat recent changes and Context Pack are regenerated for V0.84.
+   - V0.84 export/preflight logic is included in the curated context.
+
+Non-goals
+---------
+- No V0.82 MLM/ESTRACK engineering-result interpretation change is included.
+- No automatic reallocation, OPEN semantic-unit closure, Gold registration, or TC count inflation is introduced.

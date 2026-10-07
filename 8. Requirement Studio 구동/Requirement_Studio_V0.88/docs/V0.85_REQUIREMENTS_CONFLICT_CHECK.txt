@@ -1,0 +1,9 @@
+Requirement Studio V0.85 Requirements Conflict Check
+====================================================
+- Exact fact/object trace strengthens FR-439/FR-442 and does not alter parent Canonical preservation.
+- Mode family narrowing changes review precision only; it never changes allocation automatically and remains consistent with FR-440.
+- Per-finding Review Decision Registry is separate from Human Policy Registry: finding disposition != cross-document engineering policy.
+- Semantic similarity is advisory only and remains subordinate to GP-OPEN-001; unique normative facts cannot be auto-excluded.
+- Canonical Gap references change artifact presentation/resolution ownership only; original clarification/source evidence is retained.
+- Post-save trace mismatch fails closed and is compatible with Unified Artifact Contract preflight.
+Conclusion: no unresolved requirement conflict introduced by V0.85.

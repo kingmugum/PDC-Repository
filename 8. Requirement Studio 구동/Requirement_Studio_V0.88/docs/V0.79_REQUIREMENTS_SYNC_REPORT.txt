@@ -1,0 +1,19 @@
+V0.79 Requirements Sync Report
+==============================
+
+Requirements baseline:
+- Previous: Requirement_Studio_Requirements_Management_rev62.xlsx
+- Current:  Requirement_Studio_Requirements_Management_rev63.xlsx
+- Governance: Append-only
+
+Added:
+- ALR-SC-106
+- OP-164
+- FR-415 ~ FR-422
+- FAIL-285 ~ FAIL-292
+- RT-400 ~ RT-407
+- CODE-332 ~ CODE-339
+- AI-RULE-271 ~ AI-RULE-278
+- CR-258 ~ CR-265
+
+Existing rev62 rows were preserved; V0.79 rows were appended.

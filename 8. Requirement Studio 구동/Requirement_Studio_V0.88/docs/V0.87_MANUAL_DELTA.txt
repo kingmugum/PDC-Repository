@@ -1,0 +1,35 @@
+Requirement Studio V0.87 Manual Delta
+=====================================
+
+1. Compact Execution Card
+- Human-facing output choices are reduced to four rows:
+  * SWE.1 문서 (Word 파일 & 엑셀 양식)
+  * SWE.6 문서 (엑셀 양식)
+  * E2E 요구사항 명세서 (Word 파일 & 엑셀 양식)
+  * E2E 평가 명세서 (엑셀 양식)
+- SYS.1/SYS.5 implementation detail is removed from checkbox labels.
+- Bundled Word+Excel choices still map to the existing exporter flags internally.
+
+2. Compact AI Quality Review Tab
+- Keeps only the core controls: 평가 모드, 평가 산출물, 자동 평가 진행 상황.
+- Removes the verbose version paragraph, automatic reviewer detail card and evaluation-contract explanation card.
+- Keeps Basic Reset, Gold Source and AI evaluation package actions.
+- Final result button is renamed to '평가 진행 결과 열기'.
+
+3. Unified Evaluation Naming
+- Recommended option is now '통합 E2E 평가 (요구사항 + 평가 명세서, 추천)'.
+- It still means six actual artifacts: SWE.1 Word/Excel, SWE.6 Excel, E2E Requirements Word/Excel and E2E Evaluation Excel.
+
+4. Automatic 3-AI Review Remains Active
+- GUI simplification does not remove automatic review.
+- In Auto mode, GPT/Gemini/Claude independently evaluate the same Evidence, then Consensus, Completeness Audit and Final Result are generated automatically.
+- for_h_chat remains an optional ad-hoc developer/reviewer aid, not a required normal-run review step.
+
+5. Dashboard Scope Lock
+- File/AI cards, 분석 진행 상황, 필수 항목 확인, STEP 1~7 and main tabs remain in their existing positions.
+- V0.87 changes only the Run Card and the inside of the Result Quality Review tab.
+
+6. Requirements Governance
+- Requirements baseline: rev71.
+- GUI requirements FR-213, FR-316 and FR-369 are superseded by FR-469~474 under explicit user approval.
+- Historical rows remain in AI_02; AI_11 is the current effective projection.

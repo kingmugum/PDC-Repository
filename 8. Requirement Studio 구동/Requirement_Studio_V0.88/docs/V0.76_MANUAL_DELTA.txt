@@ -1,0 +1,29 @@
+Requirement Studio V0.76 - User Manual Delta
+=============================================
+
+V0.76 keeps the V0.75 extraction/trace/allocation behavior unchanged and adds package organization plus a low-output situation diagnosis.
+
+[Package layout]
+- Root historical CHANGE_DECISION files -> history/change_decisions/
+- Root old Requirements baselines -> history/requirements/
+- Latest Requirements baseline only remains in root: rev60
+- Root Markdown operation docs -> md/
+
+Historical files are retained rather than deleted because they are audit / append-only governance evidence.
+
+[Automatic Evaluation - check_situation]
+After 06_EVALUATION_EVIDENCE.json is created, V0.76 creates:
+  automatic_evaluation/check_situation/check_situation_001.txt
+  automatic_evaluation/check_situation/check_situation_002.txt ...
+  automatic_evaluation/check_situation/manifest.json
+
+The report is deterministic and independent from reviewer opinion. It answers whether low Main SWE.1 / SWE.6 output is mainly explained by the positive-SW allocation gate.
+
+It reports Canonical/Main/Pending/Not-Applicable/SWE.6/TC/Deferred/positive-SW counts plus Semantic coverage and OPEN/Potential Extraction Loss indicators.
+
+Interpretation:
+- SUPPORTED: requirements still exist in Canonical/Annex and allocation-policy hold is the dominant cause.
+- PARTIALLY_SUPPORTED: allocation policy contributes, but other causes also need review.
+- NOT_SUPPORTED: low output is not primarily explained by that gate.
+
+V0.76 does not relax allocation or hallucination safeguards. Use the check_situation result for the next policy-design discussion.

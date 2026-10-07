@@ -1,0 +1,7 @@
+Requirement Studio V0.84 Requirements Conflict Check
+====================================================
+- Nested evidence serialization vs Source fidelity: no conflict; structure is rendered, not invented.
+- Unified preflight vs 3-AI review: missing-artifact runs skip external reviewers but still emit deterministic contract failure evidence.
+- STEP 7 log change vs pipeline compatibility: internal JSON save remains unchanged; only completion semantics/logging are clarified.
+- V0.82 result findings are explicitly deferred to V0.85.
+Result: no blocking requirement conflict identified.

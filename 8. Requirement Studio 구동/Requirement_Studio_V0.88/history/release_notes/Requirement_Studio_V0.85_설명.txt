@@ -1,0 +1,14 @@
+Requirement Studio V0.85
+========================
+V0.85 is a V0.84 quality-improvement release driven by actual V0.82 MLM/ESTRACK evaluation results.
+
+Primary changes:
+- exact fact-fragment → integrated Test Object trace projection
+- post-save integrated trace scope invariant
+- mode-transition review-family precision (prevents HU-wide combinatorial findings)
+- stable mode finding IDs + persistent human review decision registry/import tool
+- advisory OPEN Semantic Unit existing-SRS review shortcut (never auto-closes)
+- canonical Gap ID references across affected SRS while preserving original detail
+- V0.84 Excel serialization / Unified preflight / STEP7B / failure dedup retained
+
+Requirements baseline: rev69 (FR-452~457).

@@ -1,0 +1,12 @@
+Requirement Studio V0.87 Requirements Sync Report
+=================================================
+Runtime: V0.87
+Requirements: rev71
+New scenario: ALR-SC-113
+New requirements: FR-469~FR-474
+New failures: FAIL-332~337
+New regressions: RT-454~459
+New code evidence: CODE-385~390
+New AI rules: AI-RULE-323~328
+New conflict decisions: CR-310~315
+Current Effective projection: AI_11 updated.

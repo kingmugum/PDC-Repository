@@ -1,0 +1,26 @@
+Requirement Studio V0.78 Requirements Sync Report
+=================================================
+
+Previous baseline: Requirement_Studio_Requirements_Management_rev61.xlsx
+New baseline: Requirement_Studio_Requirements_Management_rev62.xlsx
+
+Governance:
+- rev61 content is preserved; V0.78 additions are append-only.
+- rev61 is archived under history/requirements/.
+- rev62 is the only Requirements workbook in the package root.
+
+V0.78 additions:
+- ALR-SC-105
+- OP-163
+- FR-408~414
+- FAIL-278~284
+- RT-393~399
+- CODE-325~331
+- AI-RULE-264~270
+- CR-252~257
+
+Validation:
+- Existing rev61 rows preserved via append-only artifact_tool workflow.
+- Formula error scan: 0
+- rev62 SHA-256: 6745efa6c519f4b17bad961a7892bace37d98444b727223bf9d2a68d1f20702a
+- Full package regression: 142/142 PASS

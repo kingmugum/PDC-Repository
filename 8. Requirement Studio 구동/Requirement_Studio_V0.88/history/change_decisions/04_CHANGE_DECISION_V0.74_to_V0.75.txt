@@ -1,0 +1,30 @@
+Requirement Studio V0.74 -> V0.75 Change Decision
+================================================
+
+Trigger
+-------
+V0.74 Unified FINAL_RESULT for `260721_실시간_감시모드_사양서_ESTRACK.pdf` identified a small set of actual Tool Quality defects while also confirming several governance states that must NOT be auto-fixed.
+
+Actual Tool Quality defects selected for V0.75:
+1. Engineering identifiers followed directly by Korean particles (for example `SVM_Typ2의`, `ICMU_RealTimeMonStat를`) can be present in Source literal text but omitted from structured identifier/provenance token extraction because Unicode `\b` does not create an ASCII/Korean boundary.
+2. Timing/retry literals followed directly by Korean prose (for example `5초동안`, `1회재시도`) can be missed by the exact ownership token collector for the same boundary reason.
+3. V0.74 dominant-parent containment can remove a shared governing critical-fact Fragment from a sibling SRS, producing an orphaned retry-count ownership gap such as SRS_015 `1회`.
+
+Not Tool defects / intentionally unchanged:
+- All 18 SRS remaining SYSTEM_REQUIREMENT_PENDING_SW_ALLOCATION and SWE.6 TC count = 0.
+- Three OPEN/REVIEW_NEEDED Semantic Units on Page 5 / 18 / 19.
+- Missing approved same-source Gold baseline (Regression = NOT_EVALUATED).
+- Vision evidence absence itself.
+- Source-internal SVM_CaptureModeCMD vs ICMU_CaptureModeCMD conflict.
+
+Decision
+--------
+- Replace Unicode word-boundary assumptions in engineering fact-token extraction with ASCII alnum/underscore lookarounds. The Source literal remains authoritative and no new token is inferred.
+- Preserve critical signal/timing/hex/retry tokens when they are immediately followed by Korean particles/prose.
+- Add a shared-critical retention guard to parent containment: if a shared Fragment contains a critical token explicitly asserted by a claimant Canonical behavior, do not auto-remove that claimant solely due to semantic dominance.
+- Keep V0.74 dominant-parent cleanup for non-critical clear leakage.
+- Do not auto-link the three OPEN Semantic Units, do not manufacture SW allocation, do not auto-register Gold, and do not infer diagram semantics.
+
+Requirements
+------------
+Requirements baseline advances rev58 -> rev59 by append-only synchronization. Existing approved Requirement/Rule/Test/Conflict rows are preserved. V0.75 adds ALR-SC-102 / OP-160 / FR-395~396 and associated criteria, failure cases, regression tests, code evidence, AI rules, and conflict records.

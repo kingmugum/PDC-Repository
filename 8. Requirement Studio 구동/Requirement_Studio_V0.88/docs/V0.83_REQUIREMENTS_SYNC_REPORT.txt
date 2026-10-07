@@ -1,0 +1,15 @@
+V0.83 Requirements Sync Report
+===============================
+Baseline: Requirement_Studio_Requirements_Management_rev67.xlsx
+Previous: rev66
+Policy: Append-only
+
+Added requirements:
+- FR-444: Unified AI evaluation actual-artifact scope includes legacy SWE.1/SWE.6 + both integrated workbooks.
+- FR-445: Missing required Unified artifacts cause deterministic release-blocking Artifact Contract failure.
+- FR-446: Package includes a curated, size-bounded H-Chat Context Pack for 3-file-limited ad-hoc review.
+- FR-447: for_h_chat includes recent version delta and source/hash/symbol integrity metadata; secrets are excluded.
+
+Scope boundary:
+- No V0.82 MLM/ESTRACK result-driven domain/allocation logic change is introduced in V0.83.
+- V0.82 result feedback is reserved for V0.84.

@@ -1,0 +1,17 @@
+V0.82 Requirements Sync Report
+===============================
+
+Human-reviewed product intent reflected:
+1) Engineer-facing final view must not hide System/SYS.5 verification merely because SWE.6 is deferred.
+2) Existing SWE.1/SWE.6 outputs remain; integrated Requirement/Test workbooks are additive.
+3) Low Power/Sleep state transition remains traceable as SYS.5 + Allocation Pending intent when SW allocation is unresolved.
+4) Mixed-domain parents preserve one Canonical context while executable scope remains fact-level/domain-authoritative.
+5) Low/High Power and related mode transitions with divergent allocation create review finding, not auto-reallocation.
+6) Trigger/condition fragments alone are not inferred software evidence.
+7) Verification outputs share one finalized in-memory single truth; count/ID/trace contradictions are release-blocking.
+8) Integrated execution result cells remain physically blank pre-execution.
+
+Requirements baseline target: rev66, append-only from rev65.
+New requirement family: FR-436~FR-443.
+New regression family: RT-423~RT-430.
+Protected invariants: INV-048~INV-054.

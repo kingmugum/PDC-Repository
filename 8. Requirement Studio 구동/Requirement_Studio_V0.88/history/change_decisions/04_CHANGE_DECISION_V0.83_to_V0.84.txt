@@ -1,0 +1,13 @@
+CHANGE DECISION V0.83 -> V0.84
+================================
+Decision: fix deterministic export/evaluation-operability defects before interpreting V0.82 engineering results.
+
+Approved changes:
+- Generic Excel-safe scalar serialization for integrated exporters.
+- Unified 5-artifact preflight skips external 3-AI calls when contract already fails.
+- STEP 7 internal-save vs artifact-export completion separation.
+- One failed artifact is not duplicate-counted through review regeneration retry.
+- Regenerate V0.84 H-Chat Context Pack.
+
+Deferred to V0.85:
+- Engineering changes derived from the user's V0.82 MLM/ESTRACK result review.

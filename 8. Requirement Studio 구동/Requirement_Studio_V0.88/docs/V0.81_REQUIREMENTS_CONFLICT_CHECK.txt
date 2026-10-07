@@ -1,0 +1,35 @@
+V0.81 Requirements Conflict Check
+=================================
+
+1. Dominant ownership cleanup vs GP-SHARED-001
+----------------------------------------------
+Potential conflict:
+- aggressive cleanup can remove a legitimate shared Source fact.
+Resolution:
+- automatic removal requires a clear dominant material owner.
+- a weaker claimant with meaningful material/numeric compatibility or critical signal/timing/retry overlap is preserved.
+- ambiguous ownership remains SHARED_REVIEW_REQUIRED.
+Status: RESOLVED conservatively.
+
+2. Parent SWE.6 eligibility vs fact-level authority
+---------------------------------------------------
+Potential conflict:
+- preserving inferred Parent Eligible status can create Eligible/zero-TC mismatch.
+- forcing every child fact to Eligible can reintroduce SYS.5→SWE.6 scope leakage.
+Resolution:
+- literal software-like child action may inherit inferred SW candidate scope.
+- if no qualifying fact remains, Parent is explicitly deferred for fact-allocation review.
+Status: RESOLVED by fact-authoritative fallback.
+
+3. Cross-category consensus dedup vs over-merge
+-----------------------------------------------
+Potential conflict:
+- merging by shared SRS ID alone can collapse distinct findings.
+Resolution:
+- cross-category merge additionally requires a specific shared failure concept.
+- allocation/open/regression/execution-readiness findings remain separate from zero-TC when concepts differ.
+Status: RESOLVED conservatively.
+
+4. Source fidelity / no-hallucination
+-------------------------------------
+No conflict. V0.81 does not invent Source facts, DB values, test conditions, thresholds, PASS/FAIL, or execution evidence.

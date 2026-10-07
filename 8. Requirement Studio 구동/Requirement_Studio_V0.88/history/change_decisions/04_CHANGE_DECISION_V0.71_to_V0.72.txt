@@ -1,0 +1,24 @@
+Requirement Studio V0.71 -> V0.72 Change Decision
+==================================================
+
+Decision: IMPLEMENT / HARDENING
+
+Scope
+-----
+1. FINAL_RESULT self-identification
+   - Version, Evaluation Mode, Source filename/SHA-256, Run ID, evaluated artifacts, Evidence SHA-256.
+   - Every split part repeats a compact identity header while staying <= 110 lines.
+2. Provenance token collector unification
+   - One Source-backed structured value stream for identifiers/numeric/timing/range/enum/relation tokens.
+   - Whole dict/list JSON metadata keys are no longer treated as provenance text.
+3. Critical Fact Fragment ownership gate
+   - Broad Source provenance and exact Fragment ownership are audited separately.
+   - Missing critical signal/timing/enum/retry ownership is TOOL_QUALITY / RELEASE_REVIEW.
+4. Semantic terminal-disposition governance
+   - REVIEW_NEEDED remains OPEN/non-terminal with explicit required-resolution text.
+   - No Requirement, allocation, threshold, signal value, or owner is invented.
+5. Existing conservative allocation / no-approved-Gold => NOT_EVALUATED policies remain unchanged.
+
+Requirements baseline
+---------------------
+Requirement_Studio_Requirements_Management_rev55.xlsx is NOT modified. V0.72 is an implementation/audit/handoff hardening release within the approved evaluation and traceability requirements.

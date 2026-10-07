@@ -1,0 +1,39 @@
+V0.81 Requirements Sync Report
+==============================
+
+Baseline
+--------
+- Previous: Requirement_Studio_Requirements_Management_rev64.xlsx
+- Current: Requirement_Studio_Requirements_Management_rev65.xlsx
+- Change policy: append-only
+
+Added Functional Requirements
+-----------------------------
+- FR-432 Shared Semantic Ownership validation
+- FR-433 Post-cleanup Allocation Recompute
+- FR-434 SWE.6 Parent↔Fact Consistency
+- FR-435 Semantic Consensus Dedup
+
+Added Failure Records
+---------------------
+- FAIL-298 cross-SRS auto-solder provenance/domain contamination
+- FAIL-299 SWE.6 Eligible parent with zero eligible fact/TC scope
+- FAIL-300 equivalent 3-reviewer defect split into SINGLE_REVIEWER findings
+
+Added Regression Records
+------------------------
+- RT-417~RT-422
+
+Added Code Evidence
+-------------------
+- CODE-349~CODE-352
+
+Added AI Rules
+--------------
+- AI-RULE-287~AI-RULE-290
+
+Added Conflict Decisions
+------------------------
+- CR-274~CR-276
+
+No previously approved requirement row was intentionally deleted or rewritten. rev64 is moved to history/requirements and rev65 is the current root baseline.

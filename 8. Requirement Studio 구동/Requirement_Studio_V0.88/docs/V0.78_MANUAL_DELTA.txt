@@ -1,0 +1,42 @@
+Requirement Studio V0.78 Manual Delta
+======================================
+
+1. New automatic-evaluation handoff
+-----------------------------------
+`automatic_evaluation/guide_person/`
+- guide_person_001.txt ...
+- guide_person_questions.json
+- manifest.json
+
+GUIDE_PERSON asks reusable human Engineering Policy questions. It does not ask every SRS separately when one policy family can represent multiple examples.
+
+Each question provides:
+- stable GP-* ID
+- policy topic and general question
+- AI suggested position
+- observed examples
+- cross-document reuse scope
+- YES / NO / CONDITIONAL / DEFER check choices
+- free-form conditional rule / notes area
+
+V0.78 does not automatically learn, store, or apply the human answer. Question quality is validated first; Human Policy Registry is a future version.
+
+2. Tool Quality hardening
+-------------------------
+- Deferred Intent Review summary includes allocation-pending intents.
+- `0X0` and `0x0` match as the same hex fact for audit purposes.
+- Divergent parent allocations on the same physical Source fragment are made explicit using contextual fragment aliases.
+- Mixed-domain Main SWE.1 scope isolation covers all operative fields, not only Requirement Text.
+- Exact-cited high-confidence non-SW clauses can receive provenance completion when materially related.
+
+3. Requirements baseline
+------------------------
+Current baseline: Requirement_Studio_Requirements_Management_rev62.xlsx
+Historical rev61 is retained under history/requirements/.
+
+4. Build validation
+-------------------
+- Regression: 142 / 142 tests PASS
+- Python/PYW compile: 62 files PASS
+- Requirements rev62 formula error scan: 0
+- Requirements rev62 SHA-256: 6745efa6c519f4b17bad961a7892bace37d98444b727223bf9d2a68d1f20702a

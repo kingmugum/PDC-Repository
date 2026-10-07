@@ -1,0 +1,7 @@
+Requirement Studio V0.74 - Requirements Conflict Check
+======================================================
+1. Source-location-bounded completion refines FR-387; it does not widen Source authority because only explicitly cited locations with literal critical-token overlap are eligible.
+2. Dominant-parent disambiguation refines exact ownership. It never auto-removes ambiguous legitimate shared ownership.
+3. UNANALYZED_VISUAL_ASSET Gap does not infer visual semantics; it records an already-declared evidence limitation.
+4. OPEN REVIEW_NEEDED classification refinement does not close the item; it only prevents Tool Quality misclassification when the tool has correctly surfaced the non-terminal state.
+5. Existing SW allocation, Gold regression, Source conflict, and no-hallucination rules remain unchanged.

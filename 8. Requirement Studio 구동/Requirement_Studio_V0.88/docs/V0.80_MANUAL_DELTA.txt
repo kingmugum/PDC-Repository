@@ -1,0 +1,26 @@
+Requirement Studio V0.80 Manual Delta
+======================================
+
+V0.80 changes the center of the product from “select SWE.1/SWE.6 items” to “preserve Canonical Engineering Requirements and project them to the correct engineering/verification domains.”
+
+New requirement views in the SWE.1-compatible Excel:
+- 08_Engineering_Main: every Canonical Engineering Requirement
+- 09_SYS1_System_View: System requirement candidates
+- 10_SWE1_Software_View: Software requirement candidates
+- 11_Human_Decision_View: REVIEW_REQUIRED/HOLD / human-decision items
+
+New verification views in the SWE.6-compatible Excel:
+- 6_SYS5_Candidates: Source-backed System Qualification candidates
+- 7_Engineering_Verification: SYS.5/SWE.6 integrated trace
+
+Important rules:
+1) Not SWE.1 does not mean Not Requirement.
+2) Not SWE.6 does not mean Not Verifiable.
+3) REVIEW_REQUIRED/HOLD is preserved, not deleted.
+4) SYS.5/pending facts cannot be used as qualifying SWE.6 assertions.
+5) Candidate tests never fabricate missing inputs, criteria, results, PASS/FAIL or evidence.
+6) Proposed/change-pending source interfaces remain explicitly review-required until resolved.
+
+Human Policy Registry:
+- Existing GP/HP decisions continue across versions.
+- New core policies HP-E2E-001 and HP-SYSVER-001 are seeded without overwriting local human decisions.

@@ -1,0 +1,18 @@
+CHANGE DECISION — V0.84 → V0.85
+================================
+Trigger:
+Actual V0.82 MLM/ESTRACK automated evaluation identified a generic integrated trace defect and review-noise issues.
+
+Approved changes:
+1. Fix parent-SRS fan-out in Integrated Source Intent Traceability; exact Source Fact Fragment membership is authoritative.
+2. Verify exported trace links against finalized in-memory objects after XLSX save; mismatch is an exporter failure.
+3. Narrow Mode Transition allocation review to same actor + same recognizable engineering transition family + local Source neighborhood.
+4. Add stable mode finding IDs and persistent per-finding human review decisions, separate from global Human Policy.
+5. Add advisory existing-SRS shortcut for OPEN Semantic Units without automatic closure.
+6. Add canonical Gap IDs/references across affected SRS while preserving original clarification detail.
+
+Explicitly not changed:
+- No automatic System→Software allocation promotion.
+- No automatic OPEN Semantic Unit closure.
+- No fabricated Signal/DB/Timing/Threshold/Test Value/Result.
+- No automatic Gold promotion.

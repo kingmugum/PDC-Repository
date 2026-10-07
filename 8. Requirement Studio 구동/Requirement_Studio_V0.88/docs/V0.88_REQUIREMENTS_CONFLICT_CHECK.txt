@@ -1,0 +1,15 @@
+Requirement Studio V0.88 Requirements Conflict Check
+====================================================
+
+Resolved
+--------
+1. FR-212/315 single-row/fixed-gap AI setting layout conflicts with the requested two-row responsive provider layout.
+   -> Superseded by FR-475/476.
+2. FR-211 AI-card expansion-biased top layout conflicts with the requested balanced shrink behavior.
+   -> Superseded by FR-477.
+3. Compact-width responsiveness can conflict with readability.
+   -> Bounded solution: dashboard minimum width 1100; shrink first, scroll second.
+4. Temporary GUI requirement-edit permission could be misread as broad permission.
+   -> FR-478 restores LOCK-008 as the default change-control boundary.
+
+No unresolved conflict was introduced into E2E requirement/evaluation semantics or automatic 3-AI evaluation.

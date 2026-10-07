@@ -1,0 +1,28 @@
+Requirement Studio V0.85 Manual Delta
+=====================================
+
+1. Integrated Test Traceability
+- 08_Source_Intent_Traceability now links each Source Fact only to Test Objects that actually contain that Source Fact Fragment.
+- SWE.6-excluded System/External facts show EXCLUDED_FROM_SWE6_SCOPE instead of inheriting the parent TC link.
+- 09_Fact_Allocation_Audit uses the same exact fact/object link rule.
+
+2. Mode Transition Allocation Review
+- Findings require same actor + same engineering transition family + local Source neighborhood.
+- Each finding has a stable Finding ID and human fields: Review Disposition, Review Owner, Review Rationale.
+- Supported dispositions include PENDING, CONFIRMED_INTENTIONAL, HARMONIZED, NOT_APPLICABLE.
+- To persist edited Excel decisions: python tools/import_mode_transition_reviews.py <Integrated Tests XLSX>
+
+3. OPEN Semantic Unit Review
+- OPEN remains OPEN until a human terminal disposition.
+- High-overlap existing SRS may be shown as POSSIBLE_EXISTING_SRS_COVERAGE with similarity score and suggested action.
+- The suggestion never authorizes automatic exclusion/closure.
+
+4. Canonical Gap References
+- Requirements affected by one Source-level Gap receive canonical_gap_ids and a short clarification reference.
+- Original detailed clarification remains preserved in Canonical/Review evidence.
+
+5. Preserved V0.84 Behavior
+- nested Excel evidence scalarization
+- five-artifact Unified preflight/fail-fast
+- STEP 7B export status
+- same-run exporter failure deduplication

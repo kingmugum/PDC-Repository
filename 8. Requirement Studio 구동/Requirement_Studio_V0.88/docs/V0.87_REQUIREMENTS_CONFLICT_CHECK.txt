@@ -1,0 +1,14 @@
+Requirement Studio V0.87 Requirements Conflict Check
+=====================================================
+
+Scope: GUI and automatic evaluation changes only.
+
+Resolved:
+- FR-213 (legacy 3-output Run Card) -> FR-469 compact 4-choice Run Card.
+- FR-316 (reviewer/criteria display-oriented quality UI) -> FR-470/471 compact mode/artifact UI and explicit E2E naming.
+- FR-369 (verbose progress detail) -> FR-472/473 compact progress + preserved automatic triad backend.
+
+No functional conflict introduced:
+- V0.87 does not change V0.86 E2E Requirement/Evaluation semantics.
+- Automatic GPT/Gemini/Claude review is preserved; only the always-visible reviewer-detail UI is removed.
+- Analysis Progress and Required Items panels remain unchanged.

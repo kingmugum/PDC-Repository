@@ -1,0 +1,18 @@
+Requirement Studio V0.69 - Requirements Conflict Check
+========================================================
+Requirements Baseline: Requirement_Studio_Requirements_Management_rev55.xlsx
+Baseline SHA-256: c3a6a07868dd9673cef21547e9f904c9ade19711b929ddd5b903ffbae527c237
+Modification in V0.69: NONE
+
+Checked implementation boundaries:
+1) Existing main STEP 1~7 flow is unchanged. Automatic evaluation remains an optional post-generation quality-review workflow.
+2) FR-316 / FR-362~365 unified automatic/manual/none evaluation control remains intact.
+3) Automatic mode still performs independent GPT/Gemini/Claude review; the new progress card only observes `00_EVALUATION_STATUS.json` and does not alter evaluation evidence or provider prompts.
+4) Manual/None modes still prohibit automatic external evaluation calls.
+5) final_result remains max-150-line TXT parts. The GUI only reports generated part count and opens the folder.
+6) Gold registration/storage behavior from V0.68 remains internal to `review_exchange/gold_sources/user_registered`; no external sibling Gold folder is reintroduced.
+7) Source raw text is not rewritten by the Korean/ASCII token-boundary matching refinement.
+8) Mixed-domain SWE.6 filtering is stricter: non-SWE.6 parent expected prose is prevented from re-entering the rendered SWE.6 TC description. This is consistent with existing cross-domain exclusion invariants.
+
+Conclusion:
+No V0.69 implementation change requires a requirements-baseline edit. rev55 remains locked and byte-identical.

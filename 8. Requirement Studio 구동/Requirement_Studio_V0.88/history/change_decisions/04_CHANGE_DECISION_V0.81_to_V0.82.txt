@@ -1,0 +1,21 @@
+Requirement Studio Change Decision — V0.81 -> V0.82
+====================================================
+
+Decision: APPROVED FOR IMPLEMENTATION AS ADDITIVE OUTPUT
+
+Human review observation:
+- Source contains Low Power Mode/Sleep transition with explicit AND conditions and High Power Mode with OR conditions.
+- V0.81 may correctly allocate Low Power Mode to SYS.5 / pending software allocation, but an SWE.6-centric output makes the verification intent difficult for the user to see.
+- Desired product output is an integrated engineering specification, not forced SWE.6 promotion.
+
+V0.82 decision:
+1. Keep all existing SWE.1/SWE.6 artifacts.
+2. Add 통합_요구사항 명세서 (SYS.1 + SWE.1 + native Engineering domains).
+3. Add 통합_테스트 명세서 (SYS.5 + SWE.6 + Deferred/Allocation Pending/External/native verification intents).
+4. Preserve Source-backed Low Power Mode intent even when no SWE.6 TC exists.
+5. Add MODE_TRANSITION_ALLOCATION_INCONSISTENCY for related mode-transition allocation divergence; review only, never automatic reallocation.
+6. Treat trigger-only signal/PIN/voltage/CAN/LIN/B+/wake conditions as non-positive SW evidence.
+7. Derive all verification projections from one finalized in-memory verification bundle and release-block deterministic count/ID/trace drift.
+8. Keep result fields physically blank before execution.
+
+This change intentionally does not increase TC count by relaxing Source-fidelity or allocation gates.

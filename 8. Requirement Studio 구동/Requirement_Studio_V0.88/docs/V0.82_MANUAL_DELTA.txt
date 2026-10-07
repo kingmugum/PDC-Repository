@@ -1,0 +1,126 @@
+Requirement Studio V0.82 Manual Delta
+=====================================
+
+1. 목적
+-------
+V0.82는 기존 SWE.1 Word/Excel 및 SWE.6 Excel을 제거하거나 의미를 바꾸지 않는다.
+대신 엔지니어가 System/Software/native-domain Requirement와 Verification Intent를 한 체계에서 볼 수 있도록 아래 두 신규 XLSX를 추가한다.
+
+- 통합_요구사항 명세서_<source>_<date>_V0.0.xlsx
+- 통합_테스트 명세서_<source>_<date>_V0.0.xlsx
+
+핵심 원칙:
+- Not SWE.1 != Not Requirement
+- Not SWE.6 != Not Verifiable / Not Visible
+- Allocation을 TC 수 증가 목적으로 임의 변경하지 않는다.
+- Source-backed Fact/Intent를 SYS.5, SWE.6, Deferred, Allocation Pending, External Dependency, native verification domain 중 적절한 형태로 보존한다.
+
+2. 신규 통합_요구사항 명세서
+-----------------------------
+모든 Canonical Engineering Requirement를 포함하며 SYS.1/SWE.1/native-domain projection과 Source/Fact trace를 함께 표시한다.
+
+주요 시트:
+00_Overview
+01_Integrated_Eng_Req  (Excel 31자 제한으로 논리명 01_Integrated_Engineering_Requirements를 축약)
+02_SYS1_View
+03_SWE1_View
+04_Allocation_Review
+05_Source_Traceability
+06_External_Dependencies
+07_Open_Issues_Gaps
+08_Semantic_Unit_Coverage
+09_Fact_Fragment_Allocation
+
+기존 SWE.1 Eligible-only view와 달리 System/Electrical/Environmental/Mechanical/Manufacturing/External Dependency 및 REVIEW_REQUIRED/HOLD Requirement도 통합 Main에 유지된다.
+
+3. 신규 통합_테스트 명세서
+---------------------------
+실행 가능한 SWE.6 TC만 모으는 문서가 아니다. 다음 Verification Object를 하나의 single-truth view에 보존한다.
+
+- SYS5_CANDIDATE
+- SWE6_TC
+- DEFERRED_INTENT
+- ALLOCATION_PENDING_INTENT
+- EXTERNAL_DEPENDENCY_INTENT
+- ELECTRICAL_VERIFICATION_INTENT
+- ENVIRONMENTAL_VERIFICATION_INTENT
+- MECHANICAL_VERIFICATION_INTENT
+- MANUFACTURING_VERIFICATION_INTENT
+- REVIEW_REQUIRED
+
+주요 시트:
+00_Overview
+01_Integrated_Test_Objects
+02_SYS5_Candidates
+03_SWE6_Test_Cases
+04_Deferred_Intents
+05_Allocation_Pending_Intents
+06_External_Dependency_Intents
+07_Non_SW_Verification_Intents
+08_Source_Intent_Traceability
+09_Fact_Allocation_Audit
+10_Execution_Result_Entry
+11_Release_Gate_Summary
+
+4. Low/High Power Mode 예시
+---------------------------
+Low Power Mode가 SYSTEM_REQUIREMENT_PENDING_SW_ALLOCATION / SYS.5인 경우:
+- 기존 SWE.6 TC는 강제로 생성하지 않는다.
+- SYS5_CANDIDATE를 생성/보존한다.
+- required test intent는 ALLOCATION_PENDING_INTENT로 통합 테스트 명세서에 보존한다.
+- OFF 명령, 무드램프 OFF, Slave SLEEP(OFF), B-CAN SLEEP, AND 조건 후 Low Power Mode 전환 Source Fact trace를 유지한다.
+
+High Power Mode가 inferred SWE.6 candidate이고 Low Power Mode는 SYS.5/pending이면:
+- 두 Requirement를 자동으로 같은 Domain으로 변경하지 않는다.
+- MODE_TRANSITION_ALLOCATION_INCONSISTENCY Review Finding을 생성한다.
+- 사람에게 차이가 의도된 것인지 fact-level System/SW 책임을 확인하도록 요구한다.
+
+5. Trigger와 Software Behavior 구분
+-----------------------------------
+다음 단독 조건은 SW allocation evidence가 아니다.
+- PIN 상태/상태 변화
+- 전압 상태
+- CAN/LIN 상태
+- B+ 인가
+- Wake-up event
+- 외부 규격 참조
+
+조건 fragment가 `... 시/경우/때`로 끝나고 consequent control action이 없다면 inferred SW evidence로 승격하지 않는다.
+단, Controller/ECU가 해당 Trigger를 근거로 판단/전환/제어/복구 등의 Source-backed consequent executable behavior를 수행하면 review-required SW candidate가 될 수 있다.
+
+6. Finalized Verification Single Truth
+--------------------------------------
+V0.82는 다음 산출물을 `REQ-STUDIO-VERIFICATION-BUNDLE-0.82` 하나에서 파생한다.
+- SWE.6 case
+- SYS.5 candidate
+- Deferred/Allocation Pending/External intent
+- testability/test_intent_coverage
+- 통합 테스트 명세서
+- Review Package integrated evidence
+
+Release Blocking 대상:
+- SWE.6 Eligible인데 TC도 Deferred/Review intent도 없음
+- SWE.6 Deferred인데 Deferred/Allocation Pending intent 없음
+- finalized deferred count와 integrated row count 불일치
+- SWE.6 TC ID / SYS.5 Candidate ID가 통합 명세서와 불일치
+- integrated Test Object에 Source Semantic Unit / Fact Fragment trace가 모두 없음
+
+7. 실행 결과 정책
+-----------------
+통합 테스트 명세서의 다음 필드는 생성 시 물리적으로 blank이다.
+- Output Value
+- PASS / FAIL
+- Comment
+- Capture
+
+N/A도 실행 결과 초기값으로 사용하지 않는다.
+
+8. Review Exchange
+------------------
+Unified Review Exchange에는 기존 SWE.1 Word/Excel, SWE.6 Excel과 함께 생성된 경우 두 통합 XLSX도 복사한다.
+Review Package JSON에는 integrated_single_truth_audit, mode_transition_allocation_findings, finalized_verification_bundle을 포함한다.
+
+9. 기존 기능 호환성
+-------------------
+기존 SWE.1/SWE.6 산출물은 그대로 유지한다. V0.82 통합 산출물은 additive output이다.
+Source에 없는 Signal/DB/Timing/Threshold/Variant/Test Value/Actual Result/PASS/FAIL은 생성하지 않는다.

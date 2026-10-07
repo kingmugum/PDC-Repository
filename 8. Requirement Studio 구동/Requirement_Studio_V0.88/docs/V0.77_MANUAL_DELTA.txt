@@ -1,0 +1,60 @@
+Requirement Studio V0.77 Manual Delta
+======================================
+
+Purpose
+-------
+V0.77 changes the allocation-to-SWE.1/SWE.6 promotion policy based on V0.76 CHECK_SITUATION evidence while keeping no-hallucination / Source-fidelity safeguards.
+
+1. Inferred Controller Software Behavior
+----------------------------------------
+If Source text explicitly contains both:
+- a controller/ECU-like execution actor, and
+- an executable software-like behavior,
+
+then Requirement Studio may classify the item as:
+`SW_BEHAVIOR_INFERRED_REVIEW_REQUIRED`.
+
+This is a review-required software candidate. It is NOT equivalent to explicit Source-backed software allocation evidence.
+
+2. SWE.1 Behavior
+-----------------
+- Inferred software candidates may appear in Main SWE.1.
+- Mixed-domain parents are scoped by fact-level SWE.1 eligibility in Main view.
+- SYS.5 / pending / non-SWE.1 facts remain visible in review context instead of being presented as software scope.
+
+3. SWE.6 Behavior
+-----------------
+- Inferred software candidates may produce source-backed candidate test cases when normal testability/provenance rules permit.
+- Missing Signal/Timing/Threshold/Test Value is never invented merely to increase TC count.
+- Candidate test cases may remain INTENT_DRAFT / REVIEW_REQUIRED.
+- Human allocation review is still required before Artifact Readiness / Official Release can PASS.
+
+4. CHECK_SITUATION
+------------------
+The V0.77 situation report now shows:
+- explicit positive SW evidence count
+- inferred controller-software candidate count
+- still-held no-positive-SW count
+- historical positive-SW-gate affected count
+- Deferred Intent count from Review summary
+- Deferred Intent count from actual SWE.6 XLSX snapshot
+- consistency between the two counts
+
+If the actual serialized SWE.6 artifact disagrees with an earlier summary, the actual artifact count is the authoritative fallback for the handoff.
+
+5. Traceability Hardening
+-------------------------
+- B+ / B- power conditions participate in critical fact ownership.
+- Strict ±1 Paragraph continuation recovery is allowed only around explicitly cited Paragraph ranges.
+- Material exception behavior can be completed from literal fragments in the same cited Source location.
+- Child Intent DEFERRED/REVIEW_REQUIRED status overrides broad lexical representation claims.
+
+6. Unchanged Safeguards
+-----------------------
+- Source facts cannot be invented.
+- Unsupported values cannot be synthesized.
+- Conflict is not auto-resolved.
+- Visual contents are not guessed without Vision evidence.
+- Range/Enum/Encoding are not collapsed to arbitrary values.
+- Pre-execution Result fields stay blank.
+- No approved Gold means Regression = NOT_EVALUATED.

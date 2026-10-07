@@ -1,0 +1,28 @@
+{
+  "policy_version": "1.3",
+  "description": "User-editable requirement extraction judgment policy.",
+  "editable_rules": {
+    "extract_explicit_requirements": true,
+    "extract_implicit_behavior_requirements": true,
+    "mark_implicit_separately": true,
+    "atomicity_rule": "Feature groups related requirements. Split SRS by independently testable obligation/trigger/expected result; use BF only for detailed steps inside one SRS.",
+    "scenario_grouping": "ALIRA judges scenario grouping from user goal/context; requirement count is not pre-fixed.",
+    "gap_handling": "Do not fill missing facts. Record missing/ambiguous information in clarification_needed and gaps.",
+    "source_traceability_level": "Every requirement must include document + location + source_text.",
+    "confidence_review_threshold": 0.7,
+    "allow_requirement_count_target": false,
+    "test_case_generation_stage": "disabled_in_v0.30",
+    "reference_usage": "Use examples for format/pattern only; never copy their domain facts into the current document.",
+    "functional_nonfunctional_classification": "Use source-explicit classification first. If absent, classify functional vs non-functional by requirement obligation and mark classification_basis as rule-based inference. If ambiguous, use review needed.",
+    "trigger_precondition_separation": "Separate activation trigger from preconditions when source supports the distinction; do not invent missing conditions.",
+    "evaluation_exception_rule": "Do not invent evaluation methods or exception conditions. If not source-supported, leave empty so exporters display 입력문서에서 확인되지 않음.",
+    "related_artifact_rule": "Record source-backed tables/figures/diagrams/signals as related artifacts. Do not generate new factual diagrams/graphs in V0.33.",
+    "controller_software_behavior_inference": "If Source names a controller/ECU-like actor and explicitly states executable software-like behavior, allow Main SWE.1 and SWE.6 candidate promotion as SW_BEHAVIOR_INFERRED_REVIEW_REQUIRED even without a literal SW keyword. Do not override high-confidence non-software domains; human allocation review remains required.",
+    "guide_person_policy_question_mode": "V0.78 generates cross-document human policy questions from repeated review patterns. Answers are not automatically persisted or applied in V0.78; individual SRS approval prompts should be avoided when a stable policy-family question can represent them."
+  },
+  "user_notes": [
+    "You may edit this JSON between runs.",
+    "Changing these rules changes ALIRA judgment behavior without changing Python code.",
+    "Protected invariants are stored separately and cannot be overridden by this file."
+  ]
+}

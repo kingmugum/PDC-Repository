@@ -1,0 +1,20 @@
+Requirement Studio Change Decision — V0.82 → V0.83
+===================================================
+
+Decision 1 — Integrated workbooks are already in Unified AI evaluation
+V0.82 inspection confirmed that ReviewExchange copies both Integrated Requirements/Tests and Evaluation Orchestrator snapshots them into the exact evidence shared by GPT/Gemini/Claude.
+Therefore V0.83 does not create a redundant evaluation mode.
+
+Decision 2 — Make Unified evaluation contract explicit and deterministic
+The recommended Unified mode now requires SWE.1 Word, SWE.1 Excel, SWE.6 Excel, Integrated Requirements Excel, and Integrated Tests Excel.
+Missing required actual artifacts produce a deterministic RELEASE_BLOCKING / TOOL_QUALITY contract finding even if reviewers fail to mention it.
+
+Decision 3 — Clarify UI
+The recommended evaluation option explicitly names legacy SWE outputs plus Integrated Requirements/Tests.
+
+Decision 4 — Add for_h_chat developer/reviewer context support
+Add a package folder with recent changes and an AST-curated core-code context pack for ad-hoc H-Chat review under a 3-file upload limit.
+The context pack is supporting program context, not Source evidence and not a complete source dump.
+
+Decision 5 — Do not consume V0.82 run findings yet
+MLM/ESTRACK V0.82 runtime results and human judgment are deferred to V0.84. V0.83 is evaluation/support-infrastructure hardening only.

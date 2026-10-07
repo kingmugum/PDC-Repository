@@ -1,0 +1,30 @@
+V0.82 Requirements Conflict Check
+=================================
+
+1. Integrated Test vs SWE.6 strict qualification
+- Potential conflict: Showing SYS.5/deferred intents beside SWE.6 could imply they are SWE.6-qualified.
+- Resolution: Every row has Test Object Type, Verification Domain, Eligibility, Allocation Status, Execution Readiness, Deferred Reason. Integrated view is not a promotion rule.
+
+2. Low/High Mode consistency vs Human Allocation
+- Potential conflict: Forcing related state transitions to identical domains can overrule valid architecture.
+- Resolution: MODE_TRANSITION_ALLOCATION_INCONSISTENCY is review-only. No automatic allocation change.
+
+3. Trigger vocabulary vs inferred SW promotion
+- Potential conflict: `수신/변환` inside a trigger can resemble executable software action.
+- Resolution: trigger-only `... 시/경우/때` fragments cannot independently justify inferred SW allocation. Enclosing controller consequent behavior may still qualify as review-required candidate.
+
+4. Integrated visibility vs Official Release
+- Potential conflict: Visible SYS.5/SWE.6/deferred object could be mistaken for approved/executed evidence.
+- Resolution: Execution Readiness/Human Review/Hold stay explicit; Output Value/PASS-FAIL/Comment/Capture remain blank.
+
+5. Integrated exporter vs legacy exporter drift
+- Potential conflict: Rebuilding SWE.6/SYS.5 separately for each workbook could create count/ID drift.
+- Resolution: one finalized verification bundle is reused by legacy SWE.6, integrated exporters, Review Exchange and evaluation evidence.
+
+6. Non-SW verification objects vs synthetic test design
+- Potential conflict: Creating an Electrical/Environmental/Mechanical/Manufacturing intent may tempt the tool to invent test method/threshold.
+- Resolution: only Source-backed fact/objective is preserved. Concrete preparation/execution/expected values remain blank until supported by Source/approved evidence.
+
+Conclusion
+----------
+No requirement conflict requires removal of existing SWE.1/SWE.6 behavior. V0.82 is an additive visibility/single-truth extension bounded by existing Source-fidelity and review-first governance.

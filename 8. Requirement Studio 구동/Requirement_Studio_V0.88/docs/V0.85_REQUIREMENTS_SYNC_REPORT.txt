@@ -1,0 +1,7 @@
+Requirement Studio V0.85 Requirements Sync Report
+=================================================
+Baseline: Requirement_Studio_Requirements_Management_rev69.xlsx
+Append-only from: rev68
+Added: ALR-SC-111, OP-166, FR-452~457, FAIL-317~321, RT-439~443, CODE-369~374, AI-RULE-307~312, CR-293~298.
+Purpose: apply actual V0.82 MLM/ESTRACK findings without weakening Source-fidelity or changing approved Human Policy.
+Formula error scan: 0.

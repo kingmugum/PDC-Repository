@@ -1,0 +1,18 @@
+Requirement Studio V0.76 - Requirements Sync Report
+===================================================
+Source workbook: Requirement_Studio_Requirements_Management_rev59.xlsx
+Output workbook: Requirement_Studio_Requirements_Management_rev60.xlsx
+Sync policy: append-only
+
+Added:
+- ALR-SC-103
+- OP-161
+- FR-397~FR-400
+- FAIL-267~FAIL-270
+- RT-382~RT-385
+- CODE-314~CODE-317
+- AI-RULE-253~AI-RULE-256
+- CR-241~CR-244
+
+No previously approved row is intentionally modified or deleted.
+Historical rev55/rev58/rev59 workbooks are retained under history/requirements/.

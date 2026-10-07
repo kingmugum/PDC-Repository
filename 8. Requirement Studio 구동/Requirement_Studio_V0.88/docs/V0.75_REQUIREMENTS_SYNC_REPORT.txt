@@ -1,0 +1,32 @@
+Requirement Studio Requirements Sync Report
+================================================
+Date: 2026-10-06
+Source workbook: Requirement_Studio_Requirements_Management_rev58.xlsx
+Output workbook: Requirement_Studio_Requirements_Management_rev59.xlsx
+
+Governance
+----------
+- Existing approved Requirement/Rule/Test/Conflict rows were not modified or deleted.
+- Only revision metadata cells `사용자 시나리오!A1` and `사용자 시나리오!C2` were updated.
+- V0.75 changes were appended as ALR-SC-102 / OP-160 / FR-395~396 and associated criteria, failures, tests, code evidence, AI rules, and conflict records.
+
+Material decisions
+------------------
+1. Engineering identifier extraction uses ASCII alnum/underscore boundaries so Korean particles do not hide Source tokens such as `SVM_Typ2` or `ICMU_RealTimeMonStat`.
+2. Exact ownership token extraction applies the same boundary principle to timing/retry literals such as `5초동안` and `1회재시도`.
+3. Parent containment preserves a shared Fragment for a claimant when that Fragment carries a critical fact explicitly asserted by that claimant Canonical behavior.
+4. Existing V0.74 dominant-parent cleanup remains active for clear non-critical leakage.
+5. SW allocation, OPEN Semantic Units, missing Gold baseline, Vision absence, and Source-internal conflicts are not auto-resolved.
+
+Conflict review
+---------------
+- FR-395 refines FR-381/382/390 without widening Source authority.
+- FR-396 refines FR-392 while retaining FR-382/388 exact ownership constraints.
+- Critical-token overlap is a retention guard only; it does not create Requirement facts or allocation evidence.
+
+Verification
+------------
+Append-only existing-content check (all pre-existing data rows excluding revision metadata): PASS
+Formula error scan: PASS (0 matches)
+rev58 SHA-256: 805fd2e490437eb5579bacbe68ff0e4044257a7fba4a0261aa58d06d809bf95c
+rev59 SHA-256: 1592db72f16a82660916a00fed5650f08f09cb8aa6b9c27050b68f400f57ae1a

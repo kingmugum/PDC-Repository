@@ -1,0 +1,60 @@
+Requirement Studio V0.79 Manual Delta
+=====================================
+
+1. Human Policy Registry
+------------------------
+V0.79 stores approved GUIDE_PERSON policy decisions outside the extracted version folder.
+
+Windows default:
+  %LOCALAPPDATA%\RequirementStudio\human_policy\
+
+Files:
+  human_policy_registry.json  - runtime machine-readable registry
+  human_policy_registry.txt   - human-readable mirror
+  policy_change_log.jsonl     - append-only registry events
+
+The package also includes:
+  policy/human_policy_seed.json
+  policy/human_policy_seed.txt
+
+A new package seed adds only missing Policy IDs. Existing local decisions are not overwritten.
+
+2. GUIDE_PERSON behavior
+------------------------
+- Already-approved YES/NO/CONDITIONAL policy families are not asked again.
+- DEFER and genuinely new policy families remain in guide_person_###.txt.
+- Each Run includes:
+  automatic_evaluation/guide_person/applied_policy_snapshot.txt
+  automatic_evaluation/guide_person/applied_policy_snapshot.json
+
+3. GUIDE_PERSON decision save / next-Run import
+-----------------------------------------------
+After a Run, edit the generated `guide_person_###.txt` and mark exactly one checkbox using `o`:
+  [ o ] YES
+  [ ] NO
+  [ ] CONDITIONAL
+  [ ] DEFER
+
+The next Run scans prior GUIDE_PERSON handoffs in `review_exchange`, imports explicit single-choice decisions into the external Human Policy Registry, records the source file SHA-256/change-log event, and reuses the policy.
+AI Suggested Position, blank selections, and multiple marked selections are never interpreted as human approval.
+
+4. Main Requirement preservation
+--------------------------------
+V0.79 keeps the existing SWE.1 compatibility output name, but the Main Requirement Specification now preserves:
+- SWE.1 Eligible requirements
+- Review Needed / allocation-pending requirements
+- inferred software candidates requiring human judgement
+
+These rows show `사람의 판단 필요` status and remain duplicated in Review/Allocation views for auditability.
+Visibility does not mean approved software allocation or release eligibility.
+
+5. V0.78 deterministic defect fixes
+------------------------------------
+- Deferred Intent actual-XLSX count no longer counts workbook title/header rows.
+- Exact-cited semantic provenance can be conservatively completed from already-cited Source locations.
+- Source-backed fact-level allocation deferral is not mislabeled SOURCE_INSUFFICIENT when the exact child fact is allocation-pending.
+
+6. V0.80 boundary
+-----------------
+V0.79 does not yet perform the full SYS/SWE E2E schema/view expansion.
+V0.80 is planned to move from SWE-only naming toward Canonical Engineering Requirement + System/Software requirement and verification views.

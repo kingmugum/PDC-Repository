@@ -1,0 +1,33 @@
+Requirement Studio V0.77 Requirements Sync Report
+=================================================
+
+Previous baseline: Requirement_Studio_Requirements_Management_rev60.xlsx
+New baseline: Requirement_Studio_Requirements_Management_rev61.xlsx
+Governance: append-only
+
+Verification
+------------
+- All existing rev60 cell values/formulas in the original used ranges are unchanged in rev61.
+- New V0.77 records are appended only.
+- Formula error scan: 0 matches for #REF!, #DIV/0!, #VALUE!, #NAME?, #N/A.
+
+V0.77 requirement additions
+---------------------------
+- ALR-SC-104
+- OP-162
+- FR-401~FR-407
+- FAIL-271~FAIL-277
+- RT-386~RT-392
+- CODE-318~CODE-324
+- AI-RULE-257~AI-RULE-263
+- CR-245~CR-251
+
+Core intent
+-----------
+1) review-required inference of explicit controller/ECU software-like Source behavior
+2) release governance separating inferred candidate generation from approved allocation
+3) actual SWE.6 Deferred Intent count cross-check in CHECK_SITUATION
+4) Source-bounded behavior completion
+5) strict adjacent-Paragraph continuation recovery
+6) mixed-domain Main SWE.1 fact-scope isolation
+7) Child Intent disposition as authoritative representation truth

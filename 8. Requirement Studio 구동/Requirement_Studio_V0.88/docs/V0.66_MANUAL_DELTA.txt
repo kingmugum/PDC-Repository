@@ -1,0 +1,50 @@
+Requirement Studio V0.66 - User Manual Delta
+============================================
+
+This file supplements the bundled v0.32 / Runtime V0.63 manual.
+
+1. Automatic 3-AI Evaluation
+- Default review mode is 3-AI automatic review.
+- After Review Exchange creation, GPT/Gemini/Claude receive the same evidence independently.
+- Reviewers do not receive other reviewer outputs before their own result is persisted.
+- Turn off 'Review Package 생성 후 3-AI 자동 평가 실행' to retain local package-only behavior.
+
+2. Evaluation Result Files
+- 01_GPT_EVALUATION.json/.txt
+- 02_GEMINI_EVALUATION.json/.txt
+- 03_CLAUDE_EVALUATION.json/.txt
+- 04_EVALUATION_CONSENSUS.json/.txt
+- 05_EVALUATION_RESULT.json
+- final_result/FINAL_RESULT_###.txt + manifest.json
+
+3. 150-line Final Result Handoff
+- The consolidated human-readable result is split at 150 lines per file.
+- Part names are sequential: FINAL_RESULT_001.txt, FINAL_RESULT_002.txt, ...
+- manifest.json records total lines, part count, per-part line count and SHA-256.
+
+4. Evaluation Transport
+- Default: H-Chat using existing Requirement Studio H-Chat configuration.
+- Optional: direct_api using environment-variable API keys.
+- Configuration: config/evaluation_api_config.json.
+- No direct API key is stored in the distribution package.
+
+5. SWE.6 Trace Hardening
+- Owned Source Fact Fragment IDs propagate through Atomic Behavior into Child Intent.
+- Missing fragment identity is a Tool Quality review finding.
+- Fragment ownership is the minimum material set matched to the Canonical behavior.
+
+6. Mixed-domain TC Scope
+- When one SRS bundles SWE.6 and non-SWE.6 facts, a generated SWE.6 TC asserts only the SWE.6-eligible fact subset.
+- System Integration / external-dependency facts remain in audit/deferred evidence.
+
+7. Capture Column Contract
+- Column U 'Capture CANoe (Optional)' remains required in the workbook schema.
+- User entry is optional.
+- Header presence and pre-execution blank state are verified against the serialized XLSX.
+
+8. Consensus Governance
+- 3/3 = STRONG_CONSENSUS
+- 2/3 = CONSENSUS
+- 1/3 = SINGLE_REVIEWER
+- A partial reviewer set cannot independently produce Official Release PASS.
+- FAIL/HOLD is not hidden by majority voting.

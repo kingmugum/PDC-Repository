@@ -1,0 +1,27 @@
+Requirement Studio V0.86 Requirements Sync Report
+=================================================
+Baseline: Requirement_Studio_Requirements_Management_rev70.xlsx
+
+Added
+- ALR-SC-112
+- FR-458~468
+- acceptance criteria for E2E requirements/evaluation, Evaluation Objective, transition logic, SYS5 parent review, split gates, full AI workbook evaluation, Effective Baseline and No-Orphan E2E flow
+- FAIL-322~331
+- RT-444~453
+- CODE-375~384
+- AI-RULE-313~322
+- CR-299~309
+- AI_11_현재유효요구사항
+
+Authorized historical cleanup
+- direct conflicts were not deleted; their status/notes were changed to explicit supersession where the user approved resolution.
+- LOCK-006 and AI-RULE-009 package naming were updated to current Requirement Studio naming under explicit user approval.
+
+Implementation linkage
+- core/e2e_exporter.py
+- core/verification_single_truth.py
+- core/swe6_exporter.py
+- core/review_exchange.py
+- core/evaluation_orchestrator.py
+- main.py
+- tests/test_v086_e2e_requirements_evaluation_effective_baseline.py

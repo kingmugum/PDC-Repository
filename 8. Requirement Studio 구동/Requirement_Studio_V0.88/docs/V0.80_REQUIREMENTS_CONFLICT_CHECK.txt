@@ -1,0 +1,20 @@
+V0.80 Requirements Conflict Check
+=================================
+
+1) Engineering Main vs legacy SWE.1 naming
+- Resolution: keep legacy filename for compatibility, but Engineering Main is canonical preservation view; 01_SWE1 is only Software projection.
+
+2) System candidate preservation vs software allocation gate
+- Resolution: system requirement stays valid as SYS.1/SYS.5 candidate even when SWE.1/SWE.6 is pending/not applicable.
+
+3) Review visibility vs Official Release
+- Resolution: visible REVIEW_REQUIRED/HOLD items remain non-release-eligible until human decision/readiness gates pass.
+
+4) Mixed-domain parent preservation vs test scope
+- Resolution: Parent Canonical stays intact; Fact-level allocation controls SYS.5/SWE.6 projection. Pending SYS.5 fact may not leak into qualifying SWE.6 fields.
+
+5) Proposed interface text vs normative requirement
+- Resolution: preserve Source text and mark canonical_state=PROPOSED_CHANGE_PENDING / human decision required until authoritative version is confirmed.
+
+6) Human Policy reuse vs per-SRS approval
+- Resolution: cross-document policy reuse governs processing; it never substitutes for per-SRS official allocation/release sign-off.

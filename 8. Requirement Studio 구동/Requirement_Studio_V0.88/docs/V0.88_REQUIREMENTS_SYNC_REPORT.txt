@@ -1,0 +1,18 @@
+Requirement Studio V0.88 Requirements Sync Report
+=================================================
+Runtime: V0.88
+Requirements: rev72
+New scenario: ALR-SC-114
+New FR: FR-475~FR-478
+New regression: RT-460~RT-463
+New code evidence: CODE-391~394
+New AI rules: AI-RULE-329~331
+New conflicts: CR-316~319
+
+Superseded GUI requirements
+---------------------------
+- FR-211 -> FR-477
+- FR-212 -> FR-475/476
+- FR-315 -> FR-475/476
+
+Non-GUI semantics were not changed.

@@ -1,0 +1,19 @@
+Requirement Studio Change Decision V0.85 -> V0.86
+=================================================
+
+Accepted
+- Promote integrated SYS/SWE artifacts into E2E Requirements and E2E Evaluation specifications.
+- Preserve legacy SWE.1/SWE.6 outputs; E2E outputs are additive.
+- Use compact six-sheet E2E workbooks focused on human review rather than raw-object sheet proliferation.
+- Group duplicate review objects by Evaluation Objective while retaining raw-object trace.
+- Preserve state transition ALL_OF/ANY_OF/target semantics.
+- Distinguish SYS5_PARENT_SCOPE_REVIEW from fact-backed SYS5_CANDIDATE.
+- Split structural and semantic quality gates.
+- Evaluate all E2E workbook sheets/rows in Unified AI review.
+- Add Current Effective Requirements projection and explicitly supersede known historical contradictions.
+
+Not accepted / not automated
+- Do not auto-close OPEN Semantic Units.
+- Do not auto-approve SYS/SW allocation.
+- Do not invent missing test values, DB values, thresholds, timing or expected results.
+- Do not treat Structural PASS as Semantic/Release PASS.

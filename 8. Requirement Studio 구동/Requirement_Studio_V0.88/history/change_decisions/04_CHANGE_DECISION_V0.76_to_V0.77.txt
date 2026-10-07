@@ -1,0 +1,88 @@
+Requirement Studio Change Decision — V0.76 → V0.77
+===================================================
+
+1. Decision Summary
+-------------------
+V0.76 CHECK_SITUATION and FINAL_RESULT results for MLM and ESTRACK confirm that the low Main SWE.1 / SWE.6 counts are driven primarily by the V0.65+ positive-SW-only allocation gate, not by wholesale requirement extraction loss.
+
+Decision:
+- Relax only the allocation/promotion policy for explicit controller/ECU executable behavior.
+- Keep Source-fidelity, unsupported-generation, exact-trace, conflict, value-role, visual-unknown, and execution-readiness safeguards.
+- Treat inferred software behavior as REVIEW_REQUIRED modeling, not as approved software allocation.
+
+2. Evidence Used
+----------------
+MLM V0.76 CHECK_SITUATION:
+- Canonical SRS = 22
+- Main SWE.1 Eligible = 2
+- Allocation Review Annex = 13
+- SWE.1 Not Applicable = 7
+- Generated SWE.6 TC = 2
+- Hypothesis = SUPPORTED
+
+ESTRACK V0.76 CHECK_SITUATION:
+- Canonical SRS = 15
+- Main SWE.1 Eligible = 0
+- Allocation Review Annex = 15
+- Generated SWE.6 TC = 0
+- Hypothesis = SUPPORTED
+
+ESTRACK V0.76 FINAL_RESULT additionally proves that the actual SWE.6 artifact contains 41 ALLOCATION_PENDING Deferred Intents even though CHECK_SITUATION reported 0. This is a diagnostic-count defect, not an absence of deferred intent in the artifact.
+
+3. V0.77 Policy Change
+----------------------
+When Source text explicitly names a controller/ECU-like actor and an executable software-like behavior such as storage, signal send/receive, decision, control, transition, processing, retry, recovery, comparison, initialization, termination, or similar behavior, and no high-confidence non-software domain overrides it:
+
+- allocation_status = SW_BEHAVIOR_INFERRED_REVIEW_REQUIRED
+- SWE.1 eligibility = Eligible
+- SWE.6 eligibility = Eligible candidate
+- explicit positive SW evidence remains empty unless it truly exists
+- inference evidence is recorded separately
+- Artifact Readiness / Official Release remain REVIEW_REQUIRED until human allocation review
+
+This policy must not promote connector/electrical/mechanical/manufacturing/environmental/interface-only facts or pure system context merely because a controller name occurs nearby.
+
+4. Tool Quality Fixes Included
+------------------------------
+A. CHECK_SITUATION Deferred Intent count
+- Cross-check Review Package summary against the actual serialized SWE.6 `3_Deferred Intent` sheet snapshot.
+- Expose summary count, actual count, and consistency state.
+- Prefer actual artifact count when summary is stale.
+
+B. MLM SRS_005 `최초 B+ 인가`
+- Treat B+/B- as critical source tokens.
+- Allow strict adjacent-paragraph continuation recovery only within ±1 paragraph of an explicitly cited paragraph range.
+
+C. ESTRACK SRS_012 exception behavior ownership
+- Add source-bounded material behavior completion for Canonical clauses that are present in the cited Source location but not owned by any linked Fragment/Child Intent.
+- No new Source facts may be invented.
+
+D. MLM SRS_007 mixed-domain Main SWE.1 scope
+- Canonical / Review Package retains the full parent.
+- Main SWE.1 shows only fact-level SWE.1-eligible scope.
+- SYS.5/pending/non-SWE.1 facts remain visible as Allocation Pending / review context.
+
+E. Child Intent / representation single truth
+- If authoritative Child Intent state is DEFERRED or REVIEW_REQUIRED, broad parent TC text overlap cannot mark that child as represented/covered.
+
+5. Safeguards Explicitly Retained
+---------------------------------
+The following remain unchanged and must not be weakened by V0.77:
+- no Source-invented Signal / Threshold / Timing / Test Value
+- exact Source Fact / Fragment provenance
+- unsupported-generation audit
+- unresolved Source Conflict preservation
+- visual semantics remain unknown when Vision evidence is absent
+- Range / Enum / Encoding are not collapsed to arbitrary representative values
+- Result fields remain blank before execution
+- approved Gold is still required for Regression PASS
+
+6. Deferred Investigation
+-------------------------
+The historical ESTRACK Canonical count changed from V0.74 = 18 to V0.76 = 15. A complete record-by-record comparison is deferred because the historical Review Package is very large. V0.77 does not claim that this change is resolved. It remains a future regression investigation item and must not be used as evidence to weaken Source-fidelity safeguards.
+
+7. Requirements Governance
+--------------------------
+- Requirements baseline advances rev60 → rev61.
+- Existing approved rows remain unchanged.
+- V0.77 records are append-only: FR-401~407 and corresponding scenarios, criteria, failures, regression tests, code evidence, AI rules, and conflict reviews.
