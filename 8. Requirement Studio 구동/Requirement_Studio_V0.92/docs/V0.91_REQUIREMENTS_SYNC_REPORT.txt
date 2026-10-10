@@ -1,0 +1,9 @@
+V0.91 Requirements Sync Report
+==============================
+Runtime: V0.91
+Requirements: rev75
+New Scenario: ALR-SC-117
+New Requirements: FR-490~FR-499
+Superseded: FR-480 only, because its V0.89 34-column merged-header coordinates conflict directly with the user-approved V0.91 23-column human layout.
+Preserved: FR-483~FR-489 Basic Functional test-design semantics, source-fidelity rules, no-silent-loss, 3-AI evaluation, E2E full-workbook evaluation, and LOCK-008 governance.
+Key principle: human-facing Main views may hide internal metadata, but Source/Trace/Allocation/Readiness data remains authoritative in Review/Trace/JSON audit layers.

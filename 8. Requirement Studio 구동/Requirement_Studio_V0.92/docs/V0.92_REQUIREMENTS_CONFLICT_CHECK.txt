@@ -1,0 +1,7 @@
+V0.92 Requirements Conflict Check
+
+- FR-496: V0.91 장문 평가 내용/수행/기대결과 표시 계약은 FR-503의 구조화 본문 계약과 직접 충돌하여 Historical Truth에는 보존하되 현재 Effective Baseline에서는 대체됨.
+- FR-498: 사람용 Review 상태의 의미는 유지하되 exact label `테스트 케이스 검토 상태`는 FR-503의 `TC 검토 상태`로 대체됨.
+- FR-499: V0.91 그룹 좌표 A:F/G:I/J:M/N:Q/R:S/T:W는 FR-503의 A:F/G:H/I:L/M:P/Q:S/T:W로 대체됨.
+- FR-485는 유지: 1 SRS→N TC 허용. FR-501/502는 과분할 방지를 위해 Split/Keep/Vector/Step 조건을 구체화함.
+- LOCK-008 유지. 위 세 항목 외 기존 승인 Requirement 문구를 임의 변경하지 않음.

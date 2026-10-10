@@ -1,0 +1,16 @@
+Requirement Studio V0.91 Manual Delta
+=====================================
+- V0.87 full user manual remains the base operating manual. V0.88~V0.91 are incremental deltas.
+- E2E Requirements Word/Excel Main is simplified to 11 human-facing fields: SRS ID, parent function, review status, requirement, trigger, behavior definition, precondition, expected result, verification criterion, traceability, and notes.
+- Allocation/Eligibility/Canonical/Fact metadata is not deleted; it remains in E2E Review/Trace sheets and Review Package / Finalized Bundle JSON.
+- Review Status is displayed in Korean, e.g. `사람의 리뷰 필요`.
+- Long human-facing requirement/test text is line-broken for readability without changing the Source facts.
+- E2E Evaluation Main is reduced to 23 human-facing columns.
+- New Test Case IDs are `SRS_TC_001`, `SRS_TC_002`, ... and the human Requirement/Basic-Fact IDs are `SRS_001_BF_01`, `SRS_001_BF_02`, ... . Stable EVAL/TC/raw IDs remain in Trace/JSON.
+- Verification Domain is compact (`SYS.5`, `SWE.6`, or Review), while the Test Design Method is `기본 기능 검증` in V0.91.
+- Test Case names are numbered `_01`, `_02`, ... for human distinction.
+- Sequence Input values are displayed as values only (for example `1) 0x1`), while Expected Output keeps only value + concise Source meaning.
+- The four internal review axes are summarized in one human-facing `테스트 케이스 검토 상태` column; detailed raw states remain in Trace/JSON.
+- Row-2 groups are: 종류(A:F), 사전 준비(G:I), 입력/수행(J:M), 출력(N:Q), 판단(R:S), 실행 결과(T:W).
+- Result columns are `실제 출력값 / 판정(PASS/FAIL) / 비고 / 결과 화면 캡처` and remain physically blank before execution.
+- EP/BVA/Fault Injection automatic expansion remains OFF. V0.91 continues the Source-backed Basic Functional mode introduced in V0.90.

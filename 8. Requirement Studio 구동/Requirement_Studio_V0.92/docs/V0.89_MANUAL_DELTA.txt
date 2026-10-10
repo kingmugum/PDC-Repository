@@ -1,0 +1,7 @@
+Requirement Studio V0.89 Manual Delta
+======================================
+- No separate full manual revision is required. V0.87 manual remains functionally valid.
+- E2E Requirements is the final human-facing Requirement Master.
+- SWE.1 Word Review Annex repetition is removed; detailed review data remains in E2E Requirements/Review Package JSON.
+- E2E Evaluation gains row-2 stage groups and Korean display labels.
+- V0.90 will separately address SRS atomicity and one-SRS-to-multiple-test-case design expansion.

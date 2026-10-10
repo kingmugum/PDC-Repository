@@ -1,0 +1,17 @@
+V0.91 Requirements Conflict Check
+=================================
+1. V0.89 34-column group header vs V0.91 23-column Main
+   - Direct conflict: FR-480.
+   - Resolution: FR-480 is superseded by FR-494/FR-499.
+
+2. No-silent-loss vs human-facing metadata removal
+   - No conflict after layering: metadata is removed only from the Main display and preserved in `3_검토필요`, `4_Source_추적성` / `4_요구사항-평가추적성`, and Review Package / Finalized Bundle JSON.
+
+3. Stable raw EVAL/TC IDs vs new SRS_TC/SRS_BF IDs
+   - New IDs are display identities only. Stable raw IDs remain in Trace/JSON, so AI evaluation/regression trace is not rewritten.
+
+4. Unified human review status vs multi-axis governance
+   - `테스트 케이스 검토 상태` is a human summary only. Allocation/Eligibility/Execution Readiness/Human Review raw axes remain authoritative in Trace/JSON and release gates.
+
+No unresolved deterministic conflict introduced by V0.91.
+LOCK-008 remains in force; this approved V0.91 change does not grant permission for unrelated requirement changes.

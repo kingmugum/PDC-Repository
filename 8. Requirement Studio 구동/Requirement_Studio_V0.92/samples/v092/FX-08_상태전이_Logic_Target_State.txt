@@ -1,0 +1,17 @@
+[SAMPLE_FIXTURE]
+ID: FX-08
+NAME: 상태전이 Logic / Target State
+ORIGIN: H-Chat CF-005 검증용 합성 Fixture
+PURPOSE: Condition Logic(ALL/ANY)과 Target State를 prose가 아닌 구조 필드로 보존
+HCHAT_TARGET: Semantic Verification Quality — STATE_TRANSITION_LOGIC/TARGET
+
+[SOURCE_INPUT]
+3.2 전원 모드 전이
+- Low Power 진입 조건: ACC=OFF이고 IGN1=OFF인 경우 시스템은 Low Power 상태로 전이해야 한다.
+- High Power 진입 조건: ACC=ON 또는 IGN1=ON인 경우 시스템은 High Power 상태로 전이해야 한다.
+- Monitoring 상태에서는 Low Power 전이를 수행하지 않는다.
+
+[EXPECTED_PARENT_SRS]
+SRS_008 — 전원 모드 상태전이
+
+[END_SAMPLE_FIXTURE]

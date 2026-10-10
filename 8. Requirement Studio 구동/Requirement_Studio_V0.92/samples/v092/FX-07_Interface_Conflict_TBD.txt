@@ -1,0 +1,20 @@
+[SAMPLE_FIXTURE]
+ID: FX-07
+NAME: Interface Conflict + TBD
+ORIGIN: H-Chat CF-004/CF-007/CF-008 검증용 합성 Fixture
+PURPOSE: Conflict/TBD는 executable TC로 강제 생성하지 않고 Review terminal path로 보존
+HCHAT_TARGET: Conflict/TBD governance
+
+[SOURCE_INPUT]
+2.13 Capture Mode 제어
+- 기존 사양: HU는 ICMU Capture 종료를 위해 SVM_CaptureModeCMD를 사용한다.
+- 변경 검토안: 타이밍 이슈 해결을 위해 ICMU_CaptureModeCMD 추가를 제안한다.
+- 최종 승인된 Production Signal은 아직 확정되지 않았다.
+
+2.14 Top View 정보
+- SVM_TopViewInfo는 Signal(TBD)로 표시되어 있으며 최종 Signal 정의가 확정되지 않았다.
+
+[EXPECTED_PARENT_SRS]
+SRS_007 — Capture Mode 제어 인터페이스 / Top View 정보
+
+[END_SAMPLE_FIXTURE]

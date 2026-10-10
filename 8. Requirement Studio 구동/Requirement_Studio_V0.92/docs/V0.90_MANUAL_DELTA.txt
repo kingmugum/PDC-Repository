@@ -1,0 +1,10 @@
+Requirement Studio V0.90 Manual Delta
+======================================
+- V0.87 full user manual remains the base operating manual; V0.88~V0.90 are incremental deltas.
+- New default E2E Test Design Mode: Basic Functional Verification (Source-backed).
+- Parent SRS may contain multiple Atomic Facts without automatic SRS splitting.
+- One SRS may produce multiple E2E test cases when independent Source-backed Input→Output relations exist.
+- Explicit ordered request/response mappings are shown as one sequence TC with multiple Test Vectors where appropriate.
+- E2E Evaluation now prioritizes structured Input / Output / Expected fields instead of putting the entire Source text into Description.
+- Undefined Invalid/Error reactions remain Human Review / Source Insufficient rather than synthetic PASS/FAIL cases.
+- EP/BVA/Fault Injection automatic expansion is intentionally OFF in V0.90.

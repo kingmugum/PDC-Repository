@@ -1,0 +1,58 @@
+Requirement Studio Human Policy Seed — V0.92
+========================================================================
+
+1. GP-ALLOC-001 — Inferred Controller Software Candidate Promotion
+------------------------------------------------------------------------
+Decision: YES
+Reuse Scope: Cross-document: controller/ECU actor + literal executable behavior + no high-confidence non-SW allocation
+Notes: 명시적 SW allocation 문구가 없어도 Controller/ECU/HU의 Source-backed executable behavior는 review-required candidate로 보존한다. 개별 SRS의 공식 SW allocation 승인과는 구분한다.
+Source: User-approved V0.78 GUIDE_PERSON decision
+
+2. GP-TC-001 — Candidate Verification Generation Before Allocation Sign-off
+------------------------------------------------------------------------
+Decision: YES
+Reuse Scope: Cross-document: inferred SW candidate only; no synthetic test data; result fields blank
+Notes: 사람의 최종 allocation 승인 전에도 Source-backed Candidate TC/Intent Draft를 생성할 수 있으나 REVIEW_REQUIRED/HOLD를 유지한다.
+Source: User-approved V0.78 GUIDE_PERSON decision
+
+3. GP-MIX-001 — Mixed-domain Parent Requirement Handling
+------------------------------------------------------------------------
+Decision: YES
+Reuse Scope: Cross-document: one Canonical parent with fact-level verification domains >=2
+Notes: Canonical Parent는 유지하고 fact-level scope를 분리한다. 다른 domain fact는 삭제하지 않고 Review/Allocation context에 보존한다.
+Source: User-approved V0.78 GUIDE_PERSON decision
+
+4. GP-OPEN-001 — OPEN Semantic Unit Disposition
+------------------------------------------------------------------------
+Decision: CONDITIONAL
+Reuse Scope: Cross-document: open Semantic Unit after duplicate/context/external-reference review
+Notes: OPEN Semantic Unit은 자동 종결하지 않는다. 사람의 검토와 근거 기록 하에 Existing Canonical/SRS 직접 연결, 신규/확장 SRS, Gap/Conflict, External Dependency, 또는 완전한 중복/비규범적 배경 문장에 한한 Intentional Exclusion으로만 terminal disposition한다. 고유 normative behavior, 조건 논리, timing, 수치, 금지사항, 오류 대응, 상태 전이 또는 외부 규격 준수 의무가 있으면 Intentional Exclusion으로 종결하지 않는다.
+Source: User-approved V0.78 GUIDE_PERSON conditional decision
+
+5. GP-SHARED-001 — Shared Literal Fact with Parent-context Allocation
+------------------------------------------------------------------------
+Decision: YES
+Reuse Scope: Cross-document: identical literal fact shared by multiple parents with divergent allocation/domain
+Notes: 물리 Source Fragment는 하나로 보존하고 parent별 contextual alias와 allocation rationale을 명시한다.
+Source: User-approved V0.78 GUIDE_PERSON decision
+
+6. HP-PRESERVE-001 — Review/Hold Requirement Preservation
+------------------------------------------------------------------------
+Decision: YES
+Reuse Scope: All documents and all engineering requirement views
+Notes: REVIEW_REQUIRED/HOLD 항목은 삭제하지 않고 Main Requirement Specification 및 Review View에 보존한다. Official Release에서 제외할 수는 있으나 Source→Canonical→Review/Decision traceability는 유지한다.
+Source: User-approved V0.79 core preservation rule
+
+7. HP-E2E-001 — Engineering E2E Requirement Preservation
+------------------------------------------------------------------------
+Decision: YES
+Reuse Scope: All documents: Canonical Engineering Requirement before SYS/SWE domain projection
+Notes: Not SWE.1 != Not Requirement. Source-backed normative engineering facts are preserved as Canonical Engineering Requirements and then projected to SYS.1/SWE.1/native domain views. REVIEW_REQUIRED/HOLD remains visible.
+Source: User-approved V0.80 SYS/SWE E2E expansion directive
+
+8. HP-SYSVER-001 — System Verification Candidate Preservation
+------------------------------------------------------------------------
+Decision: YES
+Reuse Scope: System-level requirements and system facts not eligible for SWE.6
+Notes: Not SWE.6 != Not Verifiable. System-level Source-backed facts remain available as SYS.5 System Qualification Candidate intents; no Source-missing test values or results are invented.
+Source: User-approved V0.80 SYS/SWE E2E expansion directive

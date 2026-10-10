@@ -1,0 +1,17 @@
+[SAMPLE_FIXTURE]
+ID: FX-01
+NAME: 전원 입력-출력 직접 대응
+ORIGIN: 합성 회귀 Fixture
+PURPOSE: 1 Parent SRS 유지 + 독립 Fact별 1 SRS→N TC 검증
+HCHAT_TARGET: Basic Functional 구조화 / Description 몰빵 방지
+
+[SOURCE_INPUT]
+2.1 전원 출력 제어
+- ECU는 입력 전원이 12V인 경우 시스템 출력 전원을 5V로 제어해야 한다.
+- ECU는 입력 전원이 OFF인 경우 시스템 출력 전원을 0V로 제어해야 한다.
+- 출력 전압은 시스템 출력 전원 단자에서 확인한다.
+
+[EXPECTED_PARENT_SRS]
+SRS_001 — 전원 입력 상태에 따른 시스템 출력 전원 제어
+
+[END_SAMPLE_FIXTURE]

@@ -1,0 +1,30 @@
+{
+  "schema_version": "0.1",
+  "status": "SCAFFOLD_ONLY",
+  "introduced_in": "V0.92",
+  "purpose": "Collect explicit user engineering decisions for a future V0.93 Guideline Mining experiment. V0.92 does not mine or promote rules automatically.",
+  "fields": [
+    "decision_example_id",
+    "context",
+    "candidate_facts",
+    "ai_initial_decision",
+    "user_final_decision",
+    "decision_type",
+    "user_comment",
+    "applied_tc_ids",
+    "source_refs",
+    "created_at"
+  ],
+  "decision_type_values": [
+    "SPLIT",
+    "KEEP",
+    "VECTOR",
+    "STEP",
+    "REVIEW"
+  ],
+  "governance": [
+    "Examples are evidence, not approved General Rules.",
+    "No automatic Rule promotion in V0.92.",
+    "Any future Rule promotion requires counterexample analysis, human approval, and regression."
+  ]
+}

@@ -1,0 +1,12 @@
+V0.90 Requirements Sync Report
+===============================
+Runtime: V0.90
+Requirements: rev74
+Scenario: ALR-SC-116
+New FR: FR-483~FR-489
+Superseded: FR-245 for the current V0.90 E2E auto-generation mode; advanced EP/BVA/State-technique expansion is deferred to a future explicit mode.
+Regression: RT-467~RT-470
+New implementation evidence: CODE-399~CODE-402
+New AI work rules: AI-RULE-336~AI-RULE-341
+New conflicts/resolutions: CR-323~CR-326
+LOCK-008 remains active. No unrelated approved Requirement/Lock/Rule/Test/Conflict was modified.

@@ -1,0 +1,9 @@
+V0.89 Requirements Sync Report
+===============================
+Runtime: V0.89
+Requirements: rev73
+Scenario: ALR-SC-115
+New FR: FR-479~FR-482
+Superseded: FR-384 by FR-479/FR-482
+Regression: RT-464~RT-467
+No unrelated non-GUI/non-output Requirement was modified. LOCK-008 remains active.

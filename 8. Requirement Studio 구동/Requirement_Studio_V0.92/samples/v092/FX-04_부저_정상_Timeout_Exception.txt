@@ -1,0 +1,18 @@
+[SAMPLE_FIXTURE]
+ID: FX-04
+NAME: 부저 정상 + Timeout Exception
+ORIGIN: ESTRACK 패턴 축약 재구성
+PURPOSE: Normal 경로와 Timeout/Exception 경로 분리
+HCHAT_TARGET: STATE_TRANSITION_LOGIC/TARGET 구조화
+
+[SOURCE_INPUT]
+2.7 부저 제어 및 미응답 처리
+- 아웃사이드 미러 펼침 제어 이후 HU는 서버 Command의 부저 출력 주기에 따라 HU_Buzzer_OnOffReq를 0x1(Active)로 송신해야 한다.
+- HU는 BDC로부터 부저 출력 상태 피드백을 수신하여 부저 상태를 판단해야 한다.
+- 부저 출력 요청 후 피드백 신호가 5초 동안 수신되지 않으면 부저 미응답으로 판단하고 촬영을 중단해야 한다.
+- 부저 미응답에는 별도 Retry를 수행하지 않는다.
+
+[EXPECTED_PARENT_SRS]
+SRS_004 — 부저 제어 및 부저 미응답 처리
+
+[END_SAMPLE_FIXTURE]

@@ -1,0 +1,6 @@
+V0.89 Requirements Conflict Check
+=================================
+Resolved: legacy SWE.1 Allocation Review Annex requirement (FR-384) became redundant after E2E Requirements became the final human-facing Engineering Master.
+Resolution: FR-384 SUPERSEDED by FR-479/FR-482. Review information is preserved in E2E Requirements `3_검토필요` and Review Package JSON; only duplicate human-facing prose is removed.
+Localization is display-only; stable IDs and JSON schema/enum remain unchanged.
+No unresolved deterministic conflict introduced by V0.89.

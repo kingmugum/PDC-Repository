@@ -1,0 +1,647 @@
+{
+  "version": "V0.92 pre-implementation sample fixture set",
+  "scope": "BASIC_FUNCTIONAL_SOURCE_BACKED only",
+  "fixtures": [
+    {
+      "id": "FX-01",
+      "name": "전원 입력-출력 직접 대응",
+      "origin": "합성 회귀 Fixture",
+      "source_input": "2.1 전원 출력 제어\n- ECU는 입력 전원이 12V인 경우 시스템 출력 전원을 5V로 제어해야 한다.\n- ECU는 입력 전원이 OFF인 경우 시스템 출력 전원을 0V로 제어해야 한다.\n- 출력 전압은 시스템 출력 전원 단자에서 확인한다.",
+      "expected_parent_srs": "SRS_001 — 전원 입력 상태에 따른 시스템 출력 전원 제어",
+      "facts": [
+        {
+          "fact_id": "F001",
+          "role": "INPUT_CONDITION",
+          "content": "입력 전원 = 12V"
+        },
+        {
+          "fact_id": "F002",
+          "role": "EXPECTED_OUTPUT",
+          "content": "시스템 출력 전원 = 5V"
+        },
+        {
+          "fact_id": "F003",
+          "role": "INPUT_CONDITION",
+          "content": "입력 전원 = OFF"
+        },
+        {
+          "fact_id": "F004",
+          "role": "EXPECTED_OUTPUT",
+          "content": "시스템 출력 전원 = 0V"
+        },
+        {
+          "fact_id": "F005",
+          "role": "OBSERVABLE",
+          "content": "시스템 출력 전원 단자에서 출력 전압 확인"
+        }
+      ],
+      "expected_tests": [
+        {
+          "tc_id": "SRS_TC_001",
+          "bf_id": "SRS_001_BF_01",
+          "name": "12V 입력 시 5V 출력 확인",
+          "input_variable": "입력 전원",
+          "input_compare": "=",
+          "input_value": "12V",
+          "output_variable": "시스템 출력 전압",
+          "output_compare": "=",
+          "expected_output": "5V",
+          "pass_criterion": "입력 전원=12V일 때 출력 전압=5V이면 PASS",
+          "exact_fact_ids": [
+            "F001",
+            "F002",
+            "F005"
+          ]
+        },
+        {
+          "tc_id": "SRS_TC_002",
+          "bf_id": "SRS_001_BF_02",
+          "name": "입력 OFF 시 0V 출력 확인",
+          "input_variable": "입력 전원",
+          "input_compare": "=",
+          "input_value": "OFF",
+          "output_variable": "시스템 출력 전압",
+          "output_compare": "=",
+          "expected_output": "0V",
+          "pass_criterion": "입력 전원=OFF일 때 출력 전압=0V이면 PASS",
+          "exact_fact_ids": [
+            "F003",
+            "F004",
+            "F005"
+          ]
+        }
+      ],
+      "expected_reviews": []
+    },
+    {
+      "id": "FX-02",
+      "name": "System/B-CAN Wake-up + Variant",
+      "origin": "ESTRACK 패턴 축약 재구성",
+      "source_input": "2.4 System 및 B-CAN wake-up\n- HU는 CCS로부터 내 차 주변 영상 전송 요청을 수신하면 System wake-up 해야 한다.\n- HU는 System wake-up 완료 후 C_PreCrankReq를 0x1(Req on)으로 송출하여 B-CAN wake-up 해야 한다.\n- HEV/PHEV/EV 차종인 경우 HU는 IGN3 On 해야 한다.",
+      "expected_parent_srs": "SRS_002 — System 및 B-CAN wake-up",
+      "facts": [
+        {
+          "fact_id": "F001",
+          "role": "TRIGGER",
+          "content": "CCS 주변 영상 전송 요청 수신"
+        },
+        {
+          "fact_id": "F002",
+          "role": "ACTION",
+          "content": "HU System wake-up"
+        },
+        {
+          "fact_id": "F003",
+          "role": "PRECONDITION",
+          "content": "System wake-up 완료"
+        },
+        {
+          "fact_id": "F004",
+          "role": "EXPECTED_OUTPUT",
+          "content": "C_PreCrankReq = 0x1(Req on)"
+        },
+        {
+          "fact_id": "F005",
+          "role": "VARIANT_CONDITION",
+          "content": "차종 = HEV/PHEV/EV"
+        },
+        {
+          "fact_id": "F006",
+          "role": "EXPECTED_STATE",
+          "content": "IGN3 = On"
+        }
+      ],
+      "expected_tests": [
+        {
+          "tc_id": "SRS_TC_003",
+          "bf_id": "SRS_002_BF_01",
+          "name": "System/B-CAN wake-up 확인",
+          "input_variable": "CCS 주변 영상 전송 요청",
+          "input_compare": "수신",
+          "input_value": "1회",
+          "output_variable": "C_PreCrankReq",
+          "output_compare": "=",
+          "expected_output": "0x1",
+          "pass_criterion": "System wake-up 완료 후 C_PreCrankReq=0x1이면 PASS",
+          "exact_fact_ids": [
+            "F001",
+            "F002",
+            "F003",
+            "F004"
+          ]
+        },
+        {
+          "tc_id": "SRS_TC_004",
+          "bf_id": "SRS_002_BF_02",
+          "name": "전동화 차종 IGN3 On 확인",
+          "input_variable": "차종",
+          "input_compare": "∈",
+          "input_value": "HEV/PHEV/EV",
+          "output_variable": "IGN3",
+          "output_compare": "=",
+          "expected_output": "On",
+          "pass_criterion": "대상 차종에서 wake-up 흐름 수행 후 IGN3=On이면 PASS",
+          "exact_fact_ids": [
+            "F001",
+            "F005",
+            "F006"
+          ]
+        }
+      ],
+      "expected_reviews": []
+    },
+    {
+      "id": "FX-03",
+      "name": "미러 제어 + 상태 판단",
+      "origin": "ESTRACK 패턴 축약 재구성",
+      "source_input": "2.5 아웃사이드 미러 제어\n- HU는 실시간 감시모드 동작 Command 수신 시 OMUOSMirCtrl을 0x2(Unfold)로 송신해야 한다.\n- HU는 실시간 감시모드 종료 Command 수신 시 OMUOSMirCtrl을 0x1(Fold)로 송신해야 한다.\n- HU는 Mirror_UnFldCtrlSta 및 Mirror_FldCtrlSta를 수신하여 아웃사이드 미러 상태를 판단해야 한다.\n\n미러 상태 판단 표\nMirror_UnFldCtrlSta | Mirror_FldCtrlSta | 미러 상태\nAny | 0x1,0x2 | 접힘\n0x1 | Any | 접힘\n0x0,0x2,0x3 | 0x0,0x3 | 펼침",
+      "expected_parent_srs": "SRS_003 — 아웃사이드 미러 제어 및 상태 판단",
+      "facts": [
+        {
+          "fact_id": "F001",
+          "role": "INPUT",
+          "content": "Command = 동작"
+        },
+        {
+          "fact_id": "F002",
+          "role": "EXPECTED_OUTPUT",
+          "content": "OMUOSMirCtrl = 0x2"
+        },
+        {
+          "fact_id": "F003",
+          "role": "INPUT",
+          "content": "Command = 종료"
+        },
+        {
+          "fact_id": "F004",
+          "role": "EXPECTED_OUTPUT",
+          "content": "OMUOSMirCtrl = 0x1"
+        },
+        {
+          "fact_id": "F005",
+          "role": "INPUT_TABLE",
+          "content": "Mirror_UnFldCtrlSta / Mirror_FldCtrlSta 조합"
+        },
+        {
+          "fact_id": "F006",
+          "role": "EXPECTED_STATE",
+          "content": "조합에 따른 접힘/펼침 상태"
+        }
+      ],
+      "expected_tests": [
+        {
+          "tc_id": "SRS_TC_005",
+          "bf_id": "SRS_003_BF_01",
+          "name": "미러 제어 Command 확인",
+          "input_variable": "실시간 감시모드 Command",
+          "input_compare": "조건별",
+          "input_value": "동작 / 종료",
+          "output_variable": "OMUOSMirCtrl",
+          "output_compare": "조건별",
+          "expected_output": "동작→0x2 / 종료→0x1",
+          "pass_criterion": "각 Command별 OMUOSMirCtrl이 Source 정의와 일치하면 PASS",
+          "exact_fact_ids": [
+            "F001",
+            "F002",
+            "F003",
+            "F004"
+          ]
+        },
+        {
+          "tc_id": "SRS_TC_006",
+          "bf_id": "SRS_003_BF_02",
+          "name": "미러 상태 판단 확인",
+          "input_variable": "Mirror_UnFldCtrlSta + Mirror_FldCtrlSta",
+          "input_compare": "조합",
+          "input_value": "Source 표 조합",
+          "output_variable": "미러 판단 상태",
+          "output_compare": "조합 일치",
+          "expected_output": "접힘 / 펼침",
+          "pass_criterion": "각 입력 조합의 판단 상태가 Source 표와 일치하면 PASS",
+          "exact_fact_ids": [
+            "F005",
+            "F006"
+          ]
+        }
+      ],
+      "expected_reviews": []
+    },
+    {
+      "id": "FX-04",
+      "name": "부저 정상 + Timeout Exception",
+      "origin": "ESTRACK 패턴 축약 재구성",
+      "source_input": "2.7 부저 제어 및 미응답 처리\n- 아웃사이드 미러 펼침 제어 이후 HU는 서버 Command의 부저 출력 주기에 따라 HU_Buzzer_OnOffReq를 0x1(Active)로 송신해야 한다.\n- HU는 BDC로부터 부저 출력 상태 피드백을 수신하여 부저 상태를 판단해야 한다.\n- 부저 출력 요청 후 피드백 신호가 5초 동안 수신되지 않으면 부저 미응답으로 판단하고 촬영을 중단해야 한다.\n- 부저 미응답에는 별도 Retry를 수행하지 않는다.",
+      "expected_parent_srs": "SRS_004 — 부저 제어 및 부저 미응답 처리",
+      "facts": [
+        {
+          "fact_id": "F001",
+          "role": "PRECONDITION",
+          "content": "아웃사이드 미러 펼침 완료"
+        },
+        {
+          "fact_id": "F002",
+          "role": "INPUT",
+          "content": "서버 Command의 부저 출력 주기"
+        },
+        {
+          "fact_id": "F003",
+          "role": "EXPECTED_OUTPUT",
+          "content": "HU_Buzzer_OnOffReq = 0x1"
+        },
+        {
+          "fact_id": "F004",
+          "role": "OBSERVABLE",
+          "content": "BDC 부저 상태 피드백"
+        },
+        {
+          "fact_id": "F005",
+          "role": "TIMEOUT_CONDITION",
+          "content": "피드백 미수신 5초"
+        },
+        {
+          "fact_id": "F006",
+          "role": "EXPECTED_STATE",
+          "content": "부저 미응답 판단"
+        },
+        {
+          "fact_id": "F007",
+          "role": "EXPECTED_ACTION",
+          "content": "촬영 중단"
+        },
+        {
+          "fact_id": "F008",
+          "role": "NEGATIVE_REQUIREMENT",
+          "content": "Retry 없음"
+        }
+      ],
+      "expected_tests": [
+        {
+          "tc_id": "SRS_TC_007",
+          "bf_id": "SRS_004_BF_01",
+          "name": "부저 정상 제어 확인",
+          "input_variable": "부저 출력 주기",
+          "input_compare": "사양 정의",
+          "input_value": "Source 정의값",
+          "output_variable": "HU_Buzzer_OnOffReq",
+          "output_compare": "=",
+          "expected_output": "0x1",
+          "pass_criterion": "부저 출력 시 요청값 0x1 및 정상 피드백이 확인되면 PASS",
+          "exact_fact_ids": [
+            "F001",
+            "F002",
+            "F003",
+            "F004"
+          ]
+        },
+        {
+          "tc_id": "SRS_TC_008",
+          "bf_id": "SRS_004_BF_02",
+          "name": "부저 미응답 처리 확인",
+          "input_variable": "부저 상태 피드백",
+          "input_compare": "미수신",
+          "input_value": "5초",
+          "output_variable": "미응답 판단 / 촬영 상태",
+          "output_compare": "=",
+          "expected_output": "미응답 / 촬영 중단 / Retry 없음",
+          "pass_criterion": "5초 미수신 시 미응답+촬영중단+Retry 없음이면 PASS",
+          "exact_fact_ids": [
+            "F005",
+            "F006",
+            "F007",
+            "F008"
+          ]
+        }
+      ],
+      "expected_reviews": []
+    },
+    {
+      "id": "FX-05",
+      "name": "View 순차 요청/응답 + Undefined Invalid",
+      "origin": "사용자 제공 2.9 실외 이미지 캡처 패턴 재구성",
+      "source_input": "2.9 실외 이미지 View 요청/응답\n- HU는 ADAS_PRK에 SVM_CaptureModeViewRequest를 송신하여 Front→Rear→Left→Right 순서로 영상을 요청해야 한다.\n- HU는 SVM_CaptureModeViewState를 수신하여 동일 순서의 영상 송출 여부를 확인해야 한다.\n\nRequest 값\n0x1 Front\n0x2 Rear\n0x3 Left\n0x4 Right\n0x5 Top\n0x7 Invalid\n\nState 값\n0x1 Front\n0x2 Rear\n0x3 Left\n0x4 Right\n0x5 Top\n0x6 Camera Input Error\n0x7 Invalid\n\n※ Invalid/Error 수신 시 HU의 후속 처리 동작은 본 절에 정의하지 않는다.",
+      "expected_parent_srs": "SRS_005 — 실외 이미지 View 요청/응답",
+      "facts": [
+        {
+          "fact_id": "F001",
+          "role": "SEQUENCE",
+          "content": "Request 순서 Front→Rear→Left→Right"
+        },
+        {
+          "fact_id": "F002",
+          "role": "INPUT_MAPPING",
+          "content": "0x1/0x2/0x3/0x4 Request mapping"
+        },
+        {
+          "fact_id": "F003",
+          "role": "OUTPUT_MAPPING",
+          "content": "0x1/0x2/0x3/0x4 State mapping"
+        },
+        {
+          "fact_id": "F004",
+          "role": "INPUT_MAPPING",
+          "content": "0x5 Top Request"
+        },
+        {
+          "fact_id": "F005",
+          "role": "OUTPUT_MAPPING",
+          "content": "0x5 Top State"
+        },
+        {
+          "fact_id": "F006",
+          "role": "UNDEFINED_INPUT",
+          "content": "0x7 Invalid"
+        },
+        {
+          "fact_id": "F007",
+          "role": "UNDEFINED_OUTPUT",
+          "content": "0x6 Camera Input Error / 0x7 Invalid 후속 처리 미정의"
+        }
+      ],
+      "expected_tests": [
+        {
+          "tc_id": "SRS_TC_009",
+          "bf_id": "SRS_005_BF_01",
+          "name": "Front→Rear→Left→Right 순차 요청/응답",
+          "input_variable": "SVM_CaptureModeViewRequest",
+          "input_compare": "순차",
+          "input_value": "0x1→0x2→0x3→0x4",
+          "output_variable": "SVM_CaptureModeViewState",
+          "output_compare": "순차 일치",
+          "expected_output": "0x1→0x2→0x3→0x4",
+          "pass_criterion": "모든 단계의 요청/응답과 순서가 일치하면 PASS",
+          "exact_fact_ids": [
+            "F001",
+            "F002",
+            "F003"
+          ]
+        },
+        {
+          "tc_id": "SRS_TC_010",
+          "bf_id": "SRS_005_BF_02",
+          "name": "Top View 요청/응답",
+          "input_variable": "SVM_CaptureModeViewRequest",
+          "input_compare": "=",
+          "input_value": "0x5",
+          "output_variable": "SVM_CaptureModeViewState",
+          "output_compare": "=",
+          "expected_output": "0x5",
+          "pass_criterion": "Top 요청에 Top 응답이 확인되면 PASS",
+          "exact_fact_ids": [
+            "F004",
+            "F005"
+          ]
+        }
+      ],
+      "expected_reviews": [
+        {
+          "review_id": "REV-001",
+          "target": "0x7 Invalid / 0x6 Camera Input Error 후속 동작",
+          "reason": "Source에 HU 기대 반응이 없음",
+          "required_action": "실행 TC 생성 금지. 후속 동작 사양 확인 필요",
+          "fact_ids": [
+            "F006",
+            "F007"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FX-06",
+      "name": "이미지 Resize / Format / Size Exact Fact Trace",
+      "origin": "H-Chat CF-001 검증용 합성 Fixture",
+      "source_input": "2.10 이미지 처리 및 저장\n- Top View 입력 영상은 500×800이다.\n- HU는 Top View를 450×720으로 resizing하여 사용해야 한다.\n- HU는 처리된 영상을 JPEG 형식으로 저장해야 한다.\n- 저장 이미지 해상도는 1920×3240이어야 한다.\n- 저장 이미지 크기는 0.25 MB 이하이어야 한다.",
+      "expected_parent_srs": "SRS_006 — 이미지 처리 및 저장",
+      "facts": [
+        {
+          "fact_id": "F001",
+          "role": "INPUT_PROPERTY",
+          "content": "Top View 입력 = 500×800"
+        },
+        {
+          "fact_id": "F002",
+          "role": "TRANSFORM_EXPECTED",
+          "content": "Top View 출력 = 450×720"
+        },
+        {
+          "fact_id": "F003",
+          "role": "OUTPUT_PROPERTY",
+          "content": "Format = JPEG"
+        },
+        {
+          "fact_id": "F004",
+          "role": "OUTPUT_PROPERTY",
+          "content": "Resolution = 1920×3240"
+        },
+        {
+          "fact_id": "F005",
+          "role": "OUTPUT_CONSTRAINT",
+          "content": "Size <= 0.25 MB"
+        }
+      ],
+      "expected_tests": [
+        {
+          "tc_id": "SRS_TC_011",
+          "bf_id": "SRS_006_BF_01",
+          "name": "Top View Resize 확인",
+          "input_variable": "Top View 해상도",
+          "input_compare": "=",
+          "input_value": "500×800",
+          "output_variable": "Resize 결과 해상도",
+          "output_compare": "=",
+          "expected_output": "450×720",
+          "pass_criterion": "500×800 입력이 450×720으로 변환되면 PASS",
+          "exact_fact_ids": [
+            "F001",
+            "F002"
+          ]
+        },
+        {
+          "tc_id": "SRS_TC_012",
+          "bf_id": "SRS_006_BF_02",
+          "name": "저장 Format/Resolution 확인",
+          "input_variable": "처리 완료 이미지",
+          "input_compare": "존재",
+          "input_value": "1개",
+          "output_variable": "저장 이미지",
+          "output_compare": "속성 일치",
+          "expected_output": "JPEG / 1920×3240",
+          "pass_criterion": "Format과 Resolution이 모두 Source 정의와 일치하면 PASS",
+          "exact_fact_ids": [
+            "F003",
+            "F004"
+          ]
+        },
+        {
+          "tc_id": "SRS_TC_013",
+          "bf_id": "SRS_006_BF_03",
+          "name": "저장 이미지 크기 제한 확인",
+          "input_variable": "저장 이미지",
+          "input_compare": "측정",
+          "input_value": "파일 크기",
+          "output_variable": "파일 크기",
+          "output_compare": "<=",
+          "expected_output": "0.25 MB",
+          "pass_criterion": "저장 이미지 크기가 0.25 MB 이하이면 PASS",
+          "exact_fact_ids": [
+            "F005"
+          ]
+        }
+      ],
+      "expected_reviews": []
+    },
+    {
+      "id": "FX-07",
+      "name": "Interface Conflict + TBD",
+      "origin": "H-Chat CF-004/CF-007/CF-008 검증용 합성 Fixture",
+      "source_input": "2.13 Capture Mode 제어\n- 기존 사양: HU는 ICMU Capture 종료를 위해 SVM_CaptureModeCMD를 사용한다.\n- 변경 검토안: 타이밍 이슈 해결을 위해 ICMU_CaptureModeCMD 추가를 제안한다.\n- 최종 승인된 Production Signal은 아직 확정되지 않았다.\n\n2.14 Top View 정보\n- SVM_TopViewInfo는 Signal(TBD)로 표시되어 있으며 최종 Signal 정의가 확정되지 않았다.",
+      "expected_parent_srs": "SRS_007 — Capture Mode 제어 인터페이스 / Top View 정보",
+      "facts": [
+        {
+          "fact_id": "F001",
+          "role": "CONFLICT",
+          "content": "SVM_CaptureModeCMD vs ICMU_CaptureModeCMD"
+        },
+        {
+          "fact_id": "F002",
+          "role": "TBD",
+          "content": "SVM_TopViewInfo Signal TBD"
+        }
+      ],
+      "expected_tests": [],
+      "expected_reviews": [
+        {
+          "review_id": "REV-002",
+          "target": "ICMU Capture 제어 Signal authority",
+          "reason": "서로 다른 Source 표현이 충돌하고 최종 승인 미확정",
+          "required_action": "Executable TC 생성 보류. 승인된 인터페이스 결정 후 재생성",
+          "fact_ids": [
+            "F001"
+          ]
+        },
+        {
+          "review_id": "REV-003",
+          "target": "SVM_TopViewInfo Signal TBD",
+          "reason": "Signal 정의 미확정",
+          "required_action": "TBD/Gap/Semantic Unit을 하나의 Review ID로 연결",
+          "fact_ids": [
+            "F002"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FX-08",
+      "name": "상태전이 Logic / Target State",
+      "origin": "H-Chat CF-005 검증용 합성 Fixture",
+      "source_input": "3.2 전원 모드 전이\n- Low Power 진입 조건: ACC=OFF이고 IGN1=OFF인 경우 시스템은 Low Power 상태로 전이해야 한다.\n- High Power 진입 조건: ACC=ON 또는 IGN1=ON인 경우 시스템은 High Power 상태로 전이해야 한다.\n- Monitoring 상태에서는 Low Power 전이를 수행하지 않는다.",
+      "expected_parent_srs": "SRS_008 — 전원 모드 상태전이",
+      "facts": [
+        {
+          "fact_id": "F001",
+          "role": "CONDITION",
+          "content": "ACC=OFF"
+        },
+        {
+          "fact_id": "F002",
+          "role": "CONDITION",
+          "content": "IGN1=OFF"
+        },
+        {
+          "fact_id": "F003",
+          "role": "LOGIC",
+          "content": "ALL_OF"
+        },
+        {
+          "fact_id": "F004",
+          "role": "TARGET_STATE",
+          "content": "Low Power"
+        },
+        {
+          "fact_id": "F005",
+          "role": "CONDITION",
+          "content": "ACC=ON"
+        },
+        {
+          "fact_id": "F006",
+          "role": "CONDITION",
+          "content": "IGN1=ON"
+        },
+        {
+          "fact_id": "F007",
+          "role": "LOGIC",
+          "content": "ANY_OF"
+        },
+        {
+          "fact_id": "F008",
+          "role": "TARGET_STATE",
+          "content": "High Power"
+        },
+        {
+          "fact_id": "F009",
+          "role": "INHIBIT_CONDITION",
+          "content": "Monitoring"
+        },
+        {
+          "fact_id": "F010",
+          "role": "NEGATIVE_REQUIREMENT",
+          "content": "Monitoring에서는 Low Power 전이 금지"
+        }
+      ],
+      "expected_tests": [
+        {
+          "tc_id": "SRS_TC_014",
+          "bf_id": "SRS_008_BF_01",
+          "name": "Low Power 전이 확인",
+          "input_variable": "ACC / IGN1",
+          "input_compare": "ALL_OF",
+          "input_value": "OFF / OFF",
+          "output_variable": "System Power State",
+          "output_compare": "=",
+          "expected_output": "Low Power",
+          "pass_criterion": "ACC=OFF AND IGN1=OFF일 때 Low Power이면 PASS",
+          "exact_fact_ids": [
+            "F001",
+            "F002",
+            "F003",
+            "F004"
+          ]
+        },
+        {
+          "tc_id": "SRS_TC_015",
+          "bf_id": "SRS_008_BF_02",
+          "name": "High Power 전이 확인",
+          "input_variable": "ACC / IGN1",
+          "input_compare": "ANY_OF",
+          "input_value": "ON / ON 중 하나",
+          "output_variable": "System Power State",
+          "output_compare": "=",
+          "expected_output": "High Power",
+          "pass_criterion": "ACC=ON OR IGN1=ON일 때 High Power이면 PASS",
+          "exact_fact_ids": [
+            "F005",
+            "F006",
+            "F007",
+            "F008"
+          ]
+        },
+        {
+          "tc_id": "SRS_TC_016",
+          "bf_id": "SRS_008_BF_03",
+          "name": "Monitoring 상태 Low Power 전이 금지",
+          "input_variable": "System State",
+          "input_compare": "=",
+          "input_value": "Monitoring",
+          "output_variable": "Low Power Transition",
+          "output_compare": "금지",
+          "expected_output": "발생하지 않음",
+          "pass_criterion": "Monitoring에서 Low Power 전이가 발생하지 않으면 PASS",
+          "exact_fact_ids": [
+            "F009",
+            "F010"
+          ]
+        }
+      ],
+      "expected_reviews": []
+    }
+  ]
+}

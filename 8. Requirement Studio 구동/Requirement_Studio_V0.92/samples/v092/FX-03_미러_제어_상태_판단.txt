@@ -1,0 +1,23 @@
+[SAMPLE_FIXTURE]
+ID: FX-03
+NAME: 미러 제어 + 상태 판단
+ORIGIN: ESTRACK 패턴 축약 재구성
+PURPOSE: 서로 다른 Observable/판정 명제를 별도 TC로 분리
+HCHAT_TARGET: Transition/Target 구조화 + composite TC 분해
+
+[SOURCE_INPUT]
+2.5 아웃사이드 미러 제어
+- HU는 실시간 감시모드 동작 Command 수신 시 OMUOSMirCtrl을 0x2(Unfold)로 송신해야 한다.
+- HU는 실시간 감시모드 종료 Command 수신 시 OMUOSMirCtrl을 0x1(Fold)로 송신해야 한다.
+- HU는 Mirror_UnFldCtrlSta 및 Mirror_FldCtrlSta를 수신하여 아웃사이드 미러 상태를 판단해야 한다.
+
+미러 상태 판단 표
+Mirror_UnFldCtrlSta | Mirror_FldCtrlSta | 미러 상태
+Any | 0x1,0x2 | 접힘
+0x1 | Any | 접힘
+0x0,0x2,0x3 | 0x0,0x3 | 펼침
+
+[EXPECTED_PARENT_SRS]
+SRS_003 — 아웃사이드 미러 제어 및 상태 판단
+
+[END_SAMPLE_FIXTURE]

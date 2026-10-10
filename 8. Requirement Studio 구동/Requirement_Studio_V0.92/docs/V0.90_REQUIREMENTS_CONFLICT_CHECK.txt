@@ -1,0 +1,12 @@
+V0.90 Requirements Conflict Check
+=================================
+1. Legacy automatic test-technique preference (FR-245) vs V0.90 Basic-only request
+   - Resolved: FR-245 is superseded for the current automatic E2E design by FR-483.
+   - EP/BVA/Fault Injection are not deleted as engineering methods; they are simply not auto-expanded in V0.90.
+2. Atomic Requirement concept vs Parent SRS preservation
+   - Resolved by layer separation: Parent SRS remains the Engineering Requirement; Atomic Facts become traceable Test Conditions unless a separate engineering decision requires SRS split.
+3. Legacy one-SRS/one-draft-TC behavior vs one-SRS-to-many-E2E-case requirement
+   - Resolved additively: raw SYS.5/SWE.6/objective evidence remains, while E2E Basic Functional human-facing cases may expand 1:N.
+4. Invalid/Error value visibility vs Source fidelity
+   - Resolved: values remain visible through `3_검토필요` when reaction is undefined; no expected behavior is invented.
+No unresolved deterministic conflict introduced by V0.90.

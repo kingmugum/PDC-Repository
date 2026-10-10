@@ -1,0 +1,19 @@
+Requirement Studio Change Decision — V0.89 → V0.90
+====================================================
+Decision: ACCEPT
+
+User observations
+- Current E2E evaluation often places many Source facts into one Description while Input/Output cells remain under-structured.
+- A coherent Parent SRS should not automatically explode into many SRS IDs solely because multiple Atomic Facts exist.
+- One SRS may legitimately require multiple verification cases.
+- Request/response sequence tables should become practical test vectors.
+- Invalid/Error values must not receive fabricated expected behavior.
+
+Decision
+- Introduce BASIC_FUNCTIONAL_SOURCE_BACKED as the only automatic E2E test-design mode in V0.90.
+- Preserve Parent SRS; use Atomic Facts as Test Conditions.
+- Allow 1 SRS → N E2E Basic Functional cases.
+- Preserve ordered request/response behavior as a single sequence TC with multiple vectors where Source semantics indicate one sequence.
+- Move undefined Invalid/Error reactions to Human Review / Source Insufficient.
+- Preserve raw/objective verification evidence alongside new human-facing Basic Functional cases.
+- Defer automatic EP/BVA/Fault Injection expansion to a later explicitly approved version.

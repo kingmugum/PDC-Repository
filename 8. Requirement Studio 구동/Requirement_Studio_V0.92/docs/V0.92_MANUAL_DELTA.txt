@@ -1,0 +1,15 @@
+Requirement Studio V0.92 Manual Delta
+
+1. E2E 요구사항 Main 11-field 구조는 V0.91과 동일합니다.
+2. E2E 평가 Main은 23열을 유지하되 본문 역할을 구조화합니다.
+   - 종류 A:F: ID/영역/방법/이름/테스트 목적
+   - 사전 준비 G:H: 사전 조건/평가 환경·준비
+   - 입력·수행 I:L: 입력 변수/비교/입력값/수행 절차
+   - 출력 M:P: 출력 변수·관찰 대상/비교/기대 출력값/기대 상태·결과
+   - 판단 Q:S: PASS 기준/TC 검토 상태/검토 사유·필요 조치
+   - 실행 결과 T:W: 실제 출력값/PASS·FAIL/비고/결과 화면 캡처
+3. 실행 결과 T:W는 사전 실행 상태에서 물리적으로 공란입니다.
+4. Source-backed populated 판정값은 exact Fact Fragment trace를 내부 Trace/JSON에 유지합니다.
+5. Invalid/Error/TBD/Conflict에 기대반응이 Source에 없으면 Review로 남깁니다.
+6. EP/BVA/Fault Injection 자동 확장은 하지 않습니다.
+7. V0.93 Guideline Mining은 아직 구현하지 않았습니다.

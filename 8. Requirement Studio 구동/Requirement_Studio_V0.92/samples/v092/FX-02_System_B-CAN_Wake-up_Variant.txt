@@ -1,0 +1,17 @@
+[SAMPLE_FIXTURE]
+ID: FX-02
+NAME: System/B-CAN Wake-up + Variant
+ORIGIN: ESTRACK 패턴 축약 재구성
+PURPOSE: 일반 동작과 Variant 전용 동작의 TC 분리 검증
+HCHAT_TARGET: Fact 역할 분류 / 독립 Failure 판정
+
+[SOURCE_INPUT]
+2.4 System 및 B-CAN wake-up
+- HU는 CCS로부터 내 차 주변 영상 전송 요청을 수신하면 System wake-up 해야 한다.
+- HU는 System wake-up 완료 후 C_PreCrankReq를 0x1(Req on)으로 송출하여 B-CAN wake-up 해야 한다.
+- HEV/PHEV/EV 차종인 경우 HU는 IGN3 On 해야 한다.
+
+[EXPECTED_PARENT_SRS]
+SRS_002 — System 및 B-CAN wake-up
+
+[END_SAMPLE_FIXTURE]

@@ -1,0 +1,16 @@
+Requirement Studio V0.92 — Structured Basic Functional Test Design
+
+핵심 변경
+- Source-backed Fact Role 분류
+- 1 TC = 1 Primary Objective
+- SPLIT / KEEP / VECTOR / STEP / REVIEW 분해 판단
+- 테스트 목적 / 사전 조건 / 평가 환경 / 입력 / 수행 절차 / 출력·관찰 / 기대값·상태 / PASS 기준 구조화
+- populated Input/Expected/PASS factual value의 exact Source Fact Fragment trace 강화
+- ALL_OF / ANY_OF / INHIBIT + Target State 구조화
+- Invalid/Error/TBD/Conflict는 Source 반응이 없으면 executable TC가 아니라 Review
+- 8개 V0.92 Sample Fixture를 Regression 기준으로 포함
+- V0.93 Guideline Mining용 Decision Example Registry scaffold만 준비(자동 Rule Mining 없음)
+
+범위 제외
+- EP/BVA/Fault Injection 자동 확장 없음
+- GUI 변경 없음

@@ -1,0 +1,14 @@
+V0.92 Requirements Sync Report
+
+Requirements workbook: Requirement_Studio_Requirements_Management_rev76.xlsx
+Scenario: ALR-SC-118
+New requirements: FR-500~FR-510
+New failure cases: FAIL-361~371
+New regressions: RT-480~489
+New code evidence: CODE-408~414
+New AI rules: AI-RULE-349~357
+New conflicts: CR-331~336
+Explicit supersessions: FR-496, FR-498, FR-499 only
+Current Effective Baseline: 468 active requirements
+GUI changes: none
+Advanced techniques: deferred

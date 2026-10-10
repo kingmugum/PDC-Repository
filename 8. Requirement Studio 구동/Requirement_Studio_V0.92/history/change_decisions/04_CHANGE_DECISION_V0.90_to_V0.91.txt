@@ -1,0 +1,20 @@
+Requirement Studio Change Decision — V0.90 → V0.91
+==================================================
+Decision: ACCEPTED
+Scope: Human-facing E2E Requirements / E2E Evaluation presentation and audit layering.
+
+Accepted changes
+- Slim E2E Requirement Word/Excel Main to the user-approved 11 fields.
+- Keep removed Engineering/Allocation/Eligibility/Canonical/Fact metadata in Review/Trace/JSON rather than deleting it.
+- Add presentation-only multiline formatting for long Requirement/Test text.
+- Replace the 34-column E2E Evaluation Main with a 23-column human Test Case Master.
+- Add `SRS_TC_nnn` and `SRS_xxx_BF_nn` human IDs while preserving stable raw EVAL/TC IDs in Trace/JSON.
+- Display compact SYS.5/SWE.6 domains, Basic Functional method, numbered Test Case names, compact Input/Expected values, one human Review Status, and `결과 화면 캡처`.
+- Rebase row-2 stage headers and pre-execution result blank verification to the new 23-column layout.
+
+Not changed
+- Canonical Parent SRS / Atomic Fact design.
+- Basic Functional Source-backed generation semantics.
+- No automatic EP/BVA/Fault Injection expansion.
+- Source-fidelity/no-hallucination safeguards.
+- Structural/Semantic quality gates and automatic 3-AI evaluation.

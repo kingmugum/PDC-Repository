@@ -1,0 +1,14 @@
+Requirement Studio Change Decision — V0.88 → V0.89
+====================================================
+Decision: ACCEPT
+
+User observations
+- SWE.1 integrated review Word repeats the same SRS in Review Annex sections.
+- E2E Requirements already provides a single non-duplicated Engineering Master.
+- E2E Evaluation needs a row-2 stage grouping and Korean human-facing labels.
+
+Decision
+- Retire duplicate Word Review Annex sections and use E2E Requirements/Review Package JSON as the detailed review truth.
+- Convert SWE.1 Excel allocation annex to a pointer-only review index.
+- Add merged row-2 groups and Korean display localization in E2E Evaluation.
+- Do not change verification semantics, SRS atomicity, or TC decomposition in V0.89. Those are reserved for V0.90.

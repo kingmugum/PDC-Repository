@@ -1,0 +1,16 @@
+Requirement Studio V0.92 — START HERE
+
+1. `Requirement Studio.pyw` 또는 `main.py`로 실행합니다.
+2. 기존 Source→Canonical→SYS/SWE→E2E→Review/Release 구조는 유지합니다.
+3. V0.92 핵심은 Source-backed Fact를 실행·판정 가능한 Basic Functional TC 역할로 구조화하는 것입니다.
+4. E2E 요구사항 Main은 V0.91의 11개 사람용 필드를 유지합니다.
+5. E2E 평가 Main은 23열이며 테스트 목적/사전조건/환경/입력/수행/출력·관찰/기대상태/PASS 기준으로 분리됩니다.
+6. populated factual value는 exact Source Fact Fragment trace를 가져야 하며 없으면 Review입니다.
+7. State transition은 ALL_OF/ANY_OF/INHIBIT + Target State를 구조화할 수 있습니다.
+8. Invalid/Error/TBD/Conflict의 Source 기대반응이 없으면 executable TC를 만들지 않습니다.
+9. 실행 결과 4개 열은 실행 전 공란입니다.
+10. EP/BVA/Fault Injection 및 Guideline Mining은 V0.92 자동 범위가 아닙니다.
+
+Requirements: Requirement_Studio_Requirements_Management_rev76.xlsx
+Manual Base: docs/Requirement_Studio_User_Manual_v0.41_V0.87.docx + docs/V0.92_MANUAL_DELTA.txt
+Sample Regression Fixtures: samples/v092/

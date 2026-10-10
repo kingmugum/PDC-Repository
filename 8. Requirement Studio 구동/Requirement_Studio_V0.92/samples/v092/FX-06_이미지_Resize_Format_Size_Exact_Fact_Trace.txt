@@ -1,0 +1,19 @@
+[SAMPLE_FIXTURE]
+ID: FX-06
+NAME: 이미지 Resize / Format / Size Exact Fact Trace
+ORIGIN: H-Chat CF-001 검증용 합성 Fixture
+PURPOSE: 모든 populated Input/Expected 값의 exact Fact ID 연결 검증
+HCHAT_TARGET: CF-001 exact-fragment provenance
+
+[SOURCE_INPUT]
+2.10 이미지 처리 및 저장
+- Top View 입력 영상은 500×800이다.
+- HU는 Top View를 450×720으로 resizing하여 사용해야 한다.
+- HU는 처리된 영상을 JPEG 형식으로 저장해야 한다.
+- 저장 이미지 해상도는 1920×3240이어야 한다.
+- 저장 이미지 크기는 0.25 MB 이하이어야 한다.
+
+[EXPECTED_PARENT_SRS]
+SRS_006 — 이미지 처리 및 저장
+
+[END_SAMPLE_FIXTURE]

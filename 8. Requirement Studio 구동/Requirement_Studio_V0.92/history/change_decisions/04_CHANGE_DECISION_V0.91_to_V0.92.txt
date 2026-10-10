@@ -1,0 +1,20 @@
+V0.91 → V0.92 Change Decision
+
+Decision: implement structured Basic Functional Test Design before advanced technique expansion.
+
+Approved scope
+1) Fact Role Classification
+2) Primary Test Objective
+3) Split/Keep/Vector/Step/Review judgment
+4) Structured 23-column human E2E Main
+5) PASS Criterion
+6) Exact field-level Fact trace
+7) State-transition logic/target/inhibit structure
+8) Undefined/TBD/Conflict review routing
+9) 8-fixture regression
+10) V0.93 Decision Example Registry scaffold only
+
+Out of scope
+- EP/BVA/Fault Injection automatic expansion
+- Guideline Mining/automatic Rule promotion
+- GUI redesign

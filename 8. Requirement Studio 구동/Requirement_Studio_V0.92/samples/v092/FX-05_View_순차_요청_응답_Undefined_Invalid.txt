@@ -1,0 +1,35 @@
+[SAMPLE_FIXTURE]
+ID: FX-05
+NAME: View 순차 요청/응답 + Undefined Invalid
+ORIGIN: 사용자 제공 2.9 실외 이미지 캡처 패턴 재구성
+PURPOSE: Sequence는 1 TC+N Vector, 별도 Top TC, Undefined Invalid는 Review
+HCHAT_TARGET: Source fidelity / undefined response hallucination 방지
+
+[SOURCE_INPUT]
+2.9 실외 이미지 View 요청/응답
+- HU는 ADAS_PRK에 SVM_CaptureModeViewRequest를 송신하여 Front→Rear→Left→Right 순서로 영상을 요청해야 한다.
+- HU는 SVM_CaptureModeViewState를 수신하여 동일 순서의 영상 송출 여부를 확인해야 한다.
+
+Request 값
+0x1 Front
+0x2 Rear
+0x3 Left
+0x4 Right
+0x5 Top
+0x7 Invalid
+
+State 값
+0x1 Front
+0x2 Rear
+0x3 Left
+0x4 Right
+0x5 Top
+0x6 Camera Input Error
+0x7 Invalid
+
+※ Invalid/Error 수신 시 HU의 후속 처리 동작은 본 절에 정의하지 않는다.
+
+[EXPECTED_PARENT_SRS]
+SRS_005 — 실외 이미지 View 요청/응답
+
+[END_SAMPLE_FIXTURE]
