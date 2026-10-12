@@ -1,0 +1,7 @@
+V0.93 Requirements Sync Report
+==============================
+- New scenario: ALR-SC-119 User-guided Guideline Mining / TC Decomposition Refinement
+- New requirements: FR-511~FR-520
+- FR-510 is historical/superseded only where it stated that V0.92 has no Guideline Mining. V0.93 activates candidate mining but still prohibits auto-promotion.
+- V0.92 structured Basic Functional, Source Fidelity, Exact Trace, Human Review, no EP/BVA/Fault Injection remain active unless explicitly refined by V0.93.
+- Current Effective View rebuilt in rev77.

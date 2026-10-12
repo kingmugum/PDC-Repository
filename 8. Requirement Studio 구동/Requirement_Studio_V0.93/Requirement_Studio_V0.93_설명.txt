@@ -1,0 +1,17 @@
+Requirement Studio V0.93 — User-guided Guideline Mining / TC Decomposition Refinement
+
+핵심 변경
+- 사람용 E2E 평가 `검토 사유 / 필요 조치` 한글화 (Raw Trace/JSON 원문 보존)
+- E2E 요구사항 `요구사항 내역` 동일 셀 내 의미단위 ① ② ③ 번호화
+- 사용자 판단 사례 기반 Decision Example Registry 활성화
+- Decision Factor → Candidate Rule → Counterexample 분석형 Guideline Mining 추가
+- Candidate Rule 자동 승격 금지, HUMAN_APPROVED Rule Registry만 실행 로직에 적용
+- 명시적 Semantic Branch는 조건부 branch별 TC 분리
+- 서로 다른 Timing Checkpoint는 독립 TC로 세분화
+- Grouped property Exact Fact Trace false-PASS 방지 강화
+- api_keys/input의 깨진 README TXT 제거
+
+범위 제외
+- EP/BVA/Fault Injection 자동 확장 없음
+- 사용자 판단으로 기존 승인 Rule 자동 수정 없음
+- GUI 대규모 변경 없음

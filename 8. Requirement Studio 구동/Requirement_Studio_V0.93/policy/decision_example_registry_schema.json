@@ -1,0 +1,25 @@
+{
+  "schema_version": "0.2",
+  "status": "ACTIVE_EXPERIMENT",
+  "introduced_in": "V0.93",
+  "purpose": "Collect explicit user engineering decisions and support transparent Guideline Mining without automatic rule promotion.",
+  "fields": [
+    "decision_example_id",
+    "context",
+    "candidate_facts",
+    "ai_initial_decision",
+    "user_final_decision",
+    "decision_type",
+    "user_comment",
+    "applied_tc_ids",
+    "source_refs",
+    "created_at"
+  ],
+  "decision_type_values": ["SPLIT", "KEEP", "VECTOR", "STEP", "REVIEW"],
+  "governance": [
+    "Examples are evidence, not approved General Rules.",
+    "Candidate mining does not auto-promote rules.",
+    "Only HUMAN_APPROVED rules in guideline_rule_registry.json may affect generation.",
+    "Any new Rule promotion requires counterexample analysis, human approval, and regression."
+  ]
+}

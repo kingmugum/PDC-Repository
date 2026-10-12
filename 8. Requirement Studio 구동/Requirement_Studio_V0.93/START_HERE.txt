@@ -1,0 +1,18 @@
+Requirement Studio V0.93 — START HERE
+
+1. `Requirement Studio.pyw` 또는 `main.py`로 실행합니다.
+2. 기존 Source→Canonical→SYS/SWE→E2E→Review/Release 구조는 유지합니다.
+3. V0.93은 V0.92 Structured Basic Functional Test Design 위에 사용자 명시 판단 기반 Guideline Mining을 추가합니다.
+4. 사람용 E2E 평가 Main의 `검토 사유 / 필요 조치`는 한글 표시를 우선하며 Raw Trace/JSON은 보존합니다.
+5. E2E 요구사항 `요구사항 내역`은 새 행/열을 만들지 않고 동일 셀에서 의미 단위별 ① ② ③ 번호로 표시합니다.
+6. 명시적 의미 분기가 서로 독립 판정 가능하면 branch별 TC 분리를 우선할 수 있습니다.
+7. 서로 다른 timing checkpoint는 각각의 시작조건/판정기준이 Source에 있을 때 별도 TC로 분리합니다.
+8. Guideline Mining은 Decision Example→Factor→Candidate Rule→Counterexample을 생성하지만 자동 Rule 승격은 하지 않습니다.
+9. 실행에 영향을 주는 Rule은 `policy/guideline_rule_registry.json`의 HUMAN_APPROVED 항목만 사용합니다.
+10. grouped property의 한 값이라도 exact Fact Fragment가 없으면 Exact Field Trace PASS를 허용하지 않습니다.
+11. `api_keys/`와 `input/`에는 깨지는 README TXT를 배포하지 않고 `.gitkeep`만 유지합니다.
+12. EP/BVA/Fault Injection 자동 확장은 여전히 범위 밖입니다.
+
+Requirements: Requirement_Studio_Requirements_Management_rev77.xlsx
+Manual Base: docs/Requirement_Studio_User_Manual_v0.42_V0.92.docx + docs/V0.93_MANUAL_DELTA.txt
+Guideline Mining: policy/decision_example_registry.json + policy/guideline_rule_registry.json
