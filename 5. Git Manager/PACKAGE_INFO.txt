@@ -1,11 +1,9 @@
-Package            : GitManager_261004_2.zip
-Created            : 2026-10-04
-Requirements       : GitManager_Requirements_261004_2.xlsx
-Automation Manager : Automation_Manager_261004_2.zip
-Governance         : v0.10
-Managed Targets    : 9
+Package            : GitManager_261025_1.zip
+Created            : 2026-10-25
+Requirements       : GitManager_Requirements_261025_1.xlsx
+Automation Manager : Automation_Manager_261025_1.zip
+Governance         : v0.11
 
 Change
-- Target 9 Learning board metadata updated to AI 스냅샷_학습 / board/400
-- Git runtime remains Board URL independent
-- Runtime Git behavior otherwise unchanged from 261004_1
+- BoardRepo groupware credential-refresh integrated baseline metadata only
+- Git runtime behavior unchanged

@@ -15,7 +15,7 @@ from archive_selector import (
     select_latest_archive,
     version_label_from_archive,
 )
-from browser_automation import upload_snapshot
+from browser_automation import CredentialRefreshRequired, upload_snapshot
 from browser_download import (
     DownloadResult,
     DownloadTarget,
@@ -27,7 +27,8 @@ from browser_download import (
     STATUS_UP_TO_DATE,
     sync_selected_downloads,
 )
-from credential_store import CredentialStoreError, save_credentials
+from credential_store import CredentialStoreError, get_saved_username, save_credentials
+from credential_dialog import prompt_password_refresh
 from duplicate_checker import (
     RemoteCheckItem,
     STATUS_CONFLICT,
@@ -241,7 +242,7 @@ class BoardRepoApp(tk.Tk):
 
         self.credential_btn = ttk.Button(
             selection_buttons,
-            text="자격증명 저장",
+            text="로그인 정보 저장/갱신",
             command=self.save_credential_dialog,
             width=14,
         )
@@ -354,6 +355,9 @@ class BoardRepoApp(tk.Tk):
                 elif kind == "result_dialog":
                     show_result_dialog(self, payload)
 
+                elif kind == "credential_refresh":
+                    self._handle_credential_refresh(payload)
+
                 elif kind == "env":
                     ready, short_text = payload
                     self._environment_ready = ready
@@ -363,6 +367,68 @@ class BoardRepoApp(tk.Tk):
             pass
 
         self.after(100, self._poll_events)
+
+    def _handle_credential_refresh(self, payload: dict):
+        """Handle an authentication retry request on the Tk main thread."""
+        self._running = False
+        self._set_controls_state("normal")
+        self.status_var.set("그룹웨어 로그인 정보 확인 필요")
+
+        retry_count = int(payload.get("retry_count", 1))
+        if retry_count > 2:
+            messagebox.showerror(
+                "그룹웨어 로그인 실패",
+                "새 로그인 정보로 두 번 재시도했지만 인증을 완료하지 못했습니다.\n"
+                "계정 잠금, MFA/CAPTCHA, 네트워크 또는 그룹웨어 상태를 확인해주세요.",
+                parent=self,
+            )
+            self.status_var.set("중지 - 그룹웨어 로그인 확인 필요")
+            return
+
+        if not prompt_password_refresh(
+            self,
+            username=payload.get("username"),
+            reason=payload.get("reason", ""),
+        ):
+            self.status_var.set("중지 - 로그인 정보 갱신 취소")
+            return
+
+        self.log("새 그룹웨어 비밀번호를 운영체제 자격 증명 저장소에 갱신했습니다.")
+        self.log("중단되었던 BoardRepo 작업을 새 로그인 정보로 다시 시도합니다.")
+
+        resume_kind = payload.get("resume_kind")
+        resume_args = tuple(payload.get("resume_args") or ())
+        if resume_kind == "upload_preflight":
+            if not self._set_running("새 로그인 정보로 게시판 중복검사 재시도 중..."):
+                return
+            threading.Thread(
+                target=self._remote_preflight_and_upload_worker,
+                args=(*resume_args, retry_count),
+                daemon=True,
+            ).start()
+        elif resume_kind == "upload_batch":
+            if not self._set_running("새 로그인 정보로 업로드 재시도 중..."):
+                return
+            threading.Thread(
+                target=self._batch_upload_worker,
+                args=(*resume_args, retry_count),
+                daemon=True,
+            ).start()
+        elif resume_kind == "download":
+            if not self._set_running("새 로그인 정보로 다운로드 재시도 중..."):
+                return
+            threading.Thread(
+                target=self._download_worker,
+                args=(*resume_args, retry_count),
+                daemon=True,
+            ).start()
+        else:
+            messagebox.showerror(
+                "재시도 정보 오류",
+                "원래 작업 정보를 복구하지 못했습니다. 다시 작업을 실행해주세요.",
+                parent=self,
+            )
+            self.status_var.set("중지 - 재시도 정보 오류")
 
     def _set_running(self, status_text="작업 중..."):
         if self._running:
@@ -894,6 +960,7 @@ class BoardRepoApp(tk.Tk):
         selected: list[str],
         plan: list[UploadPlanItem],
         local_issues: list[PreflightIssue],
+        credential_retry_count: int = 0,
     ):
         try:
             self.log("실제 업로드 전에 게시판 원격 중복검사를 시작합니다.")
@@ -904,6 +971,19 @@ class BoardRepoApp(tk.Tk):
                 self.site_profile,
                 self.log,
             )
+        except CredentialRefreshRequired as exc:
+            self.log(f"저장된 그룹웨어 로그인 정보 확인 필요: {exc}")
+            self._event_queue.put((
+                "credential_refresh",
+                {
+                    "username": exc.username,
+                    "reason": exc.reason,
+                    "resume_kind": "upload_preflight",
+                    "resume_args": (selected, plan, local_issues),
+                    "retry_count": credential_retry_count + 1,
+                },
+            ))
+            return
         except Exception as exc:
             # A fatal/common session failure (e.g. browser cannot start or login
             # cannot be established) still stops the batch because no item's
@@ -988,9 +1068,12 @@ class BoardRepoApp(tk.Tk):
         attention_results,
         local_issues: list[PreflightIssue],
         selected: list[str],
+        successes: list[UploadPlanItem] | None = None,
+        failures: list[tuple[UploadPlanItem, str]] | None = None,
+        credential_retry_count: int = 0,
     ):
-        successes: list[UploadPlanItem] = []
-        failures: list[tuple[UploadPlanItem, str]] = []
+        successes = list(successes or [])
+        failures = list(failures or [])
 
         self.log("")
         self.log("===== BoardRepo 실제 업로드 시작 =====")
@@ -1026,6 +1109,23 @@ class BoardRepoApp(tk.Tk):
                     f"===== [{index}/{total}] {item.display_name} / "
                     f"{item.file_path.name} 업로드 완료 ====="
                 )
+            except CredentialRefreshRequired as exc:
+                self.log(f"업로드 중 그룹웨어 로그인 정보 확인 필요: {exc}")
+                remaining_plan = plan[index - 1 :]
+                self._event_queue.put((
+                    "credential_refresh",
+                    {
+                        "username": exc.username,
+                        "reason": exc.reason,
+                        "resume_kind": "upload_batch",
+                        "resume_args": (
+                            remaining_plan, duplicates, attention_results, local_issues,
+                            selected, successes, failures,
+                        ),
+                        "retry_count": credential_retry_count + 1,
+                    },
+                ))
+                return
             except Exception as exc:
                 failures.append((item, str(exc)))
                 self.log(
@@ -1216,6 +1316,7 @@ class BoardRepoApp(tk.Tk):
         selected: list[str],
         targets: list[DownloadTarget],
         local_issues: list[PreflightIssue],
+        credential_retry_count: int = 0,
     ):
         try:
             self.log("===== BoardRepo 다운로드 동기화 시작 =====")
@@ -1226,6 +1327,19 @@ class BoardRepoApp(tk.Tk):
                 self.site_profile,
                 self.log,
             )
+        except CredentialRefreshRequired as exc:
+            self.log(f"저장된 그룹웨어 로그인 정보 확인 필요: {exc}")
+            self._event_queue.put((
+                "credential_refresh",
+                {
+                    "username": exc.username,
+                    "reason": exc.reason,
+                    "resume_kind": "download",
+                    "resume_args": (selected, targets, local_issues),
+                    "retry_count": credential_retry_count + 1,
+                },
+            ))
+            return
         except Exception as exc:
             self.log(f"공통 다운로드 세션 실패: {exc}")
             self.log(traceback.format_exc())
@@ -1484,10 +1598,16 @@ class BoardRepoApp(tk.Tk):
             )
             return
 
+        try:
+            saved_username = get_saved_username() or ""
+        except CredentialStoreError:
+            saved_username = ""
+
         username = simpledialog.askstring(
             "그룹웨어 ID",
-            "그룹웨어 ID를 입력하세요.",
+            "그룹웨어 ID를 입력하세요. 기존 ID가 있으면 자동으로 표시됩니다.",
             parent=self,
+            initialvalue=saved_username,
         )
         if username is None:
             return

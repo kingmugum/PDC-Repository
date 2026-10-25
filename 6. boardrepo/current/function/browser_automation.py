@@ -15,6 +15,15 @@ class BrowserAutomationError(RuntimeError):
     pass
 
 
+class CredentialRefreshRequired(BrowserAutomationError):
+    """Stored credentials were submitted but authentication did not complete."""
+
+    def __init__(self, username: str | None, reason: str):
+        self.username = (username or "").strip() or None
+        self.reason = reason
+        super().__init__(reason)
+
+
 
 def _stage_stabilize(
     page,
@@ -96,22 +105,37 @@ def _looks_like_write_page(page, profile: dict) -> bool:
     return False
 
 
-def _try_fill_and_submit_login(page, profile: dict, log: Callable[[str], None]) -> bool:
+def _page_contains_any_text(page, candidates: Iterable[str]) -> bool:
+    candidates = [str(x).strip().lower() for x in candidates if str(x).strip()]
+    if not candidates:
+        return False
+    try:
+        body = page.locator("body").inner_text(timeout=2000).lower()
+    except Exception:
+        return False
+    return any(token in body for token in candidates)
+
+
+def _try_fill_and_submit_login(
+    page, profile: dict, log: Callable[[str], None]
+) -> tuple[bool, str | None]:
     """
     Best-effort login:
       - fills stored ID/PW
       - clicks normal login/submit button
       - never solves CAPTCHA/security code
+
+    Returns (submitted, username). The password is never returned or logged.
     """
     try:
         creds = load_credentials()
     except Exception as exc:
         log(f"자격증명 읽기 생략: {exc}")
-        return False
+        return False, None
 
     if not creds:
         log("저장된 자격증명이 없습니다. 필요한 경우 브라우저에서 직접 로그인하세요.")
-        return False
+        return False, None
 
     username, password = creds
     login_cfg = profile["login"]
@@ -120,7 +144,7 @@ def _try_fill_and_submit_login(page, profile: dict, log: Callable[[str], None]) 
     pass_input = _first_visible(page, login_cfg["password_candidates"])
 
     if not user_input or not pass_input:
-        return False
+        return False, username
 
     user_input.fill(username)
     pass_input.fill(password)
@@ -130,10 +154,10 @@ def _try_fill_and_submit_login(page, profile: dict, log: Callable[[str], None]) 
     if submit:
         submit.click()
         log("로그인 버튼을 자동 클릭했습니다.")
-        return True
+        return True, username
 
     log("로그인 버튼을 자동 탐지하지 못했습니다.")
-    return False
+    return False, username
 
 
 def _wait_until_logged_in(
@@ -144,23 +168,57 @@ def _wait_until_logged_in(
     log: Callable[[str], None],
 ):
     """
-    Tries auto-login once, then waits for any CAPTCHA/security step to be
-    completed manually. Login is considered complete when the page no longer
-    presents the password field and a board page can be reached.
+    Tries stored credentials once and then waits for manual CAPTCHA/MFA when
+    such a challenge is visible. If stored credentials appear to have been
+    rejected, raise CredentialRefreshRequired so the GUI can ask only for a
+    replacement password and retry the interrupted operation.
     """
     deadline = time.time() + wait_seconds
     auto_attempted = False
+    auto_submitted = False
+    saved_username = None
+    submitted_at = None
+    login_cfg = profile.get("login") or {}
+    credential_failure_texts = login_cfg.get("credential_failure_text_candidates") or []
+    manual_security_texts = login_cfg.get("manual_security_text_candidates") or []
+    rejection_probe_seconds = float(login_cfg.get("credential_rejection_probe_seconds", 5))
 
     while time.time() < deadline:
         if _looks_like_login_page(page, profile):
             if not auto_attempted:
                 auto_attempted = True
-                _try_fill_and_submit_login(page, profile, log)
+                auto_submitted, saved_username = _try_fill_and_submit_login(page, profile, log)
+                if auto_submitted:
+                    submitted_at = time.time()
                 page.wait_for_timeout(800)
 
             if _looks_like_login_page(page, profile):
+                if auto_submitted and _page_contains_any_text(page, credential_failure_texts):
+                    raise CredentialRefreshRequired(
+                        saved_username,
+                        "저장된 로그인 정보로 인증하지 못했습니다. "
+                        "비밀번호가 변경되었거나 계정정보 확인이 필요합니다.",
+                    )
+
+                manual_security_visible = _page_contains_any_text(page, manual_security_texts)
+                if manual_security_visible:
+                    log("CAPTCHA/추가 인증 화면을 확인했습니다. 브라우저에서 직접 완료해주세요.")
+                    time.sleep(1)
+                    continue
+
+                if (
+                    auto_submitted
+                    and submitted_at is not None
+                    and time.time() - submitted_at >= rejection_probe_seconds
+                ):
+                    raise CredentialRefreshRequired(
+                        saved_username,
+                        "저장된 로그인 정보로 자동 로그인한 뒤 로그인 화면이 계속 유지됩니다. "
+                        "비밀번호 변경 외에도 계정 잠금/네트워크/인증 정책 변경이 원인일 수 있습니다.",
+                    )
+
                 if auto_attempted:
-                    log("추가 인증/CAPTCHA가 있다면 브라우저에서 완료해주세요.")
+                    log("로그인 완료 여부를 확인 중입니다.")
                 time.sleep(1)
                 continue
 
@@ -173,6 +231,13 @@ def _wait_until_logged_in(
             pass
 
         time.sleep(1)
+
+    if auto_submitted:
+        raise CredentialRefreshRequired(
+            saved_username,
+            f"로그인 대기시간({wait_seconds}초)을 초과했습니다. "
+            "저장된 계정정보 또는 추가 인증 상태를 확인해주세요.",
+        )
 
     raise BrowserAutomationError(
         f"로그인 대기시간({wait_seconds}초)을 초과했습니다. "

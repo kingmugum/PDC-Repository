@@ -1,6 +1,6 @@
 {
   "profile_name": "Suresoft Groupware Community Board",
-  "profile_version": "1.9",
+  "profile_version": "2.0",
   "base_host": "gw.suresofttech.com",
   "routing": {
     "write_url_template": "{board_url}/post/write",
@@ -36,7 +36,28 @@
       "button:has-text('Login')",
       "input[type='submit']"
     ],
-    "captcha_policy": "manual"
+    "captcha_policy": "manual",
+    "credential_failure_text_candidates": [
+      "아이디 또는 비밀번호",
+      "아이디/비밀번호",
+      "비밀번호가 일치하지",
+      "비밀번호를 확인",
+      "계정정보를 확인",
+      "로그인 정보를 확인",
+      "invalid password",
+      "incorrect password"
+    ],
+    "manual_security_text_candidates": [
+      "CAPTCHA",
+      "보안문자",
+      "보안 문자",
+      "인증번호",
+      "인증 번호",
+      "OTP",
+      "2차 인증",
+      "추가 인증"
+    ],
+    "credential_rejection_probe_seconds": 8
   },
   "board": {
     "write_button_candidates": [
@@ -148,7 +169,8 @@
     "v0.12: DEXT5 함수 존재만으로 에디터 준비 완료로 판단하지 않고 공식 getDext5Dom()이 실제 디자인 DOM을 반환할 때까지 최대 12초 대기.",
     "v0.12: editor_id 후보는 getDext5Dom(editor_id)이 실제 DOM을 반환한 경우에만 유효한 DEXT5 editor id로 인정.",
     "v0.12: DEXT5 준비 완료 후 setBodyValue/getBodyTextValue 검증은 최대 3회 재시도하며 재시도 사이에 짧은 안정화 시간을 둠.",
-    "v0.12: 첨부파일은 고정 대기만 하지 않고 화면에 첨부 파일명이 나타나는지 최대 8초 확인한 뒤 등록 단계로 이동."
+    "v0.12: 첨부파일은 고정 대기만 하지 않고 화면에 첨부 파일명이 나타나는지 최대 8초 확인한 뒤 등록 단계로 이동.",
+    "v2.0: 저장된 ID/PW 자동 로그인 후 명시적 계정정보 오류 또는 로그인 화면 지속을 감지하면 CredentialRefreshRequired로 GUI에 전달. CAPTCHA/MFA 텍스트가 보이면 기존 수동 인증 대기 유지."
   ],
   "community": {
     "name": "모솔1팀 실차TC강건화",

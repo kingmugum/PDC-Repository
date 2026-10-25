@@ -1,22 +1,29 @@
 {
-  "package": "BoardRepo_261004_2.zip",
-  "release": "261004_2",
-  "technical_version": "0.34",
-  "created": "2026-10-04",
+  "package": "BoardRepo_261025_1.zip",
+  "release": "261025_1",
+  "technical_version": "0.35",
+  "created": "2026-10-25",
   "managed_target_id": 6,
   "governance": {
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "document_version": "v0.10",
-    "sha256": "d03ce0a4e73a2b5d6826e8e726e1cecdedbb9336c28a08ee199b5ec7a993bbe3"
+    "document_version": "v0.11",
+    "profile_am_version": "v1.5",
+    "profile_br_version": "v1.4",
+    "sha256": "052927f388413127be86fa2bb95f4e4c4c48bf96ba24698c4eea98fe7dbe3774"
   },
-  "requirements": "6. BoardRepo/BoardRepo_Requirements_v0_34.xlsx",
+  "requirements": "6. BoardRepo/BoardRepo_Requirements_v0_35.xlsx",
   "change_scope": {
-    "target_9_learning": true,
-    "learning_mode": "file_hash",
-    "learning_board_name": "AI 스냅샷_학습",
-    "learning_board_url": "https://gw.suresofttech.com/app/community/130/board/400",
-    "learning_configuration_status": "READY",
-    "result_modal_target_count": "catalog-dynamic 9"
+    "groupware_credential_refresh": true,
+    "saved_id_readonly": true,
+    "password_storage": "OS keyring only",
+    "resume_paths": [
+      "upload_preflight",
+      "upload_batch_remaining",
+      "download"
+    ],
+    "credential_retry_cap": 2,
+    "manual_security_challenge": "CAPTCHA/MFA remains manual",
+    "learning_board": "board/400 READY"
   },
   "distribution_hygiene": {
     "governance_rule": "A18",
@@ -31,33 +38,33 @@
     },
     {
       "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 55723,
-      "sha256": "d03ce0a4e73a2b5d6826e8e726e1cecdedbb9336c28a08ee199b5ec7a993bbe3"
+      "size": 58382,
+      "sha256": "052927f388413127be86fa2bb95f4e4c4c48bf96ba24698c4eea98fe7dbe3774"
     },
     {
       "path": "6. BoardRepo/00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 55723,
-      "sha256": "d03ce0a4e73a2b5d6826e8e726e1cecdedbb9336c28a08ee199b5ec7a993bbe3"
+      "size": 58382,
+      "sha256": "052927f388413127be86fa2bb95f4e4c4c48bf96ba24698c4eea98fe7dbe3774"
     },
     {
-      "path": "6. BoardRepo/BoardRepo_Requirements_v0_34.xlsx",
-      "size": 150131,
-      "sha256": "1069bc0b7d43e8338a5f1d462c16d8be1fe1d055fbd51275ddf8eef4b34bbafb"
+      "path": "6. BoardRepo/BoardRepo_Requirements_v0_35.xlsx",
+      "size": 153792,
+      "sha256": "8fb133691b3d1aac026a307b2b06814e3193c8f4e3e653bb0e2275cd740562e0"
     },
     {
       "path": "6. BoardRepo/MANUAL.txt",
-      "size": 434,
-      "sha256": "1da2c88c2f428950ed94c341c102e908a348ec8c29b9bb4694c4abbda95ce4ec"
+      "size": 1143,
+      "sha256": "df14968eb22e69f69ec84c931d8e62bc714219f83c927a90c82e06976802c743"
     },
     {
       "path": "6. BoardRepo/PACKAGE_INFO.txt",
-      "size": 389,
-      "sha256": "7bc64bdb2e55d28e721dd2bece233c6f13fb68939fa908b3145da46238ce3131"
+      "size": 575,
+      "sha256": "7e55964a0d00e237018999f7bc8d2210613a4a45b945e6b4a9e4d7ecc37724c0"
     },
     {
       "path": "6. BoardRepo/SELF_TEST_RESULTS.txt",
-      "size": 643,
-      "sha256": "3eef6ef7a771c8b6322b15166b3af9137c8b4b47350cc90ab703cc929c92814b"
+      "size": 727,
+      "sha256": "629eac8edb2283fb4f6e8cee0c5b719f59360172e7a38aa4a7ca52ec6ef1143b"
     },
     {
       "path": "6. BoardRepo/current/BoardRepo.pyw",
@@ -67,7 +74,7 @@
     {
       "path": "6. BoardRepo/current/config.json",
       "size": 15691,
-      "sha256": "4f3963652173a9c39a118c61207fcade8e1523c7c14b7502890c93b4a61ba662"
+      "sha256": "ae2860aa35efb9707aef4aff5a0471e30f9d0595383008fd9638c45618fd933d"
     },
     {
       "path": "6. BoardRepo/current/function/archive_selector.py",
@@ -81,18 +88,18 @@
     },
     {
       "path": "6. BoardRepo/current/function/boardrepo.py",
-      "size": 55224,
-      "sha256": "b87616ef4f26d440b181106ce600ab5e8e8e1abc105763f0566cc235614c2718"
+      "size": 60567,
+      "sha256": "c773afd5f58822c833fbf090b624a7d4b0847e9197669142bab4cf279329db7c"
     },
     {
       "path": "6. BoardRepo/current/function/boardrepo_tab.py",
-      "size": 52588,
-      "sha256": "b79ec2c698212e232987bdff2b8ff75d069436c70610279d9116b75e2718818f"
+      "size": 58016,
+      "sha256": "c570428cc79e4e15c45ddb6aae44ac444b9e7a23d6925f15b9c58f423630ecbe"
     },
     {
       "path": "6. BoardRepo/current/function/browser_automation.py",
-      "size": 68490,
-      "sha256": "fe86b0d177b61637ec49fdbd79a2d65e22421fd0eb0ae6b44c5e3e7a2d9f836a"
+      "size": 71452,
+      "sha256": "f56ef44d14ad495844d4f6820a8ba77294f651964cbf79eec519b3bf69ca6fb2"
     },
     {
       "path": "6. BoardRepo/current/function/browser_download.py",
@@ -105,9 +112,14 @@
       "sha256": "648f95a14de3522dee2f6e015806a2996e2300c6b72d530ec60d0af07b2af648"
     },
     {
+      "path": "6. BoardRepo/current/function/credential_dialog.py",
+      "size": 4393,
+      "sha256": "1934ae9eedeb0cdb990eb7fb47dbf6c9c3d68f8d0a1cfb8826c30e836c482bcc"
+    },
+    {
       "path": "6. BoardRepo/current/function/credential_store.py",
-      "size": 1179,
-      "sha256": "0bbd0be162643dcbcedbf8c144735616e9175edb2bcc7fbc40397968143608d9"
+      "size": 1353,
+      "sha256": "cd0ee90615474b5c770e4768b7816c146265181f31caa5837fa2750624f5c669"
     },
     {
       "path": "6. BoardRepo/current/function/duplicate_checker.py",
@@ -171,8 +183,8 @@
     },
     {
       "path": "6. BoardRepo/current/site_profile.json",
-      "size": 10277,
-      "sha256": "09d917fdae911a5f08c62cf44e5c33aab238d8ef7a248e869c1541d8eb91d67a"
+      "size": 11088,
+      "sha256": "110505ee555dd2f7b2ee5dcf0f64df353aeb5a8c82659a221a8ff2d1fd538238"
     },
     {
       "path": "function/common/catalog.py",
@@ -197,7 +209,7 @@
     {
       "path": "program_catalog.json",
       "size": 9351,
-      "sha256": "a5ffeb7591e4a95f1452ddb576fa9b7cca59c97b939d9a467db69603a70fb385"
+      "sha256": "b77b4ffcab93112b99808c74b103e1b8c226c83d70efafd08bdd60574810c601"
     }
   ]
 }

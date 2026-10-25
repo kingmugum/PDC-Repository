@@ -1,6 +1,6 @@
 # 00_AI_DEVELOPMENT_GOVERNANCE.md
 
-> **Document Version:** v0.10  
+> **Document Version:** v0.11  
 > **Status:** Draft / Living Document  
 > **Effective Date:** 2026-10-04  
 > **Purpose:** 모든 AI 보조 개발 프로젝트에 적용할 공통 개발헌법과 Project ID별 고유 운영 규칙을 하나의 문서에서 관리한다.  
@@ -880,7 +880,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | Project ID | `AM` |
 | Project Name | Automation Manager |
 | Status | `ACTIVE` |
-| Profile Version | v1.4 |
+| Profile Version | v1.5 |
 | Requirements Mode | `CUSTOM` |
 | Requirements Pattern | `Automation_Manager_Requirements_YYMMDD_N.xlsx` |
 | Package Pattern | `Automation_Manager_YYMMDD_N.zip` |
@@ -937,6 +937,15 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 - 작업 완료 후 공용 Operation Lock을 먼저 해제한 다음 결과 Modal을 표시하여 Modal을 보고 있는 동안 다른 엔진의 사용 가능 상태가 불필요하게 `작업 중`으로 남지 않게 한다.
 - 사용자가 직접 실행한 작업의 사전 안전 확인/설정/환경 오류 Modal은 본 Result Modal 정책의 적용 대상이 아니며 기존 안전 정책을 유지한다.
 
+### C3.6 BoardRepo 그룹웨어 로그인 정보 갱신
+
+- BoardRepo가 저장된 그룹웨어 자격증명으로 자동 로그인을 시도한 뒤 명시적인 계정정보 오류가 표시되거나 일정 시간 로그인 화면이 유지되면 `비밀번호 변경`으로 단정하지 않고 `로그인 정보 확인 필요` 상태로 전환한다.
+- 저장된 ID가 존재하면 갱신 UI에는 ID를 읽기 전용으로 표시하고 사용자는 새 비밀번호만 입력할 수 있어야 한다.
+- 새 비밀번호는 Windows 운영체제 자격 증명 저장소(keyring)에만 덮어써 저장하며 source/config/Requirements/Governance/log/ZIP에 평문 비밀번호를 기록하지 않는다.
+- 자격증명 갱신에 성공하면 중단되었던 업로드 사전 중복검사 또는 다운로드 동기화를 자동 재시도한다. 재시도 횟수에는 상한을 두어 잘못된 비밀번호 반복 입력으로 무한 루프하지 않게 한다.
+- CAPTCHA/MFA/보안문자 징후가 있으면 자격증명 오류로 오판하지 않고 기존 수동 인증 대기 정책을 유지한다.
+- 사용자가 취소하거나 재시도 한도를 초과하면 원래 작업을 안전하게 중지하고 원인을 로그/상태에 남긴다.
+
 ## C4. `[GM]` Git Manager
 
 ### C4.1 프로필 정보
@@ -969,7 +978,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | Project ID | `BR` |
 | Project Name | BoardRepo |
 | Status | `ACTIVE` |
-| Profile Version | v1.3 |
+| Profile Version | v1.4 |
 | Requirements Mode | `CUSTOM` |
 | Requirements Pattern | `BoardRepo_Requirements_v*.xlsx` |
 | Package Pattern | `BoardRepo_YYMMDD_N.zip` |
@@ -1000,6 +1009,14 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 - 결과 Modal은 판정 로직을 재계산하지 않고 이미 생성된 success/duplicate/conflict/error/download 상태를 집계하여 보여준다.
 - 상세 파일이 많아도 화면 높이를 무한히 늘리지 않고 Scroll 가능한 상세 영역을 사용한다.
 - Raw 문자열 요약의 literal `\n`을 사용자 결과 UI에 직접 노출하지 않는다.
+
+### C5.5 그룹웨어 자격증명 변경 대응
+
+- BoardRepo는 `CredentialRefreshRequired`와 같은 명시적 인증 갱신 신호를 Presentation 계층으로 전달할 수 있어야 하며 일반 Browser/Network 오류와 구분한다.
+- 저장된 ID/PW 제출 후 `credential_failure_text_candidates`가 확인되거나, CAPTCHA/MFA 징후 없이 로그인 화면이 설정 시간 이상 유지될 때 자격증명 갱신 후보로 판단한다. 이 판정은 `비밀번호가 바뀌었다`는 확정 판정이 아니다.
+- 갱신 UI는 저장된 ID를 유지하고 비밀번호만 교체할 수 있게 하며 저장 위치는 OS keyring으로 한정한다. 비밀번호를 로그나 예외 문자열에 포함하지 않는다.
+- 업로드는 원격 중복검사 단계, 다운로드는 원격 동기화 세션 단계에서 로그인 갱신 후 같은 작업 인자를 사용해 재시도한다.
+- 추가 인증 텍스트가 보이는 경우 자동 갱신창을 우선 띄우지 않고 사용자의 수동 인증을 기다린다.
 
 ## C6. `[ALM]` Requirement Studio Manual
 
@@ -1191,6 +1208,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | v0.9 | 2026-10-04 | Automation Manager Target 9 `학습` 추가. `9. 학습`을 Git recursive + BoardRepo file_hash direct-only 지식/학습 자료 Target으로 정의하고 `00_KNOWLEDGE_INDEX.md`, 최신 노트 정리 헌법, AI/LLM 학습 노트 기준을 등록. 권장 Board 이름은 `AI 스냅샷_학습`, 실제 URL은 미확정/TBD로 유지. AM Profile v1.3, GM v1.1, BR v1.2, 신규 LRN Profile v0.1 | AM, GM, BR, LRN |
 
 | v0.10 | 2026-10-04 | Target 9 `학습`의 실제 그룹웨어 게시판 `AI 스냅샷_학습` / board/400 확정. BoardRepo 원격 업로드·다운로드·중복검사를 활성화하고 LRN Profile v0.2, AM Profile v1.4, BR Profile v1.3으로 갱신. Git은 Board URL 비의존 유지 | AM, GM, BR, LRN |
+| v0.11 | 2026-10-25 | 저장된 그룹웨어 로그인 정보로 인증하지 못한 경우 ID는 유지하고 새 비밀번호만 OS keyring에 갱신한 뒤 중단 작업을 재시도하는 흐름 추가. 비밀번호 변경을 단정하지 않고 CAPTCHA/MFA/네트워크 가능성을 구분하며 재시도 상한 적용. AM Profile v1.5, BR Profile v1.4 | AM, BR |
 
 ---
 

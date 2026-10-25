@@ -1,13 +1,14 @@
-SELF TEST RESULTS - BoardRepo_261004_2 / v0.34
+SELF TEST RESULTS - BoardRepo_261025_1 / v0.35
 
-PASS - Target 1~9 catalog loaded
-PASS - Target 9 Learning mode=file_hash
-PASS - Learning board name = AI 스냅샷_학습
-PASS - Learning board URL = https://gw.suresofttech.com/app/community/130/board/400
-PASS - Learning configuration_status = READY
-PASS - Learning direct-only scan excludes 01. old
-PASS - Result Modal remains catalog-dynamic 9 targets
-PASS - Governance v0.10 / LRN Profile v0.2 applied
-PASS - Python source syntax check
-PASS - Distribution cache/pyc violation count = 0 after final clean
-NOT RUN - Live groupware board/400 upload/download (requires user environment/session)
+PASS - Python source syntax/compile check
+PASS - CredentialRefreshRequired explicit failure detection
+PASS - Saved ID preserved / password-only refresh dialog source check
+PASS - upload_preflight credential resume path
+PASS - upload_batch remaining-plan credential resume path
+PASS - download credential resume path
+PASS - credential retry cap = 2
+PASS - CAPTCHA/MFA manual-security candidates preserved
+PASS - password value not logged or written to config/package metadata
+PASS - Target 1~9 / Learning board/400 baseline preserved
+PASS - Governance v0.11 / AM v1.5 / BR v1.4 applied
+NOT RUN - Live Suresoft groupware changed-password login test (requires user account/session)

@@ -1,11 +1,13 @@
-Package           : BoardRepo_261004_2.zip
-Technical Version : v0.34
-Requirements      : BoardRepo_Requirements_v0_34.xlsx
-Created           : 2026-10-04
-Governance        : v0.10
-Learning Board    : AI 스냅샷_학습 / board/400
+Package           : BoardRepo_261025_1.zip
+Technical Version : v0.35
+Requirements      : BoardRepo_Requirements_v0_35.xlsx
+Created           : 2026-10-25
+Governance        : v0.11
 
 Change
-- Target 9 학습 실제 Board URL board/400 활성화
-- configuration_status READY
-- file_hash 원격 업로드/다운로드/중복검사 활성화
+- 저장된 그룹웨어 ID/PW 자동 로그인 실패 감지
+- 저장된 ID 유지 + 새 비밀번호 전용 갱신 Dialog
+- 새 비밀번호는 Windows OS keyring에만 저장
+- 업로드 사전검사/실제 업로드/다운로드 작업 자동 재개
+- Credential 재시도 최대 2회, 취소/실패 시 안전 중지
+- CAPTCHA/MFA/보안문자는 기존 수동 인증 대기 유지

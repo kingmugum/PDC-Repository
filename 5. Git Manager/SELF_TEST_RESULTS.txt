@@ -1,10 +1,7 @@
-SELF TEST RESULTS - GitManager_261004_2
+SELF TEST RESULTS - GitManager_261025_1
 
-PASS - Target 1~9 catalog loaded
-PASS - Target 9 Learning file_hash status summary supported
-PASS - Target 9 recursive preserve remains enabled
-PASS - Learning board metadata = AI 스냅샷_학습 / board/400
-PASS - Git behavior remains Board URL independent
-PASS - Governance v0.10 / LRN Profile v0.2 metadata applied
 PASS - Python source syntax check
-PASS - Distribution cache/pyc violation count = 0 after final clean
+PASS - Target 1~9 catalog baseline preserved
+PASS - Git runtime behavior preserved except APP_VERSION metadata
+PASS - BoardRepo groupware credential flow not coupled to Git authentication
+PASS - Governance v0.11 applied

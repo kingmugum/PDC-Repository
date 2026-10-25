@@ -1,8 +1,8 @@
-Automation Manager Release : 261004_2
-Created                    : 2026-10-04
+Automation Manager Release : 261025_1
+Created                    : 2026-10-25
 Managed Targets            : 9
-Target 9                    : 9. 학습 (Learning / file_hash)
-BoardRepo Board Name        : AI 스냅샷_학습
-BoardRepo Board URL         : https://gw.suresofttech.com/app/community/130/board/400
-Governance                  : v0.10
-Requirements                : Automation_Manager_Requirements_261004_2.xlsx
+Git Manager Component      : GitManager_261025_1.zip
+BoardRepo Component        : BoardRepo_261025_1.zip / v0.35
+Governance                 : v0.11
+Requirements               : Automation_Manager_Requirements_261025_1.xlsx
+Main Change                : BoardRepo groupware password refresh + interrupted operation resume

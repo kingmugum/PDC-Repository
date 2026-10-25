@@ -1,6 +1,6 @@
 {
   "app_name": "BoardRepo",
-  "version": "0.34",
+  "version": "0.35",
   "community_base": "https://gw.suresofttech.com/app/community/130",
   "targets": {
     "PassFail": {

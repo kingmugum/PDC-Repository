@@ -1,10 +1,10 @@
 {
-  "package": "Automation_Manager_261004_2.zip",
-  "release": "261004_2",
-  "governance_version": "v0.10",
-  "requirements": "Automation_Manager_Requirements_261004_2.xlsx",
-  "git_component": "GitManager_261004_2.zip",
-  "boardrepo_component": "BoardRepo_261004_2.zip",
-  "learning_board_name": "AI 스냅샷_학습",
-  "learning_board_url": "https://gw.suresofttech.com/app/community/130/board/400"
+  "package": "Automation_Manager_261025_1.zip",
+  "release": "261025_1",
+  "created": "2026-10-25",
+  "requirements": "Automation_Manager_Requirements_261025_1.xlsx",
+  "git_component": "GitManager_261025_1.zip",
+  "boardrepo_component": "BoardRepo_261025_1.zip",
+  "governance_version": "v0.11",
+  "change": "BoardRepo groupware credential refresh / password-only keyring update / operation resume"
 }

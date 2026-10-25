@@ -29,6 +29,13 @@ def save_credentials(username: str, password: str) -> None:
     kr.set_password(SERVICE_NAME, username, password)
 
 
+
+def get_saved_username() -> str | None:
+    kr = _keyring()
+    username = kr.get_password(SERVICE_NAME, "__username__")
+    return username.strip() if username else None
+
+
 def load_credentials():
     kr = _keyring()
     username = kr.get_password(SERVICE_NAME, "__username__")

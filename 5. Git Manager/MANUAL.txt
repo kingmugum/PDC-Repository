@@ -1,7 +1,5 @@
-Git Manager 261004_2
+Git Manager 261025_1
 
-- 공통 program_catalog 기준 1~9 Target 상태 확인
-- Target 9 학습: file_hash files:N 요약 / recursive preserve
-- Target 9 Board metadata: AI 스냅샷_학습 / board/400
-- Git 상태/복구/Pull/Push는 Board URL 접속 성공 여부에 의존하지 않음
-- Automation Manager self-bootstrap / ff-only / no-force 정책 유지
+- Git 기능 동작은 261004_2 기준과 동일합니다.
+- 이번 package는 Automation Manager / BoardRepo 자격증명 갱신 기능과 Governance v0.11 기준선을 맞추기 위한 동기화 Release입니다.
+- BoardRepo 그룹웨어 ID/PW는 Git/GitHub 인증과 분리되어 있습니다.
