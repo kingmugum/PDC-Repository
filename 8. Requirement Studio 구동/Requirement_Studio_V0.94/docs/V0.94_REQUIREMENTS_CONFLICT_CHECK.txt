@@ -1,0 +1,9 @@
+Requirement Studio V0.94 Conflict Check
+=======================================
+- Human-facing source de-dup does not delete Raw Source/Fact/Trace data.
+- Structured verification criteria are Presentation-only; no new SRS/row/column is created.
+- Exact Fact Trace PASS is independent from Semantic Integrity PASS.
+- Timing split remains allowed, but chained prerequisite context is mandatory.
+- Normal enum values cannot be paired to Invalid/Error responses by semantic-label overlap.
+- HUMAN_APPROVED Presentation Guideline scope does not weaken LOCK-008 or Source Fidelity.
+Result: No unresolved requirement-level contradiction introduced by FR-521~530.

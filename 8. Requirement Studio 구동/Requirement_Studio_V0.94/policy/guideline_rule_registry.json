@@ -1,0 +1,110 @@
+{
+  "schema_version": "0.2",
+  "introduced_in": "V0.93",
+  "rules": [
+    {
+      "rule_id": "GR-TC-001",
+      "name": "Distinct Timing Checkpoint Split",
+      "state": "HUMAN_APPROVED",
+      "decision": "SPLIT",
+      "principle": "하나의 요구사항/Fact 안에 서로 다른 시작 조건 또는 서로 다른 시간 한계를 가진 독립 timing checkpoint가 둘 이상 있으면 각각 독립 TC로 분리한다.",
+      "guard_conditions": [
+        "각 checkpoint가 Source에 명시됨",
+        "각 checkpoint의 판정 기준을 독립적으로 확인 가능"
+      ],
+      "counterexample": "동일 timeout 값을 여러 입력 조합에 반복 적용하는 단순 vector는 무조건 분리하지 않는다.",
+      "support_examples": [
+        "DEX-U-002",
+        "DEX-U-003"
+      ]
+    },
+    {
+      "rule_id": "HR-TC-002",
+      "name": "Semantic Branch Split Heuristic",
+      "state": "HUMAN_APPROVED",
+      "decision": "SPLIT_WHEN_GUARDED",
+      "principle": "동일 Signal의 값 분기라도 각 분기가 서로 다른 Engineering 의미 상태를 만들고 독립적으로 PASS/FAIL 판정할 수 있으면 branch별 TC 분리를 우선한다.",
+      "guard_conditions": [
+        "분기별 Source-backed expected meaning 존재",
+        "각 분기 독립 실행 가능",
+        "조합 수가 과도하지 않음"
+      ],
+      "counterexample": "동일 Decision Function의 대규모 조합 표는 1 TC + N Vector 유지가 우선이다.",
+      "support_examples": [
+        "DEX-U-001"
+      ],
+      "known_counterexamples": [
+        "DEX-H-002"
+      ]
+    },
+    {
+      "rule_id": "GR-PRES-001",
+      "name": "Number Requirement Meaning Units",
+      "state": "HUMAN_APPROVED",
+      "decision": "PRESENTATION",
+      "principle": "E2E 요구사항의 요구사항 내역 셀 안에서 독립 의미 문장을 ① ② ③ 형식으로 번호화하되 새 행/열/SRS를 만들지 않고 Source/JSON 원문은 변경하지 않는다.",
+      "support_examples": [
+        "SRS_002 user review"
+      ]
+    },
+    {
+      "rule_id": "GR-PRES-002",
+      "name": "Korean Human Review Reason",
+      "state": "HUMAN_APPROVED",
+      "decision": "PRESENTATION",
+      "principle": "사람용 E2E 평가 Main의 검토 사유/필요 조치는 한글 표시를 우선하며 raw enum/영문 원문은 Trace/JSON에 보존한다.",
+      "support_examples": [
+        "V0.92 S열 user review"
+      ]
+    },
+    {
+      "rule_id": "GR-PKG-001",
+      "name": "Remove Mojibake Folder README TXT",
+      "state": "HUMAN_APPROVED",
+      "decision": "PACKAGE_HYGIENE",
+      "principle": "api_keys/input 폴더는 .gitkeep만 유지하고 깨진 설명 README TXT를 배포하지 않는다. 사용 가이드는 정상 인코딩 문서/START_HERE/md 문서로 제공한다.",
+      "support_examples": [
+        "V0.92 package user review"
+      ]
+    },
+    {
+      "rule_id": "GR-PRES-003",
+      "name": "Traceability Location-first De-dup",
+      "state": "HUMAN_APPROVED",
+      "decision": "PRESENTATION",
+      "principle": "E2E 요구사항의 출처/Traceability는 요구사항/작동명세와 동일한 Source prose를 반복하지 않고 문서/그림 구분과 Source 위치 및 Semantic/Fact anchor 중심으로 표시한다.",
+      "guard_conditions": [
+        "Raw Source/Trace JSON 원문은 보존",
+        "Source 위치 metadata가 없을 때만 최소 근거 text fallback 허용"
+      ],
+      "support_examples": [
+        "DEX-U-004"
+      ]
+    },
+    {
+      "rule_id": "GR-PRES-004",
+      "name": "Remove Internal Step Action Tokens",
+      "state": "HUMAN_APPROVED",
+      "decision": "PRESENTATION",
+      "principle": "작동 명세 정의가 이미 1., 2., 3. 번호를 사용하면 step=1; action= 같은 내부 authoring token은 사람용 출력에서 제거한다.",
+      "support_examples": [
+        "DEX-U-005"
+      ]
+    },
+    {
+      "rule_id": "GR-PRES-005",
+      "name": "Structure Verification Criteria by Verdict",
+      "state": "HUMAN_APPROVED",
+      "decision": "PRESENTATION",
+      "principle": "검증 기준의 독립 판정 문장과 O/X 조건 집합은 동일 셀 안에서 번호/그룹/불릿으로 구조화하여 읽기 쉽게 표시한다.",
+      "support_examples": [
+        "DEX-U-006"
+      ]
+    }
+  ],
+  "governance": [
+    "This registry contains only explicit user-approved rules/heuristics.",
+    "Guideline Mining candidates are not inserted here without human approval.",
+    "Approved heuristics still respect Source fidelity and protected invariants."
+  ]
+}

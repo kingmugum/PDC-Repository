@@ -1,0 +1,26 @@
+Requirement Studio V0.94 — Manual Delta
+=======================================
+
+1. 사람용 E2E 요구사항 표현 정리
+- `작동 명세 정의`에는 실제 동작만 표시합니다.
+- `[출처 기반 세부 동작]`, SRC-SEM/SRC-FRAG 원문 반복, `step=n; action=` 내부 표현은 사람용 본문에서 제거합니다.
+- 여러 동작은 `1.`, `2.`, `3.` 형태로만 번호화합니다.
+- `출처 / Traceability`는 동일 prose를 반복하지 않고 `[문서]` 또는 `[그림]` + 문서명/Page/절 + Source anchor 중심으로 표시합니다.
+- `검증 기준`이 여러 독립 판정 또는 O/X 그룹을 포함하면 같은 셀 안에서 ①/②와 하위 불릿으로 구조화합니다.
+
+2. V0.93 실제 Run에서 발견된 Tool Quality 결함 수정
+- Request/Response enum pair는 Source 의미가 동일해야 합니다. 정상 Front 요청을 Invalid/Error 응답과 연결하지 않습니다.
+- Interface Identifier 내부 suffix를 값으로 backtracking하지 않습니다. 예: `icmuImagePosition`을 `icmuImagePositi=on`으로 만들지 않습니다.
+- Timing checkpoint를 분리할 때 뒤 checkpoint의 timer 시작을 성립시키는 앞선 Source 조건을 precondition에 유지합니다.
+  예: OMUOSMirCtrl=0x2 → 5초 이내 Mirror_UnFldCtrlSta=0x1 → 이후 15초 이내 0x2.
+- Exact Fact Trace와 Semantic Integrity를 별도 Gate로 봅니다. Exact Trace가 있어도 enum/identifier/timing semantics가 틀리면 REVIEW_REQUIRED입니다.
+
+3. Guideline Mining
+- 사용자 판단 DEX-U-004~006을 Decision Example Registry에 추가합니다.
+- HUMAN_APPROVED Presentation Guideline GR-PRES-003~005를 추가합니다.
+- Candidate Rule 자동 승격은 계속 금지되며 LOCK-008과 Source Fidelity를 유지합니다.
+
+4. 범위 유지
+- Canonical Parent SRS와 Raw Source/Trace/JSON은 Presentation 정리 때문에 변경하지 않습니다.
+- EP/BVA/Fault Injection 자동 확장은 여전히 범위 밖입니다.
+- 실행 결과 필드는 수행 전 Blank입니다.

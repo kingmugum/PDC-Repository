@@ -1,0 +1,19 @@
+Requirement Studio V0.94 — START HERE
+
+1. `Requirement Studio.pyw` 또는 `main.py`로 실행합니다.
+2. 기존 Source→Canonical→SYS/SWE→E2E→Review/Release 구조는 유지합니다.
+3. V0.94는 V0.93 Guideline Mining을 유지하면서 사람용 Requirement 중복을 줄이고 생성 TC의 Semantic Integrity를 강화합니다.
+4. E2E 요구사항 `작동 명세 정의`에는 실제 동작만 번호화하며 SRC-SEM 원문 및 `step=n; action=` 표현을 노출하지 않습니다.
+5. `출처 / Traceability`는 `[문서]`/`[그림]` + 문서명/Page/절/Source anchor 중심으로 표시합니다.
+6. `검증 기준`의 여러 의미 또는 O/X 조건은 같은 셀에서 ①/②와 하위 불릿으로 구조화합니다.
+7. Request/Response enum pair는 Source semantic mapping과 일치해야 하며, 정상 요청을 Invalid/Error 응답과 연결하지 않습니다.
+8. Identifier를 중간에서 잘라 suffix를 값으로 생성하지 않습니다.
+9. Timing TC를 분리할 때 뒤 checkpoint의 timer 시작 선행조건을 보존합니다.
+10. Exact Fact Trace와 Semantic Integrity는 별도 Gate이며 mismatch는 REVIEW_REQUIRED로 남깁니다.
+11. Guideline Mining Candidate는 자동 승격하지 않으며 HUMAN_APPROVED Rule만 적용합니다.
+12. `api_keys/`와 `input/`에는 README TXT를 배포하지 않고 `.gitkeep`만 유지합니다.
+13. EP/BVA/Fault Injection 자동 확장은 여전히 범위 밖입니다.
+
+Requirements: Requirement_Studio_Requirements_Management_rev78.xlsx
+Manual Base: docs/Requirement_Studio_User_Manual_v0.42_V0.92.docx + docs/V0.93_MANUAL_DELTA.txt + docs/V0.94_MANUAL_DELTA.txt
+Guideline Mining: policy/decision_example_registry.json + policy/guideline_rule_registry.json

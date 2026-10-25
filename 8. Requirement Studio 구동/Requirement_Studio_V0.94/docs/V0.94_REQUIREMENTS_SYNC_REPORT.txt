@@ -1,0 +1,13 @@
+Requirement Studio V0.94 Requirements Sync Report
+================================================
+Baseline: Requirement_Studio_Requirements_Management_rev78.xlsx
+Scenario: ALR-SC-120
+New Requirements: FR-521~FR-530
+New Failures: FAIL-382~FAIL-391
+New Regression Items: RT-500~RT-509
+New Code Evidence: CODE-422~CODE-429
+New AI Rules: AI-RULE-367~AI-RULE-375
+New Conflict Reviews: CR-343~CR-348
+Current Effective Baseline: AI_11 rev78 / V0.94
+Historical Truth: AI_02 preserved
+Formula error scan at workbook build: 0
