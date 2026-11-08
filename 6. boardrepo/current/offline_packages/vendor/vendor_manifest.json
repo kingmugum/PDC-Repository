@@ -1,0 +1,18 @@
+{
+  "prepared_at": "2026-11-08T12:51:44",
+  "runtime": {
+    "python": "3.15",
+    "implementation": "CPython",
+    "machine": "amd64",
+    "bits": 64,
+    "platform": "win32"
+  },
+  "wheelhouse": "windows_x64 / 3.10, 3.11, 3.12, 3.13, 3.14, 3.15",
+  "requirements": "offline_requirements_windows.txt",
+  "dependency_baseline": {
+    "playwright": "1.62.0",
+    "keyring": "25.7.0",
+    "greenlet": "3.5.6"
+  },
+  "purpose": "locked-down company PC offline BoardRepo dependencies"
+}

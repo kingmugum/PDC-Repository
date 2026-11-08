@@ -1,0 +1,6 @@
+2026/11/08-12:56:18.447 4a1c Reusing MANIFEST C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/11/08-12:56:18.448 4a1c Recovering log #23
+2026/11/08-12:56:18.448 4a1c Reusing old log C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default\EdgeCoupons/coupons_data.db/000023.log 
+2026/11/08-12:56:18.511 391c Level-0 table #27: started
+2026/11/08-12:56:18.514 391c Level-0 table #27: 683444 bytes OK
+2026/11/08-12:56:18.515 391c Delete type=0 #23
