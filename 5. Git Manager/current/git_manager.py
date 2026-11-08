@@ -3,11 +3,13 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import queue
 import re
 import shutil
 import subprocess
 import sys
 import threading
+import webbrowser
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from pathlib import Path
@@ -18,7 +20,7 @@ from catalog import load_catalog, target_map
 from release_rules import latest_release, latest_semantic_release, parse_release_name, parse_semantic_release_name
 
 APP_NAME = "Git Manager"
-APP_VERSION = "261025_1"
+APP_VERSION = "261107_3"
 VERSION_RE = re.compile(r"^(?P<date>\d{6})_(?P<num>\d+)$")
 CONFIG_DIR = Path.home() / ".pdc_git_manager"
 CONFIG_FILE = CONFIG_DIR / "projects.json"
@@ -34,8 +36,127 @@ class GitError(RuntimeError):
     pass
 
 
+GIT_WINDOWS_INSTALL_URL = "https://git-scm.com/install/windows"
+
+
+def resolve_git_executable() -> str | None:
+    """Return a usable git executable, including common post-WinGet install paths.
+
+    WinGet can install Git while this Automation Manager process is already running.
+    In that case the process PATH may not be refreshed yet, so known Git for Windows
+    locations are checked explicitly.
+    """
+    found = shutil.which("git")
+    if found:
+        return found
+    if os.name != "nt":
+        return None
+    candidates = []
+    for env_name in ("ProgramFiles", "ProgramFiles(x86)"):
+        base = os.environ.get(env_name)
+        if base:
+            candidates.extend([
+                Path(base) / "Git" / "cmd" / "git.exe",
+                Path(base) / "Git" / "bin" / "git.exe",
+            ])
+    local = os.environ.get("LOCALAPPDATA")
+    if local:
+        candidates.extend([
+            Path(local) / "Programs" / "Git" / "cmd" / "git.exe",
+            Path(local) / "Programs" / "Git" / "bin" / "git.exe",
+        ])
+    for candidate in candidates:
+        if candidate.is_file():
+            return str(candidate)
+    return None
+
+
+def resolve_winget_executable() -> str | None:
+    found = shutil.which("winget")
+    if found:
+        return found
+    if os.name != "nt":
+        return None
+    local = os.environ.get("LOCALAPPDATA")
+    if local:
+        candidate = Path(local) / "Microsoft" / "WindowsApps" / "winget.exe"
+        if candidate.is_file():
+            return str(candidate)
+    return None
+
+
+def _prepend_git_to_process_path(git_exe: str) -> None:
+    """Make a freshly installed Git immediately discoverable in this process."""
+    git_path = Path(git_exe).resolve()
+    cmd_dir = str(git_path.parent)
+    current = os.environ.get("PATH", "")
+    parts = [part for part in current.split(os.pathsep) if part]
+    if cmd_dir.casefold() not in {part.casefold() for part in parts}:
+        os.environ["PATH"] = cmd_dir + (os.pathsep + current if current else "")
+
+
+def install_git_with_winget(progress=None) -> dict:
+    if os.name != "nt":
+        raise GitError("Git 자동 설치는 Windows에서만 지원합니다.")
+    winget = resolve_winget_executable()
+    if not winget:
+        raise GitError("WinGet을 찾을 수 없습니다. Git 공식 설치 페이지에서 수동 설치가 필요합니다.")
+
+    flags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
+    if progress:
+        progress("[1/4] WinGet 사용 가능 여부 확인", "WinGet 확인")
+    try:
+        probe = subprocess.run(
+            [winget, "--version"],
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+            timeout=20, creationflags=flags,
+        )
+    except Exception as exc:
+        raise GitError(f"WinGet 실행 확인에 실패했습니다: {exc}") from exc
+    if probe.returncode != 0:
+        msg = (probe.stderr or probe.stdout or "WinGet 실행 실패").strip()
+        raise GitError(f"WinGet을 사용할 수 없습니다: {msg}")
+
+    if progress:
+        progress("[2/4] Git for Windows 자동 설치", "Git for Windows 설치")
+    cmd = [
+        winget, "install", "--id", "Git.Git", "-e", "--source", "winget",
+        "--accept-source-agreements", "--accept-package-agreements",
+    ]
+    try:
+        proc = subprocess.run(
+            cmd, capture_output=True, text=True, encoding="utf-8", errors="replace",
+            timeout=900, creationflags=flags,
+        )
+    except subprocess.TimeoutExpired as exc:
+        raise GitError("Git 자동 설치 시간이 초과되었습니다. 설치/UAC 창 또는 회사 보안 정책을 확인해주세요.") from exc
+    except Exception as exc:
+        raise GitError(f"Git 자동 설치 실행에 실패했습니다: {exc}") from exc
+
+    if progress:
+        progress("[3/4] Git 설치 결과 확인", "Git 설치 확인")
+    git_exe = resolve_git_executable()
+    if not git_exe:
+        output = (proc.stderr or proc.stdout or "").strip()
+        if proc.returncode != 0 and output:
+            raise GitError(
+                "Git 자동 설치가 완료되지 않았습니다. 회사 보안 정책/관리자 권한을 확인해주세요.\n\n"
+                + output[-1500:]
+            )
+        raise GitError(
+            "WinGet 설치 작업은 종료되었지만 git.exe를 찾지 못했습니다. "
+            "Windows를 다시 로그인하거나 Git 공식 설치 페이지에서 설치 상태를 확인해주세요."
+        )
+    _prepend_git_to_process_path(git_exe)
+
+    if progress:
+        progress("[4/4] git --version 검증", "Git 실행 검증")
+    version = run_git(None, "--version", timeout=20)
+    return {"git_exe": git_exe, "version": version, "winget": winget}
+
+
 def run_git(repo: Path | None, *args: str, timeout: int = 120) -> str:
-    cmd = ["git"]
+    cmd = [resolve_git_executable() or "git"]
     if repo is not None:
         cmd += ["-C", str(repo)]
     cmd += list(args)
@@ -79,7 +200,7 @@ def origin_url(repo: Path) -> str:
 
 
 def run_git_bytes(repo: Path | None, *args: str, timeout: int = 120) -> bytes:
-    cmd = ["git"]
+    cmd = [resolve_git_executable() or "git"]
     if repo is not None:
         cmd += ["-C", str(repo)]
     cmd += list(args)
@@ -274,7 +395,7 @@ def _hydrate_remote_managed_files(
     return restored
 
 
-def adopt_existing_remote_history(repo: Path, url: str, branch: str, catalog: dict) -> dict:
+def adopt_existing_remote_history(repo: Path, url: str, branch: str, catalog: dict, progress=None) -> dict:
     """Attach an extracted Automation Manager folder to existing remote Git history.
 
     Safety properties:
@@ -300,19 +421,28 @@ def adopt_existing_remote_history(repo: Path, url: str, branch: str, catalog: di
     created_dirs: list[Path] = []
     try:
         local_release = _local_automation_release(repo)
+        if progress:
+            progress("[2/5] 로컬 Repository 초기화", "Repository 초기화")
         run_git(repo, "init")
         created_git = True
         run_git(repo, "remote", "add", "origin", url)
+
+        if progress:
+            progress("[3/5] 원격 Git 연결 / 인증 확인", "원격 연결 / 인증 확인")
         run_git(repo, "fetch", "origin", "--tags", timeout=300)
         remote_ref = f"origin/{branch}"
         run_git(repo, "rev-parse", "--verify", remote_ref)
         remote_release = _remote_automation_release(repo, remote_ref)
 
+        if progress:
+            progress("[4/5] 기존 Git 이력 연결", "Git 이력 연결")
         # Mixed reset connects HEAD/index to remote history but does not touch working files.
         run_git(repo, "reset", "--mixed", remote_ref, timeout=180)
         run_git(repo, "branch", "-M", branch)
         run_git(repo, "branch", "--set-upstream-to", remote_ref, branch)
 
+        if progress:
+            progress("[5/5] 관리 파일 복구 / 상태 확인", "파일 복구 / 상태 확인")
         restored = _hydrate_remote_managed_files(
             repo, remote_ref, catalog, log=None,
             created_files=created_files, created_dirs=created_dirs,
@@ -348,14 +478,35 @@ def local_changes(repo: Path) -> bool:
     return bool(run_git(repo, "status", "--porcelain"))
 
 
-def git_identity_ok(repo: Path) -> bool:
-    try:
-        return bool(run_git(repo, "config", "user.name") and run_git(repo, "config", "user.email"))
-    except Exception:
+def git_identity_values(repo: Path | None = None) -> tuple[str, str]:
+    """Return the effective Git author identity without treating missing config as an error."""
+    name = ""
+    email = ""
+    if repo is not None:
         try:
-            return bool(run_git(None, "config", "--global", "user.name") and run_git(None, "config", "--global", "user.email"))
+            name = run_git(repo, "config", "user.name").strip()
         except Exception:
-            return False
+            pass
+        try:
+            email = run_git(repo, "config", "user.email").strip()
+        except Exception:
+            pass
+    if not name:
+        try:
+            name = run_git(None, "config", "--global", "user.name").strip()
+        except Exception:
+            pass
+    if not email:
+        try:
+            email = run_git(None, "config", "--global", "user.email").strip()
+        except Exception:
+            pass
+    return name, email
+
+
+def git_identity_ok(repo: Path | None = None) -> bool:
+    name, email = git_identity_values(repo)
+    return bool(name and email)
 
 
 def tracking_divergence(repo: Path) -> tuple[int, int] | None:
@@ -646,6 +797,8 @@ class GitManagerFrame(ttk.Frame):
         self.target_vars = target_vars
         self.operation_lock = operation_lock
         self.busy = False
+        self.current_operation_detail = ""
+        self._ui_queue = queue.Queue()
         self.projects: list[Project] = []
         self.repo_var = tk.StringVar()
         self.status_var = tk.StringVar(value="대기")
@@ -659,6 +812,7 @@ class GitManagerFrame(ttk.Frame):
             self.operation_lock.subscribe(self._on_operation_owner_changed)
         else:
             self._refresh_header_status()
+        self.after(50, self._drain_ui_queue)
         self.after(250, lambda: self.refresh_status(silent=True, retry_on_busy=True))
 
     def _build_ui(self):
@@ -668,16 +822,20 @@ class GitManagerFrame(ttk.Frame):
         ttk.Label(header, text="Git 기반 Repository 동기화 · catalog 전체 대상 상태 확인", font=("Segoe UI", 10)).pack(side="left", padx=(12, 0), pady=(6, 0))
         self.header_status = tk.Label(
             header,
-            text="준비 중",
+            text="준비 중\n초기 상태 확인",
             bg="#ECEFF3",
             fg="#5C6570",
-            padx=12,
-            pady=4,
+            width=24,
+            height=2,
+            padx=14,
+            pady=8,
             bd=0,
             relief="flat",
-            font=("Segoe UI", 9, "bold"),
+            anchor="center",
+            justify="center",
+            font=("Segoe UI", 10, "bold"),
         )
-        self.header_status.pack(side="left", padx=(20, 0), pady=(2, 0))
+        self.header_status.pack(side="left", padx=(20, 0), pady=(0, 2))
 
         repo_line = ttk.Frame(self)
         repo_line.pack(fill="x", pady=(10, 6))
@@ -689,7 +847,7 @@ class GitManagerFrame(ttk.Frame):
         ttk.Button(repo_line, text="Clone", command=self.clone_repo).pack(side="left", padx=4)
         ttk.Button(repo_line, text="현재 폴더 Git 연결/복구", command=self.adopt_workspace_git).pack(side="left", padx=(0, 4))
         ttk.Button(repo_line, text="원격 설정", command=self.configure_remote).pack(side="left")
-        ttk.Button(repo_line, text="Git 사용자 설정", command=self.configure_identity).pack(side="left", padx=4)
+        ttk.Button(repo_line, text="Git 사용자 설정/갱신", command=self.configure_identity).pack(side="left", padx=4)
         ttk.Button(repo_line, text="폴더 열기", command=self.open_folder).pack(side="left")
 
         ttk.Label(self, textvariable=self.repo_info_var).pack(anchor="w", pady=(0, 6))
@@ -699,6 +857,8 @@ class GitManagerFrame(ttk.Frame):
         ttk.Label(recovery, textvariable=self.recovery_info_var).pack(side="left", fill="x", expand=True)
         self.recovery_button = ttk.Button(recovery, text="현재 폴더 Git 연결/복구", command=self.adopt_workspace_git)
         self.recovery_button.pack(side="right", padx=(8, 0))
+        self.git_install_button = ttk.Button(recovery, text="Git 자동 설치", command=self.install_git_and_resume)
+        self.git_install_button.pack(side="right", padx=(8, 0))
 
         actions = ttk.Frame(self)
         actions.pack(fill="x", pady=(0, 8))
@@ -728,29 +888,89 @@ class GitManagerFrame(ttk.Frame):
         self.log_text.pack(fill="both", expand=True)
         ttk.Label(self, textvariable=self.status_var).pack(anchor="w", pady=(5, 0))
 
-    def _set_header_status(self, state: str):
+    def _queue_ui(self, callback, *args):
+        self._ui_queue.put((callback, args))
+
+    def _drain_ui_queue(self):
+        try:
+            while True:
+                callback, args = self._ui_queue.get_nowait()
+                try:
+                    callback(*args)
+                except Exception as exc:
+                    # UI callback failures must not stop the queue pump.
+                    try:
+                        self.log(f"UI 처리 오류: {exc}")
+                    except Exception:
+                        pass
+        except queue.Empty:
+            pass
+        try:
+            self.after(50, self._drain_ui_queue)
+        except tk.TclError:
+            pass
+
+    def _git_available(self) -> bool:
+        return bool(resolve_git_executable())
+
+    def _set_header_status(self, state: str, detail: str | None = None):
         styles = {
             "busy": ("작업 중", "#FFF1D6", "#8A4B08"),
             "ready": ("사용 가능", "#E2F4E8", "#1F6B3A"),
             "unavailable": ("사용 불가", "#ECEFF3", "#5C6570"),
+            "setup": ("설정 필요", "#FFF1D6", "#8A4B08"),
             "checking": ("준비 중", "#ECEFF3", "#5C6570"),
         }
-        text, bg, fg = styles.get(state, styles["checking"])
+        title, bg, fg = styles.get(state, styles["checking"])
+        if detail is None:
+            if state == "ready":
+                detail = "대기"
+            elif state == "unavailable":
+                detail = "Git 미설치" if not self._git_available() else "Repository 연결 필요"
+            elif state == "setup":
+                detail = "Git 사용자 정보"
+            elif state == "checking":
+                detail = "초기 상태 확인"
+        display = title if not detail else f"{title}\n{detail}"
         try:
-            self.header_status.configure(text=text, bg=bg, fg=fg)
+            self.header_status.configure(text=display, bg=bg, fg=fg)
         except (tk.TclError, AttributeError):
             pass
 
+    def _set_operation_detail(self, detail: str):
+        self.current_operation_detail = str(detail or "").strip()
+        if self.busy or (self.operation_lock and self.operation_lock.owner):
+            self._set_header_status("busy", self.current_operation_detail or "처리 중")
+
+    def _apply_progress(self, log_text: str, detail: str):
+        self.log(log_text)
+        self._set_operation_detail(detail)
+
     def _refresh_header_status(self):
         if self.operation_lock and self.operation_lock.owner:
-            self._set_header_status("busy")
+            owner = self.operation_lock.owner
+            detail = self.current_operation_detail if owner == "Git Manager" and self.current_operation_detail else f"{owner} 작업"
+            self._set_header_status("busy", detail)
             return
         repo = self.selected_repo()
-        self._set_header_status("ready" if repo and is_git_repo(repo) else "unavailable")
+        if not self._git_available():
+            self._set_header_status("unavailable", "Git 미설치 · 자동 설치 가능")
+        else:
+            if repo and is_git_repo(repo):
+                if git_identity_ok(repo):
+                    self._set_header_status("ready", "대기")
+                else:
+                    self._set_header_status("setup", "Git 사용자 정보")
+            else:
+                self._set_header_status("unavailable", "Repository 연결 필요")
 
     def _on_operation_owner_changed(self, owner):
         try:
-            self.after(0, lambda: self._set_header_status("busy") if owner else self._refresh_header_status())
+            if owner:
+                detail = self.current_operation_detail if owner == "Git Manager" and self.current_operation_detail else f"{owner} 작업"
+                self.after(0, lambda d=detail: self._set_header_status("busy", d))
+            else:
+                self.after(0, self._refresh_header_status)
         except tk.TclError:
             pass
 
@@ -796,6 +1016,24 @@ class GitManagerFrame(ttk.Frame):
         self.repo_var.set(f"{root.name} | {root}")
 
     def _update_recovery_ui(self):
+        if not self._git_available():
+            self.recovery_info_var.set(
+                "Git for Windows가 설치되어 있지 않습니다. [Git 자동 설치]를 누르면 WinGet으로 설치한 뒤 "
+                "현재 폴더 Git 연결/복구까지 자동으로 이어서 진행합니다."
+            )
+            try:
+                self.recovery_button.configure(state="normal")
+                self.git_install_button.configure(state="normal")
+                if not self.git_install_button.winfo_ismapped():
+                    self.git_install_button.pack(side="right", padx=(8, 0))
+            except Exception:
+                pass
+            self._set_header_status("unavailable", "Git 미설치 · 자동 설치 가능")
+            return
+        try:
+            self.git_install_button.pack_forget()
+        except Exception:
+            pass
         root = git_toplevel(self.workspace_root)
         if root == self.workspace_root:
             self.recovery_info_var.set(
@@ -833,8 +1071,73 @@ class GitManagerFrame(ttk.Frame):
         self._save_projects()
         self.repo_var.set(f"{display} | {path}")
 
-    def adopt_workspace_git(self):
+    def install_git_and_resume(self):
+        if self._git_available():
+            self._update_recovery_ui()
+            self.adopt_workspace_git()
+            return
+        winget = resolve_winget_executable()
+        if not winget:
+            self._set_header_status("unavailable", "WinGet 없음 · 수동 설치 필요")
+            self.status_var.set("WinGet 없음")
+            self.log("Git 자동 설치 중단: WinGet을 찾을 수 없습니다.")
+            if messagebox.askyesno(
+                APP_NAME,
+                "WinGet을 찾을 수 없어 Git을 자동 설치할 수 없습니다.\n\n"
+                "Git for Windows 공식 설치 페이지를 여시겠습니까?",
+            ):
+                webbrowser.open(GIT_WINDOWS_INSTALL_URL)
+            return
+
+        if not messagebox.askyesno(
+            APP_NAME,
+            "Git for Windows를 자동 설치하고 현재 폴더 Git 연결/복구까지 이어서 진행하시겠습니까?\n\n"
+            "설치 방식: WinGet (Git.Git)\n"
+            "Windows UAC 또는 회사 보안 정책에 따른 확인 창이 나타날 수 있습니다.\n"
+            "Automation Manager는 UAC/보안 정책을 우회하지 않습니다.",
+        ):
+            return
+
+        def progress(log_text: str, detail: str):
+            self._queue_ui(self._apply_progress, log_text, detail)
+
+        def work():
+            return install_git_with_winget(progress=progress)
+
+        def done(result):
+            self.log(f"Git 자동 설치 완료: {result['version']}")
+            self.log(f"Git 실행 경로: {result['git_exe']}")
+            self._update_recovery_ui()
+            self._set_header_status("checking", "Git 설치 완료 · 복구 재개")
+            # _run_locked releases the shared lock before invoking done().
+            # Schedule the normal recovery on the next UI turn and suppress the
+            # second confirmation because the install confirmation covered both.
+            self.after(200, lambda: self.adopt_workspace_git(skip_confirm=True))
+
+        self._run_locked("Git 자동 설치", work, done)
+
+    def adopt_workspace_git(self, skip_confirm: bool = False):
         repo = self.workspace_root
+        self.log("[1/5] Git 설치 확인")
+        if not self._git_available():
+            self.status_var.set("Git 미설치")
+            self._set_header_status("unavailable", "Git 미설치")
+            self.log("[1/5] Git 설치 확인 실패: Git 실행 파일을 찾을 수 없습니다.")
+            messagebox.showerror(
+                APP_NAME,
+                "Git for Windows가 설치되어 있지 않거나 Git 실행 파일을 찾을 수 없습니다.\n\n"
+                "[Git 자동 설치] 버튼을 누르면 WinGet으로 Git을 설치한 뒤 현재 폴더 복구까지 자동 진행할 수 있습니다.",
+            )
+            return
+        try:
+            git_version = run_git(None, "--version", timeout=10)
+        except Exception as exc:
+            self.status_var.set("Git 확인 실패")
+            self._set_header_status("unavailable", "Git 실행 확인 실패")
+            self.log(f"[1/5] Git 설치 확인 실패: {exc}")
+            messagebox.showerror(APP_NAME, str(exc))
+            return
+        self.log(f"[1/5] Git 설치 확인 완료: {git_version}")
         existing_root = git_toplevel(repo)
         if existing_root == repo:
             self._register_project_path(repo)
@@ -869,7 +1172,7 @@ class GitManagerFrame(ttk.Frame):
         if not url:
             messagebox.showerror(APP_NAME, "program_catalog.json에 기본 Git Repository URL이 없습니다.")
             return
-        if not messagebox.askyesno(
+        if not skip_confirm and not messagebox.askyesno(
             APP_NAME,
             "현재 폴더를 기존 Git 이력에 연결하시겠습니까?\n\n"
             f"현재 폴더: {repo}\n"
@@ -884,8 +1187,11 @@ class GitManagerFrame(ttk.Frame):
         ):
             return
 
+        def progress(log_text: str, detail: str):
+            self._queue_ui(self._apply_progress, log_text, detail)
+
         def work():
-            return adopt_existing_remote_history(repo, url, branch, self.catalog)
+            return adopt_existing_remote_history(repo, url, branch, self.catalog, progress=progress)
 
         def done(result):
             self._register_project_path(repo)
@@ -898,6 +1204,10 @@ class GitManagerFrame(ttk.Frame):
             self.log(f"기준 Branch: {result['branch']}")
             self.log(f"Release 비교: {relation}")
             self.log(f"원격 보존 파일 복원: {restored_count}개")
+            identity_missing = not git_identity_ok(repo)
+            if identity_missing:
+                self.log("Git 사용자 정보가 없습니다. Commit + Push 전에 [Git 사용자 설정/갱신]에서 1회 설정해주세요.")
+                self._set_header_status("setup", "Git 사용자 정보")
             for rel in result["restored"][:30]:
                 self.log(f"보존 파일: {rel}")
             if restored_count > 30:
@@ -913,6 +1223,11 @@ class GitManagerFrame(ttk.Frame):
                 "현재 로컬 파일은 덮어쓰지 않았고 자동 Push도 수행하지 않았습니다. "
                 "상태를 확인한 뒤 Commit + Push를 진행해주세요."
             )
+            if identity_missing:
+                message += (
+                    "\n\nGit 사용자 정보(user.name / user.email)가 아직 없습니다. "
+                    "Pull/상태 확인은 가능하지만 Commit + Push 전에는 [Git 사용자 설정/갱신]에서 1회 설정해주세요."
+                )
             cmp = _release_cmp(result["local_release"], result["remote_release"])
             if cmp is not None and cmp < 0:
                 message += (
@@ -1006,19 +1321,33 @@ class GitManagerFrame(ttk.Frame):
         except Exception as exc:
             messagebox.showerror(APP_NAME, str(exc))
 
-    def configure_identity(self):
-        name = simpledialog.askstring("Git 사용자 설정", "user.name:")
-        if not name:
-            return
-        email = simpledialog.askstring("Git 사용자 설정", "user.email:")
-        if not email:
-            return
+    def configure_identity(self) -> bool:
+        repo = self.selected_repo()
+        current_name, current_email = git_identity_values(repo)
+        name = simpledialog.askstring(
+            "Git 사용자 설정",
+            "Commit 작성자 이름(user.name):",
+            initialvalue=current_name,
+        )
+        if not name or not name.strip():
+            return False
+        email = simpledialog.askstring(
+            "Git 사용자 설정",
+            "Commit 작성자 이메일(user.email):",
+            initialvalue=current_email,
+        )
+        if not email or not email.strip():
+            return False
         try:
             run_git(None, "config", "--global", "user.name", name.strip())
             run_git(None, "config", "--global", "user.email", email.strip())
-            messagebox.showinfo(APP_NAME, "Git 사용자 설정을 저장했습니다.")
+            self.log(f"Git 사용자 정보 저장 완료: {name.strip()} / {email.strip()}")
+            self._refresh_header_status()
+            messagebox.showinfo(APP_NAME, "Git 사용자 설정을 저장했습니다.\n이제 Commit + Push를 사용할 수 있습니다.")
+            return True
         except Exception as exc:
             messagebox.showerror(APP_NAME, str(exc))
+            return False
 
     def open_folder(self):
         repo = self.selected_repo()
@@ -1039,25 +1368,30 @@ class GitManagerFrame(ttk.Frame):
                 messagebox.showwarning(APP_NAME, f"현재 {self.operation_lock.owner} 작업이 진행 중입니다. 완료 후 다시 실행해주세요.")
             return False
         self.busy = True
-        self._set_header_status("busy")
+        self.current_operation_detail = label
+        self._set_header_status("busy", label)
         self.status_var.set(label)
         self.log(f"===== {label} 시작 =====")
 
         def job():
             try:
                 result = work()
-                self.after(0, lambda: finish(result, None))
+                self._queue_ui(finish, result, None)
             except Exception as exc:
-                self.after(0, lambda: finish(None, exc))
+                # Worker threads never call Tk directly.  Queue the completion back
+                # to the main thread so busy/OperationLock cleanup is deterministic.
+                self._queue_ui(finish, None, exc)
 
         def finish(result, error):
             self.busy = False
+            self.current_operation_detail = ""
             if self.operation_lock:
                 self.operation_lock.release("Git Manager")
             if error:
                 self.status_var.set("오류")
                 self.log(f"실패: {error}")
-                self._set_header_status("unavailable")
+                detail = "Git 미설치" if not self._git_available() else "작업 오류"
+                self._set_header_status("unavailable", detail)
                 if not silent:
                     messagebox.showerror(APP_NAME, str(error))
             else:
@@ -1219,8 +1553,16 @@ class GitManagerFrame(ttk.Frame):
             messagebox.showinfo(APP_NAME, "현재 변경된 파일이 없습니다.")
             return
         if not git_identity_ok(repo):
-            messagebox.showwarning(APP_NAME, "Git user.name/user.email이 설정되지 않았습니다.")
-            return
+            if not messagebox.askyesno(
+                APP_NAME,
+                "Git 사용자 정보(user.name / user.email)가 설정되지 않았습니다.\n\n"
+                "Commit + Push 전에 한 번만 설정하면 됩니다. 지금 설정하시겠습니까?",
+            ):
+                self._set_header_status("setup", "Git 사용자 정보")
+                return
+            if not self.configure_identity():
+                self._set_header_status("setup", "Git 사용자 정보")
+                return
         msg = simpledialog.askstring("새 버전 업로드", "변경 내용을 입력하세요:")
         if not msg:
             return

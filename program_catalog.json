@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "261025_1",
+  "release": "261107_3",
   "targets": [
     {
       "id": 1,
@@ -296,7 +296,7 @@
   "governance": {
     "required": true,
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "minimum_document_version": "v0.10",
+    "minimum_document_version": "v0.14",
     "carry_forward_on_release": true,
     "manifest_sha256_required": true,
     "development_baseline": true,

@@ -6,6 +6,7 @@ import json
 import locale
 import os
 import platform
+import shutil
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -20,6 +21,7 @@ WHEELHOUSE_DIR = OFFLINE_ROOT / "windows_x64"
 VENDOR_DIR = OFFLINE_ROOT / "vendor"
 VENDOR_MANIFEST = VENDOR_DIR / "vendor_manifest.json"
 OFFLINE_REQUIREMENTS = APP_ROOT / "offline_requirements_windows.txt"
+GREENLET_PIN = "3.5.6"
 
 
 def _runtime_tag() -> dict:
@@ -269,8 +271,25 @@ def _missing_packages() -> list[str]:
     return missing
 
 
+def _current_runtime_greenlet_wheel() -> Path | None:
+    """Return the pinned Windows x64 greenlet wheel for this interpreter, if bundled."""
+    if os.name != "nt" or sys.maxsize <= 2**32:
+        return None
+    py_tag = f"cp{sys.version_info.major}{sys.version_info.minor}"
+    pattern = f"greenlet-{GREENLET_PIN}-{py_tag}-{py_tag}-win_amd64.whl"
+    candidate = WHEELHOUSE_DIR / pattern
+    return candidate if candidate.is_file() else None
+
+
 def _install_from_wheelhouse(log: Callable[[str], None]) -> bool:
     if not _offline_wheels_ready() or not OFFLINE_REQUIREMENTS.is_file():
+        return False
+    if os.name == "nt" and sys.maxsize > 2**32 and _current_runtime_greenlet_wheel() is None:
+        log(
+            f"현재 Python {sys.version_info.major}.{sys.version_info.minor}용 "
+            f"greenlet {GREENLET_PIN} Windows x64 wheel이 없습니다. "
+            "[회사용 오프라인 준비]를 인터넷 가능한 PC에서 다시 실행해야 합니다."
+        )
         return False
     log("인터넷을 사용하지 않고 로컬 Offline Wheelhouse에서 설치를 시도합니다.")
     code = _run_command(
@@ -360,8 +379,11 @@ def install_or_repair(log: Callable[[str], None], config: dict | None = None) ->
 def prepare_offline_packages(log: Callable[[str], None], config: dict | None = None) -> Path:
     """
     Run on an Internet-connected Windows PC before taking the package to a locked-down PC.
-    Downloads Windows x64 wheels for CPython 3.10~3.14 into one wheelhouse and builds a
-    current-runtime portable vendor folder so the destination may run even if pip is blocked.
+    Build the complete Windows x64 wheelhouse in a staging directory first, including the
+    configured CPython versions (currently 3.10~3.15), then atomically replace the old
+    generated wheelhouse/vendor only after every download and the current-runtime vendor
+    installation succeeds. This prevents stale wheels (for example greenlet 4.x) from
+    contaminating a newly prepared offline package.
     """
     if os.name != "nt":
         raise RuntimeError("회사용 오프라인 패키지 준비는 Windows PC에서 실행해주세요.")
@@ -372,68 +394,137 @@ def prepare_offline_packages(log: Callable[[str], None], config: dict | None = N
     if sys.maxsize <= 2**32:
         raise RuntimeError("현재 준비 기능은 회사 환경 기준 Windows 64-bit용으로 구성되어 있습니다.")
 
-    WHEELHOUSE_DIR.mkdir(parents=True, exist_ok=True)
-    versions = ["310", "311", "312", "313", "314"]
-    for pyver in versions:
-        abi = f"cp{pyver}"
-        log(f"Windows x64 CPython {pyver[0]}.{pyver[1:]} wheel 준비 중...")
+    config = config or {}
+    env_cfg = config.get("environment") or {}
+    configured_versions = list(env_cfg.get("offline_prepare_python_versions") or [
+        "3.10", "3.11", "3.12", "3.13", "3.14", "3.15"
+    ])
+    versions: list[tuple[str, str]] = []
+    for item in configured_versions:
+        text = str(item).strip()
+        match = __import__("re").fullmatch(r"3\.(\d+)", text)
+        if not match:
+            raise RuntimeError(f"지원 Python 버전 형식이 잘못되었습니다: {text}")
+        minor = int(match.group(1))
+        versions.append((text, f"3{minor:02d}"))
+
+    staging_root = OFFLINE_ROOT / ".prepare_staging"
+    staging_wheelhouse = staging_root / "windows_x64"
+    staging_vendor = staging_root / "vendor"
+    if staging_root.exists():
+        shutil.rmtree(staging_root, ignore_errors=True)
+    staging_wheelhouse.mkdir(parents=True, exist_ok=True)
+    staging_vendor.mkdir(parents=True, exist_ok=True)
+
+    try:
+        for display, pyver in versions:
+            abi = f"cp{pyver}"
+            log(f"Windows x64 CPython {display} wheel 준비 중...")
+            code = _run_command(
+                [
+                    sys.executable,
+                    "-m",
+                    "pip",
+                    "download",
+                    "--dest",
+                    str(staging_wheelhouse),
+                    "--only-binary=:all:",
+                    "--platform",
+                    "win_amd64",
+                    "--implementation",
+                    "cp",
+                    "--python-version",
+                    pyver,
+                    "--abi",
+                    abi,
+                    "-r",
+                    str(OFFLINE_REQUIREMENTS),
+                ],
+                log,
+            )
+            if code != 0:
+                raise RuntimeError(f"CPython {display}용 오프라인 wheel 다운로드 실패. 종료 코드: {code}")
+
+        current_tag = f"cp{sys.version_info.major}{sys.version_info.minor}"
+        expected_greenlet = staging_wheelhouse / (
+            f"greenlet-{GREENLET_PIN}-{current_tag}-{current_tag}-win_amd64.whl"
+        )
+        if not expected_greenlet.is_file():
+            raise RuntimeError(
+                f"현재 Python {sys.version_info.major}.{sys.version_info.minor}용 "
+                f"greenlet {GREENLET_PIN} wheel을 준비하지 못했습니다: {expected_greenlet.name}"
+            )
+
+        log("현재 PC Python과 호환되는 Portable Vendor Runtime을 임시 영역에 생성합니다.")
         code = _run_command(
             [
                 sys.executable,
                 "-m",
                 "pip",
-                "download",
-                "--dest",
-                str(WHEELHOUSE_DIR),
-                "--only-binary=:all:",
-                "--platform",
-                "win_amd64",
-                "--implementation",
-                "cp",
-                "--python-version",
-                pyver,
-                "--abi",
-                abi,
+                "install",
+                "--no-index",
+                f"--find-links={staging_wheelhouse}",
+                "--target",
+                str(staging_vendor),
                 "-r",
                 str(OFFLINE_REQUIREMENTS),
             ],
             log,
         )
         if code != 0:
-            raise RuntimeError(f"CPython {pyver}용 오프라인 wheel 다운로드 실패. 종료 코드: {code}")
+            raise RuntimeError(f"Portable Vendor Runtime 생성 실패. 종료 코드: {code}")
 
-    # Build a zero-pip portable runtime for the current Python version as an extra fallback.
-    if VENDOR_DIR.exists():
-        import shutil
-        shutil.rmtree(VENDOR_DIR)
-    VENDOR_DIR.mkdir(parents=True, exist_ok=True)
-    log("현재 PC Python과 호환되는 Portable Vendor Runtime을 생성합니다.")
-    code = _run_command(
-        [
-            sys.executable,
-            "-m",
-            "pip",
-            "install",
-            "--no-index",
-            f"--find-links={WHEELHOUSE_DIR}",
-            "--target",
-            str(VENDOR_DIR),
-            "-r",
-            str(OFFLINE_REQUIREMENTS),
-        ],
-        log,
-    )
-    if code != 0:
-        raise RuntimeError(f"Portable Vendor Runtime 생성 실패. 종료 코드: {code}")
+        manifest = {
+            "prepared_at": __import__("datetime").datetime.now().isoformat(timespec="seconds"),
+            "runtime": _runtime_tag(),
+            "wheelhouse": "windows_x64 / " + ", ".join(v[0] for v in versions),
+            "requirements": OFFLINE_REQUIREMENTS.name,
+            "dependency_baseline": {
+                "playwright": "1.62.0",
+                "keyring": "25.7.0",
+                "greenlet": GREENLET_PIN,
+            },
+            "purpose": "locked-down company PC offline BoardRepo dependencies",
+        }
+        (staging_vendor / "vendor_manifest.json").write_text(
+            json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
 
-    manifest = {
-        "prepared_at": __import__("datetime").datetime.now().isoformat(timespec="seconds"),
-        "runtime": _runtime_tag(),
-        "wheelhouse": "windows_x64 / CPython 3.10~3.14",
-        "requirements": OFFLINE_REQUIREMENTS.name,
-        "purpose": "locked-down company PC offline BoardRepo dependencies",
-    }
-    VENDOR_MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
-    bootstrap_vendor_runtime()
-    log(f"회사 PC용 오프라인 준비 완료: {OFFLINE_ROOT}")
-    return OFFLINE_ROOT
+        # Replace generated artifacts only after the full staging build succeeded.
+        # Keep one rollback copy so even a filesystem error during the final swap does
+        # not destroy the previously working offline environment.
+        wheel_backup = OFFLINE_ROOT / ".windows_x64_previous"
+        vendor_backup = OFFLINE_ROOT / ".vendor_previous"
+        shutil.rmtree(wheel_backup, ignore_errors=True)
+        shutil.rmtree(vendor_backup, ignore_errors=True)
+        try:
+            if WHEELHOUSE_DIR.exists():
+                shutil.move(str(WHEELHOUSE_DIR), str(wheel_backup))
+            if VENDOR_DIR.exists():
+                shutil.move(str(VENDOR_DIR), str(vendor_backup))
+            shutil.move(str(staging_wheelhouse), str(WHEELHOUSE_DIR))
+            shutil.move(str(staging_vendor), str(VENDOR_DIR))
+        except Exception:
+            shutil.rmtree(WHEELHOUSE_DIR, ignore_errors=True)
+            shutil.rmtree(VENDOR_DIR, ignore_errors=True)
+            if wheel_backup.exists():
+                shutil.move(str(wheel_backup), str(WHEELHOUSE_DIR))
+            if vendor_backup.exists():
+                shutil.move(str(vendor_backup), str(VENDOR_DIR))
+            raise
+        else:
+            shutil.rmtree(wheel_backup, ignore_errors=True)
+            shutil.rmtree(vendor_backup, ignore_errors=True)
+        finally:
+            shutil.rmtree(staging_root, ignore_errors=True)
+
+        bootstrap_vendor_runtime()
+        log(
+            f"회사 PC용 오프라인 준비 완료: {OFFLINE_ROOT} "
+            f"(Python {versions[0][0]}~{versions[-1][0]}, greenlet {GREENLET_PIN})"
+        )
+        return OFFLINE_ROOT
+    except Exception:
+        shutil.rmtree(staging_root, ignore_errors=True)
+        raise
+

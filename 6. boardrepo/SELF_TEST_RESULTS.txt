@@ -1,14 +1,15 @@
-SELF TEST RESULTS - BoardRepo_261025_1 / v0.35
+SELF TEST RESULTS - BoardRepo_261107_3 / v0.36
 
-PASS - Python source syntax/compile check
-PASS - CredentialRefreshRequired explicit failure detection
-PASS - Saved ID preserved / password-only refresh dialog source check
-PASS - upload_preflight credential resume path
-PASS - upload_batch remaining-plan credential resume path
-PASS - download credential resume path
-PASS - credential retry cap = 2
-PASS - CAPTCHA/MFA manual-security candidates preserved
-PASS - password value not logged or written to config/package metadata
-PASS - Target 1~9 / Learning board/400 baseline preserved
-PASS - Governance v0.11 / AM v1.5 / BR v1.4 applied
-NOT RUN - Live Suresoft groupware changed-password login test (requires user account/session)
+PASS - Python source syntax check
+PASS - Offline requirements pinned: playwright==1.62.0 / keyring==25.7.0 / greenlet==3.5.6
+PASS - Python 3.15 included in Windows x64 offline preparation targets
+PASS - Staging simulation: CPython 3.10~3.15 wheel set generated before production replacement
+PASS - Staging simulation: stale greenlet 4.x is not carried into the newly prepared wheelhouse
+PASS - Staging simulation: current-runtime Portable Vendor is generated before swap
+PASS - Final swap keeps rollback copies until replacement succeeds
+PASS - Missing current-runtime pinned greenlet wheel produces actionable re-prepare guidance
+PASS - browser_automation.py SHA-256 unchanged from v0.35 baseline
+PASS - Credential refresh / Target 9 board/400 behavior preserved
+PASS - Governance v0.14 / BR Profile v1.5 applied
+NOT RUN - Live Windows pip download for all CPython 3.10~3.15 wheels in this Linux build environment
+NOT RUN - Live groupware browser automation on user company session

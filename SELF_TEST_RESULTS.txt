@@ -1,14 +1,15 @@
-SELF TEST RESULTS - Automation_Manager_261025_1
+SELF TEST RESULTS - Automation_Manager_261107_3
 
-PASS - Target 1~9 catalog loaded
-PASS - Target 9 Learning board = AI 스냅샷_학습 / board/400
-PASS - Git Manager compact shared-operation status preserved
-PASS - BoardRepo credential refresh event flow integrated
-PASS - Saved ID readonly + new password refresh dialog
-PASS - Upload preflight / upload remaining batch / download resume paths
-PASS - Retry cap = 2 and cancel-safe behavior
-PASS - CAPTCHA/MFA manual authentication policy preserved
-PASS - Governance v0.11 / AM Profile v1.5 / BR Profile v1.4 applied
-PASS - Python source syntax check
-PASS - Distribution cache/pyc violation count = 0 after final clean (verified during packaging)
-NOT RUN - Live groupware password-change authentication test (requires user environment/session)
+PASS - Python/PYW source syntax check
+PASS - Program catalog release 261107_3 / Governance minimum v0.14
+PASS - Git identity missing is displayed as `설정 필요 / Git 사용자 정보` rather than Repository failure
+PASS - Git Push assisted identity setup flow present
+PASS - Existing Git one-click WinGet install and non-destructive recovery flows preserved
+PASS - BoardRepo Technical v0.36 dependency baseline uses greenlet 3.5.6 and includes Python 3.15 offline preparation
+PASS - BoardRepo staged wheelhouse/vendor replacement simulation passed and stale greenlet 4.x removed from new result
+PASS - BoardRepo stable browser_automation.py unchanged from v0.35 baseline
+PASS - Managed Target count remains 9; Learning remains board/400
+PASS - Governance v0.14 / AM v1.8 / GM v1.4 / BR v1.5 applied
+PASS - Distribution cache/pyc exclusion rule applied
+NOT RUN - Live GitHub Push after user identity setup on user Windows PC
+NOT RUN - Live Windows CPython 3.15 wheel download / company groupware automation

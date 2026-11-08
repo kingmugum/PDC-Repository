@@ -8,7 +8,7 @@ BoardRepo 회사 PC용 오프라인 패키지 폴더
 준비 결과
 ---------
 1) windows_x64/
-   - CPython 3.10~3.14용 Windows x64 wheel 파일
+   - CPython 3.10~3.15용 Windows x64 wheel 파일
    - 회사 PC에서는 pip가 가능할 경우 --no-index / --find-links로만 설치
 
 2) vendor/
@@ -22,3 +22,8 @@ BoardRepo 회사 PC용 오프라인 패키지 폴더
 - 기존 Playwright Chromium이 이미 있으면 계속 1순위로 사용합니다.
 - Chromium이 없거나 실행 실패하면 설치된 Microsoft Edge로 자동 전환합니다.
 - 회사 보안정책이 Edge 자동 제어 자체를 차단하면 우회하지 않고 오류를 표시합니다.
+
+의존성 기준
+- Playwright 1.62.0 / keyring 25.7.0 / greenlet 3.5.6
+- greenlet 4.x는 Playwright 1.62.0 요구조건(<4.0.0)과 충돌하므로 포함하지 않습니다.
+- 준비는 임시 staging에서 완료한 뒤 기존 wheelhouse/vendor를 교체합니다.

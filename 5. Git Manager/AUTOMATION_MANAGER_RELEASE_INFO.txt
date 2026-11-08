@@ -1,8 +1,8 @@
-Automation Manager Release : 261025_1
-Created                    : 2026-10-25
+Automation Manager Release : 261107_3
+Created                    : 2026-11-07
 Managed Targets            : 9
-Git Manager Component      : GitManager_261025_1.zip
-BoardRepo Component        : BoardRepo_261025_1.zip / v0.35
-Governance                 : v0.11
-Requirements               : Automation_Manager_Requirements_261025_1.xlsx
-Main Change                : BoardRepo groupware password refresh + interrupted operation resume
+Git Manager Component      : GitManager_261107_3.zip
+BoardRepo Component        : BoardRepo_261107_3.zip / v0.36
+Governance                 : v0.14
+Requirements               : Automation_Manager_Requirements_261107_3.xlsx
+Main Change                : Git identity setup UX + BoardRepo Python 3.15 offline dependency fix

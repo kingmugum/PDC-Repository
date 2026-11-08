@@ -1,18 +1,23 @@
 {
-  "package": "GitManager_261025_1.zip",
-  "release": "261025_1",
-  "created": "2026-10-25",
+  "package": "GitManager_261107_3.zip",
+  "release": "261107_3",
+  "created": "2026-11-07",
   "governance": {
     "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-    "document_version": "v0.11",
-    "sha256": "052927f388413127be86fa2bb95f4e4c4c48bf96ba24698c4eea98fe7dbe3774"
+    "document_version": "v0.14",
+    "profile_gm_version": "v1.4",
+    "sha256": "33dda5c193bfdd3d93e808e5ed9aad056a1cf8ad8069503f924f2c480059d8b3"
   },
-  "requirements": "5. Git Manager/GitManager_Requirements_261025_1.xlsx",
-  "automation_manager": "Automation_Manager_261025_1.zip",
+  "requirements": "5. Git Manager/GitManager_Requirements_261107_3.xlsx",
+  "automation_manager": "Automation_Manager_261107_3.zip",
   "managed_target_count": 9,
   "change_scope": {
-    "boardrepo_credential_refresh_baseline": true,
-    "runtime_git_behavior": "unchanged except APP_VERSION metadata"
+    "git_identity_missing_state": "설정 필요 / Git 사용자 정보",
+    "identity_setup_button": "Git 사용자 설정/갱신",
+    "push_assisted_identity_setup": true,
+    "identity_auto_guess": false,
+    "existing_git_auto_install": "preserved",
+    "existing_non_destructive_recovery": "preserved"
   },
   "distribution_hygiene": {
     "governance_rule": "A18",
@@ -27,48 +32,48 @@
     },
     {
       "path": "00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 58382,
-      "sha256": "052927f388413127be86fa2bb95f4e4c4c48bf96ba24698c4eea98fe7dbe3774"
+      "size": 67025,
+      "sha256": "33dda5c193bfdd3d93e808e5ed9aad056a1cf8ad8069503f924f2c480059d8b3"
     },
     {
       "path": "5. Git Manager/00_AI_DEVELOPMENT_GOVERNANCE.md",
-      "size": 58382,
-      "sha256": "052927f388413127be86fa2bb95f4e4c4c48bf96ba24698c4eea98fe7dbe3774"
+      "size": 67025,
+      "sha256": "33dda5c193bfdd3d93e808e5ed9aad056a1cf8ad8069503f924f2c480059d8b3"
     },
     {
       "path": "5. Git Manager/AUTOMATION_MANAGER_RELEASE_INFO.txt",
-      "size": 429,
-      "sha256": "e6406f0fa5b55c4c635415abfc1ad942e944c4b4cdb68e24671759c89344924d"
+      "size": 430,
+      "sha256": "8299b38169d404e8c25fcaab7d4855c60936a90fa4b24601b4ea7e7330c4bb86"
     },
     {
-      "path": "5. Git Manager/Automation_Manager_Requirements_261025_1.xlsx",
-      "size": 60886,
-      "sha256": "fc27a2a0054d2845b50d476567107c348c48e1dc476f7e054f2e3f6230135272"
+      "path": "5. Git Manager/Automation_Manager_Requirements_261107_3.xlsx",
+      "size": 68839,
+      "sha256": "a85e25a1304dd097a9c6478b2875587736d75d300850c46e1ac7f7a16eee352e"
     },
     {
       "path": "5. Git Manager/Automation_Manager_package_manifest.json",
-      "size": 404,
-      "sha256": "7817419e6afe1c0c090e5498d77aea56a7410ac113921f08df40e93b9e5dfd71"
+      "size": 381,
+      "sha256": "8fdfeed28e9e4d0176da3aa43bc98b4a21846ac75b5be37909998fa41a380884"
     },
     {
-      "path": "5. Git Manager/GitManager_Requirements_261025_1.xlsx",
-      "size": 59573,
-      "sha256": "5f545d54ee572a0c3bb5da07997d6c1518e5d55525fe96e31de61133f855173c"
+      "path": "5. Git Manager/GitManager_Requirements_261107_3.xlsx",
+      "size": 65280,
+      "sha256": "8b03b635bb6c23fdbf0235d7882c9d7836df56ab15aac35c0e641cb145f0931a"
     },
     {
       "path": "5. Git Manager/MANUAL.txt",
-      "size": 319,
-      "sha256": "67f492e3ffba25d6c08dd9b1fe2ea1e1a2a4bd4b6bd8bb0d96f7f20fc3fc2673"
+      "size": 1863,
+      "sha256": "237ceafec26f6567a075f220b0770e8c39d4e27d2fef4d060e6b04ec060906bb"
     },
     {
       "path": "5. Git Manager/PACKAGE_INFO.txt",
-      "size": 332,
-      "sha256": "93692c3f18960cd16a8561bc16d47c7b0477e7e1fa10d1538bac909377ef5e65"
+      "size": 507,
+      "sha256": "35e6914e5f04d421dbf79d015fd5578ca8c463d3ee3cdcb23546baa53f7fcb3a"
     },
     {
       "path": "5. Git Manager/SELF_TEST_RESULTS.txt",
-      "size": 295,
-      "sha256": "edaa79ee098b5b18eeab5779a3d7cdbeea3fdb16e54e4c3da537c476fc5b93a6"
+      "size": 925,
+      "sha256": "ae80d1e088614f174044834cf0ba96e02ad5154de4fa90ee804e991c6b0695bb"
     },
     {
       "path": "5. Git Manager/current/Git_Manager.pyw",
@@ -77,13 +82,13 @@
     },
     {
       "path": "5. Git Manager/current/git_manager.py",
-      "size": 54472,
-      "sha256": "86b7210a81ce895036634f53347ff6b835b9e62db22cb3ed0babf28f1345a8b8"
+      "size": 69590,
+      "sha256": "f4ea697aaae1eefd2ebca0fecece48b1356b4f17805384cb0daf0f8a130d8fa5"
     },
     {
       "path": "Automation_Manager.pyw",
       "size": 4367,
-      "sha256": "ad52b74555c2317c29c104bae04fe7fbf8410000eb4073a15b2aa47018331b73"
+      "sha256": "55348afba630e242158f7abd3d343ec89cefa1a73f5469e09129c4fc3f69608f"
     },
     {
       "path": "function/common/catalog.py",
@@ -107,8 +112,8 @@
     },
     {
       "path": "program_catalog.json",
-      "size": 9351,
-      "sha256": "b77b4ffcab93112b99808c74b103e1b8c226c83d70efafd08bdd60574810c601"
+      "size": 9350,
+      "sha256": "2e680e56fda33c44e4a5cd3eefef378db75f367009e08bf8556a94dd488bc678"
     }
   ]
 }

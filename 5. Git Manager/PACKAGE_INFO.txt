@@ -1,9 +1,11 @@
-Package            : GitManager_261025_1.zip
-Created            : 2026-10-25
-Requirements       : GitManager_Requirements_261025_1.xlsx
-Automation Manager : Automation_Manager_261025_1.zip
-Governance         : v0.11
+Package            : GitManager_261107_3.zip
+Created            : 2026-11-07
+Requirements       : GitManager_Requirements_261107_3.xlsx
+Automation Manager : Automation_Manager_261107_3.zip
+Governance         : v0.14
 
 Change
-- BoardRepo groupware credential-refresh integrated baseline metadata only
-- Git runtime behavior unchanged
+- New-PC Git identity missing state: `설정 필요 / Git 사용자 정보`
+- Git 사용자 설정/갱신 keeps existing values as initial values
+- Commit + Push can open identity setup and continue after successful save
+- Identity is never guessed from remote commits/account names

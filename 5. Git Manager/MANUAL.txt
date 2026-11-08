@@ -1,5 +1,35 @@
-Git Manager 261025_1
+Git Manager 261107_3
 
-- Git 기능 동작은 261004_2 기준과 동일합니다.
-- 이번 package는 Automation Manager / BoardRepo 자격증명 갱신 기능과 Governance v0.11 기준선을 맞추기 위한 동기화 Release입니다.
-- BoardRepo 그룹웨어 ID/PW는 Git/GitHub 인증과 분리되어 있습니다.
+핵심 변경
+- Git 미설치 상태에서 [Git 자동 설치] 버튼을 제공합니다.
+- 사용자가 승인하면 WinGet exact package `Git.Git`을 사용하여 Git for Windows 설치를 시도합니다.
+- 설치 단계는 1/4~4/4로 Git Manager 로그와 확대 Header 상태 박스에 표시됩니다.
+- WinGet 설치 직후 현재 프로세스 PATH가 갱신되지 않아도 일반 Git 설치 경로에서 git.exe를 다시 찾아 즉시 사용합니다.
+- `git --version` 검증 성공 후 [현재 폴더 Git 연결/복구]를 자동 재개합니다.
+- 처음 [Git 자동 설치] 확인창에서 설치+복구를 함께 승인했으므로 자동 재개 시 두 번째 복구 확인창은 생략합니다.
+- WinGet이 없으면 Git 공식 Windows 설치 페이지를 열 수 있도록 안내합니다.
+- UAC, 회사 보안 정책, 관리자 권한 제한은 우회하지 않습니다.
+
+Git 자동 설치 단계
+1/4 WinGet 사용 가능 여부 확인
+2/4 Git for Windows 자동 설치
+3/4 Git 설치 결과 확인
+4/4 git --version 검증
+
+기존 Git 복구 단계
+1/5 Git 설치 확인
+2/5 로컬 Repository 초기화
+3/5 원격 Git 연결 / 인증 확인
+4/5 기존 Git 이력 연결
+5/5 관리 파일 복구 / 상태 확인
+
+안전 원칙
+- Git 설치 실패 상태에서는 .git 생성/fetch를 시작하지 않습니다.
+- 현재 로컬 파일은 복구 과정에서 덮어쓰지 않습니다.
+- 자동 Commit/Push를 수행하지 않습니다.
+- UAC/보안 정책을 자동 우회하지 않습니다.
+
+
+[신규 Windows Git 사용자 정보]
+- Repository 복구 후 `설정 필요 / Git 사용자 정보`가 표시되면 [Git 사용자 설정/갱신]에서 user.name/user.email을 1회 저장합니다.
+- Pull/상태 확인은 그대로 가능하며 Commit + Push에서 미설정이면 설정 화면으로 바로 연결됩니다.

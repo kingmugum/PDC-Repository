@@ -1,7 +1,12 @@
-SELF TEST RESULTS - GitManager_261025_1
+SELF TEST RESULTS - GitManager_261107_3
 
 PASS - Python source syntax check
-PASS - Target 1~9 catalog baseline preserved
-PASS - Git runtime behavior preserved except APP_VERSION metadata
-PASS - BoardRepo groupware credential flow not coupled to Git authentication
-PASS - Governance v0.11 applied
+PASS - Git identity helper reads effective local/global user.name and user.email without treating missing values as Repository failure
+PASS - Header UI smoke: normal Repository + missing identity => `설정 필요 / Git 사용자 정보`
+PASS - Pull/status/recovery paths remain available when Git identity is missing
+PASS - Commit + Push path offers `Git 사용자 설정/갱신` and continues after successful save
+PASS - Identity setup uses user-entered values; remote commit author/account guessing is not implemented
+PASS - Existing Git auto-install (WinGet Git.Git), 4-step install progress and 5-step recovery flow preserved
+PASS - Existing non-destructive recovery / no auto Push policy preserved
+PASS - Governance v0.14 / GM Profile v1.4 applied
+NOT RUN - Live GitHub Commit + Push with newly entered user.name/user.email on user Windows PC

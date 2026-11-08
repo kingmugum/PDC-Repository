@@ -1,6 +1,6 @@
 {
   "app_name": "BoardRepo",
-  "version": "0.35",
+  "version": "0.36",
   "community_base": "https://gw.suresofttech.com/app/community/130",
   "targets": {
     "PassFail": {
@@ -470,7 +470,8 @@
       "3.11",
       "3.12",
       "3.13",
-      "3.14"
+      "3.14",
+      "3.15"
     ],
     "company_mode_note": "외부 Chromium 다운로드 없이 기존 Chromium 우선, 없거나 실행 실패 시 설치된 Microsoft Edge 사용"
   },

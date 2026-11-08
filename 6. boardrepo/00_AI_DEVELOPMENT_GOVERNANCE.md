@@ -1,6 +1,6 @@
 # 00_AI_DEVELOPMENT_GOVERNANCE.md
 
-> **Document Version:** v0.11  
+> **Document Version:** v0.14  
 > **Status:** Draft / Living Document  
 > **Effective Date:** 2026-10-04  
 > **Purpose:** 모든 AI 보조 개발 프로젝트에 적용할 공통 개발헌법과 Project ID별 고유 운영 규칙을 하나의 문서에서 관리한다.  
@@ -880,7 +880,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | Project ID | `AM` |
 | Project Name | Automation Manager |
 | Status | `ACTIVE` |
-| Profile Version | v1.5 |
+| Profile Version | v1.8 |
 | Requirements Mode | `CUSTOM` |
 | Requirements Pattern | `Automation_Manager_Requirements_YYMMDD_N.xlsx` |
 | Package Pattern | `Automation_Manager_YYMMDD_N.zip` |
@@ -946,6 +946,40 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 - CAPTCHA/MFA/보안문자 징후가 있으면 자격증명 오류로 오판하지 않고 기존 수동 인증 대기 정책을 유지한다.
 - 사용자가 취소하거나 재시도 한도를 초과하면 원래 작업을 안전하게 중지하고 원인을 로그/상태에 남긴다.
 
+### C3.7 Git 복구 가시성 및 Git 미설치 대응
+
+- `현재 폴더 Git 연결/복구`를 실행하면 실제 Git 복구 작업을 시작하기 전에 Git 실행 파일 존재 여부와 `git --version` 응답을 먼저 확인한다.
+- Git이 설치되어 있지 않거나 PATH에서 찾을 수 없으면 Git Repository 초기화/원격 연결을 시도하지 않고 즉시 `Git 미설치` 상태로 종료한다.
+- Git 미설치/실행 실패는 `작업 중` 상태를 남겨두지 않으며 사용자에게 `Git for Windows 설치 후 git --version 확인` 안내를 제공한다.
+- Git 복구 진행 단계는 다음 5단계 기준으로 로그와 상단 상태에 표시한다.
+  1. Git 설치 확인
+  2. 로컬 Repository 초기화
+  3. 원격 Git 연결 / 인증 확인
+  4. 기존 Git 이력 연결
+  5. 관리 파일 복구 / 상태 확인
+- Git Manager Header 상태 표시는 기존 색상 의미를 유지하되 가로·세로 크기를 확대하고 2줄 표시를 사용하여 `작업 중`뿐 아니라 현재 단계/원인을 함께 보여준다.
+- Worker Thread는 Tk API를 직접 호출하지 않고 Thread-safe UI Queue로 진행/완료/오류 이벤트를 Main Thread에 전달하여 `busy`와 공용 Operation Lock이 반드시 해제되도록 한다.
+
+### C3.8 Git for Windows 자동 설치 및 복구 연계
+
+- Git 미설치 상태에서는 `Git 자동 설치` 버튼을 제공하고, 사용자가 승인하면 WinGet을 이용해 `Git.Git` 패키지를 설치할 수 있다.
+- 자동 설치 명령의 기준은 `winget install --id Git.Git -e --source winget`이며 자동화 시 package/source agreement 동의 옵션을 사용할 수 있다.
+- 자동 설치는 Windows UAC, 회사 보안 정책, 관리자 권한 제한을 우회하지 않는다. 필요한 시스템 확인창은 사용자가 직접 승인한다.
+- WinGet이 없거나 실행할 수 없으면 임의의 다른 패키지 관리자/다운로드 우회 경로를 사용하지 않고 Git 공식 Windows 설치 페이지로 수동 설치를 안내한다.
+- 설치 진행은 `WinGet 확인 → Git 설치 → 설치 결과 확인 → git --version 검증`의 4단계로 Header와 로그에 표시한다.
+- WinGet 설치 후 현재 프로세스 PATH가 갱신되지 않을 수 있으므로 `Program Files\Git\cmd`, `LOCALAPPDATA\Programs\Git\cmd` 등 승인된 Git for Windows 설치 위치에서 `git.exe`를 다시 탐색해 현재 프로세스에서 즉시 사용할 수 있게 한다.
+- Git 설치 검증 성공 후 사용자가 처음 요청했던 `현재 폴더 Git 연결/복구`를 자동 재개한다. 이 자동 재개는 최초 `Git 자동 설치` 확인창에서 설치와 복구를 함께 승인한 경우에 한해 두 번째 복구 확인창을 생략할 수 있다.
+- Git 설치 실패, WinGet 미존재, UAC 거부, 회사 정책 차단 등에서는 Repository 초기화나 원격 fetch를 시작하지 않고 안전 종료한다.
+
+### C3.9 새 PC Git 사용자 정보 설정 안내
+
+- Windows 포맷/신규 PC처럼 Git 전역 설정이 초기화된 환경에서는 Repository 복구 성공과 `user.name` / `user.email` 설정 유무를 별도 상태로 취급한다.
+- Git Repository가 정상이어도 Git 사용자 정보가 없으면 Header는 `설정 필요 / Git 사용자 정보`를 표시하여 Commit + Push 전에 필요한 조치를 명확히 보여준다.
+- `Git 사용자 설정/갱신`은 기존 설정값이 있으면 초기값으로 보여주고 사용자가 명시적으로 입력·확정한 값을 `--global` 설정으로 저장한다. 사용자 이름/이메일을 AI가 임의 추정해 자동 저장하지 않는다.
+- Commit + Push를 실행했는데 Git 사용자 정보가 없으면 단순 경고 후 종료하지 않고 사용자가 원할 경우 즉시 설정 UI로 연결하고, 설정 성공 후 원래 Push 흐름을 계속 진행할 수 있다.
+- Pull, 상태 확인, 복구 등 작성자 정보가 필요하지 않은 작업까지 Git 사용자 정보 미설정을 이유로 차단하지 않는다.
+
+
 ## C4. `[GM]` Git Manager
 
 ### C4.1 프로필 정보
@@ -955,7 +989,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | Project ID | `GM` |
 | Project Name | Git Manager |
 | Status | `ACTIVE` |
-| Profile Version | v1.1 |
+| Profile Version | v1.4 |
 | Requirements Mode | `CUSTOM` |
 | Requirements Pattern | `GitManager_Requirements_YYMMDD_N.xlsx` |
 | Package Pattern | `GitManager_YYMMDD_N.zip` |
@@ -969,6 +1003,29 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 - 최신 Automation Manager ZIP만으로 self-bootstrap 복구가 가능해야 하며 Clone을 필수 단계로 되돌리지 않는다.
 - Target 추가/순서 변경 시 숫자만으로 의미를 추정하지 않고 catalog key/alias를 사용한다.
 
+### C4.3 복구 단계 표시 및 실패 종료 보장
+
+- Git Manager의 Self-Bootstrap 복구는 Git 설치 확인을 선행하고 Git 실행 불가 상태에서는 `.git` 생성이나 원격 fetch를 시작하지 않는다.
+- 복구 중에는 단계별 진행 상황을 Header의 확대 상태 박스와 Git Manager 로그에 동시에 표시한다.
+- 복구 실패 시 기존 로컬 파일 보존/신규 `.git` rollback 정책을 유지하며, Worker → Main Thread UI Queue를 통해 GUI의 `작업 중` 상태와 Operation Lock도 반드시 해제한다.
+- Git 설치 여부 확인은 OS PATH의 Git 실행 파일과 `git --version` 응답을 기준으로 하며 GitHub 인증 여부와 혼동하지 않는다.
+
+### C4.4 Git 자동 설치 안전 규칙
+
+- Git 자동 설치는 Windows + WinGet 사용 가능 환경에서만 수행한다.
+- 설치 대상은 exact package ID `Git.Git`으로 제한하며 다른 Git 유사 패키지를 자동 선택하지 않는다.
+- 설치 완료 판정은 WinGet 종료코드만으로 확정하지 않고 실제 `git.exe` 재탐색과 `git --version` 성공을 함께 확인한다.
+- 설치 중 UAC/보안 정책을 우회하거나 관리자 권한을 강제로 획득하지 않는다.
+- 설치 후 기존 Self-Bootstrap 복구의 비파괴 정책, 원격 최신본 보호, 자동 Push 금지 정책을 그대로 적용한다.
+
+### C4.5 Git 사용자 정보 초기화 대응
+
+- `git config user.name` / `user.email`이 비어 있는 상태는 Repository 고장이나 GitHub 인증 실패와 구분한다.
+- Git 사용자 정보가 없으면 Commit/Push만 제한하고 상태 확인·Pull·Self-Bootstrap 복구는 계속 허용한다.
+- Push 직전에 사용자 정보가 없으면 `Git 사용자 설정/갱신`으로 연결할 수 있으며 저장 성공 시 사용자가 다시 Push 버튼을 누르지 않아도 원래 Push 절차를 이어갈 수 있다.
+- 사용자 정보는 사용자가 직접 확인·입력한 값을 사용하며 원격 Commit 작성자나 계정명을 근거로 자동 추정·저장하지 않는다.
+
+
 ## C5. `[BR]` BoardRepo
 
 ### C5.1 프로필 정보
@@ -978,7 +1035,7 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 | Project ID | `BR` |
 | Project Name | BoardRepo |
 | Status | `ACTIVE` |
-| Profile Version | v1.4 |
+| Profile Version | v1.5 |
 | Requirements Mode | `CUSTOM` |
 | Requirements Pattern | `BoardRepo_Requirements_v*.xlsx` |
 | Package Pattern | `BoardRepo_YYMMDD_N.zip` |
@@ -1017,6 +1074,15 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 - 갱신 UI는 저장된 ID를 유지하고 비밀번호만 교체할 수 있게 하며 저장 위치는 OS keyring으로 한정한다. 비밀번호를 로그나 예외 문자열에 포함하지 않는다.
 - 업로드는 원격 중복검사 단계, 다운로드는 원격 동기화 세션 단계에서 로그인 갱신 후 같은 작업 인자를 사용해 재시도한다.
 - 추가 인증 텍스트가 보이는 경우 자동 갱신창을 우선 띄우지 않고 사용자의 수동 인증을 기다린다.
+### C5.6 오프라인 Python 의존성 및 Python 3.15 준비 규칙
+
+- BoardRepo 회사/오프라인 dependency baseline은 현재 `playwright==1.62.0`, `keyring==25.7.0`, `greenlet==3.5.6`으로 고정한다.
+- Playwright 1.62.0의 greenlet 요구조건과 충돌하는 greenlet 4.x를 오프라인 Wheelhouse 기준선에 사용하지 않는다.
+- Windows x64 오프라인 준비 대상 Python은 3.10, 3.11, 3.12, 3.13, 3.14, 3.15를 포함한다. Python 3.15 환경에서는 해당 CPython tag의 `greenlet 3.5.6` wheel 존재를 확인한다.
+- `회사용 오프라인 준비`는 기존 Wheelhouse에 신규 파일을 누적하는 방식 대신 임시 staging 영역에서 전체 dependency set과 현재 Python용 Portable Vendor 생성이 모두 성공한 뒤 기존 생성물을 교체한다. 실패 시 기존 정상 Wheelhouse/Vendor를 유지한다.
+- 설치/복구 시 현재 Python에 맞는 pinned greenlet wheel이 없으면 일반 pip resolver 오류만 노출하지 않고 `회사용 오프라인 준비` 재실행이 필요하다는 원인을 로그에 남긴다.
+- 브라우저 자동화 핵심 로직(`browser_automation.py`)은 본 dependency 패키징 수정만을 이유로 변경하지 않는다.
+
 
 ## C6. `[ALM]` Requirement Studio Manual
 
@@ -1209,6 +1275,9 @@ Compile 또는 정적 감사 PASS를 전체 기능 검증 PASS로 표현하지 �
 
 | v0.10 | 2026-10-04 | Target 9 `학습`의 실제 그룹웨어 게시판 `AI 스냅샷_학습` / board/400 확정. BoardRepo 원격 업로드·다운로드·중복검사를 활성화하고 LRN Profile v0.2, AM Profile v1.4, BR Profile v1.3으로 갱신. Git은 Board URL 비의존 유지 | AM, GM, BR, LRN |
 | v0.11 | 2026-10-25 | 저장된 그룹웨어 로그인 정보로 인증하지 못한 경우 ID는 유지하고 새 비밀번호만 OS keyring에 갱신한 뒤 중단 작업을 재시도하는 흐름 추가. 비밀번호 변경을 단정하지 않고 CAPTCHA/MFA/네트워크 가능성을 구분하며 재시도 상한 적용. AM Profile v1.5, BR Profile v1.4 | AM, BR |
+| v0.12 | 2026-11-07 | Git 복구 시작 전 Git 설치/실행 여부를 즉시 확인하고 미설치 시 안전 종료하도록 개선. 복구 로그를 5단계로 표시하고 Git Manager Header 상태 박스를 확대하여 현재 단계/원인을 2줄로 표시. Worker Thread가 Tk API를 직접 호출하지 않도록 UI Queue 구조로 변경하여 오류 시 `작업 중`/OperationLock이 해제되지 않을 수 있는 문제를 수정. AM Profile v1.6, GM Profile v1.2 | AM, GM |
+| v0.13 | 2026-11-07 | Git 미설치 상태에서 `Git 자동 설치` 버튼을 제공하고 WinGet `Git.Git` 설치 → git.exe 재탐색 → `git --version` 검증 → 기존 Self-Bootstrap 복구 자동 재개 흐름을 추가. WinGet 미존재/UAC/회사 정책 차단 시 안전 종료 및 공식 수동 설치 안내. AM Profile v1.7, GM Profile v1.3 | AM, GM |
+| v0.14 | 2026-11-07 | 신규 Windows에서 Git Repository 복구 후 `user.name/user.email` 미설정 상태를 `설정 필요`로 명확히 표시하고 Push 시 설정 UI로 연결 후 계속 진행하도록 개선. BoardRepo 오프라인 baseline을 Playwright 1.62.0 / keyring 25.7.0 / greenlet 3.5.6으로 고정하고 Python 3.15 wheel 준비 및 staging 교체 방식 추가. AM Profile v1.8, GM Profile v1.4, BR Profile v1.5 | AM, GM, BR |
 
 ---
 
