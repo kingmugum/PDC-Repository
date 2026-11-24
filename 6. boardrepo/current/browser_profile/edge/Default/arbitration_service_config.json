@@ -11,6 +11,12 @@
          "notification_max_quick_dismiss_count": 1
       }
    },
+   "DefaultCampaignModelInfo": {
+      "campaigns": [  ],
+      "segment_id": 553,
+      "signals": [ "cpu_num_cores", "ram_mb", "screen_width", "screen_height", "main_tab_size_width", "main_tab_size_height", "hour_of_day", "day_of_week", "browser_window_size_width", "browser_window_size_height", "time_from_session_start", "duration_since_playing_typing", "customer_group", "is_edu", "is_edge_default", "default_search_provider", "ntp_feed_display", "session_startup", "is_msa", "accepted_count", "days_since_last_campaign", "dismissal_count", "dismissed_to_shown_ratio", "impression_count", "last_interaction_outcome", "last_shown_day_of_week", "user_interaction_score" ],
+      "threshold_value": 0.5
+   },
    "DynamicSuppressionBypass": {
       "ExperienceIDs": [ "Nurturing.Global.OnRamp_RetriggerFREOnEdgeVersionUpgradeViaExplicitLaunch", "Nurturing.Global.OnRamp_RetriggerFREOnExplicitProtocolPDFLaunchForEdgePostDMA", "Nurturing.Global.Bing_DefaultBrowserBannerCloseBtn", "Nurturing.Global.Bing_DefaultBrowserBannerCloseBtnUpdate", "Nurturing.Global.Bing_MSStartYJCompete", "Nurturing.Global.Bing_NtpHomeStartpageUpsellFlyout", "Nurturing.Global.Fundamentals_DefaultBrowserMonitor", "Nurturing.Global.Fundamentals_DefaultBrowserMonitorOnStart", "Nurturing.Global.Fundamentals_DefaultBrowserMonitorVariant2", "Nurturing.Global.RecommendedSettingsChina", "Nurturing.Global.ContinuousImport_PasswordZeroStateV2", "Nurturing.Global.OnRamp_CIExplicitLaunchBannerUpsell", "Nurturing.Global.OnRamp_CIUpsell_ProtocolLaunch_Banner", "Nurturing.Global.EdgeGrowth_SitePinningCITopSites", "Nurturing.Global.EdgeGrowth_SitePinningWithWindowsConsent", "Nurturing.Global.EdgeGrowth_GlobalSitePinningOnCloseModal" ],
       "TeamIDs": [ "NTP" ]
@@ -190,6 +196,6 @@
    },
    "SuppressedExperiences": [  ],
    "TimeDelta": 5000000,
-   "baseConfigVersion": "41.0.0",
-   "configVersion": "41.0.0"
+   "baseConfigVersion": "42.0.0",
+   "configVersion": "42.0.0"
 }
