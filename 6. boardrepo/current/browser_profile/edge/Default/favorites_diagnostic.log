@@ -96,3 +96,36 @@
 2026-11-08 03:56:21.380: [INFO] BookmarksLoadDropped droppedNodes=0
 2026-11-08 03:56:21.380: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
 2026-11-08 03:56:29.727: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-11-08 04:24:42.123: [INFO] CurrentProfilePath: C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default
+2026-11-08 04:24:42.123: [INFO] Profiles total count: 1
+2026-11-08 04:24:42.123: [INFO] Profile: name=개인 path=C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default lastActive=2026-11-08T03:56:21.364Z
+2026-11-08 04:24:42.123: [INFO] LastUsedProfileDir: C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default
+2026-11-08 04:24:42.123: [INFO] MostRecentlyActiveProfile: name=개인 path=C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default lastActive=2026-11-08T03:56:21.364Z
+2026-11-08 04:24:42.123: [INFO] VisibilityChanged: 0
+2026-11-08 04:24:42.159: [INFO] OnDoneLoading sync enabled: 0
+2026-11-08 04:24:42.159: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-11-08 04:24:42.159: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-11-08 04:24:42.159: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-11-08 04:24:53.016: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-11-08 04:24:53.488: [INFO] CurrentProfilePath: C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default
+2026-11-08 04:24:53.488: [INFO] Profiles total count: 1
+2026-11-08 04:24:53.488: [INFO] Profile: name=개인 path=C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default lastActive=2026-11-08T04:24:46.376Z
+2026-11-08 04:24:53.488: [INFO] LastUsedProfileDir: C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default
+2026-11-08 04:24:53.488: [INFO] MostRecentlyActiveProfile: name=개인 path=C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default lastActive=2026-11-08T04:24:46.376Z
+2026-11-08 04:24:53.488: [INFO] VisibilityChanged: 0
+2026-11-08 04:24:53.515: [INFO] OnDoneLoading sync enabled: 0
+2026-11-08 04:24:53.515: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-11-08 04:24:53.515: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-11-08 04:24:53.515: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-11-08 04:25:01.833: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-11-08 04:25:02.545: [INFO] CurrentProfilePath: C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default
+2026-11-08 04:25:02.545: [INFO] Profiles total count: 1
+2026-11-08 04:25:02.545: [INFO] Profile: name=개인 path=C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default lastActive=2026-11-08T04:24:53.498Z
+2026-11-08 04:25:02.545: [INFO] LastUsedProfileDir: C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default
+2026-11-08 04:25:02.545: [INFO] MostRecentlyActiveProfile: name=개인 path=C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default lastActive=2026-11-08T04:24:53.498Z
+2026-11-08 04:25:02.545: [INFO] VisibilityChanged: 0
+2026-11-08 04:25:02.585: [INFO] OnDoneLoading sync enabled: 0
+2026-11-08 04:25:02.585: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-11-08 04:25:02.585: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-11-08 04:25:02.585: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-11-08 04:25:11.578: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
