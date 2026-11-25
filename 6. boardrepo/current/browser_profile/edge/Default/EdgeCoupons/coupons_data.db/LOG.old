@@ -1,6 +1,15 @@
-2026/11/08-13:25:09.697 46e8 Reusing MANIFEST C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
-2026/11/08-13:25:09.707 46e8 Recovering log #36
-2026/11/08-13:25:09.707 46e8 Reusing old log C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default\EdgeCoupons/coupons_data.db/000036.log 
-2026/11/08-13:25:09.815 67c4 Level-0 table #40: started
-2026/11/08-13:25:09.817 67c4 Level-0 table #40: 683444 bytes OK
-2026/11/08-13:25:09.818 67c4 Delete type=0 #36
+2026/11/24-13:12:58.556 5838 Reusing MANIFEST C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/11/24-13:12:58.556 5838 Recovering log #42
+2026/11/24-13:12:58.557 5838 Reusing old log C:\Users\kingm\Desktop\Automation_Manager_261107_3\6. BoardRepo\current\browser_profile\edge\Default\EdgeCoupons/coupons_data.db/000042.log 
+2026/11/24-13:12:58.593 18a4 Level-0 table #46: started
+2026/11/24-13:12:58.595 18a4 Level-0 table #46: 683444 bytes OK
+2026/11/24-13:12:58.596 18a4 Delete type=0 #42
+2026/11/24-13:12:58.596 714c Compacting 4@0 + 1@1 files
+2026/11/24-13:12:58.598 714c Generated table #47@0: 4 keys, 683351 bytes
+2026/11/24-13:12:58.598 714c Compacted 4@0 + 1@1 files => 683351 bytes
+2026/11/24-13:12:58.599 714c compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/11/24-13:12:58.599 714c Delete type=2 #34
+2026/11/24-13:12:58.599 714c Delete type=2 #37
+2026/11/24-13:12:58.599 714c Delete type=2 #40
+2026/11/24-13:12:58.599 714c Delete type=2 #43
+2026/11/24-13:12:58.599 714c Delete type=2 #46
